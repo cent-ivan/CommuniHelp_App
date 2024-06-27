@@ -15,6 +15,7 @@ class _HomeBaseState extends State<HomeBase> {
   final PageStorageBucket bucket = PageStorageBucket();
   int _currentIndex = 0;
 
+
   final List<Widget> _screens = [
     const DashboardView(),
     const ContactsView(),
@@ -37,24 +38,27 @@ class _HomeBaseState extends State<HomeBase> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: const BaseFloatingActionButton(),
 
-      //TO DO: create UI to PageView then compare
+      //BASE BOTTOM APPBAR 
       bottomNavigationBar: BottomAppBar(
+        padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+        height: 58,
         elevation: 0,
         color: Colors.white,
         shape: const CircularNotchedRectangle(),
         notchMargin: 5,
         child: Container(
-          height: 60,
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+          height: 40,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               //LEFT Side
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //Home Button
                   MaterialButton(
-                    minWidth: 40,
+                    minWidth: 25,
                     onPressed: () {
                       setState(() {
                         _currentIndex = 0;
@@ -63,31 +67,36 @@ class _HomeBaseState extends State<HomeBase> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-
+      
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/Home.png'),
-                            color: _currentIndex == 0? Colors.blue : Colors.grey,
+                            color: _currentIndex == 0? const Color(0xFF3D424A) : Colors.grey,
+                            width: _currentIndex == 0 ? 30 : 20,
                           ),
                         ),
-
+       
+      
                         Expanded(
+                          flex: 0,
                           child: Text(
                             "Home",
                             style: TextStyle(
-                              color: _currentIndex == 0 ? Colors.blue : Colors.grey,
-                              fontSize: 15
+                              color: _currentIndex ==  0? const Color(0xFF3D424A) : Colors.grey,
+                              fontWeight: _currentIndex == 0? FontWeight.bold : FontWeight.normal,
+                              fontSize: 12
                             ),
                           ),
                         )
                       ],
                     ),
                   ), //Home Button
-
-
+      
+                  const SizedBox(width: 5,),
+      
                   //Contacts Button
                   MaterialButton(
-                    minWidth: 40,
+                    minWidth: 25,
                     onPressed: () {
                       setState(() {
                         _currentIndex = 1;
@@ -96,101 +105,114 @@ class _HomeBaseState extends State<HomeBase> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-
+      
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/FindMale.png'),
-                            color: _currentIndex == 1? Colors.blue : Colors.grey,
+                            color: _currentIndex == 1? const Color(0xFF3D424A) : Colors.grey,
+                            width: _currentIndex == 1 ? 30 : 20,
                           ),
                         ),
-
+      
                         Expanded(
+                          flex: 0,
                           child: Text(
                             "Contacts",
                             style: TextStyle(
-                              color: _currentIndex == 1 ? Colors.blue : Colors.grey,
-                              fontSize: 15
+                              color: _currentIndex == 1 ? const Color(0xFF3D424A) : Colors.grey,
+                              fontWeight: _currentIndex == 1? FontWeight.bold : FontWeight.normal,
+                              fontSize: 12
                             ),
                           ),
                         )
+      
                       ],
                     ),
                   ), //Contacts Button
                 ],
               ), //LEFT
-
-              //const SizedBox(width: 1,),
-
+      
+      
               //RIGHT Side
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   //Community Button
                   MaterialButton(
-                    minWidth: 40,
+                    minWidth: 20,
                     onPressed: () {
                       setState(() {
                         _currentIndex = 2;
                       });
                     },
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-
+      
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/People.png'),
-                            color: _currentIndex == 2? Colors.blue : Colors.grey,
+                            color: _currentIndex == 2? const Color(0xFF3D424A) : Colors.grey,
+                            width: _currentIndex == 2 ? 30 : 20,
                           ),
                         ),
-
+      
                         Expanded(
+                          flex: 0,
                           child: Text(
-                            "Community",
+                            "Forum",
                             style: TextStyle(
-                              color: _currentIndex == 2 ? Colors.blue : Colors.grey,
-                              fontSize: 15
+                              color: _currentIndex == 2 ? const Color(0xFF3D424A) : Colors.grey,
+                              fontWeight: _currentIndex == 2? FontWeight.bold : FontWeight.normal,
+                              fontSize: 12
                             ),
                           ),
                         )
+      
                       ],
-                    ),
+      
+                    )
                   ), //Community Button
-
-
+      
+      
                   //Profile Button
                   MaterialButton(
-                    minWidth: 40,
+                    minWidth: 20,
                     onPressed: () {
                       setState(() {
                         _currentIndex = 3;
                       });
                     },
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-
+      
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/Profile.png'),
-                            color: _currentIndex == 3? Colors.blue : Colors.grey,
+                            color: _currentIndex == 3? const Color(0xFF3D424A) : Colors.grey,
+                            width: _currentIndex == 3 ? 30 : 20,
                           ),
                         ),
-
+      
+                      
                         Expanded(
+                          flex: 0,
                           child: Text(
                             "Profile",
                             style: TextStyle(
-                              color: _currentIndex == 3 ? Colors.blue : Colors.grey,
-                              fontSize: 15
+                              color: _currentIndex == 3 ? const Color(0xFF3D424A) : Colors.grey,
+                              fontWeight: _currentIndex == 3? FontWeight.bold : FontWeight.normal,
+                              fontSize: 12
                             ),
                           ),
                         )
+      
                       ],
                     ),
                   ), //Profile Button
                 ],
-              )
+              ) //RIGHT
+      
             ],
           ),
         ),
@@ -221,7 +243,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
         style: TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF57BEE6),//Color.fromRGBO(1,87,155,1.000), 
+          color: Color(0xFF57BEE6),
           letterSpacing: 1.5
         ),
       ),
@@ -232,7 +254,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
       leading: IconButton(
         icon: const Icon(Icons.menu_rounded),
         iconSize: 27,
-        color: const Color(0xFF57BEE6),//const Color.fromRGBO(1,87,155,1.000),
+        color: const Color(0xFF57BEE6),
         onPressed: () {
           Scaffold.of(context).openDrawer();
         },
@@ -269,7 +291,7 @@ class BaseDrawer extends StatelessWidget {
       elevation: 0,
       backgroundColor: const Color(0xFF57BEE6),
       child: Container(
-        color: const Color.fromARGB(255, 224, 224, 224),
+        color: const Color(0xFFFFFFFF),
         child: ListView(
           children: const [
             DrawerHeader(
