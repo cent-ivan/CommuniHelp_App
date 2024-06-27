@@ -228,7 +228,6 @@ class _HomeBaseState extends State<HomeBase> {
 
 
 //----------------------------------------------------------------------------------------
-
 //BASE APP BAR
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   const BaseAppBar({
@@ -241,7 +240,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
       title: const Text(
         "CommuniHelp",
         style: TextStyle(
-          fontSize: 25,
+          fontSize: 28,
           fontWeight: FontWeight.bold,
           color: Color(0xFF57BEE6),
           letterSpacing: 1.5
