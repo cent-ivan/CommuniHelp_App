@@ -9,7 +9,7 @@ class InfographicsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180,
+      height: 190,
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.fromLTRB(9, 0, 9, 12),
       decoration: const BoxDecoration(
@@ -35,32 +35,65 @@ class InfographicsSection extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MaterialButton(
-                  onPressed: () {},
-                  height: 100,
-                  minWidth: 150,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15))
-                  ),
-                  color: Colors.white,
-                  child: const Icon(
-                    Icons.accessibility_sharp
-                  ),
+
+                Column(
+                  children: [
+
+                    MaterialButton(
+                      onPressed: () {},
+                      height: 100,
+                      minWidth: 150,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15))
+                      ),
+                      color: Colors.white,
+                      child: const Icon(
+                        Icons.accessibility_sharp
+                      ),
+                    ),
+
+                    const SizedBox(height: 5,),
+
+                    const Text(
+                      "Natural Disaster",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF3D424A), 
+                      ),
+                    ),
+                  ],
                 ),
     
                 const SizedBox(width: 10,),
             
-                MaterialButton(
-                  onPressed: () {},
-                  height: 100,
-                  minWidth: 150,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15))
-                  ),
-                  color: Colors.white,
-                  child: const Icon(
-                    Icons.accessibility_sharp
-                  ),
+                Column(
+                  children: [
+
+                    MaterialButton(
+                      onPressed: () {},
+                      height: 100,
+                      minWidth: 150,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15))
+                      ),
+                      color: Colors.white,
+                      child: const Icon(
+                        Icons.accessibility_sharp
+                      ),
+                    ),
+
+                    const SizedBox(height: 5,),
+
+                    const Text(
+                      "Man-made Disaster",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF3D424A), 
+                      ),
+                    ),
+                  ],
                 ),
             
               ],
