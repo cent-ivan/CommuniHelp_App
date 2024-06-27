@@ -1,7 +1,7 @@
-import 'package:communihelp_app/Views/Pages/community_view.dart';
-import 'package:communihelp_app/Views/Pages/contacts_view.dart';
-import 'package:communihelp_app/Views/Pages/dashboard_view.dart';
-import 'package:communihelp_app/Views/Pages/profile_view.dart';
+import 'package:communihelp_app/Views/Pages/Community_Page/community_view.dart';
+import 'package:communihelp_app/Views/Pages/Contacts_Page/contacts_view.dart';
+import 'package:communihelp_app/Views/Pages/Dashboard_Page/dashboard_view.dart';
+import 'package:communihelp_app/Views/Pages/Profile_Page/profile_view.dart';
 import 'package:communihelp_app/Views/base.dart';
 import 'package:flutter/material.dart';
 
