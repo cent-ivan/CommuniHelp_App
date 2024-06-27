@@ -10,9 +10,15 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Profile"),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          height: 1000,
+          color: Colors.deepPurpleAccent,
+          child: const Center(
+            child: Text("Profile"),
+          ),
+        ),
       ),
     );
   }
