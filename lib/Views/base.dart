@@ -37,7 +37,7 @@ class _HomeBaseState extends State<HomeBase> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: const BaseFloatingActionButton(),
 
-      //TO DO: create the botton App Bar either named routes or PageStorageBukcets, see chatgpt
+      //TO DO: create UI to PageView then compare
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
         color: Colors.white,
