@@ -1,4 +1,4 @@
-import 'package:communihelp_app/Views/Pages/Dashboard_Page/Dashboard_components/dashboard_buttons.dart';
+import 'package:communihelp_app/Views/Pages/Dashboard_Page/dashboard_components/dashboard_buttons.dart';
 import 'package:flutter/material.dart';
 
 class DashboardView extends StatefulWidget {
