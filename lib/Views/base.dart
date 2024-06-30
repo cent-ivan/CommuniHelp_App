@@ -265,6 +265,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
         },
       ),
 
+
       //notifications
       actions: [
         IconButton(
