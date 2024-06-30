@@ -25,7 +25,7 @@ class _DashboardViewState extends State<DashboardView> {
 
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(9, 20, 9, 9),
+                margin: const EdgeInsets.fromLTRB(9, 28, 9, 9),
                 child: Text(
                   "DASHBOARD",
                   style: TextStyle(

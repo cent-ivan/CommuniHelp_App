@@ -56,7 +56,7 @@ class InfographicsSection extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 5,),
+                    const SizedBox(height: 10,),
 
                     Text(
                       "Natural Disaster",
@@ -90,7 +90,7 @@ class InfographicsSection extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 5,),
+                    const SizedBox(height: 10,),
 
                     Text(
                       "Man-made Disaster",
