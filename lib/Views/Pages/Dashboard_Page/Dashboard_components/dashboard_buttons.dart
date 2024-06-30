@@ -21,7 +21,7 @@ class InfographicsSection extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            margin: const EdgeInsets.fromLTRB(9, 3, 9, 5),
+            margin: const EdgeInsets.fromLTRB(9, 3, 9, 6),
             child: const Text(
               "Infographics",
               style: TextStyle(
@@ -39,7 +39,8 @@ class InfographicsSection extends StatelessWidget {
 
                 Column(
                   children: [
-
+                    
+                    //Natural Disaster Button
                     MaterialButton(
                       onPressed: () {},
                       height: 100,
@@ -47,7 +48,9 @@ class InfographicsSection extends StatelessWidget {
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15))
                       ),
-                      color: Colors.white,
+                      color: const Color(0xFFB9EFD8),
+                      splashColor: const Color(0x80FEAE49),
+                      elevation: 3,
                       child: const Icon(
                         Icons.accessibility_sharp
                       ),
@@ -70,7 +73,8 @@ class InfographicsSection extends StatelessWidget {
             
                 Column(
                   children: [
-
+                    
+                    //Man-made Disaster Button
                     MaterialButton(
                       onPressed: () {},
                       height: 100,
@@ -78,7 +82,9 @@ class InfographicsSection extends StatelessWidget {
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15))
                       ),
-                      color: Colors.white,
+                      color: const Color(0xFFB9EFD8),
+                      splashColor: const Color(0x80FEAE49),
+                      elevation: 3,
                       child: const Icon(
                         Icons.accessibility_sharp
                       ),
@@ -119,7 +125,7 @@ class UtilitySection extends StatelessWidget {
     return Container(
       height: 250,
       padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.fromLTRB(9, 5, 9, 9),
+      margin: const EdgeInsets.fromLTRB(9, 15, 9, 9),
       decoration: const BoxDecoration(
         color:  Color(0x4D57BEE6),
         borderRadius: BorderRadius.all(Radius.circular(18 ))

@@ -21,6 +21,7 @@ class UtilityButtons extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(25))
           ),
           color: Colors.white,
+          splashColor: const Color(0x4D57BEE6),
           child: const Icon(
             Icons.accessibility_sharp
           ),
@@ -34,6 +35,7 @@ class UtilityButtons extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(25))
           ),
           color: Colors.white,
+          splashColor: const Color(0x4D57BEE6),
           child: const Icon(
             Icons.accessibility_sharp
           ),
@@ -47,6 +49,7 @@ class UtilityButtons extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(25))
           ),
           color: Colors.white,
+          splashColor: const Color(0x4D57BEE6),
           child: const Icon(
             Icons.accessibility_sharp
           ),
@@ -60,6 +63,7 @@ class UtilityButtons extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(25))
           ),
           color: Colors.white,
+          splashColor: const Color(0x4D57BEE6),
           child: const Icon(
             Icons.accessibility_sharp
           ),
@@ -73,6 +77,7 @@ class UtilityButtons extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(25))
           ),
           color: Colors.white,
+          splashColor: const Color(0x4D57BEE6),
           child: const Icon(
             Icons.accessibility_sharp
           ),
@@ -86,6 +91,7 @@ class UtilityButtons extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(25))
           ),
           color: Colors.white,
+          splashColor: const Color(0x4D57BEE6),
           child: const Icon(
             Icons.accessibility_sharp
           ),

@@ -12,11 +12,11 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white54,//const Color(0xFFE0E0E0),
+      backgroundColor: Colors.white,//if dark mode const Color(0xFF3D424A)
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(13),
-          height: 750,
+          height: 780,
           child:  Column(
             children: <Widget>[
 
@@ -25,7 +25,7 @@ class _DashboardViewState extends State<DashboardView> {
 
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(9, 12, 9, 9),
+                margin: const EdgeInsets.fromLTRB(9, 20, 9, 9),
                 child: const Text(
                   "DASHBOARD",
                   style: TextStyle(
@@ -102,7 +102,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(9)),
                     gradient: LinearGradient(
-                      colors: [Color(0xCCFEAE49), Color(0x80FEC57C), Colors.white70, Colors.white60, ], 
+                      colors: [Color(0xCCFEAE49), Color(0x80FEC57C), Colors.white54, ], 
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       tileMode: TileMode.decal
