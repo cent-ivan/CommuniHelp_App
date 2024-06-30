@@ -12,7 +12,7 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,//if dark mode const Color(0xFF3D424A)
+      backgroundColor: Theme.of(context).colorScheme.surface,//if dark mode const Color(0xFF3D424A)
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(13),
@@ -26,12 +26,12 @@ class _DashboardViewState extends State<DashboardView> {
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(9, 20, 9, 9),
-                child: const Text(
+                child: Text(
                   "DASHBOARD",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF3D424A), 
+                    color: Theme.of(context).colorScheme.outline, 
                   ),
                 ),
               ),
@@ -76,12 +76,12 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
         Container(
           alignment: Alignment.topLeft,
           margin: const EdgeInsets.fromLTRB(9, 3, 9, 0),
-          child: const Text(
+          child: Text(
             "Announcement", 
               style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold, 
-              color: Color(0xFF3D424A),               
+              color: Theme.of(context).colorScheme.outline,               
             ),
           ), 
         ),
@@ -99,10 +99,10 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                 child: Container(
                   width: 280,
                   height: 160,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(9)),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(9)),
                     gradient: LinearGradient(
-                      colors: [Color(0xCCFEAE49), Color(0x80FEC57C), Colors.white54, ], 
+                      colors: [const Color(0xCCFEAE49), const Color(0x80FEC57C), Theme.of(context).colorScheme.surface, ], 
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       tileMode: TileMode.decal

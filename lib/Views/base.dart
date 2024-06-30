@@ -42,8 +42,8 @@ class _HomeBaseState extends State<HomeBase> {
       bottomNavigationBar: BottomAppBar(
         padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
         height: 58,
-        elevation: 0,
-        color: Colors.white,
+        elevation: 5,
+        color: Theme.of(context).colorScheme.surface,
         shape: const CircularNotchedRectangle(),
         notchMargin: 5,
         child: Container(
@@ -71,7 +71,7 @@ class _HomeBaseState extends State<HomeBase> {
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/Home.png'),
-                            color: _currentIndex == 0? const Color(0xFF3D424A) : Colors.grey,
+                            color: _currentIndex == 0? Theme.of(context).colorScheme.outline : Colors.grey,
                             width: _currentIndex == 0 ? 30 : 20,
                           ),
                         ),
@@ -82,7 +82,7 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Text(
                             "Home",
                             style: TextStyle(
-                              color: _currentIndex ==  0? const Color(0xFF3D424A) : Colors.grey,
+                              color: _currentIndex ==  0? Theme.of(context).colorScheme.outline : Colors.grey,
                               fontWeight: _currentIndex == 0? FontWeight.bold : FontWeight.normal,
                               fontSize: 12
                             ),
@@ -109,7 +109,7 @@ class _HomeBaseState extends State<HomeBase> {
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/FindMale.png'),
-                            color: _currentIndex == 1? const Color(0xFF3D424A) : Colors.grey,
+                            color: _currentIndex == 1? Theme.of(context).colorScheme.outline : Colors.grey,
                             width: _currentIndex == 1 ? 30 : 20,
                           ),
                         ),
@@ -119,7 +119,7 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Text(
                             "Contacts",
                             style: TextStyle(
-                              color: _currentIndex == 1 ? const Color(0xFF3D424A) : Colors.grey,
+                              color: _currentIndex == 1 ? Theme.of(context).colorScheme.outline : Colors.grey,
                               fontWeight: _currentIndex == 1? FontWeight.bold : FontWeight.normal,
                               fontSize: 12
                             ),
@@ -151,7 +151,7 @@ class _HomeBaseState extends State<HomeBase> {
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/People.png'),
-                            color: _currentIndex == 2? const Color(0xFF3D424A) : Colors.grey,
+                            color: _currentIndex == 2? Theme.of(context).colorScheme.outline : Colors.grey,
                             width: _currentIndex == 2 ? 30 : 20,
                           ),
                         ),
@@ -161,7 +161,7 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Text(
                             "Forum",
                             style: TextStyle(
-                              color: _currentIndex == 2 ? const Color(0xFF3D424A) : Colors.grey,
+                              color: _currentIndex == 2 ? Theme.of(context).colorScheme.outline: Colors.grey,
                               fontWeight: _currentIndex == 2? FontWeight.bold : FontWeight.normal,
                               fontSize: 12
                             ),
@@ -189,7 +189,7 @@ class _HomeBaseState extends State<HomeBase> {
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/Profile.png'),
-                            color: _currentIndex == 3? const Color(0xFF3D424A) : Colors.grey,
+                            color: _currentIndex == 3? Theme.of(context).colorScheme.outline : Colors.grey,
                             width: _currentIndex == 3 ? 30 : 20,
                           ),
                         ),
@@ -200,7 +200,7 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Text(
                             "Profile",
                             style: TextStyle(
-                              color: _currentIndex == 3 ? const Color(0xFF3D424A) : Colors.grey,
+                              color: _currentIndex == 3 ? Theme.of(context).colorScheme.outline : Colors.grey,
                               fontWeight: _currentIndex == 3? FontWeight.bold : FontWeight.normal,
                               fontSize: 12
                             ),
@@ -237,23 +237,29 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text(
-        "CommuniHelp",
-        style: TextStyle(
-          fontSize: 28,
-          fontWeight: FontWeight.bold,
-          color: Color(0xFF57BEE6),
-          letterSpacing: 1.5
+      title: ShaderMask(
+        shaderCallback: (bounds) => LinearGradient(
+          colors: [Theme.of(context).colorScheme.outline, Color(0x80FEAE49),  Color(0xFF57BEE6)],
+        ).createShader(bounds),
+
+        child: const Text(
+          "CommuniHelp",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 28,
+            fontWeight: FontWeight.bold
+          ),
         ),
       ),
     
-      backgroundColor: Colors.transparent,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0,
 
+      //drawer
       leading: IconButton(
         icon: const Icon(Icons.menu_rounded),
         iconSize: 27,
-        color: const Color(0xFF3D424A),
+        color: Theme.of(context).colorScheme.outline,
         onPressed: () {
           Scaffold.of(context).openDrawer();
         },
@@ -267,7 +273,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
           }, 
           icon: const Icon(Icons.notifications),
           iconSize: 30,
-          color: const Color(0xFF57BEE6),
+          color: Theme.of(context).colorScheme.outline,
         ),
       ],
     );
@@ -276,6 +282,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
 
 
 //BASE DRAWER WIDGET
@@ -288,12 +295,11 @@ class BaseDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       elevation: 0,
-      backgroundColor: const Color(0xFF57BEE6),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       child: Container(
-        color: const Color(0xFFFFFFFF),
         child: ListView(
-          children: const [
-            DrawerHeader(
+          children: [
+            const DrawerHeader(
               padding: EdgeInsets.fromLTRB(9, 9, 9, 3),
               child: Center(
                 child: Image(
@@ -301,6 +307,144 @@ class BaseDrawer extends StatelessWidget {
                 ),
               ),
             ),
+
+            //Drawer contents
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 15, 9, 3),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  Container( 
+                    margin: const EdgeInsets.only(bottom: 2), 
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.home_filled), 
+                          iconSize: 25,
+                          color: Theme.of(context).colorScheme.outline,
+                          onPressed: () {},
+                        ),
+
+                        const SizedBox( width: 15,),
+
+                        Text(
+                          "Home",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        )
+                      ],
+                    )
+                  ),
+
+                  Container( 
+                    margin: const EdgeInsets.only(bottom: 2), 
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.notification_important), 
+                          iconSize: 25,
+                          color: Theme.of(context).colorScheme.outline,
+                          onPressed: () {},
+                        ),
+                        
+                        const SizedBox( width: 15,),
+
+                        Text(
+                          "Notifactions",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        )
+                      ],
+                    )
+                  ),
+
+                  Container( 
+                    margin: const EdgeInsets.only(bottom: 2), 
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.privacy_tip), 
+                          iconSize: 25,
+                          color: Theme.of(context).colorScheme.outline,
+                          onPressed: () {},
+                        ),
+                        
+                        const SizedBox( width: 15,),
+
+                        Text(
+                          "Privacy Policy",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        )
+                      ],
+                    )
+                  ),
+
+                  Container( 
+                    margin: const EdgeInsets.only(bottom: 2), 
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.share), 
+                          iconSize: 25,
+                          color: Theme.of(context).colorScheme.outline,
+                          onPressed: () {},
+                        ),
+                        
+                        const SizedBox( width: 15,),
+
+                        Text(
+                          "Share App",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        )
+                      ],
+                    )
+                  ),
+
+                  Container( 
+                    margin: const EdgeInsets.only(bottom: 2), 
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.reviews_sharp), 
+                          iconSize: 25,
+                          color: Theme.of(context).colorScheme.outline,
+                          onPressed: () {},
+                        ),
+
+                        const SizedBox( width: 15,),
+
+                        Text(
+                          "Rate Us",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        )
+                      ],
+                    )
+                  ),
+
+                ],
+              ),
+            ),
+
+
           ],
         ),
       ),
@@ -321,10 +465,10 @@ class BaseFloatingActionButton extends StatelessWidget {
       elevation: 0,
       shape: const CircleBorder(),
       onPressed: () {
-        
+        Navigator.pushNamed(context, '/emergency');
       },
       backgroundColor: const Color(0xFFFEAE49),
-      foregroundColor: const Color(0xFFFFFFFF),
+      foregroundColor: Colors.white,
       splashColor: Colors.redAccent,
       child: const Icon(Icons.call),
     );

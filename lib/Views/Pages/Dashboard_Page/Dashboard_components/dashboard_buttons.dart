@@ -22,12 +22,12 @@ class InfographicsSection extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.fromLTRB(9, 3, 9, 6),
-            child: const Text(
+            child: Text(
               "Infographics",
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF3D424A), 
+                color: Theme.of(context).colorScheme.outline, 
               ),
             ),
           ),
@@ -58,12 +58,12 @@ class InfographicsSection extends StatelessWidget {
 
                     const SizedBox(height: 5,),
 
-                    const Text(
+                    Text(
                       "Natural Disaster",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF3D424A), 
+                        color: Theme.of(context).colorScheme.outline, 
                       ),
                     ),
                   ],
@@ -92,12 +92,12 @@ class InfographicsSection extends StatelessWidget {
 
                     const SizedBox(height: 5,),
 
-                    const Text(
+                    Text(
                       "Man-made Disaster",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF3D424A), 
+                        color: Theme.of(context).colorScheme.outline, 
                       ),
                     ),
                   ],
@@ -135,12 +135,12 @@ class UtilitySection extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.fromLTRB(9, 3, 9, 5),
-            child: const Text(
+            child: Text(
               "Utility",
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF3D424A), 
+                color: Theme.of(context).colorScheme.outline, 
               ),
             ),
           ),
