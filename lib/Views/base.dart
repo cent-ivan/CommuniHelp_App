@@ -43,7 +43,7 @@ class _HomeBaseState extends State<HomeBase> {
         padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
         height: 58,
         elevation: 5,
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).colorScheme.primary,
         shape: const CircularNotchedRectangle(),
         notchMargin: 5,
         child: Container(
@@ -239,7 +239,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
     return AppBar(
       title: ShaderMask(
         shaderCallback: (bounds) => LinearGradient(
-          colors: [Theme.of(context).colorScheme.outline, Color(0x80FEAE49),  Color(0xFF57BEE6)],
+          colors: [Theme.of(context).colorScheme.outline, const Color(0x80FEAE49),   const Color(0xFF57BEE6)],
         ).createShader(bounds),
 
         child: const Text(
@@ -252,8 +252,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
         ),
       ),
     
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      elevation: 0,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      elevation: 1,
 
       //drawer
       leading: IconButton(
@@ -310,7 +310,7 @@ class BaseDrawer extends StatelessWidget {
 
             //Drawer contents
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 15, 9, 3),
+              padding: const EdgeInsets.fromLTRB(15, 15, 9, 3),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -328,13 +328,18 @@ class BaseDrawer extends StatelessWidget {
 
                         const SizedBox( width: 15,),
 
-                        Text(
-                          "Home",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
+                        TextButton(
+                          child: Text(
+                            "Home",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
                           ),
+                          onPressed: (){
+                            Navigator.pushNamed(context, '/home');
+                          },
                         )
                       ],
                     )
@@ -353,13 +358,18 @@ class BaseDrawer extends StatelessWidget {
                         
                         const SizedBox( width: 15,),
 
-                        Text(
-                          "Notifactions",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
+                        TextButton(
+                          child: Text(
+                            "Notifactions",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
                           ),
+                          onPressed: (){
+
+                          },
                         )
                       ],
                     )
@@ -378,13 +388,18 @@ class BaseDrawer extends StatelessWidget {
                         
                         const SizedBox( width: 15,),
 
-                        Text(
-                          "Privacy Policy",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
+                        TextButton(
+                          child: Text(
+                            "Privacy Policy",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
                           ),
+                          onPressed: () {
+                            
+                          },
                         )
                       ],
                     )
@@ -403,13 +418,18 @@ class BaseDrawer extends StatelessWidget {
                         
                         const SizedBox( width: 15,),
 
-                        Text(
-                          "Share App",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
+                        TextButton(
+                          child: Text(
+                            "Share App",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
                           ),
+                          onPressed: (){
+
+                          },
                         )
                       ],
                     )
@@ -428,13 +448,18 @@ class BaseDrawer extends StatelessWidget {
 
                         const SizedBox( width: 15,),
 
-                        Text(
-                          "Rate Us",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
+                        TextButton(
+                          child: Text(
+                            "Rate Us",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
                           ),
+                          onPressed: (){
+
+                          },
                         )
                       ],
                     )
