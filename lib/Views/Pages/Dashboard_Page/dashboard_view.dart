@@ -15,7 +15,7 @@ class _DashboardViewState extends State<DashboardView> {
       backgroundColor: Theme.of(context).colorScheme.surface,//if dark mode const Color(0xFF3D424A)
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(13),
+          padding: const EdgeInsets.fromLTRB(9, 20, 9, 0),
           height: 780,
           child:  Column(
             children: <Widget>[
