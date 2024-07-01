@@ -324,7 +324,9 @@ class BaseDrawer extends StatelessWidget {
                           icon: const Icon(Icons.home_filled), 
                           iconSize: 25,
                           color: Theme.of(context).colorScheme.outline,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/home');
+                          },
                         ),
 
                         const SizedBox( width: 15,),
