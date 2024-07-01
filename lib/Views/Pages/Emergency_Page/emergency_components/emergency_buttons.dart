@@ -1,0 +1,124 @@
+//Emergency Hotline Body
+import 'package:communihelp_app/Views/Pages/Emergency_Page/emergency_view.dart';
+import 'package:flutter/material.dart';
+
+class EmergencyNumbers extends StatelessWidget {
+  const EmergencyNumbers({
+    super.key,
+    required this.numberOfMDRRMO,
+    required this.numberOfAmbulance,
+    required this.numberOfPolice,
+  });
+
+  final int numberOfMDRRMO;
+  final int numberOfAmbulance;
+  final int numberOfPolice;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(13),
+        child: Container(
+          height: 700 + (numberOfMDRRMO.toDouble() * 5) * ((numberOfAmbulance.toDouble() * 5) + (numberOfPolice.toDouble() * 10)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              
+              //Municipality Tag
+              Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.all(Radius.circular(15))
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    "<Municipality here>",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.outline,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+              ),
+                  
+              const SizedBox(height: 15,),
+    
+              //MDDRMO Title
+              Container(
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.topLeft,
+                      margin: const EdgeInsets.fromLTRB(9, 25, 9, 10),
+                      child: Text(
+                        "MDDRMO Rescuers",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.outline, 
+                        ),
+                      ),
+                    ),
+                        
+                    //MDRRMO Responder
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: EmergencyContacts(numberOfContacts: numberOfMDRRMO,color: const Color(0x4DFEAE49),)
+                    ),
+                  ],
+                ),
+              ),
+                  
+                  
+              //Ambulance Title
+              Container(
+                alignment: Alignment.topLeft,
+                margin: const EdgeInsets.fromLTRB(9, 25, 9, 10),
+                child: Text(
+                  "Numero it Ambulansya",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.outline, 
+                  ),
+                ),
+              ),
+                  
+              //Ambulance number
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: EmergencyContacts(numberOfContacts: numberOfAmbulance, color: Theme.of(context).colorScheme.primary, )
+              ),
+    
+              const SizedBox(height: 10,),
+                  
+              //Police Title
+              Container(
+                alignment: Alignment.topLeft,
+                margin: const EdgeInsets.fromLTRB(9, 25, 9, 10),
+                child: Text(
+                  "Numero it Pulisya",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.outline, 
+                  ),
+                ),
+              ),
+                  
+              //Police number
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: EmergencyContacts(numberOfContacts: numberOfPolice, color: const Color(0x4D57BEE6), )
+              ),
+    
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
