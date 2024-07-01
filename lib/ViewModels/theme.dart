@@ -14,6 +14,6 @@ ThemeData darktMode = ThemeData(
   colorScheme: const ColorScheme.dark(
     surface: Color(0xFF31363C), //for backgorund
     primary: Color(0xFF3D424A), 
-    outline: Colors.white70 //for texts and icons
+    outline: Color(0xFFFAFAFA) //for texts and icons
   )
 );
