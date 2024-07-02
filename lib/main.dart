@@ -1,4 +1,6 @@
 import 'package:communihelp_app/ViewModels/theme.dart';
+import 'package:communihelp_app/Views/Infographics/manmade_disaster_view.dart';
+import 'package:communihelp_app/Views/Infographics/natural_disaster_view.dart';
 import 'package:communihelp_app/Views/Pages/Community_Page/community_view.dart';
 import 'package:communihelp_app/Views/Pages/Contacts_Page/contacts_view.dart';
 import 'package:communihelp_app/Views/Pages/Profile_Page/profile_view.dart';
@@ -32,7 +34,9 @@ class MainApp extends StatelessWidget {
         '/contacts' : (context) => const ContactsView(),
         '/community' : (context) => const CommunityView(),
         '/profile' : (context) => const ProfileView(),
-        '/emergency': (context) => const EmergencyView()
+        '/emergency': (context) => const EmergencyView(),
+        '/naturalinfo': (context) => const NaturalDisasterView(),
+        '/manmadeinfo': (context) => const ManMadeDisasterView(),
       },
       theme: lightMode,
       darkTheme: darktMode,
