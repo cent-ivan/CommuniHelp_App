@@ -101,7 +101,7 @@ class EmergencyContacts extends StatelessWidget {
                 elevation: 0,
                 child: Row(
                   children: [
-
+                    //TODO: Change image, number and name of hotline
                     Expanded(
                       flex: 1,
                       child: Container(
