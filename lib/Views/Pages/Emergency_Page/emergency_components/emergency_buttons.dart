@@ -18,7 +18,7 @@ class EmergencyNumbers extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(13),
+        padding: const EdgeInsets.all(13),
         child: Container(
           height: 700 + (numberOfMDRRMO.toDouble() * 5) * ((numberOfAmbulance.toDouble() * 5) + (numberOfPolice.toDouble() * 10)),
           child: Column(
@@ -44,6 +44,7 @@ class EmergencyNumbers extends StatelessWidget {
                 ),
               ),
                   
+                  
               const SizedBox(height: 15,),
     
               //MDDRMO Title
@@ -63,7 +64,7 @@ class EmergencyNumbers extends StatelessWidget {
                       ),
                     ),
                         
-                    //MDRRMO Responder
+                    //MDRRMO Number
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: EmergencyContacts(numberOfContacts: numberOfMDRRMO,color: const Color(0x4DFEAE49),)
@@ -93,6 +94,7 @@ class EmergencyNumbers extends StatelessWidget {
                 child: EmergencyContacts(numberOfContacts: numberOfAmbulance, color: Theme.of(context).colorScheme.primary, )
               ),
     
+
               const SizedBox(height: 10,),
                   
               //Police Title
