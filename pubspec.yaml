@@ -23,6 +23,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/dashboard/
     - assets/images/bottom_app_bar/
     - assets/images/logo/
     - assets/images/
