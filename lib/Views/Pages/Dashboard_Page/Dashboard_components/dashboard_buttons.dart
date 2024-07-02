@@ -42,7 +42,9 @@ class InfographicsSection extends StatelessWidget {
                     
                     //Natural Disaster Button
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('/naturalinfo');
+                      },
                       height: 100,
                       minWidth: 150,
                       shape: const RoundedRectangleBorder(
@@ -77,7 +79,9 @@ class InfographicsSection extends StatelessWidget {
                     
                     //Man-made Disaster Button
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('/manmadeinfo');
+                      },
                       height: 100,
                       minWidth: 150,
                       shape: const RoundedRectangleBorder(
