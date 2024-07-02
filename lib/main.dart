@@ -5,8 +5,17 @@ import 'package:communihelp_app/Views/Pages/Profile_Page/profile_view.dart';
 import 'package:communihelp_app/Views/Pages/Emergency_Page/emergency_view.dart';
 import 'package:communihelp_app/Views/base.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //Set preferred orientation
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+  
   runApp(const MainApp());
 }
 
