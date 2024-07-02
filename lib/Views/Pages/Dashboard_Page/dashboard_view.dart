@@ -16,7 +16,7 @@ class _DashboardViewState extends State<DashboardView> {
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.fromLTRB(9, 20, 9, 0),
-          height: 780,
+          height: 1075,
           child:  Column(
             children: <Widget>[
 

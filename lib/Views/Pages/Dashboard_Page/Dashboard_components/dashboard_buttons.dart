@@ -14,7 +14,7 @@ class InfographicsSection extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.fromLTRB(9, 0, 9, 12),
       decoration: const BoxDecoration(
-        color:  Color(0x8CA4EACD),
+        color:  Color(0x80A4EACD),
         borderRadius: BorderRadius.all(Radius.circular(18 ))
       ),
       child: Column(
@@ -48,20 +48,21 @@ class InfographicsSection extends StatelessWidget {
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15))
                       ),
-                      color: const Color(0xFFB9EFD8),
-                      splashColor: const Color(0x80FEAE49),
+                      color: Theme.of(context).colorScheme.primary,
+                      splashColor: const Color(0xFFB9EFD8),
                       elevation: 3,
-                      child: const Icon(
-                        Icons.accessibility_sharp
-                      ),
+                      child: const Image(
+                        width: 55,
+                        image: AssetImage('assets/images/dashboard/natural.png')
+                      )
                     ),
 
                     const SizedBox(height: 10,),
 
                     Text(
-                      "Natural Disaster",
+                      "Natural na sakuna",
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 12,
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).colorScheme.outline, 
                       ),
@@ -82,20 +83,25 @@ class InfographicsSection extends StatelessWidget {
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15))
                       ),
-                      color: const Color(0xFFB9EFD8),
+                      color: Theme.of(context).colorScheme.primary,
                       splashColor: const Color(0x80FEAE49),
                       elevation: 3,
-                      child: const Icon(
-                        Icons.accessibility_sharp
-                      ),
+                      child: const CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.white54,
+                        child: Image(
+                          width: 55,
+                          image: AssetImage('assets/images/dashboard/manmade.png')
+                        ),
+                      )
                     ),
 
                     const SizedBox(height: 10,),
 
                     Text(
-                      "Man-made Disaster",
+                      "Kalamidad na ubra it tawo",
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 12,
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).colorScheme.outline, 
                       ),
@@ -122,8 +128,9 @@ class UtilitySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Container of Utility Section
     return Container(
-      height: 250,
+      height: 515,
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.fromLTRB(9, 15, 9, 9),
       decoration: const BoxDecoration(
@@ -134,7 +141,7 @@ class UtilitySection extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            margin: const EdgeInsets.fromLTRB(9, 3, 9, 5),
+            margin: const EdgeInsets.fromLTRB(9, 3, 9, 15),
             child: Text(
               "Utility",
               style: TextStyle(
