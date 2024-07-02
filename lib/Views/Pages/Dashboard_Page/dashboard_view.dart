@@ -67,6 +67,8 @@ class AnnouncementSection extends StatefulWidget {
 }
 
 class _AnnouncementSectionState extends State<AnnouncementSection> {
+  final int numOfAnnouncement = 1; //get total announcement in database
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -91,7 +93,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
           width: 350,
           height: 150,
           child: ListView.builder(
-            itemCount: 6,
+            itemCount: numOfAnnouncement,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
@@ -99,6 +101,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                 child: Container(
                   width: 280,
                   height: 160,
+                  padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(9)),
                     gradient: LinearGradient(
@@ -106,7 +109,33 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       tileMode: TileMode.decal
-                    )
+                    ),
+                  ),
+
+                  //TODO: Change dummy text
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 155,
+                        margin: const EdgeInsets.only(bottom: 8),
+                        decoration: const BoxDecoration(
+                          color: Colors.black26,
+                          borderRadius: BorderRadius.all(Radius.circular(5))
+                        ),
+                        child: const Text(
+                          "Nabas Announcement",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+
+                      const Text(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet sit amet leo sed tempor."
+                      ),
+                    ],
                   ),
                 ),
               );
