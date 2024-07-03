@@ -239,7 +239,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
     return AppBar(
       title: ShaderMask(
         shaderCallback: (bounds) => LinearGradient(
-          colors: [Theme.of(context).colorScheme.outline, const Color(0x80FEAE49),   const Color(0xFF57BEE6)],
+          colors: [Theme.of(context).colorScheme.outline, const Color(0xFFFEAE49),   const Color(0xFF57BEE6)],
         ).createShader(bounds),
 
         child: const Text(
@@ -247,7 +247,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
           style: TextStyle(
             color: Colors.white,
             fontSize: 28,
-            fontWeight: FontWeight.bold
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
