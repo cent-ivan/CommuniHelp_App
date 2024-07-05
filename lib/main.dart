@@ -35,7 +35,7 @@ class MainApp extends StatelessWidget {
       //designSize: Size(sizeWidth, sizeHeight),
       builder: (context, child) => MaterialApp(
 
-        //TODO: use ScreenUtil package, add classes to Led Light and Report Damage (No designs yet)
+        //TODO:add classes to Led Light and Report Damage (No designs yet)
         home: const HomeBase(),
         routes: {
           '/home' : (context) => const HomeBase(),
