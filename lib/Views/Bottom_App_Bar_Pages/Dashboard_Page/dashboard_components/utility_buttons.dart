@@ -150,7 +150,7 @@ class UtilityButtons extends StatelessWidget {
             MaterialButton(
               onPressed: () {},
               height: 80.r,
-              minWidth: 115.r,
+              minWidth: 105.r,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
@@ -181,7 +181,7 @@ class UtilityButtons extends StatelessWidget {
                 Navigator.of(context).popAndPushNamed('/radio');
               },
               height: 80.r,
-              minWidth: 115.r,
+              minWidth: 105.r,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
