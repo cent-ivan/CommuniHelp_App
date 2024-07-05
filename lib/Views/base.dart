@@ -16,7 +16,6 @@ class _HomeBaseState extends State<HomeBase> {
   final PageStorageBucket bucket = PageStorageBucket();
   int _currentIndex = 0;
 
-
   final List<Widget> _screens = [
     const DashboardView(),
     const ContactsView(),
