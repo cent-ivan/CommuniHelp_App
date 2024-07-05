@@ -1,5 +1,6 @@
 //Utility Buttons
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UtilityButtons extends StatelessWidget {
   const UtilityButtons({
@@ -9,41 +10,41 @@ class UtilityButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 5,
-      runSpacing: 10,
+      spacing: 5.r,
+      runSpacing: 10.r,
       alignment: WrapAlignment.center,
       children: [
         //----------------------------------------------------------------------------------------------------------
             
         Wrap(
-          spacing: 5,
-          runSpacing: 10,
+          spacing: 5.r,
+          runSpacing: 10.r,
           alignment: WrapAlignment.center,
           children: [
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).popAndPushNamed('/evacuationfinder');
               },
-              height: 80,
-              minWidth: 100,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25))
+              height: 80.r,
+              minWidth: 100.r,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
               color: Theme.of(context).colorScheme.primary,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Image(
-                    width: 35,
-                    image: AssetImage('assets/images/dashboard/searchevac.png')
+                  Image(
+                    width: 35.r,
+                    image: const AssetImage('assets/images/dashboard/searchevac.png')
                   ),
             
                   Center(
                     child: Text(
                     "Magusoy it Evacuation Center",
                         style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 12.r,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.outline, 
                       ),
@@ -57,25 +58,25 @@ class UtilityButtons extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).popAndPushNamed('/newsfeed');
               },
-              height: 80,
-              minWidth: 100,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25))
+              height: 80.r,
+              minWidth: 95.r,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
               color: Theme.of(context).colorScheme.primary,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Image(
-                    width: 35,
-                    image: AssetImage('assets/images/dashboard/newspaper.png')
+                  Image(
+                    width: 35.r,
+                    image: const AssetImage('assets/images/dashboard/newspaper.png')
                   ),
             
                   Text(
                   "Mga Balita",
                       style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 12.r,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.outline, 
                     ),
@@ -88,25 +89,25 @@ class UtilityButtons extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).popAndPushNamed('/weatherupdate');
               },
-              height: 80,
-              minWidth: 100,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25))
+              height: 80.r,
+              minWidth: 95.r,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
               color: Theme.of(context).colorScheme.primary,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Image(
-                    width: 35,
-                    image: AssetImage('assets/images/dashboard/weather.png')
+                  Image(
+                    width: 35.r,
+                    image: const AssetImage('assets/images/dashboard/weather.png')
                   ),
             
                   Text(
                   "Ang Panahon",
                       style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 12.r,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.outline, 
                     ),
@@ -119,25 +120,25 @@ class UtilityButtons extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).popAndPushNamed('/emergencykit');
               },
-              height: 80,
-              minWidth: 100,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25))
+              height: 80.r,
+              minWidth: 95.r,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
               color: Theme.of(context).colorScheme.primary,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Image(
-                    width: 35,
-                    image: AssetImage('assets/images/dashboard/mykit.png')
+                  Image(
+                    width: 35.r,
+                    image: const AssetImage('assets/images/dashboard/mykit.png')
                   ),
             
                   Text(
                   "Akong Kit",
                       style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 12.r,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.outline, 
                     ),
@@ -148,25 +149,25 @@ class UtilityButtons extends StatelessWidget {
         
             MaterialButton(
               onPressed: () {},
-              height: 80,
-              minWidth: 120,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25))
+              height: 80.r,
+              minWidth: 115.r,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
               color: Theme.of(context).colorScheme.primary,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Image(
-                    width: 35,
-                    image: AssetImage('assets/images/dashboard/flashlight.png')
+                  Image(
+                    width: 35.r,
+                    image: const AssetImage('assets/images/dashboard/flashlight.png')
                   ),
             
                   Text(
                   "Led Light",
                       style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 12.r,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.outline, 
                     ),
@@ -179,25 +180,25 @@ class UtilityButtons extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).popAndPushNamed('/radio');
               },
-              height: 80,
-              minWidth: 120,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25))
+              height: 80.r,
+              minWidth: 115.r,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
               color: Theme.of(context).colorScheme.primary,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Image(
-                    width: 35,
-                    image: AssetImage('assets/images/dashboard/radio.png')
+                  Image(
+                    width: 35.r,
+                    image: const AssetImage('assets/images/dashboard/radio.png')
                   ),
             
                   Text(
                   "Pamati it Radyo",
                       style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 12.r,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.outline, 
                     ),
@@ -211,14 +212,14 @@ class UtilityButtons extends StatelessWidget {
 
         //----------------------------------------------------------------------------------------------------------
         Container(
-          margin: const EdgeInsets.only(top: 15),
-          padding: const EdgeInsets.fromLTRB(10,10,10,15),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(9))
+          margin: const EdgeInsets.only(top: 15).r,
+          padding: const EdgeInsets.fromLTRB(10,10,10,15).r,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(9.r))
           ),
           child: Wrap(
-            spacing: 5,
-            runSpacing: 10,
+            spacing: 5.r,
+            runSpacing: 10.r,
             alignment: WrapAlignment.center,
             children: [
 
@@ -226,7 +227,7 @@ class UtilityButtons extends StatelessWidget {
                 child: Text(
                   "Magpadaea it Report",
                       style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.r,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.outline, 
                     ),
@@ -235,25 +236,25 @@ class UtilityButtons extends StatelessWidget {
                  
               MaterialButton(
                 onPressed: () {},
-                height: 80,
-                minWidth: 100,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25))
+                height: 80.r,
+                minWidth: 95.r,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(25.r))
                 ),
                 color: Theme.of(context).colorScheme.primary,
                 splashColor: const Color(0x4D57BEE6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Image(
-                      width: 35,
-                      image: AssetImage('assets/images/dashboard/file.png')
+                    Image(
+                      width: 35.r,
+                      image: const AssetImage('assets/images/dashboard/file.png')
                     ),
               
                     Text(
                     "Report Damage",
                         style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 11.r,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.outline, 
                       ),

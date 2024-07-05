@@ -1,6 +1,7 @@
 //Infographics Section
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Dashboard_Page/dashboard_components/utility_buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfographicsSection extends StatelessWidget {
   const InfographicsSection({
@@ -10,22 +11,22 @@ class InfographicsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 190,
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.fromLTRB(9, 0, 9, 12),
-      decoration: const BoxDecoration(
-        color:  Color(0x80A4EACD),
-        borderRadius: BorderRadius.all(Radius.circular(18 ))
+      height: 190.r,
+      padding: const EdgeInsets.all(10).r,
+      margin: const EdgeInsets.fromLTRB(9, 0, 9, 12).r,
+      decoration: BoxDecoration(
+        color:  const Color(0x80A4EACD),
+        borderRadius: BorderRadius.all(Radius.circular(18.r))
       ),
       child: Column(
         children: [
           Container(
             alignment: Alignment.topLeft,
-            margin: const EdgeInsets.fromLTRB(9, 3, 9, 6),
+            margin: const EdgeInsets.fromLTRB(9, 3, 9, 6).r,
             child: Text(
               "Infographics",
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 20.r,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).colorScheme.outline, 
               ),
@@ -45,26 +46,26 @@ class InfographicsSection extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).popAndPushNamed('/naturalinfo');
                       },
-                      height: 100,
-                      minWidth: 150,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15))
+                      height: 100.r,
+                      minWidth: 145.r,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.r))
                       ),
                       color: Theme.of(context).colorScheme.primary,
                       splashColor: const Color(0xFFB9EFD8),
                       elevation: 3,
-                      child: const Image(
-                        width: 55,
-                        image: AssetImage('assets/images/dashboard/natural.png')
+                      child: Image(
+                        width: 55.r,
+                        image: const  AssetImage('assets/images/dashboard/natural.png')
                       )
                     ),
 
-                    const SizedBox(height: 10,),
+                    SizedBox(height: 10.r,),
 
                     Text(
                       "Natural na sakuna",
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 12.r,
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).colorScheme.outline, 
                       ),
@@ -72,7 +73,7 @@ class InfographicsSection extends StatelessWidget {
                   ],
                 ),
     
-                const SizedBox(width: 10,),
+                SizedBox(width: 10.r,),
             
                 Column(
                   children: [
@@ -82,30 +83,30 @@ class InfographicsSection extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).popAndPushNamed('/manmadeinfo');
                       },
-                      height: 100,
-                      minWidth: 150,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15))
+                      height: 100.r,
+                      minWidth: 145.r,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.r))
                       ),
                       color: Theme.of(context).colorScheme.primary,
                       splashColor: const Color(0x80FEAE49),
                       elevation: 3,
-                      child: const CircleAvatar(
-                        radius: 25,
+                      child: CircleAvatar(
+                        radius: 25.r,
                         backgroundColor: Colors.white54,
                         child: Image(
-                          width: 55,
-                          image: AssetImage('assets/images/dashboard/manmade.png')
+                          width: 55.r,
+                          image: const AssetImage('assets/images/dashboard/manmade.png')
                         ),
                       )
                     ),
 
-                    const SizedBox(height: 10,),
+                    SizedBox(height: 10.r,),
 
                     Text(
                       "Kalamidad na ubra it tawo",
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 12.r,
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).colorScheme.outline, 
                       ),
@@ -134,22 +135,22 @@ class UtilitySection extends StatelessWidget {
   Widget build(BuildContext context) {
     //Container of Utility Section
     return Container(
-      height: 515,
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.fromLTRB(9, 15, 9, 9),
-      decoration: const BoxDecoration(
-        color:  Color(0x4D57BEE6),
-        borderRadius: BorderRadius.all(Radius.circular(18 ))
+      height: 515.r,
+      padding: const EdgeInsets.all(10).r,
+      margin: const EdgeInsets.fromLTRB(9, 15, 9, 9).r,
+      decoration: BoxDecoration(
+        color:  const Color(0x4D57BEE6),
+        borderRadius: BorderRadius.all(Radius.circular(18.r))
       ),
       child: Column(
         children: [
           Container(
             alignment: Alignment.topLeft,
-            margin: const EdgeInsets.fromLTRB(9, 3, 9, 15),
+            margin: const EdgeInsets.fromLTRB(9, 3, 9, 15).r,
             child: Text(
               "Utility",
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 20.r,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).colorScheme.outline, 
               ),

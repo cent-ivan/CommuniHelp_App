@@ -1,6 +1,7 @@
 //Emergency Hotline Body
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Emergency_Page/emergency_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmergencyNumbers extends StatelessWidget {
   const EmergencyNumbers({
@@ -18,9 +19,9 @@ class EmergencyNumbers extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(13),
+        padding: const EdgeInsets.all(13).r,
         child: Container(
-          height: 700 + (numberOfMDRRMO.toDouble() * 5) * ((numberOfAmbulance.toDouble() * 5) + (numberOfPolice.toDouble() * 10)),
+          height: (700 + (numberOfMDRRMO.toDouble() * 5) * ((numberOfAmbulance.toDouble() * 5) + (numberOfPolice.toDouble() * 10))).r,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -29,15 +30,15 @@ class EmergencyNumbers extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.all(Radius.circular(15))
+                  borderRadius: BorderRadius.all(Radius.circular(15.r))
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10).r,
                   child: Text(
                     "<Municipality here>",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
-                      fontSize: 16,
+                      fontSize: 16.r,
                       fontWeight: FontWeight.w500
                     ),
                   ),
@@ -45,7 +46,7 @@ class EmergencyNumbers extends StatelessWidget {
               ),
                   
                   
-              const SizedBox(height: 15,),
+              SizedBox(height: 15.r,),
     
               //MDDRMO Title
               Container(
@@ -53,11 +54,11 @@ class EmergencyNumbers extends StatelessWidget {
                   children: [
                     Container(
                       alignment: Alignment.topLeft,
-                      margin: const EdgeInsets.fromLTRB(9, 25, 9, 10),
+                      margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                       child: Text(
                         "MDDRMO Rescuers",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 20.r,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.outline, 
                         ),
@@ -66,7 +67,7 @@ class EmergencyNumbers extends StatelessWidget {
                         
                     //MDRRMO Number
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15.r),
                       child: EmergencyContacts(numberOfContacts: numberOfMDRRMO,color: const Color(0x4DFEAE49),)
                     ),
                   ],
@@ -77,11 +78,11 @@ class EmergencyNumbers extends StatelessWidget {
               //Ambulance Title
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(9, 25, 9, 10),
+                margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                 child: Text(
                   "Numero it Ambulansya",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 20.r,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.outline, 
                   ),
@@ -90,21 +91,21 @@ class EmergencyNumbers extends StatelessWidget {
                   
               //Ambulance number
               ClipRRect(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15.r),
                 child: EmergencyContacts(numberOfContacts: numberOfAmbulance, color: Theme.of(context).colorScheme.primary, )
               ),
     
 
-              const SizedBox(height: 10,),
+              SizedBox(height: 10.r,),
                   
               //Police Title
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(9, 25, 9, 10),
+                margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                 child: Text(
                   "Numero it Pulisya",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 20.r,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.outline, 
                   ),
@@ -113,7 +114,7 @@ class EmergencyNumbers extends StatelessWidget {
                   
               //Police number
               ClipRRect(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15).r,
                 child: EmergencyContacts(numberOfContacts: numberOfPolice, color: const Color(0x4D57BEE6), )
               ),
     

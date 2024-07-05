@@ -3,6 +3,7 @@ import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Contacts_Page/contact
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Dashboard_Page/dashboard_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeBase extends StatefulWidget {
   const HomeBase({super.key});
@@ -40,15 +41,15 @@ class _HomeBaseState extends State<HomeBase> {
 
       //BASE BOTTOM APPBAR 
       bottomNavigationBar: BottomAppBar(
-        padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-        height: 58,
-        elevation: 5,
+        padding: EdgeInsets.fromLTRB(5, 5, 5, 5).r,
+        height: 58.r,
+        elevation: 5.r,
         color: Theme.of(context).colorScheme.primary,
         shape: const CircularNotchedRectangle(),
-        notchMargin: 5,
+        notchMargin: 5.r,
         child: Container(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-          height: 40,
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0).r,
+          height: 40.r,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -58,7 +59,7 @@ class _HomeBaseState extends State<HomeBase> {
                 children: [
                   //Home Button
                   MaterialButton(
-                    minWidth: 25,
+                    minWidth: 25.r,
                     onPressed: () {
                       setState(() {
                         _currentIndex = 0;
@@ -72,7 +73,7 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/Home.png'),
                             color: _currentIndex == 0? Theme.of(context).colorScheme.outline : Colors.grey,
-                            width: _currentIndex == 0 ? 30 : 20,
+                            width: _currentIndex == 0 ? 30.r : 20.r,
                           ),
                         ),
        
@@ -84,7 +85,7 @@ class _HomeBaseState extends State<HomeBase> {
                             style: TextStyle(
                               color: _currentIndex ==  0? Theme.of(context).colorScheme.outline : Colors.grey,
                               fontWeight: _currentIndex == 0? FontWeight.bold : FontWeight.normal,
-                              fontSize: 12
+                              fontSize: 12.r
                             ),
                           ),
                         )
@@ -92,11 +93,11 @@ class _HomeBaseState extends State<HomeBase> {
                     ),
                   ), //Home Button
       
-                  const SizedBox(width: 5,),
+                  SizedBox(width: 5.r,),
       
                   //Contacts Button
                   MaterialButton(
-                    minWidth: 25,
+                    minWidth: 2.r,
                     onPressed: () {
                       setState(() {
                         _currentIndex = 1;
@@ -110,7 +111,7 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/FindMale.png'),
                             color: _currentIndex == 1? Theme.of(context).colorScheme.outline : Colors.grey,
-                            width: _currentIndex == 1 ? 30 : 20,
+                            width: _currentIndex == 1 ? 30.r : 18.r,
                           ),
                         ),
       
@@ -121,7 +122,7 @@ class _HomeBaseState extends State<HomeBase> {
                             style: TextStyle(
                               color: _currentIndex == 1 ? Theme.of(context).colorScheme.outline : Colors.grey,
                               fontWeight: _currentIndex == 1? FontWeight.bold : FontWeight.normal,
-                              fontSize: 12
+                              fontSize: 12.r
                             ),
                           ),
                         )
@@ -139,7 +140,7 @@ class _HomeBaseState extends State<HomeBase> {
                 children: [
                   //Community Button
                   MaterialButton(
-                    minWidth: 20,
+                    minWidth: 20.r,
                     onPressed: () {
                       setState(() {
                         _currentIndex = 2;
@@ -152,7 +153,7 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/People.png'),
                             color: _currentIndex == 2? Theme.of(context).colorScheme.outline : Colors.grey,
-                            width: _currentIndex == 2 ? 30 : 20,
+                            width: _currentIndex == 2 ? 30.r : 20.r,
                           ),
                         ),
       
@@ -163,7 +164,7 @@ class _HomeBaseState extends State<HomeBase> {
                             style: TextStyle(
                               color: _currentIndex == 2 ? Theme.of(context).colorScheme.outline: Colors.grey,
                               fontWeight: _currentIndex == 2? FontWeight.bold : FontWeight.normal,
-                              fontSize: 12
+                              fontSize: 12.r
                             ),
                           ),
                         )
@@ -176,7 +177,7 @@ class _HomeBaseState extends State<HomeBase> {
       
                   //Profile Button
                   MaterialButton(
-                    minWidth: 20,
+                    minWidth: 20.r,
                     onPressed: () {
                       setState(() {
                         _currentIndex = 3;
@@ -190,7 +191,7 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/Profile.png'),
                             color: _currentIndex == 3? Theme.of(context).colorScheme.outline : Colors.grey,
-                            width: _currentIndex == 3 ? 30 : 20,
+                            width: _currentIndex == 3 ? 30.r : 20.r,
                           ),
                         ),
       
@@ -202,7 +203,7 @@ class _HomeBaseState extends State<HomeBase> {
                             style: TextStyle(
                               color: _currentIndex == 3 ? Theme.of(context).colorScheme.outline : Colors.grey,
                               fontWeight: _currentIndex == 3? FontWeight.bold : FontWeight.normal,
-                              fontSize: 12
+                              fontSize: 12.r
                             ),
                           ),
                         )
@@ -242,11 +243,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
           colors: [Theme.of(context).colorScheme.outline, const Color(0xFFFEAE49),   const Color(0xFF57BEE6)],
         ).createShader(bounds),
 
-        child: const Text(
+        child: Text(
           "CommuniHelp",
           style: TextStyle(
             color: Colors.white,
-            fontSize: 28,
+            fontSize: 28.r,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -258,7 +259,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
       //drawer
       leading: IconButton(
         icon: const Icon(Icons.menu_rounded),
-        iconSize: 27,
+        iconSize: 27.r,
         color: Theme.of(context).colorScheme.outline,
         onPressed: () {
           Scaffold.of(context).openDrawer();
@@ -273,7 +274,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
 
           }, 
           icon: const Icon(Icons.notifications),
-          iconSize: 30,
+          iconSize: 30.r,
           color: Theme.of(context).colorScheme.outline,
         ),
       ],
@@ -281,7 +282,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   }
   
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight.r);
 }
 
 
@@ -300,9 +301,9 @@ class BaseDrawer extends StatelessWidget {
       child: Container(
         child: ListView(
           children: [
-            const DrawerHeader(
-              padding: EdgeInsets.fromLTRB(9, 9, 9, 3),
-              child: Center(
+            DrawerHeader(
+              padding: EdgeInsets.fromLTRB(9, 9, 9, 3).r,
+              child: const Center(
                 child: Image(
                   image: AssetImage('assets/images/logo/communiHelpLogo.png'),
                 ),
@@ -489,16 +490,22 @@ class BaseFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      elevation: 0,
-      shape: const CircleBorder(),
-      onPressed: () {
-        Navigator.pushNamed(context, '/emergency');
-      },
-      backgroundColor: const Color(0xFFFEAE49),
-      foregroundColor: Colors.white,
-      splashColor: Colors.redAccent,
-      child: const Icon(Icons.call),
+    return SizedBox.fromSize(
+      size: Size.square(50.r),
+      child: FloatingActionButton(
+        elevation: 0,
+        shape: const CircleBorder(),
+        onPressed: () {
+          Navigator.pushNamed(context, '/emergency');
+        },
+        backgroundColor: const Color(0xFFFEAE49),
+        foregroundColor: Colors.white,
+        splashColor: Colors.redAccent,
+        child: Icon(
+          Icons.call,
+          size: 25.r,
+        ),
+      ),
     );
   }
 }
