@@ -342,7 +342,7 @@ class BaseDrawer extends StatelessWidget {
                             ),
                           ),
                           onPressed: (){
-                            Navigator.pushNamed(context, '/home');
+                            Navigator.popAndPushNamed(context, '/home');
                           },
                         )
                       ],
