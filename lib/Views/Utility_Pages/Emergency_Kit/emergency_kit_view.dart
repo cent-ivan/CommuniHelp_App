@@ -4,7 +4,9 @@
 
 //see the design in the figma link
 //NOTE: pre-load the items stated in the design in the list
+//when putting sizes in double data type add `.r` at the end Ex: 13.r/ EdgeInsets.all(13).r for paddings
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmergencyKitView extends StatefulWidget {
   const EmergencyKitView({super.key});
@@ -21,17 +23,17 @@ class _EmergencyKitViewState extends State<EmergencyKitView> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        elevation: 1,
+        elevation: 1.r,
         title: ShaderMask(
           shaderCallback: (bounds) => LinearGradient(
             colors: [Theme.of(context).colorScheme.outline, const Color(0x80FEAE49),   const Color(0xFF57BEE6)],
           ).createShader(bounds),
 
-          child: const Text(
+          child: Text(
             "CommuniHelp",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 25,
+              fontSize: 25.r,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -39,7 +41,7 @@ class _EmergencyKitViewState extends State<EmergencyKitView> {
 
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
-          iconSize: 20,
+          iconSize: 20.r,
           onPressed: () {
             Navigator.popAndPushNamed(context, '/home');
           },
