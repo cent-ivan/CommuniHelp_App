@@ -44,7 +44,7 @@ class InfographicsSection extends StatelessWidget {
                     //Natural Disaster Button
                     MaterialButton(
                       onPressed: () {
-                        Navigator.of(context).popAndPushNamed('/naturalinfo');
+                        Navigator.of(context).pushNamed('/naturalinfo');
                       },
                       height: 100.r,
                       minWidth: 145.r,
@@ -81,7 +81,7 @@ class InfographicsSection extends StatelessWidget {
                     //Man-made Disaster Button
                     MaterialButton(
                       onPressed: () {
-                        Navigator.of(context).popAndPushNamed('/manmadeinfo');
+                        Navigator.of(context).pushNamed('/manmadeinfo');
                       },
                       height: 100.r,
                       minWidth: 145.r,
