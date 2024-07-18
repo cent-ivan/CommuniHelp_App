@@ -10,9 +10,13 @@ class CommunityView extends StatefulWidget {
 class _CommunityViewState extends State<CommunityView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Community"),
+    return const PopScope(
+      canPop: false,
+      child: Scaffold(
+        key: PageStorageKey<String>('CommunityView'),
+        body: Center(
+          child: Text("Community"),
+        ),
       ),
     );
   }
