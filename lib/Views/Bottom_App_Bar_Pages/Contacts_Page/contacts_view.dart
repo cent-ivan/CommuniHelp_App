@@ -16,17 +16,20 @@ class ContactsView extends StatefulWidget {
 class _ContactsViewState extends State<ContactsView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(13).r,
-        child: Container(
-          child: const Text("Enter your code here:"), //remove the text widget
-          
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(13).r,
+          child: Container(
+            child: const Text("Enter your code here:"), //remove the text widget
+            
+          ),
         ),
+      
+      
       ),
-
-
     );
   }
 }

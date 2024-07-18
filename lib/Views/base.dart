@@ -26,9 +26,9 @@ class _HomeBaseState extends State<HomeBase> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  const BaseAppBar(),
+      appBar:  const AppBarBase(),
 
-      drawer: const BaseDrawer(),
+      drawer: const DrawerBase(),
 
       body: PageStorage(
         bucket: bucket,
@@ -36,11 +36,11 @@ class _HomeBaseState extends State<HomeBase> {
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: const BaseFloatingActionButton(),
+      floatingActionButton: const FloatingActionButtonBase(),
 
-      //BASE BOTTOM APPBAR 
+      //BOTTOM APPBAR BASE
       bottomNavigationBar: BottomAppBar(
-        padding: EdgeInsets.fromLTRB(5, 5, 5, 5).r,
+        padding: const EdgeInsets.fromLTRB(5, 5, 5, 5).r,
         height: 58.r,
         elevation: 5.r,
         color: Theme.of(context).colorScheme.primary,
@@ -228,9 +228,9 @@ class _HomeBaseState extends State<HomeBase> {
 
 
 //----------------------------------------------------------------------------------------
-//BASE APP BAR
-class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
-  const BaseAppBar({
+//APP BAR BASE 
+class AppBarBase extends StatelessWidget implements PreferredSizeWidget{
+  const AppBarBase({
     super.key,
   });
 
@@ -262,7 +262,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
         color: Theme.of(context).colorScheme.outline,
         onPressed: () {
           Scaffold.of(context).openDrawer();
-        },
+        }
       ),
 
 
@@ -285,10 +285,10 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
 }
 
 
-
-//BASE DRAWER WIDGET
-class BaseDrawer extends StatelessWidget {
-  const BaseDrawer({
+//--------------------------------------------------------------------------------------
+//DRAWER WIDGET BASE
+class DrawerBase extends StatelessWidget {
+  const DrawerBase({
     super.key,
   });
 
@@ -297,184 +297,190 @@ class BaseDrawer extends StatelessWidget {
     return Drawer(
       elevation: 0,
       backgroundColor: Theme.of(context).colorScheme.surface,
-      child: Container(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              padding: EdgeInsets.fromLTRB(9, 9, 9, 3).r,
-              child: const Center(
-                child: Image(
-                  image: AssetImage('assets/images/logo/communiHelpLogo.png'),
+      child: ListView(
+        children: [
+          DrawerHeader(
+            padding: const EdgeInsets.fromLTRB(9, 9, 9, 3).r,
+            child: const Center(
+              child: Image(
+                image: AssetImage('assets/images/logo/communiHelpLogo.png'),
+              ),
+            ),
+          ),
+      
+          //Drawer contents
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 9, 3),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+      
+                Container( 
+                  margin: const EdgeInsets.only(bottom: 2), 
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.home_filled), 
+                        iconSize: 25,
+                        color: Theme.of(context).colorScheme.outline,
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/home',
+                            (Route<dynamic> route) => false,
+                          );
+                        },
+                      ),
+      
+                      const SizedBox( width: 15,),
+      
+                      TextButton(
+                        child: Text(
+                          "Home",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                        onPressed: (){
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/home',
+                            (Route<dynamic> route) => false,
+                          );
+                        },
+                      )
+                    ],
+                  )
                 ),
-              ),
+      
+                Container( 
+                  margin: const EdgeInsets.only(bottom: 2), 
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.notification_important), 
+                        iconSize: 25,
+                        color: Theme.of(context).colorScheme.outline,
+                        onPressed: () {},
+                      ),
+                      
+                      const SizedBox( width: 15,),
+      
+                      TextButton(
+                        child: Text(
+                          "Notifactions",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                        onPressed: (){
+      
+                        },
+                      )
+                    ],
+                  )
+                ),
+      
+                Container( 
+                  margin: const EdgeInsets.only(bottom: 2), 
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.privacy_tip), 
+                        iconSize: 25,
+                        color: Theme.of(context).colorScheme.outline,
+                        onPressed: () {},
+                      ),
+                      
+                      const SizedBox( width: 15,),
+      
+                      TextButton(
+                        child: Text(
+                          "Privacy Policy",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                        onPressed: () {
+                          
+                        },
+                      )
+                    ],
+                  )
+                ),
+      
+                Container( 
+                  margin: const EdgeInsets.only(bottom: 2), 
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.share), 
+                        iconSize: 25,
+                        color: Theme.of(context).colorScheme.outline,
+                        onPressed: () {},
+                      ),
+                      
+                      const SizedBox( width: 15,),
+      
+                      TextButton(
+                        child: Text(
+                          "Share App",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                        onPressed: (){
+      
+                        },
+                      )
+                    ],
+                  )
+                ),
+      
+                Container( 
+                  margin: const EdgeInsets.only(bottom: 2), 
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.reviews_sharp), 
+                        iconSize: 25,
+                        color: Theme.of(context).colorScheme.outline,
+                        onPressed: () {},
+                      ),
+      
+                      const SizedBox( width: 15,),
+      
+                      TextButton(
+                        child: Text(
+                          "Rate Us",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                        onPressed: (){
+      
+                        },
+                      )
+                    ],
+                  )
+                ),
+      
+              ],
             ),
-
-            //Drawer contents
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 9, 3),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  Container( 
-                    margin: const EdgeInsets.only(bottom: 2), 
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.home_filled), 
-                          iconSize: 25,
-                          color: Theme.of(context).colorScheme.outline,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-
-                        const SizedBox( width: 15,),
-
-                        TextButton(
-                          child: Text(
-                            "Home",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
-                          ),
-                          onPressed: (){
-                            Scaffold.of(context).closeDrawer();
-                          },
-                        )
-                      ],
-                    )
-                  ),
-
-                  Container( 
-                    margin: const EdgeInsets.only(bottom: 2), 
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.notification_important), 
-                          iconSize: 25,
-                          color: Theme.of(context).colorScheme.outline,
-                          onPressed: () {},
-                        ),
-                        
-                        const SizedBox( width: 15,),
-
-                        TextButton(
-                          child: Text(
-                            "Notifactions",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
-                          ),
-                          onPressed: (){
-
-                          },
-                        )
-                      ],
-                    )
-                  ),
-
-                  Container( 
-                    margin: const EdgeInsets.only(bottom: 2), 
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.privacy_tip), 
-                          iconSize: 25,
-                          color: Theme.of(context).colorScheme.outline,
-                          onPressed: () {},
-                        ),
-                        
-                        const SizedBox( width: 15,),
-
-                        TextButton(
-                          child: Text(
-                            "Privacy Policy",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
-                          ),
-                          onPressed: () {
-                            
-                          },
-                        )
-                      ],
-                    )
-                  ),
-
-                  Container( 
-                    margin: const EdgeInsets.only(bottom: 2), 
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.share), 
-                          iconSize: 25,
-                          color: Theme.of(context).colorScheme.outline,
-                          onPressed: () {},
-                        ),
-                        
-                        const SizedBox( width: 15,),
-
-                        TextButton(
-                          child: Text(
-                            "Share App",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
-                          ),
-                          onPressed: (){
-
-                          },
-                        )
-                      ],
-                    )
-                  ),
-
-                  Container( 
-                    margin: const EdgeInsets.only(bottom: 2), 
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.reviews_sharp), 
-                          iconSize: 25,
-                          color: Theme.of(context).colorScheme.outline,
-                          onPressed: () {},
-                        ),
-
-                        const SizedBox( width: 15,),
-
-                        TextButton(
-                          child: Text(
-                            "Rate Us",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
-                          ),
-                          onPressed: (){
-
-                          },
-                        )
-                      ],
-                    )
-                  ),
-
-                ],
-              ),
-            ),
-
-
-          ],
-        ),
+          ),
+      
+      
+        ],
       ),
     );
   }
@@ -482,8 +488,8 @@ class BaseDrawer extends StatelessWidget {
 
 
 //BASE FLOATING ACTION BUTTON
-class BaseFloatingActionButton extends StatelessWidget {
-  const BaseFloatingActionButton({
+class FloatingActionButtonBase extends StatelessWidget {
+  const FloatingActionButtonBase({
     super.key,
   });
 
