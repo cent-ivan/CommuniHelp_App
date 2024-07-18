@@ -325,7 +325,7 @@ class BaseDrawer extends StatelessWidget {
                           iconSize: 25,
                           color: Theme.of(context).colorScheme.outline,
                           onPressed: () {
-                            Navigator.pushNamed(context, '/home');
+                            Navigator.pop(context);
                           },
                         ),
 
@@ -341,7 +341,7 @@ class BaseDrawer extends StatelessWidget {
                             ),
                           ),
                           onPressed: (){
-                            Navigator.popAndPushNamed(context, '/home');
+                            Scaffold.of(context).closeDrawer();
                           },
                         )
                       ],
