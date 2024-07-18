@@ -26,6 +26,7 @@ class _DashboardViewState extends State<DashboardView> {
               //ANNOUNCEMENT SECTION
               const AnnouncementSection(),
 
+
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(9, 28, 9, 9).r,
@@ -39,8 +40,10 @@ class _DashboardViewState extends State<DashboardView> {
                 ),
               ),
 
+
               //INFOGRAPHICS SECTION
               const InfographicsSection(), //Dashboard buttons
+
 
               //UTILITY SECTION
               const UtilitySection()
