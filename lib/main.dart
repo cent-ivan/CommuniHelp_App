@@ -22,7 +22,9 @@ void main() {
     DeviceOrientation.portraitDown
   ]);
   
-  runApp(const MainApp());
+  runApp(
+    const MainApp()
+  );
 }
 
 class MainApp extends StatelessWidget {
