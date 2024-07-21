@@ -176,36 +176,6 @@ class UtilityButtons extends StatelessWidget {
               )
             ),
         
-            MaterialButton(
-              onPressed: () {
-                Navigator.of(context).popAndPushNamed('/radio');
-              },
-              height: 80.r,
-              minWidth: 105.r,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25.r))
-              ),
-              color: Theme.of(context).colorScheme.primary,
-              splashColor: const Color(0x4D57BEE6),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image(
-                    width: 35.r,
-                    image: const AssetImage('assets/images/dashboard/radio.png')
-                  ),
-            
-                  Text(
-                  "Pamati it Radyo",
-                      style: TextStyle(
-                      fontSize: 12.r,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.outline, 
-                    ),
-                  ),
-                ],
-              )
-            ),
         
           ],
         ),
