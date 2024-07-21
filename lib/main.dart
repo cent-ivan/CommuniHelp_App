@@ -6,7 +6,6 @@ import 'package:communihelp_app/Views/Infographics/natural_disaster_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/News_Feed/news_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Emergency_Page/emergency_view.dart';
-import 'package:communihelp_app/Views/Utility_Pages/Radio_Page/radio_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Weather_Page/weather_view.dart';
 import 'package:communihelp_app/Views/base.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +47,7 @@ class MainApp extends StatelessWidget {
           '/newsfeed': (context) => const NewsView(),
           '/emergencykit': (context) => const EmergencyKitView(),
           '/weatherupdate': (context) => const WeatherView(),
-          '/evacuationfinder': (context) => const EvacautionFinderView(),
-          '/radio': (context) => const RadioView(),
+          '/evacuationfinder': (context) => const EvacautionFinderView()
         },
         theme: lightMode,
         darkTheme: darktMode,
