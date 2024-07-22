@@ -11,53 +11,49 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
+  
+
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      onPopInvoked: (didPop) {
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false); //if pushed in the home it removes prevoius screens
-      },
-
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.surface,//if dark mode const Color(0xFF3D424A)
-        body: SingleChildScrollView(
-          key: const PageStorageKey<String>('DashboardView'),
-          physics: const ClampingScrollPhysics(),
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(9, 15, 9, 0).r,
-            height: 1075.r,
-            child:  Column(
-              children: <Widget>[
-      
-                //ANNOUNCEMENT SECTION
-                const AnnouncementSection(),
-      
-      
-                Container(
-                  alignment: Alignment.topLeft,
-                  margin: const EdgeInsets.fromLTRB(9, 28, 9, 9).r,
-                  child: Text(
-                    "DASHBOARD",
-                    style: TextStyle(
-                      fontSize: 25.r,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.outline, 
-                    ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,//if dark mode const Color(0xFF3D424A)
+      body: SingleChildScrollView(
+        key: const PageStorageKey<String>('DashboardView'),
+        physics: const ClampingScrollPhysics(),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(9, 15, 9, 0).r,
+          height: 1075.r,
+          child:  Column(
+            children: <Widget>[
+    
+              //ANNOUNCEMENT SECTION
+              const AnnouncementSection(),
+    
+    
+              Container(
+                alignment: Alignment.topLeft,
+                margin: const EdgeInsets.fromLTRB(9, 28, 9, 9).r,
+                child: Text(
+                  "DASHBOARD",
+                  style: TextStyle(
+                    fontSize: 25.r,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.outline, 
                   ),
                 ),
-      
-      
-                //INFOGRAPHICS SECTION
-                const InfographicsSection(), //Dashboard buttons
-      
-      
-                //UTILITY SECTION
-                const UtilitySection()
-      
-      
-              ],
-            )
-          ),
+              ),
+    
+    
+              //INFOGRAPHICS SECTION
+              const InfographicsSection(), //Dashboard buttons
+    
+    
+              //UTILITY SECTION
+              const UtilitySection()
+    
+    
+            ],
+          )
         ),
       ),
     );
