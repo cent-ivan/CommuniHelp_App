@@ -35,10 +35,12 @@ class _WeatherViewState extends State<WeatherView> {
           icon: const Icon(Icons.arrow_back_ios_new),
           iconSize: 20,
           onPressed: () {
-            Navigator.popAndPushNamed(context, '/home');
+            Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
           },
         ),
       ),
+
+       body: Container(), //repalce code here
     );
   }
 }

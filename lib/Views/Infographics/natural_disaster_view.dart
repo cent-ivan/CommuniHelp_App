@@ -39,7 +39,7 @@ class NaturalAppBar extends StatelessWidget implements PreferredSizeWidget{
         icon: const Icon(Icons.arrow_back_ios_new),
         iconSize: 20.r,
         onPressed: () {
-          Navigator.popAndPushNamed(context, '/home');
+          Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
         },
       ),
       
