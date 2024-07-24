@@ -1,3 +1,4 @@
+import 'package:communihelp_app/ViewModels/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModels/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModels/theme.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Emergency_Kit/emergency_kit_view.dart';
@@ -27,6 +28,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: ((context) => EmergencyViewModel())),
+        ChangeNotifierProvider(create: ((context) => AnnouncementViewModel())),
       ],
       child: const MainApp(),
     )
