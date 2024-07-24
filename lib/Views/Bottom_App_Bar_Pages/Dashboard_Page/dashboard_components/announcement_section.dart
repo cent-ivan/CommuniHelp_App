@@ -1,5 +1,7 @@
+import 'package:communihelp_app/ViewModels/anouncement_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 //-----------------------------------------------------------------------------------------------
 //Announcement Section
 
@@ -13,7 +15,6 @@ class AnnouncementSection extends StatefulWidget {
 }
 
 class _AnnouncementSectionState extends State<AnnouncementSection> {
-  final int numOfAnnouncement = 2; //get total announcement in database
 
   @override
   Widget build(BuildContext context) {
@@ -38,59 +39,60 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
         SizedBox(
           width: 350.r,
           height: 150.r,
-          child: ListView.builder(
-            itemCount: numOfAnnouncement,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8).r,
-                child: Container(
-                  width: 280.r,
-                  height: 160.r,
+          child: Consumer<AnnouncementViewModel>(builder: (context, viewModel, child) => ListView.builder(
+              itemCount: viewModel.announcements.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return Padding(
                   padding: const EdgeInsets.all(8).r,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(const Radius.circular(9).r),
-                    gradient: LinearGradient(
-                      colors: [const Color(0xCCFEAE49), const Color(0x80FEC57C), Theme.of(context).colorScheme.surface, ], 
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      tileMode: TileMode.decal
+                  child: Container(
+                    width: 280.r,
+                    height: 160.r,
+                    padding: const EdgeInsets.all(8).r,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(const Radius.circular(9).r),
+                      gradient: LinearGradient(
+                        colors: [const Color(0xCCFEAE49), const Color(0x80FEC57C), Theme.of(context).colorScheme.surface, ], 
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        tileMode: TileMode.decal
+                      ),
                     ),
-                  ),
 
-                  //TODO: Change dummy text
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 155.r,
-                        margin: const EdgeInsets.only(bottom: 8).r,
-                        decoration: BoxDecoration(
-                          color: Colors.black26,
-                          borderRadius: BorderRadius.all(const Radius.circular(5).r)
-                        ),
-                        child: Text(
-                          "Nabas Announcement",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.r
+                    //TODO: Change dummy text
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 155.r,
+                          margin: const EdgeInsets.only(bottom: 8).r,
+                          decoration: BoxDecoration(
+                            color: Colors.black26,
+                            borderRadius: BorderRadius.all(const Radius.circular(5).r)
+                          ),
+                          child: Text(
+                            viewModel.announcements[index].title!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.r
+                            ),
                           ),
                         ),
-                      ),
 
-                      Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet sit amet leo sed tempor.",
-                        style: TextStyle(
-                          fontSize: 11.r
+                        Text(
+                          viewModel.announcements[index].content!,
+                          style: TextStyle(
+                            fontSize: 11.r
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }
-          ),
+                );
+              }
+            ),
+          )
         ),
       ],
       
