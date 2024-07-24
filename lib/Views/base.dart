@@ -314,7 +314,8 @@ class DrawerBase extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-      
+                
+                //Home
                 Container( 
                   margin: const EdgeInsets.only(bottom: 2), 
                   child: Row(
@@ -355,6 +356,8 @@ class DrawerBase extends StatelessWidget {
                   )
                 ),
       
+
+                //Notifications
                 Container( 
                   margin: const EdgeInsets.only(bottom: 2), 
                   child: Row(
@@ -385,6 +388,8 @@ class DrawerBase extends StatelessWidget {
                   )
                 ),
       
+
+                //Privacy Policy
                 Container( 
                   margin: const EdgeInsets.only(bottom: 2), 
                   child: Row(
@@ -414,7 +419,9 @@ class DrawerBase extends StatelessWidget {
                     ],
                   )
                 ),
-      
+
+
+                //Share App
                 Container( 
                   margin: const EdgeInsets.only(bottom: 2), 
                   child: Row(
@@ -445,6 +452,7 @@ class DrawerBase extends StatelessWidget {
                   )
                 ),
       
+                //Rate Us 
                 Container( 
                   margin: const EdgeInsets.only(bottom: 2), 
                   child: Row(
@@ -474,7 +482,45 @@ class DrawerBase extends StatelessWidget {
                     ],
                   )
                 ),
-      
+
+
+                const SizedBox( height: 50,),
+
+                //Logout
+                Container(
+                  width: 155,
+                  margin: const EdgeInsets.only(left: 15),
+                  child: MaterialButton(
+                    elevation: 1,
+                    color: const Color(0xE6FEAE49),
+                    onPressed: () {
+                  
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.logout_rounded), 
+                          iconSize: 28,
+                          color: Theme.of(context).colorScheme.outline,
+                          onPressed: () {},
+                        ),
+                        
+                        const SizedBox( width: 5,),
+                  
+                        Text(
+                            "Logout",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+
               ],
             ),
           ),
