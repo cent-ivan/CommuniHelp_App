@@ -1,126 +1,238 @@
 //Emergency Hotline Body
-import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Emergency_Page/emergency_view.dart';
+import 'package:communihelp_app/ViewModels/emergency_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
-class EmergencyNumbers extends StatelessWidget {
-  const EmergencyNumbers({
-    super.key,
-    required this.numberOfMDRRMO,
-    required this.numberOfAmbulance,
-    required this.numberOfPolice,
-  });
 
-  final int numberOfMDRRMO;
-  final int numberOfAmbulance;
-  final int numberOfPolice;
+class MDRRMOButton extends StatefulWidget {
+  final int numberOfContacts;
+  final Color? color;
+  const MDRRMOButton({super.key, required this.numberOfContacts, required this.color});
 
   @override
+  State<MDRRMOButton> createState() => _MDRRMOButtonState();
+}
+
+class _MDRRMOButtonState extends State<MDRRMOButton> {
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(13).r,
-        child: Container(
-          height: (700 + (numberOfMDRRMO.toDouble() * 5) * ((numberOfAmbulance.toDouble() * 5) + (numberOfPolice.toDouble() * 10))).r,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              
-              //Municipality Tag
-              Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.all(Radius.circular(15.r))
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10).r,
-                  child: Text(
-                    "<Municipality here>",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.outline,
-                      fontSize: 16.r,
-                      fontWeight: FontWeight.w500
-                    ),
+    return SizedBox(
+      height: (110 * widget.numberOfContacts.toDouble()).r,
+      child: Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => ListView.builder(
+          itemCount: viewModel.mddrmoContacts.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(8).r,
+              child: MaterialButton(
+                  onPressed: () {
+                  },
+                  height: 100.r,
+                  minWidth: 340.r,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.r))
                   ),
-                ),
-              ),
-                  
-                  
-              SizedBox(height: 15.r,),
-    
-              //MDDRMO Title
-              Container(
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.topLeft,
-                      margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
-                      child: Text(
-                        "MDDRMO Rescuers",
-                        style: TextStyle(
-                          fontSize: 20.r,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.outline, 
+                  color: widget.color,
+                  splashColor: const Color(0x80FEAE49),
+                  elevation: 0.r,
+                  child: Row(
+                    children: [
+                      //TODO: Change image, number and name of hotline
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(50, 0, 50, 0).r,
+                        child: CircleAvatar(
+                          radius: 25.r,
+                          backgroundImage: const AssetImage('assets/images/rescuer.png'),
                         ),
                       ),
-                    ),
-                        
-                    //MDRRMO Number
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15.r),
-                      child: EmergencyContacts(numberOfContacts: numberOfMDRRMO,color: const Color(0x4DFEAE49),)
-                    ),
-                  ],
-                ),
-              ),
-                  
-                  
-              //Ambulance Title
-              Container(
-                alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
-                child: Text(
-                  "Numero it Ambulansya",
-                  style: TextStyle(
-                    fontSize: 20.r,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.outline, 
-                  ),
-                ),
-              ),
-                  
-              //Ambulance number
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.r),
-                child: EmergencyContacts(numberOfContacts: numberOfAmbulance, color: Theme.of(context).colorScheme.primary, )
-              ),
-    
 
-              SizedBox(height: 10.r,),
-                  
-              //Police Title
-              Container(
-                alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
-                child: Text(
-                  "Numero it Pulisya",
-                  style: TextStyle(
-                    fontSize: 20.r,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.outline, 
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              viewModel.mddrmoContacts[index].number!, //gets the name from the list
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.outline,
+                                fontSize: 16.r,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                        
+                            Text(
+                              viewModel.mddrmoContacts[index].contactName!, //gets the name from the list
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.outline,
+                                fontSize: 12.r,
+                                fontWeight: FontWeight.w500
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ),
               ),
-                  
-              //Police number
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15).r,
-                child: EmergencyContacts(numberOfContacts: numberOfPolice, color: const Color(0x4D57BEE6), )
+            );
+          }
+
+        )
+      ),
+    );
+  }
+}
+
+class AmbulanceButton extends StatefulWidget {
+  final int numberOfContacts;
+  final Color? color;
+  const AmbulanceButton({super.key, required this.numberOfContacts, required this.color});
+
+  @override
+  State<AmbulanceButton> createState() => _AmbulanceButtonState();
+}
+
+class _AmbulanceButtonState extends State<AmbulanceButton> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: (110 * widget.numberOfContacts.toDouble()).r,
+      child: Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => ListView.builder(
+          itemCount: widget.numberOfContacts,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(8).r,
+              child: MaterialButton(
+                  onPressed: () {},
+                  height: 100.r,
+                  minWidth: 350.r,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.r))
+                  ),
+                  color: widget.color,
+                  splashColor: const Color(0x80FEAE49),
+                  elevation: 0.r,
+                  child: Row(
+                    children: [
+                      //TODO: Change image, number and name of hotline
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(50, 0, 50, 0).r,
+                        child: CircleAvatar(
+                          radius: 25.r,
+                          backgroundImage: const AssetImage('assets/images/rescuer.png'),
+                        ),
+                      ),
+
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              viewModel.ambulanceContacts[index].number!, //gets the name from the list
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.outline,
+                                fontSize: 16.r,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                        
+                            Text(
+                              viewModel.ambulanceContacts[index].contactName!, //gets the name from the list
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.outline,
+                                fontSize: 12.r,
+                                fontWeight: FontWeight.w500
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
               ),
-    
-            ],
-          ),
-        ),
+            );
+          }
+
+        )
+      ),
+    );
+  }
+}
+
+
+class PoliceButton extends StatefulWidget {
+  final int numberOfContacts;
+  final Color? color;
+  const PoliceButton({super.key, required this.numberOfContacts, required this.color});
+
+  @override
+  State<PoliceButton> createState() => _PoliceButtonState();
+}
+
+class _PoliceButtonState extends State<PoliceButton> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: (110 * widget.numberOfContacts.toDouble()).r,
+      child: Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => ListView.builder(
+          itemCount: widget.numberOfContacts,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(8).r,
+              child: MaterialButton(
+                  onPressed: () {},
+                  height: 100.r,
+                  minWidth: 350.r,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.r))
+                  ),
+                  color: widget.color,
+                  splashColor: const Color(0x80FEAE49),
+                  elevation: 0.r,
+                  child: Row(
+                    children: [
+                      //TODO: Change image, number and name of hotline
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 50, 0).r,
+                        child: CircleAvatar(
+                          radius: 25.r,
+                          backgroundImage: const AssetImage('assets/images/rescuer.png'),
+                        ),
+                      ),
+
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              viewModel.policeContacts[index].number!, //gets the name from the list
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.outline,
+                                fontSize: 16.r,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                        
+                            Text(
+                              viewModel.policeContacts[index].contactName!, //gets the name from the list
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.outline,
+                                fontSize: 12.r,
+                                fontWeight: FontWeight.w500
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+              ),
+            );
+          }
+
+        )
       ),
     );
   }

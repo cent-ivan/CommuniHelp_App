@@ -1,6 +1,8 @@
+import 'package:communihelp_app/ViewModels/emergency_view_model.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Emergency_Page/emergency_components/emergency_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class EmergencyView extends StatefulWidget {
   const EmergencyView({super.key});
@@ -10,38 +12,18 @@ class EmergencyView extends StatefulWidget {
 }
 
 class _EmergencyViewState extends State<EmergencyView> {
-  final int numberOfMDRRMO = 2; //count in database here
-  final int numberOfAmbulance = 1;
-  final int numberOfPolice = 2;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: const EmergencyAppBar(),
+    return Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        appBar: const EmergencyAppBar(),
 
-      body: EmergencyNumbers(numberOfMDRRMO: numberOfMDRRMO, numberOfAmbulance: numberOfAmbulance, numberOfPolice: numberOfPolice),
-
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox.fromSize(
-        size: Size.square(55.r),
-        child: FloatingActionButton(
-          elevation: 0.r,
-          shape: const CircleBorder(),
-          backgroundColor: Colors.redAccent,
-          onPressed: () {
-            
-          },
-          child: Icon(
-            Icons.call,
-            size: 25.r,
-          ),
-        ),
-      ),
+        body: const EmergencyNumbers(),
+      )
     );
   }
 }
-
 
 
 
@@ -71,7 +53,7 @@ class EmergencyAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.arrow_back_ios_new),
           iconSize: 20.r,
           onPressed: () {
-            Navigator.popAndPushNamed(context, '/home');
+            Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
           },
         ),
       
@@ -82,72 +64,122 @@ class EmergencyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight.r);
 }
 
-class EmergencyContacts extends StatelessWidget {
-  final int numberOfContacts;
-  final Color? color;
-  const EmergencyContacts({super.key, required this.numberOfContacts, required this.color});
+
+class EmergencyNumbers extends StatefulWidget {
+  const EmergencyNumbers({super.key,});
+
+  @override
+  State<EmergencyNumbers> createState() => _EmergencyNumbersState();
+}
+
+class _EmergencyNumbersState extends State<EmergencyNumbers> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: (110 * numberOfContacts.toDouble()).r,
-      child: ListView.builder(
-        itemCount: numberOfContacts,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8).r,
-            child: MaterialButton(
-                onPressed: () {},
-                height: 100.r,
-                minWidth: 350.r,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.r))
-                ),
-                color: color,
-                splashColor: const Color(0x80FEAE49),
-                elevation: 0.r,
-                child: Row(
-                  children: [
-                    //TODO: Change image, number and name of hotline
-                    Container(
-                      padding: EdgeInsets.fromLTRB(50, 0, 50, 0).r,
-                      child: CircleAvatar(
-                        radius: 25.r,
-                        backgroundImage: const AssetImage('assets/images/rescuer.png'),
+    return Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(13).r,
+          child: SizedBox(
+            height: (700 + (viewModel.mddrmoContacts.length.toDouble() * 5) * ((viewModel.ambulanceContacts.length.toDouble() * 5) + (viewModel.policeContacts.length.toDouble() * 10))).r,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                
+                //Municipality Tag
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.all(Radius.circular(15.r))
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10).r,
+                    child: Text(
+                      viewModel.municipalityName,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.outline,
+                        fontSize: 16.r,
+                        fontWeight: FontWeight.w500
                       ),
                     ),
-
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "09***********",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.outline,
-                              fontSize: 16.r,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                      
-                          Text(
-                            "TNT - MDRRMO",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.outline,
-                              fontSize: 12.r,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
-                        ],
+                  ),
+                ),
+                    
+                    
+                SizedBox(height: 15.r,),
+      
+                //MDDRMO Title
+                Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.topLeft,
+                      margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
+                      child: Text(
+                        "MDDRMO Rescuers",
+                        style: TextStyle(
+                          fontSize: 20.r,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.outline, 
+                        ),
                       ),
+                    ),
+                        
+                    //MDRRMO Number
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15.r),
+                      child: MDRRMOButton(numberOfContacts: viewModel.mddrmoContacts.length,color: const Color(0x4DFEAE49),)
                     ),
                   ],
                 ),
+                    
+                    
+                //Ambulance Title
+                Container(
+                  alignment: Alignment.topLeft,
+                  margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
+                  child: Text(
+                    "Numero it Ambulansya",
+                    style: TextStyle(
+                      fontSize: 20.r,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.outline, 
+                    ),
+                  ),
+                ),
+                    
+                //Ambulance number
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15.r),
+                  child: AmbulanceButton(numberOfContacts: viewModel.ambulanceContacts.length, color: Theme.of(context).colorScheme.primary, )
+                ),
+      
+
+                SizedBox(height: 10.r,),
+                    
+                //Police Title
+                Container(
+                  alignment: Alignment.topLeft,
+                  margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
+                  child: Text(
+                    "Numero it Pulisya",
+                    style: TextStyle(
+                      fontSize: 20.r,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.outline, 
+                    ),
+                  ),
+                ),
+                    
+                //Police number
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15).r,
+                  child: PoliceButton(numberOfContacts: viewModel.policeContacts.length, color: const Color(0x4D57BEE6), )
+                ),
+      
+              ],
             ),
-          );
-        }
-      ),
+          ),
+        ),
+      )
     );
   }
 }

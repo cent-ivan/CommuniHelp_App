@@ -1,3 +1,4 @@
+import 'package:communihelp_app/ViewModels/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModels/theme.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Emergency_Kit/emergency_kit_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Evacuation_Finder/evacaution_finder_view.dart';
@@ -11,6 +12,7 @@ import 'package:communihelp_app/Views/base.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +24,12 @@ void main() {
   ]);
   
   runApp(
-    const MainApp()
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: ((context) => EmergencyViewModel())),
+      ],
+      child: const MainApp(),
+    )
   );
 }
 
