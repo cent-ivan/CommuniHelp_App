@@ -26,6 +26,7 @@ flutter:
     - assets/images/dashboard/
     - assets/images/bottom_app_bar/
     - assets/images/logo/
+    - assets/images/background/
     - assets/images/
 
       # fonts:
