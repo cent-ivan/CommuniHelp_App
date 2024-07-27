@@ -47,7 +47,8 @@ class _LoginViewState extends State<LoginView> {
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),
                     ),
-        
+
+                    //Logo and title
                     Positioned(
                       top: 120.r,
                       child: Text(
