@@ -38,6 +38,7 @@ class _LoginViewState extends State<LoginView> {
             padding: const EdgeInsets.fromLTRB(8, 30, 8, 8).r,
             child: Column(
               children: [
+                //Logo and title
                 Stack(
                   alignment: Alignment.center,
                   children: [
