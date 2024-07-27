@@ -13,6 +13,12 @@ class _LoginViewState extends State<LoginView> {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
+  bool _isObscure =  true;
+
+  //controllers
+  final TextEditingController _numberController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,6 +130,7 @@ class _LoginViewState extends State<LoginView> {
 
                               //mobile number
                               TextFormField(
+                                controller: _numberController,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Mobile Number",
@@ -140,6 +147,8 @@ class _LoginViewState extends State<LoginView> {
 
                               //password
                               TextFormField(
+                                controller: _passwordController,
+                                obscureText: _isObscure,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Password",
@@ -148,7 +157,15 @@ class _LoginViewState extends State<LoginView> {
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
-                                  )
+                                  ),
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _isObscure = ! _isObscure;
+                                      });
+                                    },
+                                    icon: _isObscure ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off) ,
+                                  ) 
                                 ),
                               ),
 
