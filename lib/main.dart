@@ -2,6 +2,7 @@ import 'package:communihelp_app/ViewModels/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModels/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModels/theme.dart';
 import 'package:communihelp_app/Views/Login_Registration_Page/login_view.dart';
+import 'package:communihelp_app/Views/Login_Registration_Page/registration_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Emergency_Kit/emergency_kit_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Evacuation_Finder/evacaution_finder_view.dart';
 import 'package:communihelp_app/Views/Infographics/manmade_disaster_view.dart';
@@ -58,7 +59,8 @@ class MainApp extends StatelessWidget {
           '/emergencykit': (context) => const EmergencyKitView(),
           '/weatherupdate': (context) => const WeatherView(),
           '/evacuationfinder': (context) => const EvacautionFinderView(),
-          '/login': (context) => const LoginView()
+          '/login': (context) => const LoginView(),
+          '/register': (context) => const RegistrationView(),
         },
         theme: lightMode,
         darkTheme: darktMode,
