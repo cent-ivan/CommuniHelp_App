@@ -22,6 +22,7 @@ class _RegistrationViewState extends State<RegistrationView> {
   final String _barangayValue = "Unidos";
   String currentOption = options[0];
   final TextEditingController _contactController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -30,7 +31,7 @@ class _RegistrationViewState extends State<RegistrationView> {
       body: SingleChildScrollView(
         child: Container(
           width: 500.r,
-          height: 755.r,
+          height: 920.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/background/Register.jpg'),
@@ -80,7 +81,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                 //registration form container
                 Container(
-                  height: 460.r,
+                  height: 625.r,
                   width: 320.r,
                   decoration: BoxDecoration(
                     color: const Color(0x99FCFCFC),
@@ -128,16 +129,21 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
+
+                                validator: (value) {
+                                  if (value!.isEmpty){
+                                    return "Please enter name";
+                                  }
+                                  else{
+                                    return null;
+                                  }
+                                },
                               ),
 
-                              //age
+                              //Birthdate
                               TextFormField(
                                 controller: _ageController,
                                 cursorColor: const Color(0xFF3D424A),
-                                keyboardType: TextInputType.number, //accepts only intgers
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
                                 decoration: InputDecoration(
                                   hintText: "Age",
                                   enabledBorder: UnderlineInputBorder(
@@ -145,8 +151,27 @@ class _RegistrationViewState extends State<RegistrationView> {
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  ),
+
+                                  //Date picker
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+
+                                    }, 
+                                    icon: const Icon(Icons.date_range_outlined),
+                                    color: const Color(0xCC3D424A),
+                                    splashColor: const Color(0xFF3D424A),
                                   )
                                 ),
+
+                                validator: (value) {
+                                  if (value!.isEmpty){
+                                    return "Please enter birthdate";
+                                  }
+                                  else{
+                                    return null;
+                                  }
+                                },
                               ),
 
                               SizedBox(height: 10.r,),
@@ -185,7 +210,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                       setState(() {
                                         _municipalityValue = newValue!;
                                       });
-                                    }
+                                    }                    
                                   ),
 
                                   SizedBox(width: 50.r,),
@@ -278,6 +303,42 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
+
+                                validator: (value) {
+                                  if (value!.isEmpty){
+                                    return "Please enter contact";
+                                  }
+                                  else{
+                                    return null;
+                                  }
+                                },
+                              ),
+
+                              //email
+                              TextFormField(
+                                controller: _emailController,
+                                cursorColor: const Color(0xFF3D424A),
+                                decoration: InputDecoration(
+                                  hintText: "Email",
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  )
+                                ),
+
+                                validator: (value) {
+                                  if (value!.isEmpty){
+                                    return "Please enter an email";
+                                  }
+                                  else if (!value.contains('@')){
+                                    return "Enter a valid email";
+                                  }
+                                  else{
+                                    return null;
+                                  }
+                                },
                               ),
 
                               //password
@@ -293,9 +354,21 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
+
+                                validator: (value) {
+                                  if (value!.isEmpty){
+                                    return "Please enter password";
+                                  }
+                                  else if (value.length < 4) {
+                                    return "Password must be 6 characters or longer";
+                                  }
+                                  else{
+                                    return null;
+                                  }
+                                },
                               ),
 
-                              SizedBox(height: 25.r,),
+                              SizedBox(height: 35.r,),
 
                               //register button
                               Column(
@@ -305,7 +378,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     height: 50.r,
                                     minWidth: 100.r,
                                     onPressed: () {
-                                      
+                                      if (_formKey.currentState!.validate()){
+                                        //validated the text field and adds to the firebase, pass to register view model
+                                        _formKey.currentState!.save();
+                                      }
                                     },
                                     color: const Color(0xFF3D424A),
                                     child: Text(
