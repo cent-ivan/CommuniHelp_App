@@ -1,5 +1,6 @@
 import 'package:communihelp_app/ViewModels/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModels/emergency_view_model.dart';
+import 'package:communihelp_app/ViewModels/profile_view_model.dart';
 import 'package:communihelp_app/ViewModels/theme.dart';
 import 'package:communihelp_app/Views/Login_Registration_Page/login_view.dart';
 import 'package:communihelp_app/Views/Login_Registration_Page/registration_view.dart';
@@ -31,6 +32,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: ((context) => EmergencyViewModel())),
         ChangeNotifierProvider(create: ((context) => AnnouncementViewModel())),
+        ChangeNotifierProvider(create: ((context) => ProfileViewModel())),
       ],
       child: const MainApp(),
     )
