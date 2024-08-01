@@ -145,7 +145,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 controller: _ageController,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
-                                  hintText: "Age",
+                                  hintText: "Birthdate",
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
                                   ),
