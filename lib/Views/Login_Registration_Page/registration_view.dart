@@ -290,6 +290,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                               TextFormField(
                                 controller: _contactController,
                                 cursorColor: const Color(0xFF3D424A),
+                                maxLength: 11,
                                 keyboardType: TextInputType.number, //accepts only intgers
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly,
