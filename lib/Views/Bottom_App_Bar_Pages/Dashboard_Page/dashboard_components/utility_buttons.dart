@@ -205,7 +205,9 @@ class UtilityButtons extends StatelessWidget {
               ),
                  
               MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).popAndPushNamed('/report');
+                },
                 height: 80.r,
                 minWidth: 95.r,
                 shape: RoundedRectangleBorder(

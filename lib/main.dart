@@ -12,6 +12,7 @@ import 'package:communihelp_app/Views/Infographics/natural_disaster_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/News_Feed/news_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Emergency_Page/emergency_view.dart';
+import 'package:communihelp_app/Views/Utility_Pages/Report_Damage/report_damage_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Weather_Page/weather_view.dart';
 import 'package:communihelp_app/Views/base.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,7 @@ class MainApp extends StatelessWidget {
         home: const HomeBase(),
         routes: {
           '/home' : (context) => const HomeBase(),
+          '/evacuationfinder': (context) => const EvacautionFinderView(),
           '/profile' : (context) => const ProfileView(),
           '/emergency': (context) => const EmergencyView(),
           '/naturalinfo': (context) => const NaturalDisasterView(),
@@ -61,7 +63,7 @@ class MainApp extends StatelessWidget {
           '/newsfeed': (context) => const NewsView(),
           '/emergencykit': (context) => const EmergencyKitView(),
           '/weatherupdate': (context) => const WeatherView(),
-          '/evacuationfinder': (context) => const EvacautionFinderView(),
+          '/report': (context) => const ReportDamageView(),
           '/login': (context) => const LoginView(),
           '/register': (context) => const RegistrationView(),
           '/editprofile': (context) => const EditProfileView()
