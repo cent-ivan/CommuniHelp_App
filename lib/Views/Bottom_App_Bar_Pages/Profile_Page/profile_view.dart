@@ -24,7 +24,7 @@ class _ProfileViewState extends State<ProfileView> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           child: Container(
-            height: 785,
+            height: 795.r,
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 5).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,7 +212,7 @@ class _ProfileViewState extends State<ProfileView> {
 
                       //Contact Number
                       Text(
-                        "Contact Number",
+                        "Contact Details",
                         style: TextStyle(
                           color: const Color(0xFFFEAE49),
                           fontSize: 20.r,
@@ -222,6 +222,33 @@ class _ProfileViewState extends State<ProfileView> {
 
                       SizedBox(height: 10.r,),
 
+                      //Show Email address
+                      Text(
+                        "Email",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.outline,
+                          fontSize: 14.r,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+
+                      SizedBox(height: spaceBetweenLabel,),
+
+                      //Show Email Address
+                      Text(
+                        viewModel.profile.email!,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.outline,
+                          fontSize: 18.r,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1
+                        ),
+                      ),
+
+                      SizedBox(height: spaceBetweenDetails,),
+
+
+                      //Show Mobile number
                       Text(
                         "Mobile number",
                         style: TextStyle(

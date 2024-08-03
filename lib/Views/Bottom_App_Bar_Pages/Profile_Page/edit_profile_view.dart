@@ -19,9 +19,10 @@ class _EditProfileViewState extends State<EditProfileView> {
   //text field controllers
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdateController = TextEditingController();
-  final String _municipalityValue = "Nabas";
+  String _municipalityValue = "Nabas";
   String _barangayValue = "Unidos";
   String currentOption = options[0];
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _contactController = TextEditingController();
 
   double spaceBetweenDetails = 20.r;
@@ -50,7 +51,7 @@ class _EditProfileViewState extends State<EditProfileView> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           child: Container(
-            height: 785,
+            height: 895.r,
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 5).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,7 +343,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   ], 
                                   onChanged: (newValue) {
                                     setState(() {
-                                      _barangayValue = newValue!;
+                                      _municipalityValue = newValue!;
                                     });
                                   }                    
                                 ),
@@ -357,7 +358,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   
                         //Contact Number
                         Text(
-                          "Contact Number",
+                          "Contact Details",
                           style: TextStyle(
                             color: const Color(0xFFFEAE49),
                             fontSize: 20.r,
@@ -366,7 +367,51 @@ class _EditProfileViewState extends State<EditProfileView> {
                         ),
                   
                         SizedBox(height: 10.r,),
-                  
+
+                        Text(
+                          "Email",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.outline,
+                            fontSize: 14.r,
+                            fontWeight: FontWeight.w500
+                          ),
+                        ),
+
+                        SizedBox(height: spaceBetweenLabel,),
+
+                        //edit email
+                        TextFormField(
+                          controller: _emailController,
+                          cursorColor: const Color(0xFF3D424A),
+                          style: TextStyle(
+                            fontSize: 18.r
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Edit Email",
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                            )
+                          ),
+
+                          validator: (value) {
+                            if (value!.isEmpty){
+                              return "Please enter an email";
+                            }
+                            else if (!value.contains('@')){
+                              return "Enter a valid email";
+                            }
+                            else{
+                              return null;
+                            }
+                          },
+                        ),
+
+
+                        SizedBox(height: spaceBetweenDetails,),
+
                         Text(
                           "Mobile number",
                           style: TextStyle(
@@ -377,10 +422,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                         ),
                   
                         SizedBox(height: spaceBetweenLabel,),
-                  
+
+                        //edit contacts
                         TextFormField(
                           controller: _contactController,
                           cursorColor: const Color(0xFF3D424A),
+                          maxLength: 11,
                           style: TextStyle(
                             fontSize: 18.r
                           ),
@@ -405,10 +452,27 @@ class _EditProfileViewState extends State<EditProfileView> {
                         ),
                   
                         SizedBox(height: 35.r,),
-                  
-                        MaterialButton(
+
+                        //Save Button
+                        MaterialButton( 
                           onPressed: (){
-                            Navigator.pushReplacementNamed(context, '/profile');
+                            if (_formKey.currentState!.validate()){
+                              //validated the text field and adds to the firebase, pass to register view model
+                              _formKey.currentState!.save();
+
+                              //calls update
+                              viewModel.updateProfile(
+                                _nameController.text, 
+                                _birthdateController.text, 
+                                currentOption, 
+                                _barangayValue, 
+                                _municipalityValue, 
+                                _emailController.text,
+                                _contactController.text
+                                
+                              );
+                              Navigator.pushReplacementNamed(context, '/home');
+                            }
                           },
                           height: 50.r,
                           minWidth: 340.r,

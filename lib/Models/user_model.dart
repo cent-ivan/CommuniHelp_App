@@ -4,6 +4,7 @@ class UserModel {
   String? gender;
   String? barangay;
   String? municipality;
+  String? email;
   String? mobileNumber;
 
   UserModel({
@@ -12,6 +13,7 @@ class UserModel {
     required this.gender, 
     required this.barangay, 
     required this.municipality, 
+    required this.email,
     required this.mobileNumber
   });
 }
