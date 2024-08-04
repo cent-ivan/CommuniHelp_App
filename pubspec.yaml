@@ -25,6 +25,7 @@ flutter:
   assets:
     - assets/images/dashboard/
     - assets/images/infographics/
+    - assets/images/infographics/button_images/
     - assets/images/bottom_app_bar/
     - assets/images/logo/
     - assets/images/background/
