@@ -21,6 +21,7 @@ class UtilityButtons extends StatelessWidget {
           runSpacing: 10.r,
           alignment: WrapAlignment.center,
           children: [
+            //Evacuation Button
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).popAndPushNamed('/evacuationfinder');
@@ -53,7 +54,8 @@ class UtilityButtons extends StatelessWidget {
                 ],
               )
             ),
-                
+            
+            //News Button
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).popAndPushNamed('/newsfeed');
@@ -84,7 +86,8 @@ class UtilityButtons extends StatelessWidget {
                 ],
               )
             ),
-                
+
+            //Weather Button  
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).popAndPushNamed('/weatherupdate');
@@ -115,7 +118,8 @@ class UtilityButtons extends StatelessWidget {
                 ],
               )
             ),
-                
+            
+            //Emergency Kit Button
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).popAndPushNamed('/emergencykit');
@@ -147,6 +151,7 @@ class UtilityButtons extends StatelessWidget {
               )
             ),
         
+            //Flashlight button
             MaterialButton(
               onPressed: () {},
               height: 80.r,
@@ -203,7 +208,8 @@ class UtilityButtons extends StatelessWidget {
                     ),
                 ),
               ),
-                 
+              
+              //Report Button
               MaterialButton(
                 onPressed: () {
                   Navigator.of(context).popAndPushNamed('/report');
