@@ -34,11 +34,15 @@ class NaturalInfoButtons extends StatelessWidget {
             padding: EdgeInsets.all(10.r),
             child: Row(
               children: [
-                Image(
-                  image: const AssetImage("assets/images/infographics/button_images/Typhoon.png"),
-                  height: 40.r,
+                CircleAvatar(
+                  radius: 25.r,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  child: Image(
+                    image: const AssetImage("assets/images/infographics/button_images/Typhoon.png"),
+                    height: 40.r,
+                  ),
                 ),
-        
+                
                 SizedBox(width: 40.r,),
         
                 Text(
@@ -68,9 +72,13 @@ class NaturalInfoButtons extends StatelessWidget {
             padding: EdgeInsets.all(10.r),
             child: Row(
               children: [
-                Image(
-                  image: const AssetImage("assets/images/infographics/button_images/Floods.png"),
-                  height: 40.r,
+                CircleAvatar(
+                  radius: 25.r,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  child: Image(
+                    image: const AssetImage("assets/images/infographics/button_images/Floods.png"),
+                    height: 40.r,
+                  ),
                 ),
         
                 SizedBox(width: 40.r,),
@@ -102,9 +110,13 @@ class NaturalInfoButtons extends StatelessWidget {
             padding: EdgeInsets.all(10.r),
             child: Row(
               children: [
-                Image(
-                  image: const AssetImage("assets/images/infographics/button_images/Landslide.png"),
-                  height: 40.r,
+                CircleAvatar(
+                  radius: 25.r,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  child: Image(
+                    image: const AssetImage("assets/images/infographics/button_images/Landslide.png"),
+                    height: 40.r,
+                  ),
                 ),
         
                 SizedBox(width: 40.r,),
@@ -123,7 +135,7 @@ class NaturalInfoButtons extends StatelessWidget {
     
         SizedBox(height: 10.r,),
     
-        //Tornado Button
+        //Earthquake Button
         MaterialButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.r)),
@@ -136,15 +148,19 @@ class NaturalInfoButtons extends StatelessWidget {
             padding: EdgeInsets.all(10.r),
             child: Row(
               children: [
-                Image(
-                  image: const AssetImage("assets/images/infographics/button_images/Tornado.png"),
-                  height: 40.r,
+                CircleAvatar(
+                  radius: 25.r,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  child: Image(
+                    image: const AssetImage("assets/images/infographics/button_images/Earthquake.png"),
+                    height: 40.r,
+                  ),
                 ),
         
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Buhawi",
+                  "Linog",
                   style: TextStyle(
                     fontSize: 18.r,
                     fontWeight: FontWeight.bold
