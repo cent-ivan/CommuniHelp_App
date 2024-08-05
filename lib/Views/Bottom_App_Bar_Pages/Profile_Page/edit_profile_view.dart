@@ -174,7 +174,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                             //Date picker
                             suffixIcon: IconButton(
                               onPressed: () {
-
+                                pickDate();
                               }, 
                               icon: const Icon(Icons.date_range_outlined),
                               color: const Color(0xCC3D424A),
@@ -503,5 +503,29 @@ class _EditProfileViewState extends State<EditProfileView> {
         ),
       ),
     );
+  }
+
+  //DatePicker Widget
+  Future<void> pickDate() async {
+    DateTime? _picked = await showDatePicker(
+      context: context, 
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900), 
+      lastDate:  DateTime.now(),
+      initialEntryMode: DatePickerEntryMode.input,
+      confirmText: "Confirm",
+      cancelText: "No",
+    );
+
+    if (_picked != null) {
+      //converts DateTime to String then splits the string by spaces then gets the date then splits the date by - 
+      String month = _picked.toString().split(" ")[0].split("-")[1];
+      String day = _picked.toString().split(" ")[0].split("-")[2];
+      String year = _picked.toString().split(" ")[0].split("-")[0];
+
+      setState(() {
+        _birthdateController.text = "$month/$day/$year";
+      });
+    }
   }
 }
