@@ -143,6 +143,15 @@ class _LoginViewState extends State<LoginView> {
                                     borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
+
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Please enter your mobile number";
+                                  }
+                                  else {
+                                    return null;
+                                  }
+                                },
                               ),
 
                               SizedBox(height: 20.r,),
@@ -169,6 +178,15 @@ class _LoginViewState extends State<LoginView> {
                                     icon: _isObscure ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off) ,
                                   ) 
                                 ),
+
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Please enter password";
+                                  }
+                                  else {
+                                    return null;
+                                  }
+                                },
                               ),
 
                               SizedBox(height: 20.r,),
@@ -182,7 +200,13 @@ class _LoginViewState extends State<LoginView> {
                                     height: 50.r,
                                     minWidth: 100.r,
                                     onPressed: () {
-                              
+                                      if (_formKey.currentState!.validate()){
+                                        //validated the text field and adds to the firebase, pass to register view model
+                                        _formKey.currentState!.save();
+                                      }
+                                      else {
+                                        Navigator.pushReplacementNamed(context, '/home');
+                                      }
                                     },
                                     color: const Color(0xFF3D424A),
                                     child: Text(
