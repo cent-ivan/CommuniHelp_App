@@ -489,21 +489,21 @@ class DrawerBase extends StatelessWidget {
                 //Logout
                 Container(
                   width: 155,
+                  height: 50,
                   margin: const EdgeInsets.only(left: 15),
                   child: MaterialButton(
                     elevation: 1,
                     color: const Color(0xE6FEAE49),
                     onPressed: () {
-                  
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.logout_rounded), 
-                          iconSize: 28,
+                        Icon(
+                          Icons.logout_rounded,
+                          size: 28,
                           color: Theme.of(context).colorScheme.outline,
-                          onPressed: () {},
                         ),
                         
                         const SizedBox( width: 5,),
