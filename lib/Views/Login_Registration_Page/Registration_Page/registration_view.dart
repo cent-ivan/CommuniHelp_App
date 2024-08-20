@@ -13,7 +13,7 @@ List<String> options =["Male", "Female"]; //for radio list
 
 class _RegistrationViewState extends State<RegistrationView> {
 
-  //Box height
+  //DefaultBox height
   double _whiteContainerHeight = 615.r;
 
   //form global key
@@ -423,6 +423,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                                       if (_formKey.currentState!.validate()){
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
+                                        setState(() {
+                                          _whiteContainerHeight = 615.r;
+                                        });
                                       }
                                       else {
                                         setState(() {
