@@ -7,7 +7,7 @@ import 'package:communihelp_app/Views/Login_Registration_Page/Login_Page/login_v
 import 'package:communihelp_app/Views/Login_Registration_Page/Registration_Page/registration_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Emergency_Kit/emergency_kit_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Evacuation_Finder/evacaution_finder_view.dart';
-import 'package:communihelp_app/Views/Infographics/manmade_disaster_view.dart';
+import 'package:communihelp_app/Views/Infographics/Man_Made_Disaster/manmade_disaster_view.dart';
 import 'package:communihelp_app/Views/Infographics/Natural_Disaster/natural_disaster_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/News_Feed/news_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';

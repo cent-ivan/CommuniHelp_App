@@ -13,8 +13,8 @@ List<String> options =["Male", "Female"]; //for radio list
 
 class _RegistrationViewState extends State<RegistrationView> {
 
-  //Box height
-  double _whiteContainerHeight = 615.r;
+  //DefaultBox height
+  double _whiteContainerHeight = 625.r;
 
   //form global key
   final _formKey = GlobalKey<FormState>();
@@ -23,7 +23,7 @@ class _RegistrationViewState extends State<RegistrationView> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   String _municipalityValue = "Nabas";
-  final String _barangayValue = "Unidos";
+  String _barangayValue = "Unidos";
   String currentOption = options[0];
   final TextEditingController _contactController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -35,7 +35,7 @@ class _RegistrationViewState extends State<RegistrationView> {
       body: SingleChildScrollView(
         child: Container(
           width: 500.r,
-          height: 930.r,
+          height: 980.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/background/Register.jpg'),
@@ -104,6 +104,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                               Text(
                                 "Personal Information",
                                 style: TextStyle(
+                                  color: const Color(0xFF3D424A),
                                   fontSize: 20.r,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 2
@@ -126,6 +127,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Name",
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF3D424A)
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
                                   ),
@@ -153,6 +157,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Birthdate (mm/dd/yyyy)",
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF3D424A)
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
                                   ),
@@ -188,6 +195,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 children: [
                                   DropdownButton(
                                     hint: const Text("Municipality"),
+                                    dropdownColor: const Color(0xFFFCFCFC),
                                     value: _municipalityValue,
                                     underline: Container(
                                       height: 2,
@@ -199,6 +207,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                         child: Text(
                                           "Nabas",
                                           style: TextStyle(
+                                            color: Color(0xFF3D424A),
                                             fontSize: 12
                                           ),
                                         ),
@@ -208,6 +217,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                         child: Text(
                                           "Malay",
                                           style: TextStyle(
+                                            color: Color(0xFF3D424A),
                                             fontSize: 12
                                           ),
                                         ),
@@ -235,6 +245,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                         child: Text(
                                           "Unidos",
                                           style: TextStyle(
+                                            color: Color(0xFF3D424A),
                                             fontSize: 12
                                           ),
                                         ),
@@ -242,8 +253,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                                       DropdownMenuItem(
                                         value: "Caticlan",
                                         child: Text(
-                                          "Malay",
+                                          "Catcilan",
                                           style: TextStyle(
+                                            color: Color(0xFF3D424A),
                                             fontSize: 12
                                           ),
                                         ),
@@ -251,7 +263,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     ], 
                                     onChanged: (newValue) {
                                       setState(() {
-                                        _municipalityValue = newValue!;
+                                        _barangayValue = newValue!;
                                       });
                                     }
                                   ),
@@ -274,7 +286,12 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     },
                                   ),
 
-                                  Text(options[0]),
+                                  Text(
+                                    options[0],
+                                    style: const TextStyle(
+                                      color: Color(0xFF3D424A),
+                                    ),
+                                  ),
 
                                    SizedBox(width: 60.r,),
 
@@ -288,7 +305,13 @@ class _RegistrationViewState extends State<RegistrationView> {
                                       });
                                     },
                                   ),
-                                  Text(options[1]),
+
+                                  Text(
+                                    options[1],
+                                    style: const TextStyle(
+                                      color: Color(0xFF3D424A),
+                                    ),
+                                  ),
                                 ],
                               ),
 
@@ -304,6 +327,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 ],
                                 decoration: InputDecoration(
                                   hintText: "Contact Number",
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF3D424A)
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
                                   ),
@@ -328,6 +354,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Email",
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF3D424A)
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
                                   ),
@@ -357,6 +386,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Password",
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF3D424A)
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
                                   ),
@@ -367,7 +399,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                                 validator: (value) {
                                   if (value!.isEmpty){
-                                    return "Please enter password";
+                                    return "Please enter a password";
                                   }
                                   else if (value.length < 4) {
                                     return "Password must be 6 characters or longer";
@@ -391,10 +423,13 @@ class _RegistrationViewState extends State<RegistrationView> {
                                       if (_formKey.currentState!.validate()){
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
+                                        setState(() {
+                                          _whiteContainerHeight = 625.r;
+                                        });
                                       }
                                       else {
                                         setState(() {
-                                          _whiteContainerHeight = 655.r;
+                                          _whiteContainerHeight = 675.r;
                                         });
                                       }
                                     },

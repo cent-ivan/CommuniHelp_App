@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginView extends StatefulWidget {
@@ -114,6 +115,7 @@ class _LoginViewState extends State<LoginView> {
                               Text(
                                 "Login",
                                 style: TextStyle(
+                                  color: const Color(0xFF3D424A),
                                   fontSize: 32.r,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 2
@@ -134,8 +136,15 @@ class _LoginViewState extends State<LoginView> {
                               TextFormField(
                                 controller: _numberController,
                                 cursorColor: const Color(0xFF3D424A),
+                                keyboardType: TextInputType.number, //accepts only intgers
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
                                 decoration: InputDecoration(
                                   hintText: "Mobile Number",
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF3D424A)
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
                                   ),
@@ -163,6 +172,9 @@ class _LoginViewState extends State<LoginView> {
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Password",
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF3D424A)
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
                                   ),
@@ -170,6 +182,7 @@ class _LoginViewState extends State<LoginView> {
                                     borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
                                   ),
                                   suffixIcon: IconButton(
+                                    color: const Color(0xFF3D424A),
                                     onPressed: () {
                                       setState(() {
                                         _isObscure = ! _isObscure;

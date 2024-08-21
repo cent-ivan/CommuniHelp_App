@@ -11,7 +11,7 @@ class InfographicsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 190.r,
+      height: 215.r,
       padding: const EdgeInsets.all(10).r,
       margin: const EdgeInsets.fromLTRB(9, 0, 9, 12).r,
       decoration: BoxDecoration(
@@ -60,10 +60,10 @@ class InfographicsSection extends StatelessWidget {
                       )
                     ),
 
-                    SizedBox(height: 10.r,),
+                    SizedBox(height: 15.r,),
 
                     Text(
-                      "Natural na sakuna",
+                      "Natural nga sakuna",
                       style: TextStyle(
                         fontSize: 12.r,
                         fontWeight: FontWeight.w500,
@@ -101,10 +101,10 @@ class InfographicsSection extends StatelessWidget {
                       )
                     ),
 
-                    SizedBox(height: 10.r,),
+                    SizedBox(height: 15.r,),
 
                     Text(
-                      "Kalamidad na ubra it tawo",
+                      "Man-made nga sakuna",
                       style: TextStyle(
                         fontSize: 12.r,
                         fontWeight: FontWeight.w500,

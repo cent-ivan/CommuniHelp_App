@@ -1,21 +1,22 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'checklist.dart';
 
 class _PcardState extends State<Pcard> {
   List<List<dynamic>> thelist = [
-    ['Water',false,'assets/water.jpg'],
-    ['Food',false,'assets/food.jpg'],
-    ['First Aid Kit',false,'assets/firstaid.jpg'],
-    ['Cash',false,'assets/money.jpg'],
-    ['Prescription medicines',false,'assets/medicine.jpg'],
-    ['Hygiene Supplies',false,'assets/hygiene.jpeg'],
-    ['Communication Devices',false,'assets/phone.jpg'],
-    ['Clothes',false,'assets/clothes.jpg'],
-    ['Important Documents',false,'assets/documents.jpg'],
+    ['Bottled Water', false, 'assets/images/dashboard/checklist_images/water.jpg'],
+    ['Canned Food', false, 'assets/images/dashboard/checklist_images/food.jpg'],
+    ['First Aid Kit', false, 'assets/images/dashboard/checklist_images/firstaid.jpg'],
+    ['Cash', false, 'assets/images/dashboard/checklist_images/money.jpg'],
+    ['Prescription medicines', false, 'assets/images/dashboard/checklist_images/medicine.jpg'],
+    ['Hygiene kit', false, 'assets/images/dashboard/checklist_images/hygiene.jpeg'],
+    ['Radyo de baterya', false, 'assets/images/dashboard/checklist_images/phone.jpg'],
+    ['Extra Clothes', false, 'assets/images/dashboard/checklist_images/clothes.jpg'],
+    ['Mga importanteng documento (national id, passport, birth certificate)', false, 'assets/images/dashboard/checklist_images/documents.jpg'],
 
   ];
   XFile? image;
@@ -51,13 +52,13 @@ class _PcardState extends State<Pcard> {
             (
             borderRadius: BorderRadius.circular(10),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xFFF5F5F5),
           title: Text('Add New Item',
             style: TextStyle
               (
-              fontSize: 20,
+              fontSize: 20.r,
               fontWeight: FontWeight.bold,
-              color: Colors.blue[900],
+              color: const Color(0xFF3D424A),
 
             ),
           ),
@@ -70,25 +71,45 @@ class _PcardState extends State<Pcard> {
                   Expanded(
                     child: TextField(
                       controller: textController,
-                      decoration: InputDecoration(hintText: 'Enter Item',
+                      style: const TextStyle(
+                        color: const Color(0xFF3D424A)
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Enter checklist',
+                        hintStyle: const TextStyle(
+                          color: Color(0xFF3D424A)
+                        ),
                           border:  OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.blue.shade900,
-                              width: 2.0,
+                              color: const Color(0xFF3D424A),
+                              width: 2.0.r,
                             ),
                           ),
-                          contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0)
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                          ),
+                          contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0).r
                       ),
                     ),
                   ),
 
-                  SizedBox(height: 10,width: 10),
-                  ElevatedButton(
+                  SizedBox(height: 10.r,width: 10.r),
+
+                  MaterialButton(
+                    color: const Color(0xFF3D424A),
                     onPressed: imageSelect,
-                    child: Icon(Icons.image,color: Colors.blue[900],),
+                    child: const Icon(
+                      Icons.image,
+                      color: Color(0xFFF5F5F5),
+                    ),
                   ),
                 ],
               ),
+              
+
               image != null ? Image.file(File(image!.path)) : Container(),
             ],
           ),
@@ -96,14 +117,22 @@ class _PcardState extends State<Pcard> {
             TextButton(
               onPressed: () => _addItem(textController.text),
               child: Text('Add',
-                  style: TextStyle( fontSize: 20,color: Colors.blue[900],
-                    fontWeight: FontWeight.bold,)),
+                  style: TextStyle(
+                    fontSize: 20.r,
+                    color: Colors.blue[900] ,
+                    fontWeight: FontWeight.bold,
+                )
+              ),
             ),
+
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text('Cancel',
-                style: TextStyle(  fontSize: 20,color: Colors.blue[900],
-                  fontWeight: FontWeight.bold,),
+                style: TextStyle(
+                  fontSize: 20.r,
+                  color: const Color(0xFF3D424A),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],
@@ -124,36 +153,25 @@ class _PcardState extends State<Pcard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar
-        (
-        title: Padding(
-          padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
-          child: Text('CommuniHelp',
-            style: TextStyle
-              (
-              color: Colors.blue[900],
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+
       body: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.lightBlue[100],
         ),
-        margin: EdgeInsets.all(16.0),
-        padding: EdgeInsets.all(16.0),
+        margin: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text
               (
-              'Emergency Kit Checklist', style: TextStyle
-              (
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+              'Emergency Kit Checklist', 
+              style: TextStyle(
+                fontSize: 18.r,
+                color: const Color(0xFF3D424A),
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 10),
             Expanded(
@@ -189,6 +207,8 @@ class _PcardState extends State<Pcard> {
 }
 
 class Pcard extends StatefulWidget {
+  const Pcard({super.key});
+
   @override
   State<Pcard> createState() => _PcardState();
 }
