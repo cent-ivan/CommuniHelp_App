@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginView extends StatefulWidget {
@@ -135,6 +136,10 @@ class _LoginViewState extends State<LoginView> {
                               TextFormField(
                                 controller: _numberController,
                                 cursorColor: const Color(0xFF3D424A),
+                                keyboardType: TextInputType.number, //accepts only intgers
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
                                 decoration: InputDecoration(
                                   hintText: "Mobile Number",
                                   hintStyle: const TextStyle(
