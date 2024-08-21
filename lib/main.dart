@@ -1,4 +1,5 @@
 import 'package:communihelp_app/ViewModels/anouncement_view_model.dart';
+import 'package:communihelp_app/ViewModels/emergency_kit_view_model.dart';
 import 'package:communihelp_app/ViewModels/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModels/profile_view_model.dart';
 import 'package:communihelp_app/ViewModels/theme.dart';
@@ -35,6 +36,7 @@ void main() {
         ChangeNotifierProvider(create: ((context) => EmergencyViewModel())),
         ChangeNotifierProvider(create: ((context) => AnnouncementViewModel())),
         ChangeNotifierProvider(create: ((context) => ProfileViewModel())),
+        ChangeNotifierProvider(create: ((context) => EmergencyKitViewModel())),
       ],
       child: const MainApp(),
     )

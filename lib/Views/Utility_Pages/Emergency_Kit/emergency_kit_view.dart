@@ -1,13 +1,10 @@
-//to make the text color of the page adapt to dark mode enter this `Theme.of(context).colorScheme.outline`
-//for the contact tiles here is the color: `Theme.of(context).colorScheme.primary`
-//if you find the code to be difficult jsut search in youtube `To Do App in flutter`
-
-//see the design in the figma link
-//NOTE: pre-load the items stated in the design in the list
-//when putting sizes in double data type add `.r` at the end Ex: 13.r/ EdgeInsets.all(13).r for paddings
-import 'package:communihelp_app/Views/Utility_Pages/Emergency_Kit/card.dart';
+import 'package:communihelp_app/Views/Utility_Pages/Emergency_Kit/emergency_kit_components/add_dialog.dart';
+import 'package:communihelp_app/Views/Utility_Pages/Emergency_Kit/emergency_kit_components/checklist_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+import '../../../ViewModels/emergency_kit_view_model.dart';
 
 class EmergencyKitView extends StatefulWidget {
   const EmergencyKitView({super.key});
@@ -52,4 +49,132 @@ class _EmergencyKitViewState extends State<EmergencyKitView> {
       body: const Pcard(),
     );
   }
+}
+
+
+//Emergency Checklist
+class Pcard extends StatefulWidget {
+  const Pcard({super.key});
+
+  @override
+  State<Pcard> createState() => _PcardState();
+}
+
+class _PcardState extends State<Pcard> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+
+      body: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.lightBlue[100],
+        ),
+        margin: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Emergency Kit Checklist', 
+              style: TextStyle(
+                fontSize: 18.r,
+                color: const Color(0xFF3D424A),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Expanded(
+              child: Consumer<EmergencyKitViewModel>( builder: (context, emergencyValue, child) =>  ListView.builder (
+                  itemCount: emergencyValue.importantsList.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return ChecklistItem (
+                      itemname: emergencyValue.importantsList[index].title!,
+                      gotitem: emergencyValue.importantsList[index].isChecked!,
+                      onChanged: (value) => emergencyValue.checkBoxChanged(index, value),
+                      image: emergencyValue.importantsList[index].imagePath,
+                      deleteFunction: (context) => emergencyValue.deleteitem(index),
+                    );
+                  },
+                
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+
+      floatingActionButton: FloatingActionButton (
+        backgroundColor:(Colors.orange).withOpacity(0.6),
+        onPressed: () => _addItemBox(),
+        elevation: 0,
+        child: Icon(Icons.add,size: 40,color: Colors.white.withOpacity(0.5),weight:1000,),
+      ),
+
+    );
+  }
+
+  //shows the dialog for adding the item
+  void _addItemBox() {
+    final TextEditingController textController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Consumer<EmergencyKitViewModel>( builder: (context, emergencyValue, child) => AlertDialog(
+            shape: RoundedRectangleBorder
+              (
+              borderRadius: BorderRadius.circular(10),
+            ),
+            backgroundColor: const Color(0xFFF5F5F5),
+            title: Text('Add New Item',
+              style: TextStyle
+                (
+                fontSize: 20.r,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF3D424A),
+          
+              ),
+            ),
+          
+          
+            content: AddChecklistDialog(
+              textController: textController, 
+              emergencyKitViewModel: emergencyValue
+            ),
+          
+            actions: [
+              TextButton(
+                onPressed: () => emergencyValue.addItem(textController.text, context),
+                child: Text('Add',
+                    style: TextStyle(
+                      fontSize: 20.r,
+                      color: Colors.blue[900] ,
+                      fontWeight: FontWeight.bold,
+                  )
+                ),
+              ),
+          
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('Cancel',
+                  style: TextStyle(
+                    fontSize: 20.r,
+                    color: const Color(0xFF3D424A),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+  }
+
 }
