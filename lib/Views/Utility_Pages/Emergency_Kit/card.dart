@@ -7,15 +7,15 @@ import 'checklist.dart';
 
 class _PcardState extends State<Pcard> {
   List<List<dynamic>> thelist = [
-    ['Water',false,'assets/images/dashboard/checklist_images/water.jpg'],
-    ['Food',false,'assets/images/dashboard/checklist_images/food.jpg'],
-    ['First Aid Kit',false,'assets/images/dashboard/checklist_images/firstaid.jpg'],
-    ['Cash',false,'assets/images/dashboard/checklist_images/money.jpg'],
-    ['Prescription medicines',false,'assets/images/dashboard/checklist_images/medicine.jpg'],
-    ['Hygiene Supplies',false,'assets/images/dashboard/checklist_images/hygiene.jpeg'],
-    ['Communication Devices',false,'assets/images/dashboard/checklist_images/phone.jpg'],
-    ['Clothes',false,'assets/images/dashboard/checklist_images/clothes.jpg'],
-    ['Important Documents',false,'assets/images/dashboard/checklist_images/documents.jpg'],
+    ['Water', false, 'assets/images/dashboard/checklist_images/water.jpg'],
+    ['Food', false, 'assets/images/dashboard/checklist_images/food.jpg'],
+    ['First Aid Kit', false,' assets/images/dashboard/checklist_images/firstaid.jpg'],
+    ['Cash', false, 'assets/images/dashboard/checklist_images/money.jpg'],
+    ['Prescription medicines', false, 'assets/images/dashboard/checklist_images/medicine.jpg'],
+    ['Hygiene Supplies', false, 'assets/images/dashboard/checklist_images/hygiene.jpeg'],
+    ['Communication Devices', false, 'assets/images/dashboard/checklist_images/phone.jpg'],
+    ['Clothes', false, 'assets/images/dashboard/checklist_images/clothes.jpg'],
+    ['Important Documents', false, 'assets/images/dashboard/checklist_images/documents.jpg'],
 
   ];
   XFile? image;
