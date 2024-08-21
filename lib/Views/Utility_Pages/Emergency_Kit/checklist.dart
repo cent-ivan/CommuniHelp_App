@@ -24,7 +24,7 @@ class Itemlist extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
       child: Slidable(
         endActionPane: ActionPane(
-          motion: StretchMotion(),
+          motion: const StretchMotion(),
           children: [
             SlidableAction(
               onPressed: deleteFunction,
@@ -39,7 +39,7 @@ class Itemlist extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
           ),
-          padding: EdgeInsets.all(3),
+          padding: const EdgeInsets.all(3),
           child: Row(
             children: [
               Checkbox(
@@ -71,14 +71,16 @@ class Itemlist extends StatelessWidget {
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.help_outline,
                     size: 30,
                     color: Colors.white,
                   ),
                 ),
               ),
-              SizedBox(width: 10),
+
+              const SizedBox(width: 10),
+
               Expanded(
                 child: Text(
                   itemname,

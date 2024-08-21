@@ -30,6 +30,7 @@ flutter:
 
   assets:
     - assets/images/dashboard/
+    - assets/images/dashboard/checklist_images/
     - assets/images/infographics/
     - assets/images/infographics/button_images/
     - assets/images/bottom_app_bar/

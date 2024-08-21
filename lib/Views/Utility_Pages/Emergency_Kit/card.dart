@@ -7,15 +7,15 @@ import 'checklist.dart';
 
 class _PcardState extends State<Pcard> {
   List<List<dynamic>> thelist = [
-    ['Water',false,'assets/water.jpg'],
-    ['Food',false,'assets/food.jpg'],
-    ['First Aid Kit',false,'assets/firstaid.jpg'],
-    ['Cash',false,'assets/money.jpg'],
-    ['Prescription medicines',false,'assets/medicine.jpg'],
-    ['Hygiene Supplies',false,'assets/hygiene.jpeg'],
-    ['Communication Devices',false,'assets/phone.jpg'],
-    ['Clothes',false,'assets/clothes.jpg'],
-    ['Important Documents',false,'assets/documents.jpg'],
+    ['Water',false,'assets/images/dashboard/checklist_images/water.jpg'],
+    ['Food',false,'assets/images/dashboard/checklist_images/food.jpg'],
+    ['First Aid Kit',false,'assets/images/dashboard/checklist_images/firstaid.jpg'],
+    ['Cash',false,'assets/images/dashboard/checklist_images/money.jpg'],
+    ['Prescription medicines',false,'assets/images/dashboard/checklist_images/medicine.jpg'],
+    ['Hygiene Supplies',false,'assets/images/dashboard/checklist_images/hygiene.jpeg'],
+    ['Communication Devices',false,'assets/images/dashboard/checklist_images/phone.jpg'],
+    ['Clothes',false,'assets/images/dashboard/checklist_images/clothes.jpg'],
+    ['Important Documents',false,'assets/images/dashboard/checklist_images/documents.jpg'],
 
   ];
   XFile? image;
@@ -77,12 +77,13 @@ class _PcardState extends State<Pcard> {
                               width: 2.0,
                             ),
                           ),
-                          contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0)
+                          contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0)
                       ),
                     ),
                   ),
 
-                  SizedBox(height: 10,width: 10),
+                  const SizedBox(height: 10,width: 10),
+
                   ElevatedButton(
                     onPressed: imageSelect,
                     child: Icon(Icons.image,color: Colors.blue[900],),
@@ -142,12 +143,12 @@ class _PcardState extends State<Pcard> {
           borderRadius: BorderRadius.circular(10),
           color: Colors.lightBlue[100],
         ),
-        margin: EdgeInsets.all(16.0),
-        padding: EdgeInsets.all(16.0),
+        margin: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text
+            const Text
               (
               'Emergency Kit Checklist', style: TextStyle
               (
@@ -189,6 +190,8 @@ class _PcardState extends State<Pcard> {
 }
 
 class Pcard extends StatefulWidget {
+  const Pcard({super.key});
+
   @override
   State<Pcard> createState() => _PcardState();
 }
