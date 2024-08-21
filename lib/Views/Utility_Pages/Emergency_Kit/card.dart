@@ -71,6 +71,9 @@ class _PcardState extends State<Pcard> {
                   Expanded(
                     child: TextField(
                       controller: textController,
+                      style: const TextStyle(
+                        color: const Color(0xFF3D424A)
+                      ),
                       decoration: InputDecoration(
                         hintText: 'Enter checklist',
                         hintStyle: const TextStyle(
@@ -105,6 +108,8 @@ class _PcardState extends State<Pcard> {
                   ),
                 ],
               ),
+              
+
               image != null ? Image.file(File(image!.path)) : Container(),
             ],
           ),
@@ -159,13 +164,14 @@ class _PcardState extends State<Pcard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text
+            Text
               (
-              'Emergency Kit Checklist', style: TextStyle
-              (
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+              'Emergency Kit Checklist', 
+              style: TextStyle(
+                fontSize: 18.r,
+                color: const Color(0xFF3D424A),
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 10),
             Expanded(

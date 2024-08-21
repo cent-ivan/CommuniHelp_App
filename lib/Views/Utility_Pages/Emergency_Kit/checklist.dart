@@ -32,20 +32,18 @@ class Itemlist extends StatelessWidget {
               onPressed: deleteFunction,
               icon: Icons.delete,
               backgroundColor: Colors.red,
-              borderRadius: BorderRadius.circular(20).r,
             ),
           ],
         ),
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10).r,
+          decoration: const BoxDecoration(
             color: Colors.white,
           ),
           padding: const EdgeInsets.all(3).r,
           child: Row(
             children: [
               Checkbox(
-                activeColor: Colors.blue[900],
+                activeColor: Colors.greenAccent,
                 side: BorderSide(color: Colors.blue.shade900),
                 value: gotitem,
                 onChanged: onChanged,
@@ -95,6 +93,7 @@ class Itemlist extends StatelessWidget {
                     decorationStyle: TextDecorationStyle.solid,
                     color: Colors.black,
                     fontSize: 16.r,
+                    fontWeight: FontWeight.w600
                   ),
                 ),
               ),
