@@ -3,5 +3,9 @@ class EmergencyContactsModel {
   String? number;
   String? contactName;
 
-  EmergencyContactsModel({required this.contactType, required this.number, required this.contactName});
+  EmergencyContactsModel({
+    required this.contactType, 
+    required this.number, 
+    required this.contactName
+  });
 }

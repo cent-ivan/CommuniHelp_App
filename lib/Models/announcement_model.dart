@@ -3,5 +3,9 @@ class AnnouncementModel {
   String? title;
   String? content;
 
-  AnnouncementModel({required this.level , required this.title, required this.content});
+  AnnouncementModel({
+    required this.level , 
+    required this.title, 
+    required this.content
+  });
 }
