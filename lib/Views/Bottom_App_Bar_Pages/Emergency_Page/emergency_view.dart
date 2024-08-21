@@ -149,7 +149,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                 //Ambulance number
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15.r),
-                  child: AmbulanceButton(numberOfContacts: viewModel.ambulanceContacts.length, color: Theme.of(context).colorScheme.primary, )
+                  child: AmbulanceButton(numberOfContacts: viewModel.ambulanceContacts.length, color: const Color(0xFFF2F2F2), )
                 ),
       
 

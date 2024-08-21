@@ -131,7 +131,7 @@ class _AmbulanceButtonState extends State<AmbulanceButton> {
                             Text(
                               viewModel.ambulanceContacts[index].number!, //gets the name from the list
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.outline,
+                                color: const Color(0xFF3D424A),
                                 fontSize: 16.r,
                                 fontWeight: FontWeight.bold
                               ),
@@ -140,7 +140,7 @@ class _AmbulanceButtonState extends State<AmbulanceButton> {
                             Text(
                               viewModel.ambulanceContacts[index].contactName!, //gets the name from the list
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.outline,
+                                color: const Color(0xFF3D424A),
                                 fontSize: 12.r,
                                 fontWeight: FontWeight.w500
                               ),
