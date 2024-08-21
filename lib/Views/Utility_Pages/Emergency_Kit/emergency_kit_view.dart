@@ -5,6 +5,7 @@
 //see the design in the figma link
 //NOTE: pre-load the items stated in the design in the list
 //when putting sizes in double data type add `.r` at the end Ex: 13.r/ EdgeInsets.all(13).r for paddings
+import 'package:communihelp_app/Views/Utility_Pages/Emergency_Kit/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -48,7 +49,7 @@ class _EmergencyKitViewState extends State<EmergencyKitView> {
         ),
       ),
 
-      body: const Text("Enter Code here"),
+      body: const Pcard(),
     );
   }
 }
