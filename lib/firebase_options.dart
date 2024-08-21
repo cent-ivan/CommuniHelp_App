@@ -59,4 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'communihelp-d6550',
     storageBucket: 'communihelp-d6550.appspot.com',
   );
+
 }
