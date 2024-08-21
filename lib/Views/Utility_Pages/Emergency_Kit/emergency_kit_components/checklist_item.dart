@@ -4,8 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class Itemlist extends StatelessWidget {
-  const Itemlist({
+class ChecklistItem extends StatelessWidget {
+  const ChecklistItem({
     super.key,
     required this.itemname,
     required this.gotitem,
@@ -35,6 +35,8 @@ class Itemlist extends StatelessWidget {
             ),
           ],
         ),
+
+        //Checkbox Container
         child: Container(
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -42,12 +44,16 @@ class Itemlist extends StatelessWidget {
           padding: const EdgeInsets.all(3).r,
           child: Row(
             children: [
+              
+              //Checkbox code
               Checkbox(
                 activeColor: Colors.greenAccent,
                 side: BorderSide(color: Colors.blue.shade900),
                 value: gotitem,
                 onChanged: onChanged,
               ),
+
+              //Image Code
               Padding(
                 padding: const EdgeInsets.only(left: 10).r,
                 child: image != null
@@ -81,6 +87,7 @@ class Itemlist extends StatelessWidget {
 
               const SizedBox(width: 10),
 
+              //Checklist item name
               Expanded(
                 child: Text(
                   itemname,
@@ -97,10 +104,14 @@ class Itemlist extends StatelessWidget {
                   ),
                 ),
               ),
+
             ],
           ),
+
         ),
       ),
     );
+
   }
+
 }
