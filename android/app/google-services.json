@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "406735923781",
+    "project_id": "communihelp-d6550",
+    "storage_bucket": "communihelp-d6550.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406735923781:android:e57135d408ea05cbf7512c",
+        "android_client_info": {
+          "package_name": "com.our_capstone.communihelp_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuQcgDV87KAmlpp5dzWBpZkrEXbKKJwjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
