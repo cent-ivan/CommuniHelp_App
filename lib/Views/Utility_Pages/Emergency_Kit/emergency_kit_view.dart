@@ -108,11 +108,20 @@ class _PcardState extends State<Pcard> {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton (
-        backgroundColor:(Colors.orange).withOpacity(0.6),
-        onPressed: () => _addItemBox(),
-        elevation: 0,
-        child: Icon(Icons.add,size: 40,color: Colors.white.withOpacity(0.5),weight:1000,),
+      floatingActionButton: SizedBox.fromSize(
+        size: Size.square(60.r),
+        child: FloatingActionButton (
+          shape: const CircleBorder(),
+          backgroundColor:Colors.orange,
+          onPressed: () => _addItemBox(),
+          elevation: 0,
+          child: const Icon(
+            Icons.add, 
+            size: 40, 
+            color: Colors.white, 
+            weight:1000,
+          ),
+        ),
       ),
 
     );
