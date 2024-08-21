@@ -11,6 +11,9 @@ dependencies:
     sdk: flutter
   provider: ^6.1.2
   flutter_screenutil: ^5.9.3
+
+  image_picker: ^0.8.6
+  flutter_slidable: ^3.1.0
   
 
 dev_dependencies:
