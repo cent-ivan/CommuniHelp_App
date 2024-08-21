@@ -14,7 +14,7 @@ List<String> options =["Male", "Female"]; //for radio list
 class _RegistrationViewState extends State<RegistrationView> {
 
   //DefaultBox height
-  double _whiteContainerHeight = 615.r;
+  double _whiteContainerHeight = 625.r;
 
   //form global key
   final _formKey = GlobalKey<FormState>();
@@ -35,7 +35,7 @@ class _RegistrationViewState extends State<RegistrationView> {
       body: SingleChildScrollView(
         child: Container(
           width: 500.r,
-          height: 930.r,
+          height: 980.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/background/Register.jpg'),
@@ -424,12 +424,12 @@ class _RegistrationViewState extends State<RegistrationView> {
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
                                         setState(() {
-                                          _whiteContainerHeight = 615.r;
+                                          _whiteContainerHeight = 625.r;
                                         });
                                       }
                                       else {
                                         setState(() {
-                                          _whiteContainerHeight = 655.r;
+                                          _whiteContainerHeight = 675.r;
                                         });
                                       }
                                     },
