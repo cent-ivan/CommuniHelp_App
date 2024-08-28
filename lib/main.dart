@@ -50,7 +50,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return  ScreenUtilInit(
-      //designSize: Size(sizeWidth, sizeHeight),
+      //designSize: Size(sizeWidth, sizeHeight), //hi from diorj
       builder: (context, child) => MaterialApp(
 
         //TODO:add classes to Led Light and Report Damage (No designs yet)
