@@ -33,89 +33,87 @@ class InfographicsSection extends StatelessWidget {
             ),
           ),
       
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-
-                Column(
-                  children: [
-                    
-                    //Natural Disaster Button
-                    MaterialButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/naturalinfo');
-                      },
-                      height: 100.r,
-                      minWidth: 145.r,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15.r))
-                      ),
-                      color: Theme.of(context).colorScheme.primary,
-                      splashColor: const Color(0xFFB9EFD8),
-                      elevation: 3,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+          
+              Column(
+                children: [
+                  
+                  //Natural Disaster Button
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/naturalinfo');
+                    },
+                    height: 100.r,
+                    minWidth: 145.r,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.r))
+                    ),
+                    color: Theme.of(context).colorScheme.primary,
+                    splashColor: const Color(0xFFB9EFD8),
+                    elevation: 3,
+                    child: Image(
+                      width: 55.r,
+                      image: const  AssetImage('assets/images/dashboard/natural.png')
+                    )
+                  ),
+          
+                  SizedBox(height: 15.r,),
+          
+                  Text(
+                    "Natural nga sakuna",
+                    style: TextStyle(
+                      fontSize: 12.r,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.outline, 
+                    ),
+                  ),
+                ],
+              ),
+              
+              SizedBox(width: 10.r,),
+          
+              Column(
+                children: [
+                  
+                  //Man-made Disaster Button
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/manmadeinfo');
+                    },
+                    height: 100.r,
+                    minWidth: 145.r,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.r))
+                    ),
+                    color: Theme.of(context).colorScheme.primary,
+                    splashColor: const Color(0x80FEAE49),
+                    elevation: 3,
+                    child: CircleAvatar(
+                      radius: 25.r,
+                      backgroundColor: Colors.white54,
                       child: Image(
                         width: 55.r,
-                        image: const  AssetImage('assets/images/dashboard/natural.png')
-                      )
-                    ),
-
-                    SizedBox(height: 15.r,),
-
-                    Text(
-                      "Natural nga sakuna",
-                      style: TextStyle(
-                        fontSize: 12.r,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).colorScheme.outline, 
+                        image: const AssetImage('assets/images/dashboard/manmade.png')
                       ),
+                    )
+                  ),
+          
+                  SizedBox(height: 15.r,),
+          
+                  Text(
+                    "Man-made nga sakuna",
+                    style: TextStyle(
+                      fontSize: 12.r,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.outline, 
                     ),
-                  ],
-                ),
-    
-                SizedBox(width: 10.r,),
-            
-                Column(
-                  children: [
-                    
-                    //Man-made Disaster Button
-                    MaterialButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/manmadeinfo');
-                      },
-                      height: 100.r,
-                      minWidth: 145.r,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15.r))
-                      ),
-                      color: Theme.of(context).colorScheme.primary,
-                      splashColor: const Color(0x80FEAE49),
-                      elevation: 3,
-                      child: CircleAvatar(
-                        radius: 25.r,
-                        backgroundColor: Colors.white54,
-                        child: Image(
-                          width: 55.r,
-                          image: const AssetImage('assets/images/dashboard/manmade.png')
-                        ),
-                      )
-                    ),
-
-                    SizedBox(height: 15.r,),
-
-                    Text(
-                      "Man-made nga sakuna",
-                      style: TextStyle(
-                        fontSize: 12.r,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).colorScheme.outline, 
-                      ),
-                    ),
-                  ],
-                ),
-            
-              ],
-            ),
+                  ),
+                ],
+              ),
+          
+            ],
           )
         ],
       ),
