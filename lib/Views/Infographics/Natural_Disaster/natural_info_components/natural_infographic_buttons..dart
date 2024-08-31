@@ -23,6 +23,7 @@ class NaturalInfoButtons extends StatelessWidget {
 
         //Typhoon Button
         MaterialButton(
+          color: Theme.of(context).colorScheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.r)),
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
