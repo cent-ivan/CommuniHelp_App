@@ -483,7 +483,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
   //DatePicker Widget
   Future<void> pickDate() async {
-    DateTime? _picked = await showDatePicker(
+    DateTime? picked = await showDatePicker(
       context: context, 
       initialDate: DateTime.now(),
       firstDate: DateTime(1900), 
@@ -493,11 +493,11 @@ class _RegistrationViewState extends State<RegistrationView> {
       cancelText: "No",
     );
 
-    if (_picked != null) {
+    if (picked != null) {
       //converts DateTime to String then splits the string by spaces then gets the date then splits the date by - 
-      String month = _picked.toString().split(" ")[0].split("-")[1];
-      String day = _picked.toString().split(" ")[0].split("-")[2];
-      String year = _picked.toString().split(" ")[0].split("-")[0];
+      String month = picked.toString().split(" ")[0].split("-")[1];
+      String day = picked.toString().split(" ")[0].split("-")[2];
+      String year = picked.toString().split(" ")[0].split("-")[0];
 
       setState(() {
         _ageController.text = "$month/$day/$year";
