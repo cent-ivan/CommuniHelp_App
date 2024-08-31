@@ -8,8 +8,8 @@ class ManMadeDisasterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: ManMadeAppBar(),
-      body: Placeholder(),
+      appBar: const ManMadeAppBar(),
+      body: const Placeholder(),
     );
   }
 }
