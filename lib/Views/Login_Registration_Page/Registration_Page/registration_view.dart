@@ -190,7 +190,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               SizedBox(height: 13.r,),
 
-                              //Dropdown address
+                              //Dropdown address / StreamBuilder
                               Row(
                                 children: [
                                   DropdownButton(
