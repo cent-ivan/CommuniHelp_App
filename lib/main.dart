@@ -54,7 +54,7 @@ class MainApp extends StatelessWidget {
       builder: (context, child) => MaterialApp(
 
         //TODO:add classes to Led Light and Report Damage (No designs yet)
-        home: const HomeBase(),
+        home: const LoginView(),
         routes: {
           '/home' : (context) => const HomeBase(),
           '/evacuationfinder': (context) => const EvacautionFinderView(),
