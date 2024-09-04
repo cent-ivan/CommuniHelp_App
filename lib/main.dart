@@ -1,3 +1,4 @@
+import 'package:communihelp_app/ViewModels/Login_Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModels/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModels/emergency_kit_view_model.dart';
 import 'package:communihelp_app/ViewModels/emergency_view_model.dart';
@@ -16,13 +17,15 @@ import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Emergency_Page/emerge
 import 'package:communihelp_app/Views/Utility_Pages/Report_Damage/report_damage_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Weather_Page/weather_view.dart';
 import 'package:communihelp_app/Views/base.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   //Set preferred orientation
   SystemChrome.setPreferredOrientations([
@@ -33,10 +36,14 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        //View Model for Pages
         ChangeNotifierProvider(create: ((context) => EmergencyViewModel())),
         ChangeNotifierProvider(create: ((context) => AnnouncementViewModel())),
         ChangeNotifierProvider(create: ((context) => ProfileViewModel())),
         ChangeNotifierProvider(create: ((context) => EmergencyKitViewModel())),
+
+        //View Model for Firestore
+        ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
       ],
       child: const MainApp(),
     )
