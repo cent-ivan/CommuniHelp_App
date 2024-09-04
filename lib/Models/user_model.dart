@@ -1,4 +1,5 @@
 class UserModel {
+  String? uid;
   String? name;
   String? birthdate;
   String? gender;
@@ -8,6 +9,7 @@ class UserModel {
   String? mobileNumber;
 
   UserModel({
+    this.uid,
     required this.name, 
     required this.birthdate, 
     required this.gender, 
@@ -16,4 +18,30 @@ class UserModel {
     required this.email,
     required this.mobileNumber
   });
+
+  //Uploading
+  toJson() {
+    return {
+      "Name" : name,
+      "Birthdate" : birthdate,
+      "Gender" : gender,
+      "Barangay" : barangay,
+      "Municipality" : municipality,
+      "Email" : email,
+      "MobileNumber" : mobileNumber
+    };
+  }
+
+  //Getting
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      name: json["Name"], 
+      birthdate: json["Birthdate"], 
+      gender: json["Gender"], 
+      barangay: json["Barangay"], 
+      municipality: json["Municipality"], 
+      email: json["Email"], 
+      mobileNumber: json["MobileNumber"]
+    );
+  }
 }
