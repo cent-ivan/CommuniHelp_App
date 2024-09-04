@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+import '../../../ViewModels/Login_Registration_View_Models/registration_view_model.dart';
 
 class RegistrationView extends StatefulWidget {
   const RegistrationView({super.key});
@@ -19,15 +23,8 @@ class _RegistrationViewState extends State<RegistrationView> {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
-  //text field controllers
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
-  String _municipalityValue = "Nabas";
-  String _barangayValue = "Unidos";
   String currentOption = options[0];
-  final TextEditingController _contactController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +83,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                 //registration form container
                 Container(
                   height: _whiteContainerHeight,
-                  width: 320.r,
+                  width: 328.r,
                   decoration: BoxDecoration(
                     color: const Color(0x99FCFCFC),
-                    borderRadius: BorderRadius.circular(20.r)
+                    borderRadius: BorderRadius.circular(12.r)
                   ),
         
                   child: Padding(
@@ -116,14 +113,14 @@ class _RegistrationViewState extends State<RegistrationView> {
                           ),
                         ),
                     
-                        Form(
+                        Consumer<RegistrationViewModel>(builder: (context, viewModel, child) => Form(
                           key: _formKey,
                           child: Column(
                             children: [
 
                               //name
                               TextFormField(
-                                controller: _nameController,
+                                controller: viewModel.nameController,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Name",
@@ -152,7 +149,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               //Birthdate
                               TextFormField(
-                                controller: _ageController,
+                                controller: viewModel.ageController,
                                 readOnly: true,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
@@ -170,7 +167,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                   //Date picker
                                   suffixIcon: IconButton(
                                     onPressed: () {
-                                      pickDate();
+                                      viewModel.pickDate(context);
                                     }, 
                                     icon: const Icon(Icons.date_range_outlined),
                                     color: const Color(0xCC3D424A),
@@ -192,83 +189,119 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               //Dropdown address / StreamBuilder
                               Row(
-                                children: [
-                                  DropdownButton(
-                                    hint: const Text("Municipality"),
-                                    dropdownColor: const Color(0xFFFCFCFC),
-                                    value: _municipalityValue,
-                                    underline: Container(
-                                      height: 2,
-                                      color: const Color(0xFF3D424A),
+                                  children: [
+                                    StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance.collection('municipalities').snapshots(), 
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasError) {
+                                          return Center(child: Text("some error occured ${snapshot.error}"),);
+                                        }
+                                        List<DropdownMenuItem> municipalities = [];
+                                        if (!snapshot.hasData) {
+                                          return const CircularProgressIndicator.adaptive();
+                                        }
+                                        else {
+                                          final selectMunicipal = snapshot.data?.docs.toList();
+                                          if (selectMunicipal != null) {
+                                            for (var municipal in selectMunicipal) {
+                                              municipalities.add(DropdownMenuItem(
+                                                  value: municipal.id,
+                                                  child: Text(
+                                                    municipal["name"],
+                                                    style: TextStyle(
+                                                    color: const Color(0xFF3D424A),
+                                                    fontSize: 14.r
+                                                    )
+                                                  )
+                                                ),
+                                              );
+                                            }
+                                          }
+                                          return DropdownButton(
+                                            hint: const Text("Your Municipality"),
+                                            value: viewModel.municipalityValue,
+                                            items: municipalities, 
+                                            iconSize: 28.r,
+                                            underline: Container(
+                                              height: 2,
+                                              color: const Color(0xFF3D424A),
+                                            ),
+                                            onChanged: (value) {
+                                              viewModel.updateMunicipality(value);
+                                              if (value != null) {
+                                                viewModel.barangayValue = null;
+                                              }
+                                              else {
+                                                viewModel.updateMunicipality(value);
+                                              }
+                                            }
+                                          );
+                                        }
+                                      }
                                     ),
-                                    items: const [
-                                      DropdownMenuItem(
-                                        value: "Nabas",
-                                        child: Text(
-                                          "Nabas",
-                                          style: TextStyle(
-                                            color: Color(0xFF3D424A),
-                                            fontSize: 12
-                                          ),
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "Malay",
-                                        child: Text(
-                                          "Malay",
-                                          style: TextStyle(
-                                            color: Color(0xFF3D424A),
-                                            fontSize: 12
-                                          ),
-                                        ),
-                                      ),
-                                    ], 
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _municipalityValue = newValue!;
-                                      });
-                                    }                    
-                                  ),
 
-                                  SizedBox(width: 50.r,),
+                                    SizedBox(width: 20.r,),
 
-                                  DropdownButton(
-                                    hint: const Text("Barangay"),
-                                    value: _barangayValue,
-                                    underline: Container(
-                                      height: 2,
-                                      color: const Color(0xFF3D424A),
+                                    StreamBuilder<QuerySnapshot>(
+                                      stream: viewModel.isActive? 
+                                        FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalityValue).collection('Cities').snapshots() :
+                                        FirebaseFirestore.instance.collection('municipalities').snapshots(), 
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasError) {
+                                          return Center(child: Text("some error occured ${snapshot.error}"),);
+                                        }
+                                        List<DropdownMenuItem> barangays = [];
+                                        if (!snapshot.hasData) {
+                                          return const CircularProgressIndicator.adaptive();
+                                        }
+                                        else {
+                                          final selectBarangay = snapshot.data?.docs.toList();
+                                          if (selectBarangay  != null) {
+                                            for (var barangay in selectBarangay ) {
+                                              barangays.add(DropdownMenuItem(
+                                                  value: barangay.id,
+                                                  child: Text(
+                                                    barangay["name"],
+                                                    style: TextStyle(
+                                                    color: const Color(0xFF3D424A),
+                                                    fontSize: 14.r
+                                                    )
+                                                  )
+                                                ),
+                                              );
+                                              // if (viewModel.checkCollection(municipal)) {
+                                              //   print("Collection boss");
+                                                
+                                              // } 
+                                              // else{
+                                              //   print("di collection ${municipal.data().toString()}");
+                                              // }
+                                            }
+                                          }
+                                          return DropdownButton(
+                                            hint: Text(
+                                              "Your Barangay",
+                                              style: TextStyle(
+                                                color: viewModel.isActive? const Color(0xFF3D424A) : const Color(0xFF808080)
+                                              )
+                                            ),
+                                            value: viewModel.barangayValue,
+                                            items: viewModel.isActive? barangays : null, 
+                                            iconSize: 28.r,
+                                            underline: Container(
+                                              height: 2,
+                                              color: const Color(0xFF3D424A),
+                                            ),
+                                            onChanged: (value) {
+                                              viewModel.updateBarangay(value);
+                                            }
+                                          );
+                                        }
+                                      }
                                     ),
-                                    items: const [
-                                      DropdownMenuItem(
-                                        value: "Unidos",
-                                        child: Text(
-                                          "Unidos",
-                                          style: TextStyle(
-                                            color: Color(0xFF3D424A),
-                                            fontSize: 12
-                                          ),
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "Caticlan",
-                                        child: Text(
-                                          "Catcilan",
-                                          style: TextStyle(
-                                            color: Color(0xFF3D424A),
-                                            fontSize: 12
-                                          ),
-                                        ),
-                                      ),
-                                    ], 
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _barangayValue = newValue!;
-                                      });
-                                    }
-                                  ),
-                                ],
+                                  ],
                               ),
+                          
 
                               SizedBox(height: 13.r,),
 
@@ -318,7 +351,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               //contact number
                               TextFormField(
-                                controller: _contactController,
+                                controller: viewModel.contactController,
                                 cursorColor: const Color(0xFF3D424A),
                                 maxLength: 11,
                                 keyboardType: TextInputType.number, //accepts only intgers
@@ -350,7 +383,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               //email
                               TextFormField(
-                                controller: _emailController,
+                                controller: viewModel.emailController,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Email",
@@ -382,7 +415,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               //password
                               TextFormField(
-                                controller: _passwordController,
+                                controller: viewModel.passwordController,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Password",
@@ -466,6 +499,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                             ],
                           ),
                         ),
+                        )
                       ],
                     ),
                   ),
@@ -479,29 +513,5 @@ class _RegistrationViewState extends State<RegistrationView> {
       ),
     );
 
-  }
-
-  //DatePicker Widget
-  Future<void> pickDate() async {
-    DateTime? picked = await showDatePicker(
-      context: context, 
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900), 
-      lastDate:  DateTime.now(),
-      initialEntryMode: DatePickerEntryMode.input,
-      confirmText: "Confirm",
-      cancelText: "No",
-    );
-
-    if (picked != null) {
-      //converts DateTime to String then splits the string by spaces then gets the date then splits the date by - 
-      String month = picked.toString().split(" ")[0].split("-")[1];
-      String day = picked.toString().split(" ")[0].split("-")[2];
-      String year = picked.toString().split(" ")[0].split("-")[0];
-
-      setState(() {
-        _ageController.text = "$month/$day/$year";
-      });
-    }
   }
 }
