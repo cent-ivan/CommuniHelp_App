@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/ViewModels/profile_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
@@ -16,14 +18,8 @@ class _EditProfileViewState extends State<EditProfileView> {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
-  //text field controllers
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _birthdateController = TextEditingController();
-  String _municipalityValue = "Nabas";
-  String _barangayValue = "Unidos";
   String currentOption = options[0];
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _contactController = TextEditingController();
+  
 
   double spaceBetweenDetails = 20.r;
   double spaceBetweenLabel = 2.5.r;
@@ -96,6 +92,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                           }, 
                           icon: const Icon(Icons.camera_alt),
                           iconSize: 15.r,
+                          splashRadius: 50.r,
                         ),
                       )
                     ],
@@ -127,7 +124,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                         //Details---
                         //FullName Edit
                         TextFormField(
-                          controller: _nameController,
+                          controller: viewModel.nameController,
                           cursorColor: const Color(0xFF3D424A),
                           style: TextStyle(
                             fontSize: 18.r
@@ -157,8 +154,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                   
                         //Birthday Edit
                         TextFormField(
-                          controller: _birthdateController,
+                          controller: viewModel.birthdateController,
                           cursorColor: const Color(0xFF3D424A),
+                          readOnly: true,
                           style: TextStyle(
                             fontSize: 18.r
                           ),
@@ -174,7 +172,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                             //Date picker
                             suffixIcon: IconButton(
                               onPressed: () {
-                                pickDate();
+                                viewModel.pickDate(context);
                               }, 
                               icon: const Icon(Icons.date_range_outlined),
                               color: const Color(0xCC3D424A),
@@ -252,57 +250,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                             Column(
                               children: [
                                 Text(
-                                  "Barangay",
-                                  style: TextStyle(
-                                    color: Theme.of(context).colorScheme.outline,
-                                    fontSize: 14.r,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.5
-                                  ),
-                                ),
-                  
-                                SizedBox(height: 3.r,),
-                  
-                                DropdownButton(
-                                  hint: const Text("Barangay"),
-                                  value: _barangayValue ,
-                                  underline: Container(
-                                    height: 2,
-                                    color: const Color(0xFF3D424A),
-                                  ),
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: "Unidos",
-                                      child: Text(
-                                        "Unidos",
-                                        style: TextStyle(
-                                           fontSize: 14.r
-                                        ),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: "Libertad",
-                                      child: Text(
-                                        "Libertad",
-                                        style: TextStyle(
-                                           fontSize: 14.r
-                                        ),
-                                      ),
-                                    ),
-                                  ], 
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      _barangayValue = newValue!;
-                                    });
-                                  }                    
-                                ),
-
-                              ],
-                            ),
-                  
-                            Column(
-                              children: [
-                                Text(
                                   "Municipality",
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.outline,
@@ -314,39 +261,130 @@ class _EditProfileViewState extends State<EditProfileView> {
                   
                                 SizedBox(height: 3.r,),
                   
-                                DropdownButton(
-                                  hint: const Text("Municipality"),
-                                  value: _municipalityValue,
-                                  underline: Container(
-                                    height: 2,
-                                    color: const Color(0xFF3D424A),
+                                StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance.collection('municipalities').snapshots(), 
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasError) {
+                                          return Center(child: Text("Error occured: ${snapshot.error}"),);
+                                        }
+                                        List<DropdownMenuItem> municipalities = [];
+                                        if (!snapshot.hasData) {
+                                          return const CircularProgressIndicator.adaptive();
+                                        }
+                                        else {
+                                          final selectMunicipal = snapshot.data?.docs.toList();
+                                          if (selectMunicipal != null) {
+                                            for (var municipal in selectMunicipal) {
+                                              municipalities.add(DropdownMenuItem(
+                                                  value: municipal.id,
+                                                  child: Text(
+                                                    municipal["name"],
+                                                    style: TextStyle(
+                                                    color: const Color(0xFF3D424A),
+                                                    fontSize: 14.r
+                                                    )
+                                                  )
+                                                ),
+                                              );
+                                            }
+                                          }
+                                          return DropdownButton(
+                                            hint: const Text("Your Municipality"),
+                                            value: viewModel.municipalId,
+                                            items: municipalities, 
+                                            iconSize: 28.r,
+                                            underline: Container(
+                                              height: 2,
+                                              color: const Color(0xFF3D424A),
+                                            ),
+                                            onChanged: (value) {
+                                              viewModel.updateMunicipality(value);
+                                              if (value != null) {
+                                                viewModel.barangayId = null;
+                                              }
+                                              else {
+                                                viewModel.updateMunicipality(value);
+                                                viewModel.getMunicipal();
+                                              }
+                                            }
+                                          );
+                                        }
+                                      }
                                   ),
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: "Nabas",
-                                      child: Text(
-                                        "Nabas",
-                                        style: TextStyle(
-                                           fontSize: 14.r
-                                        ),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: "Malay",
-                                      child: Text(
-                                        "Malay",
-                                        style: TextStyle(
-                                           fontSize: 14.r
-                                        ),
-                                      ),
-                                    ),
-                                  ], 
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      _municipalityValue = newValue!;
-                                    });
-                                  }                    
+
+                              ],
+                            ),
+                  
+                            Column(
+                              children: [
+                                Text(
+                                  "Barangay",
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.outline,
+                                    fontSize: 14.r,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1.5
+                                  ),
                                 ),
+                  
+                                SizedBox(height: 3.r,),
+                  
+                                StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalId).collection('Cities').snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasError) {
+                                          return Center(child: Text("Error occured: ${snapshot.error}"),);
+                                        }
+                                        List<DropdownMenuItem> barangays = [];
+                                        if (!snapshot.hasData) {
+                                          return const CircularProgressIndicator.adaptive();
+                                        }
+                                        else {
+                                          final selectBarangay = snapshot.data?.docs.toList();
+                                          if (selectBarangay  != null) {
+                                            for (var barangay in selectBarangay ) {
+                                              barangays.add(DropdownMenuItem(
+                                                  value: barangay.id,
+                                                  child: Text(
+                                                    barangay["name"],
+                                                    style: TextStyle(
+                                                    color: const Color(0xFF3D424A),
+                                                    fontSize: 14.r
+                                                    )
+                                                  )
+                                                ),
+                                              );
+                                              // if (viewModel.checkCollection(municipal)) {
+                                              //   print("Collection boss");
+                                                
+                                              // } 
+                                              // else{
+                                              //   print("di collection ${municipal.data().toString()}");
+                                              // }
+                                            }
+                                          }
+                                          return DropdownButton(
+                                            hint: Text(
+                                              "Your Barangay",
+                                              style: TextStyle(
+                                                color: viewModel.isActive? const Color(0xFF3D424A) : const Color(0xFF808080)
+                                              )
+                                            ),
+                                            value: viewModel.barangayId,
+                                            items: viewModel.isActive? barangays : null, 
+                                            iconSize: 28.r,
+                                            underline: Container(
+                                              height: 2,
+                                              color: const Color(0xFF3D424A),
+                                            ),
+                                            onChanged: (value) {
+                                              viewModel.updateBarangay(value);
+                                              viewModel.getBarangay();
+                                            }
+                                          );
+                                        }
+                                      }
+                                  ),
                               ],
                             ),
                   
@@ -381,7 +419,7 @@ class _EditProfileViewState extends State<EditProfileView> {
 
                         //edit email
                         TextFormField(
-                          controller: _emailController,
+                          controller: viewModel.emailController,
                           cursorColor: const Color(0xFF3D424A),
                           style: TextStyle(
                             fontSize: 18.r
@@ -425,9 +463,13 @@ class _EditProfileViewState extends State<EditProfileView> {
 
                         //edit contacts
                         TextFormField(
-                          controller: _contactController,
+                          controller:  viewModel.contactController,
                           cursorColor: const Color(0xFF3D424A),
                           maxLength: 11,
+                          keyboardType: TextInputType.number, //accepts only intgers
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                           style: TextStyle(
                             fontSize: 18.r
                           ),
@@ -462,13 +504,13 @@ class _EditProfileViewState extends State<EditProfileView> {
 
                               //calls update
                               viewModel.updateProfile(
-                                _nameController.text, 
-                                _birthdateController.text, 
+                                viewModel.nameController.text, 
+                                viewModel.birthdateController.text, 
                                 currentOption, 
-                                _barangayValue, 
-                                _municipalityValue, 
-                                _emailController.text,
-                                _contactController.text
+                                viewModel.barangayValue!, 
+                                viewModel.municipalityValue!, 
+                                viewModel.emailController.text,
+                                viewModel.contactController.text
                                 
                               );
                               Navigator.pushReplacementNamed(context, '/home');
@@ -505,27 +547,5 @@ class _EditProfileViewState extends State<EditProfileView> {
     );
   }
 
-  //DatePicker Widget
-  Future<void> pickDate() async {
-    DateTime? picked = await showDatePicker(
-      context: context, 
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900), 
-      lastDate:  DateTime.now(),
-      initialEntryMode: DatePickerEntryMode.input,
-      confirmText: "Confirm",
-      cancelText: "No",
-    );
-
-    if (picked != null) {
-      //converts DateTime to String then splits the string by spaces then gets the date then splits the date by - 
-      String month = picked.toString().split(" ")[0].split("-")[1];
-      String day = picked.toString().split(" ")[0].split("-")[2];
-      String year = picked.toString().split(" ")[0].split("-")[0];
-
-      setState(() {
-        _birthdateController.text = "$month/$day/$year";
-      });
-    }
-  }
+  
 }
