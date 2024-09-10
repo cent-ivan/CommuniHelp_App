@@ -80,30 +80,26 @@ class ProfileViewModel extends ChangeNotifier{
   //Firestore methods-------------------------------------------------------------------
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  void updateMunicipality(String? newValue) {
+  Future updateMunicipal(String? newValue) async {
     municipalId = newValue;
     isActive = true;
-    notifyListeners();
-  }
-
-  void updateBarangay(String? newValue) {
-    barangayId = newValue;
-    notifyListeners();
-  }
-
-  Future getMunicipal() async {
     //Gets municipal
     DocumentSnapshot docMunicipal = await _db.collection("municipalities").doc(municipalId).get();
     if (docMunicipal.exists) {
       municipalityValue = docMunicipal["name"];
+      
     }
+    notifyListeners();
   }
 
-  Future getBarangay() async {
-    //Gets municipal
+  Future updateBarangay(String? newValue) async {
+    barangayId = newValue;
+    //Gets barangay
     DocumentSnapshot docBarangay = await _db.collection("municipalities").doc(municipalId).collection("Cities").doc(barangayId).get();
     if (docBarangay .exists) {
       barangayValue = docBarangay ["name"];
+      
     }
+    notifyListeners();
   }
 }
