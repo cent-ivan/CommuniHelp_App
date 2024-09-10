@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/ViewModels/profile_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
@@ -16,15 +18,9 @@ class _EditProfileViewState extends State<EditProfileView> {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
-  //text field controllers
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _birthdateController = TextEditingController();
-  String _municipalityValue = "Nabas";
-  String _barangayValue = "Unidos";
   String currentOption = options[0];
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _contactController = TextEditingController();
-
+  
+  double _screenSize = 895.r;
   double spaceBetweenDetails = 20.r;
   double spaceBetweenLabel = 2.5.r;
   
@@ -51,7 +47,7 @@ class _EditProfileViewState extends State<EditProfileView> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           child: Container(
-            height: 895.r,
+            height: _screenSize,
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 5).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,6 +92,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                           }, 
                           icon: const Icon(Icons.camera_alt),
                           iconSize: 15.r,
+                          splashRadius: 50.r,
                         ),
                       )
                     ],
@@ -108,391 +105,445 @@ class _EditProfileViewState extends State<EditProfileView> {
                 ),
 
                 //Personal Details
-                Form(
-                  key: _formKey,
-                  child: Consumer<ProfileViewModel>(builder: (context, viewModel, child) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Personal Details",
-                          style: TextStyle(
-                            color: const Color(0xFFFEAE49),
-                            fontSize: 20.r,
-                            fontWeight: FontWeight.bold
-                          ),
-                        ),
-                  
-                        SizedBox(height: 10.r,),
-                  
-                        //Details---
-                        //FullName Edit
-                        TextFormField(
-                          controller: _nameController,
-                          cursorColor: const Color(0xFF3D424A),
-                          style: TextStyle(
-                            fontSize: 18.r
-                          ),
-                          decoration: InputDecoration(
-                          hintText: "Edit Name",
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                Container(
+                  padding: EdgeInsets.all(12.r),
+                    decoration: BoxDecoration(
+                    color:  const Color(0xFFF5F5F5),
+                    borderRadius: BorderRadius.all(Radius.circular(10.r))
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Consumer<ProfileViewModel>(builder: (context, viewModel, child) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Personal Details",
+                            style: TextStyle(
+                              color: const Color(0xFFFEAE49),
+                              fontSize: 20.r,
+                              fontWeight: FontWeight.bold
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
-                            )
                           ),
-
-                          validator: (value) {
-                            if (value!.isEmpty){
-                              return "Please enter name";
-                            }
-                            else{
-                              return null;
-                            }
-                          },
-                        ),
-                      
-                  
-                        SizedBox(height: spaceBetweenDetails,),
-                  
-                        //Birthday Edit
-                        TextFormField(
-                          controller: _birthdateController,
-                          cursorColor: const Color(0xFF3D424A),
-                          style: TextStyle(
-                            fontSize: 18.r
-                          ),
-                          decoration: InputDecoration(
-                            hintText: "Edit Birthday",
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                    
+                          SizedBox(height: 10.r,),
+                    
+                          //Details---
+                          //FullName Edit
+                          TextFormField(
+                            controller: viewModel.nameController,
+                            cursorColor: const Color(0xFF3D424A),
+                            style: TextStyle(
+                              fontSize: 18.r
                             ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
-                            ),
-
-                            //Date picker
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                pickDate();
-                              }, 
-                              icon: const Icon(Icons.date_range_outlined),
-                              color: const Color(0xCC3D424A),
-                              splashColor: const Color(0xFF3D424A),
-                            )
-
-                          ),
-
-                          validator: (value) {
-                            if (value!.isEmpty){
-                              return "Please enter name";
-                            }
-                            else{
-                              return null;
-                            }
-                          },
-                        ),
-                  
-                  
-                        SizedBox(height: spaceBetweenDetails,),
-                  
-                        //Gender edit
-                        Text(
-                          "Gender",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.outline,
-                            fontSize: 14.r,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1.5
-                          ),
-                        ),
-                  
-                        SizedBox(height: spaceBetweenLabel,),
-                  
-                        Row(
-                          children: [
-                            Radio<String>(
-                              activeColor: const Color(0xFF854F6C),
-                              value: options[0],
-                              groupValue: currentOption,
-                              onChanged: (value) {
-                                setState(() {
-                                  currentOption = value.toString();
-                                });
-                              },
-                            ),
-
-                            Text(options[0]),
-
-                            SizedBox(width: 60.r,),
-
-                            Radio(
-                              activeColor: const Color(0xFF854F6C),
-                              value: options[1],
-                              groupValue: currentOption,
-                              onChanged: (value) {
-                                setState(() {
-                                  currentOption = value.toString();
-                                });
-                              },
-                            ),
-
-                            Text(options[1]),
-                          ],
-                        ),
-                  
-                  
-                        SizedBox(height: spaceBetweenDetails,),
-                  
-                        //Barangay and Municipality
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "Barangay",
-                                  style: TextStyle(
-                                    color: Theme.of(context).colorScheme.outline,
-                                    fontSize: 14.r,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.5
-                                  ),
-                                ),
-                  
-                                SizedBox(height: 3.r,),
-                  
-                                DropdownButton(
-                                  hint: const Text("Barangay"),
-                                  value: _barangayValue ,
-                                  underline: Container(
-                                    height: 2,
-                                    color: const Color(0xFF3D424A),
-                                  ),
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: "Unidos",
-                                      child: Text(
-                                        "Unidos",
-                                        style: TextStyle(
-                                           fontSize: 14.r
-                                        ),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: "Libertad",
-                                      child: Text(
-                                        "Libertad",
-                                        style: TextStyle(
-                                           fontSize: 14.r
-                                        ),
-                                      ),
-                                    ),
-                                  ], 
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      _barangayValue = newValue!;
-                                    });
-                                  }                    
-                                ),
-
-                              ],
-                            ),
-                  
-                            Column(
-                              children: [
-                                Text(
-                                  "Municipality",
-                                  style: TextStyle(
-                                    color: Theme.of(context).colorScheme.outline,
-                                    fontSize: 14.r,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.5
-                                  ),
-                                ),
-                  
-                                SizedBox(height: 3.r,),
-                  
-                                DropdownButton(
-                                  hint: const Text("Municipality"),
-                                  value: _municipalityValue,
-                                  underline: Container(
-                                    height: 2,
-                                    color: const Color(0xFF3D424A),
-                                  ),
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: "Nabas",
-                                      child: Text(
-                                        "Nabas",
-                                        style: TextStyle(
-                                           fontSize: 14.r
-                                        ),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: "Malay",
-                                      child: Text(
-                                        "Malay",
-                                        style: TextStyle(
-                                           fontSize: 14.r
-                                        ),
-                                      ),
-                                    ),
-                                  ], 
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      _municipalityValue = newValue!;
-                                    });
-                                  }                    
-                                ),
-                              ],
-                            ),
-                  
-                            SizedBox(width: 10.r,)
-                          ],
-                        ),
-                  
-                        SizedBox(height: 25.r,),
-                  
-                        //Contact Number
-                        Text(
-                          "Contact Details",
-                          style: TextStyle(
-                            color: const Color(0xFFFEAE49),
-                            fontSize: 20.r,
-                            fontWeight: FontWeight.bold
-                          ),
-                        ),
-                  
-                        SizedBox(height: 10.r,),
-
-                        Text(
-                          "Email",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.outline,
-                            fontSize: 14.r,
-                            fontWeight: FontWeight.w500
-                          ),
-                        ),
-
-                        SizedBox(height: spaceBetweenLabel,),
-
-                        //edit email
-                        TextFormField(
-                          controller: _emailController,
-                          cursorColor: const Color(0xFF3D424A),
-                          style: TextStyle(
-                            fontSize: 18.r
-                          ),
-                          decoration: InputDecoration(
-                            hintText: "Edit Email",
+                            decoration: InputDecoration(
+                            hintText: "Edit Name",
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
-                            ),
-                            focusedBorder: UnderlineInputBorder(
+                              ),
+                              focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
-                            )
-                          ),
-
-                          validator: (value) {
-                            if (value!.isEmpty){
-                              return "Please enter an email";
-                            }
-                            else if (!value.contains('@')){
-                              return "Enter a valid email";
-                            }
-                            else{
-                              return null;
-                            }
-                          },
-                        ),
-
-
-                        SizedBox(height: spaceBetweenDetails,),
-
-                        Text(
-                          "Mobile number",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.outline,
-                            fontSize: 14.r,
-                            fontWeight: FontWeight.w500
-                          ),
-                        ),
-                  
-                        SizedBox(height: spaceBetweenLabel,),
-
-                        //edit contacts
-                        TextFormField(
-                          controller: _contactController,
-                          cursorColor: const Color(0xFF3D424A),
-                          maxLength: 11,
-                          style: TextStyle(
-                            fontSize: 18.r
-                          ),
-                          decoration: InputDecoration(
-                          hintText: "Edit Contact Number",
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                              )
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
-                            )
-                          ),
-
-                          validator: (value) {
-                            if (value!.isEmpty){
-                              return "Please enter name";
-                            }
-                            else{
-                              return null;
-                            }
-                          },
-                        ),
                   
-                        SizedBox(height: 35.r,),
-
-                        //Save Button
-                        MaterialButton( 
-                          onPressed: (){
-                            if (_formKey.currentState!.validate()){
-                              //validated the text field and adds to the firebase, pass to register view model
-                              _formKey.currentState!.save();
-
-                              //calls update
-                              viewModel.updateProfile(
-                                _nameController.text, 
-                                _birthdateController.text, 
-                                currentOption, 
-                                _barangayValue, 
-                                _municipalityValue, 
-                                _emailController.text,
-                                _contactController.text
-                                
-                              );
-                              Navigator.pushReplacementNamed(context, '/home');
-                            }
-                          },
-                          height: 50.r,
-                          minWidth: 340.r,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(15.r))
+                            validator: (value) {
+                              if (value!.isEmpty){
+                                return "Please enter name";
+                              }
+                              else{
+                                return null;
+                              }
+                            },
                           ),
-                          color: const Color(0xFF57BEE6),
-                          child: Center(
-                            child: Text(
-                              "Save",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.outline,
-                                fontSize: 18.r,
-                                fontWeight: FontWeight.bold
+                        
+                    
+                          SizedBox(height: spaceBetweenDetails,),
+                    
+                          //Birthday Edit
+                          TextFormField(
+                            controller: viewModel.birthdateController,
+                            cursorColor: const Color(0xFF3D424A),
+                            readOnly: true,
+                            style: TextStyle(
+                              fontSize: 18.r
+                            ),
+                            decoration: InputDecoration(
+                              hintText: "Edit Birthday",
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                              ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                              ),
+                  
+                              //Date picker
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  viewModel.pickDate(context);
+                                }, 
+                                icon: const Icon(Icons.date_range_outlined),
+                                color: const Color(0xCC3D424A),
+                                splashColor: const Color(0xFF3D424A),
+                              )
+                  
+                            ),
+                  
+                            validator: (value) {
+                              if (value!.isEmpty){
+                                return "Please enter name";
+                              }
+                              else{
+                                return null;
+                              }
+                            },
+                          ),
+                    
+                    
+                          SizedBox(height: spaceBetweenDetails,),
+                    
+                          //Gender edit
+                          Text(
+                            "Gender",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.outline,
+                              fontSize: 14.r,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.5
+                            ),
+                          ),
+                    
+                          SizedBox(height: spaceBetweenLabel,),
+
+                          //gender
+                          Row(
+                            children: [
+                              Radio<String>(
+                                activeColor: const Color(0xFF854F6C),
+                                value: options[0],
+                                groupValue: currentOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    currentOption = value.toString();
+                                  });
+                                },
+                              ),
+                                                
+                              Text(options[0]),
+                  
+                              SizedBox(width: 60.r,),
+                  
+                              Radio(
+                                activeColor: const Color(0xFF854F6C),
+                                value: options[1],
+                                groupValue: currentOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    currentOption = value.toString();
+                                  });
+                                },
+                              ),
+                  
+                              Text(options[1]),
+                            ],
+                          ),
+                    
+                    
+                          SizedBox(height: spaceBetweenDetails,),
+                    
+                          //Barangay and Municipality
+                          Row(
+                            //crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Municipality",
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.outline,
+                                      fontSize: 14.r,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: 1.5
+                                    ),
+                                  ),
+                    
+                                  SizedBox(height: 3.r,),
+                    
+                                  StreamBuilder<QuerySnapshot>(
+                                        stream: FirebaseFirestore.instance.collection('municipalities').snapshots(), 
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Center(child: Text("Error occured: ${snapshot.error}"),);
+                                          }
+                                          List<DropdownMenuItem> municipalities = [];
+                                          if (!snapshot.hasData) {
+                                            return const CircularProgressIndicator.adaptive();
+                                          }
+                                          else {
+                                            final selectMunicipal = snapshot.data?.docs.toList();
+                                            if (selectMunicipal != null) {
+                                              for (var municipal in selectMunicipal) {
+                                                municipalities.add(DropdownMenuItem(
+                                                    value: municipal.id,
+                                                    child: Text(
+                                                      municipal["name"],
+                                                      style: TextStyle(
+                                                      color: const Color(0xFF3D424A),
+                                                      fontSize: 14.r
+                                                      )
+                                                    )
+                                                  ),
+                                                );
+                                              }
+                                            }
+                                            return DropdownButton(
+                                              hint: const Text("Your Municipality"),
+                                              value: viewModel.municipalId,
+                                              items: municipalities, 
+                                              iconSize: 28.r,
+                                              underline: Container(
+                                                height: 2,
+                                                color: const Color(0xFF3D424A),
+                                              ),
+                                              onChanged: (value) {
+                                                viewModel.updateMunicipal(value);
+                                                if (value != null) {
+                                                  viewModel.barangayId = null;
+                                                }
+                                                else {
+                                                  viewModel.updateMunicipal(value);
+                                                }
+                                              }
+                                            );
+                                          }
+                                        }
+                                    ),
+                  
+                                ],
+                              ),
+                    
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Barangay",
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.outline,
+                                      fontSize: 14.r,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: 1.5
+                                    ),
+                                  ),
+                    
+                                  SizedBox(height: 3.r,),
+                    
+                                  StreamBuilder<QuerySnapshot>(
+                                        stream: FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalId).collection('Cities').snapshots(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Center(child: Text("Error occured: ${snapshot.error}"),);
+                                          }
+                                          List<DropdownMenuItem> barangays = [];
+                                          if (!snapshot.hasData) {
+                                            return const CircularProgressIndicator.adaptive();
+                                          }
+                                          else {
+                                            final selectBarangay = snapshot.data?.docs.toList();
+                                            if (selectBarangay  != null) {
+                                              for (var barangay in selectBarangay ) {
+                                                barangays.add(DropdownMenuItem(
+                                                    value: barangay.id,
+                                                    child: Text(
+                                                      barangay["name"],
+                                                      style: TextStyle(
+                                                      color: const Color(0xFF3D424A),
+                                                      fontSize: 14.r
+                                                      )
+                                                    )
+                                                  ),
+                                                );
+                                              }
+                                            }
+                                            return DropdownButton(
+                                              hint: Text(
+                                                "Your Barangay",
+                                                style: TextStyle(
+                                                  color: viewModel.isActive? const Color(0xFF3D424A) : const Color(0xFF808080)
+                                                )
+                                              ),
+                                              value: viewModel.barangayId,
+                                              items: viewModel.isActive? barangays : null, 
+                                              iconSize: 28.r,
+                                              underline: Container(
+                                                height: 2,
+                                                color: const Color(0xFF3D424A),
+                                              ),
+                                              onChanged: (value) {
+                                                viewModel.updateBarangay(value);
+                                              }
+                                            );
+                                          }
+                                        }
+                                    ),
+                                ],
+                              ),
+                    
+                              SizedBox(width: 10.r,)
+                            ],
+                          ),
+                    
+                          SizedBox(height: 40.r,),
+                    
+                          //Contact Number
+                          Text(
+                            "Contact Details",
+                            style: TextStyle(
+                              color: const Color(0xFFFEAE49),
+                              fontSize: 20.r,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                    
+                          SizedBox(height: 10.r,),
+                  
+                          Text(
+                            "Email",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.outline,
+                              fontSize: 14.r,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                  
+                          SizedBox(height: spaceBetweenLabel,),
+                  
+                          //edit email
+                          TextFormField(
+                            controller: viewModel.emailController,
+                            cursorColor: const Color(0xFF3D424A),
+                            style: TextStyle(
+                              fontSize: 18.r
+                            ),
+                            decoration: InputDecoration(
+                              hintText: "Edit Email",
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                              )
+                            ),
+                  
+                            validator: (value) {
+                              if (value!.isEmpty){
+                                return "Please enter an email";
+                              }
+                              else if (!value.contains('@')){
+                                return "Enter a valid email";
+                              }
+                              else{
+                                return null;
+                              }
+                            },
+                          ),
+                  
+                  
+                          SizedBox(height: spaceBetweenDetails,),
+                  
+                          Text(
+                            "Mobile number",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.outline,
+                              fontSize: 14.r,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                    
+                          SizedBox(height: spaceBetweenLabel,),
+                  
+                          //edit contacts
+                          TextFormField(
+                            controller:  viewModel.contactController,
+                            cursorColor: const Color(0xFF3D424A),
+                            maxLength: 11,
+                            keyboardType: TextInputType.number, //accepts only intgers
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            style: TextStyle(
+                              fontSize: 18.r
+                            ),
+                            decoration: InputDecoration(
+                            hintText: "Edit Contact Number",
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                              )
+                            ),
+                  
+                            validator: (value) {
+                              if (value!.isEmpty){
+                                return "Please enter name";
+                              }
+                              else{
+                                return null;
+                              }
+                            },
+                          ),
+                    
+                          SizedBox(height: 35.r,),
+                  
+                          //Save Button
+                          MaterialButton( 
+                            onPressed: (){
+                              if (_formKey.currentState!.validate()){
+                                //validated the text field and adds to the firebase, pass to register view model
+                                _formKey.currentState!.save();
+                                setState(() {
+                                  _screenSize = 895.r;
+                                });
+                  
+                                //calls update
+                                viewModel.updateProfile(
+                                  viewModel.nameController.text, 
+                                  viewModel.birthdateController.text, 
+                                  currentOption, 
+                                  viewModel.barangayValue!, 
+                                  viewModel.municipalityValue!, 
+                                  viewModel.emailController.text,
+                                  viewModel.contactController.text
+                                  
+                                );
+                                Navigator.pushReplacementNamed(context, '/home');
+                              }
+                              else {
+                                setState(() {
+                                  _screenSize = 950.r;
+                                });
+                              }
+                            },
+                            height: 50.r,
+                            minWidth: 340.r,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(15.r))
+                            ),
+                            color: const Color(0xFF57BEE6),
+                            child: Center(
+                              child: Text(
+                                "Save",
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.outline,
+                                  fontSize: 18.r,
+                                  fontWeight: FontWeight.bold
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
-                    )
+                          )
+                        ],
+                      )
+                    ),
                   ),
                 ),
 
@@ -505,27 +556,5 @@ class _EditProfileViewState extends State<EditProfileView> {
     );
   }
 
-  //DatePicker Widget
-  Future<void> pickDate() async {
-    DateTime? _picked = await showDatePicker(
-      context: context, 
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900), 
-      lastDate:  DateTime.now(),
-      initialEntryMode: DatePickerEntryMode.input,
-      confirmText: "Confirm",
-      cancelText: "No",
-    );
-
-    if (_picked != null) {
-      //converts DateTime to String then splits the string by spaces then gets the date then splits the date by - 
-      String month = _picked.toString().split(" ")[0].split("-")[1];
-      String day = _picked.toString().split(" ")[0].split("-")[2];
-      String year = _picked.toString().split(" ")[0].split("-")[0];
-
-      setState(() {
-        _birthdateController.text = "$month/$day/$year";
-      });
-    }
-  }
+  
 }

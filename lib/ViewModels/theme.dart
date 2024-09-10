@@ -5,7 +5,7 @@ ThemeData lightMode = ThemeData(
   colorScheme: const ColorScheme.light(
     surface: Colors.white, //for backgorund
     primary: Color(0xFFF2F2F2),
-    secondary: Color(0xFFF5F5F5), //For extra not important stuff
+    secondary: Color(0xFFF8F8F8), //For extra not important stuff
     outline: Color(0xFF3D424A) //for texts and icons
   )
 );

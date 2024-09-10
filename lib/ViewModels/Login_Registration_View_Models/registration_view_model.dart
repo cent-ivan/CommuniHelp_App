@@ -1,56 +1,32 @@
+//import 'package:communihelp_app/FirebaseServices/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:communihelp_app/Models/user_model.dart';
 import 'package:flutter/material.dart';
 
-class ProfileViewModel extends ChangeNotifier{
+class RegistrationViewModel extends ChangeNotifier{
   //text field controllers
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController birthdateController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
   final TextEditingController contactController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   String? municipalityValue;
   String? barangayValue;
 
   String? municipalId;
   String? barangayId;
 
-  bool isActive  = false;
+  bool isActive = false;
 
-  //pseudo data
-  String name = "John Doe";
-  String birthdate = "June 03, 2002";
-  String gender = "Male"; 
-  String barangay = "Unidos"; 
-  String municipality = "Nabas"; 
-  String email = "johnd@gmail.com";
-  String mobileNumber = "09123990034";
-
-  late UserModel profile = loadProfile(name, birthdate, gender, barangay, municipality,email,  mobileNumber);
-
-  UserModel loadProfile(String name, String birthdate, String gender, String? barangay, String? municipality, String email, String mobileNumber){
-    return UserModel(
-      name: name, 
-      birthdate: birthdate, 
-      gender: gender, 
-      barangay: barangay, 
-      municipality: municipality, 
-      email: email,
-      mobileNumber: mobileNumber
-    );
+  //checks if the snapshot is a collection
+  bool checkCollection(DocumentSnapshot snapshot) {
+    Object data  = snapshot.data()!;
+    print(data);
+    if (data is Map) {
+      return true;
+    }
+    return false;
   }
 
-  void updateProfile(String updateName, String updateBirthdate, String updateGender, String updateBarangay, String updateMunicipality, String updateEmail, String updateMobileNumber){
-    name = updateName;
-    birthdate = updateBirthdate;
-    gender = updateGender;
-    barangay = updateBarangay;
-    municipality = updateMunicipality;
-    email = updateEmail;
-    mobileNumber = updateMobileNumber;
-
-    profile = loadProfile(name, birthdate, gender, barangay, municipality, email, mobileNumber);
-    notifyListeners();
-  }
 
 
   //DatePicker Widget
@@ -71,8 +47,7 @@ class ProfileViewModel extends ChangeNotifier{
       String day = picked.toString().split(" ")[0].split("-")[2];
       String year = picked.toString().split(" ")[0].split("-")[0];
 
-      birthdateController.text = "$month/$day/$year";
-      notifyListeners();
+       ageController.text = "$month/$day/$year";
     }
   }
 
@@ -81,14 +56,15 @@ class ProfileViewModel extends ChangeNotifier{
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future updateMunicipal(String? newValue) async {
+    
     municipalId = newValue;
-    isActive = true;
     //Gets municipal
     DocumentSnapshot docMunicipal = await _db.collection("municipalities").doc(municipalId).get();
     if (docMunicipal.exists) {
       municipalityValue = docMunicipal["name"];
-      
+      isActive = true;
     }
+
     notifyListeners();
   }
 
@@ -96,10 +72,10 @@ class ProfileViewModel extends ChangeNotifier{
     barangayId = newValue;
     //Gets barangay
     DocumentSnapshot docBarangay = await _db.collection("municipalities").doc(municipalId).collection("Cities").doc(barangayId).get();
-    if (docBarangay .exists) {
+    if (docBarangay.exists) {
       barangayValue = docBarangay ["name"];
-      
     }
+
     notifyListeners();
   }
 }

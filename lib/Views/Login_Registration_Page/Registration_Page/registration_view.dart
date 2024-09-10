@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+import '../../../ViewModels/Login_Registration_View_Models/registration_view_model.dart';
 
 class RegistrationView extends StatefulWidget {
   const RegistrationView({super.key});
@@ -14,20 +18,13 @@ List<String> options =["Male", "Female"]; //for radio list
 class _RegistrationViewState extends State<RegistrationView> {
 
   //DefaultBox height
-  double _whiteContainerHeight = 625.r;
+  double _whiteContainerHeight = 675.r;
 
   //form global key
   final _formKey = GlobalKey<FormState>();
 
-  //text field controllers
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
-  String _municipalityValue = "Nabas";
-  String _barangayValue = "Unidos";
   String currentOption = options[0];
-  final TextEditingController _contactController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +83,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                 //registration form container
                 Container(
                   height: _whiteContainerHeight,
-                  width: 320.r,
+                  width: 328.r,
                   decoration: BoxDecoration(
-                    color: const Color(0x99FCFCFC),
-                    borderRadius: BorderRadius.circular(20.r)
+                    color: const Color(0xB3FCFCFC),
+                    borderRadius: BorderRadius.circular(12.r)
                   ),
         
                   child: Padding(
@@ -107,7 +104,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                   color: const Color(0xFF3D424A),
                                   fontSize: 20.r,
                                   fontWeight: FontWeight.bold,
-                                  letterSpacing: 2
+                                  letterSpacing: 1.5
                                 ),
                               ),
 
@@ -116,14 +113,14 @@ class _RegistrationViewState extends State<RegistrationView> {
                           ),
                         ),
                     
-                        Form(
+                        Consumer<RegistrationViewModel>(builder: (context, viewModel, child) => Form(
                           key: _formKey,
                           child: Column(
                             children: [
 
                               //name
                               TextFormField(
-                                controller: _nameController,
+                                controller: viewModel.nameController,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Name",
@@ -131,10 +128,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   ),
                                 ),
 
@@ -152,7 +149,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               //Birthdate
                               TextFormField(
-                                controller: _ageController,
+                                controller: viewModel.ageController,
                                 readOnly: true,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
@@ -161,16 +158,16 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   ),
 
                                   //Date picker
                                   suffixIcon: IconButton(
                                     onPressed: () {
-                                      pickDate();
+                                      viewModel.pickDate(context);
                                     }, 
                                     icon: const Icon(Icons.date_range_outlined),
                                     color: const Color(0xCC3D424A),
@@ -192,85 +189,130 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               //Dropdown address
                               Row(
+                                  children: [
+                                    StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance.collection('municipalities').snapshots(), 
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasError) {
+                                          return Center(child: Text("some error occured ${snapshot.error}"),);
+                                        }
+                                        List<DropdownMenuItem> municipalities = [];
+                                        if (!snapshot.hasData) {
+                                          return const CircularProgressIndicator.adaptive();
+                                        }
+                                        else {
+                                          final selectMunicipal = snapshot.data?.docs.toList();
+                                          if (selectMunicipal != null) {
+                                            for (var municipal in selectMunicipal) {
+                                              municipalities.add(DropdownMenuItem(
+                                                  value: municipal.id,
+                                                  child: Text(
+                                                    municipal["name"],
+                                                    style: TextStyle(
+                                                    color: const Color(0xFF3D424A),
+                                                    fontSize: 14.r
+                                                    )
+                                                  )
+                                                ),
+                                              );
+                                            }
+                                          }
+                                
+                                          return DropdownButton(
+                                            hint: const Text("Your Municipality"),
+                                            value: viewModel.municipalId,
+                                            items: municipalities, 
+                                            iconSize: 28.r,
+                                            underline: Container(
+                                              height: 2.3,
+                                              color: const Color(0xFF3D424A),
+                                            ),
+                                            onChanged: (value) {
+                                              viewModel.updateMunicipal(value);
+                                              if (value != null) {
+                                                viewModel.barangayId = null;
+                                              }
+                                              else {
+                                                viewModel.updateMunicipal(value);
+                                              }
+                                            }
+                                          );
+                                        }
+                                      }
+                                    ),
+
+                                    SizedBox(width: 20.r,),
+
+                                    StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalId).collection('Cities').snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasError) {
+                                          return Center(child: Text("some error occured ${snapshot.error}"),);
+                                        }
+                                        List<DropdownMenuItem> barangays = [];
+                                        if (!snapshot.hasData) {
+                                          return const CircularProgressIndicator.adaptive();
+                                        }
+                                        else {
+                                          final selectBarangay = snapshot.data?.docs.toList();
+                                          if (selectBarangay  != null) {
+                                            for (var barangay in selectBarangay ) {
+                                              barangays.add(DropdownMenuItem(
+                                                  value: barangay.id,
+                                                  child: Text(
+                                                    barangay["name"],
+                                                    style: TextStyle(
+                                                    color: const Color(0xFF3D424A),
+                                                    fontSize: 14.r
+                                                    )
+                                                  )
+                                                ),
+                                              );
+                                            }
+                                          }
+
+                                          return DropdownButton(
+                                            hint: Text(
+                                              "Your Barangay",
+                                              style: TextStyle(
+                                                color: viewModel.isActive ? const Color(0xFF3D424A) : const Color(0xFF808080)
+                                              )
+                                            ),
+                                            value: viewModel.barangayId,
+                                            items: viewModel.isActive ? barangays : null, 
+                                            iconSize: 28.r,
+                                            underline: Container(
+                                              height: 2.3,
+                                              color: const Color(0xFF3D424A),
+                                            ),
+                                            onChanged: (value) {
+                                              viewModel.updateBarangay(value);
+                                            }
+                                          );
+                                        }
+                                      }
+                                    ),
+                                  ],
+                              ),
+                          
+
+                              SizedBox(height: 19.r,),
+
+
+                              //Gender Title
+                              Row(
                                 children: [
-                                  DropdownButton(
-                                    hint: const Text("Municipality"),
-                                    dropdownColor: const Color(0xFFFCFCFC),
-                                    value: _municipalityValue,
-                                    underline: Container(
-                                      height: 2,
+                                  Text(
+                                    "Gender",
+                                    style: TextStyle(
                                       color: const Color(0xFF3D424A),
+                                      fontSize: 20.r,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1.5.r
                                     ),
-                                    items: const [
-                                      DropdownMenuItem(
-                                        value: "Nabas",
-                                        child: Text(
-                                          "Nabas",
-                                          style: TextStyle(
-                                            color: Color(0xFF3D424A),
-                                            fontSize: 12
-                                          ),
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "Malay",
-                                        child: Text(
-                                          "Malay",
-                                          style: TextStyle(
-                                            color: Color(0xFF3D424A),
-                                            fontSize: 12
-                                          ),
-                                        ),
-                                      ),
-                                    ], 
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _municipalityValue = newValue!;
-                                      });
-                                    }                    
-                                  ),
-
-                                  SizedBox(width: 50.r,),
-
-                                  DropdownButton(
-                                    hint: const Text("Barangay"),
-                                    value: _barangayValue,
-                                    underline: Container(
-                                      height: 2,
-                                      color: const Color(0xFF3D424A),
-                                    ),
-                                    items: const [
-                                      DropdownMenuItem(
-                                        value: "Unidos",
-                                        child: Text(
-                                          "Unidos",
-                                          style: TextStyle(
-                                            color: Color(0xFF3D424A),
-                                            fontSize: 12
-                                          ),
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "Caticlan",
-                                        child: Text(
-                                          "Catcilan",
-                                          style: TextStyle(
-                                            color: Color(0xFF3D424A),
-                                            fontSize: 12
-                                          ),
-                                        ),
-                                      ),
-                                    ], 
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _barangayValue = newValue!;
-                                      });
-                                    }
                                   ),
                                 ],
                               ),
-
-                              SizedBox(height: 13.r,),
 
                               //Gender radio bottons
                               Row(
@@ -314,11 +356,30 @@ class _RegistrationViewState extends State<RegistrationView> {
                                   ),
                                 ],
                               ),
+                              
+                              SizedBox(height: 13.r,),
 
+                              const Divider(color: Color(0xE63D424A),),
+
+                
+                              //Contact Title
+                              Row(
+                                children: [
+                                  Text(
+                                    "Contact Details",
+                                    style: TextStyle(
+                                      color: const Color(0xFF3D424A),
+                                      fontSize: 20.r,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1.5.r
+                                    ),
+                                  ),
+                                ],
+                              ),
 
                               //contact number
                               TextFormField(
-                                controller: _contactController,
+                                controller: viewModel.contactController,
                                 cursorColor: const Color(0xFF3D424A),
                                 maxLength: 11,
                                 keyboardType: TextInputType.number, //accepts only intgers
@@ -331,10 +392,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
 
@@ -350,7 +411,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               //email
                               TextFormField(
-                                controller: _emailController,
+                                controller: viewModel.emailController,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Email",
@@ -358,10 +419,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
 
@@ -382,7 +443,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               //password
                               TextFormField(
-                                controller: _passwordController,
+                                controller: viewModel.passwordController,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Password",
@@ -390,10 +451,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
 
@@ -424,12 +485,12 @@ class _RegistrationViewState extends State<RegistrationView> {
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
                                         setState(() {
-                                          _whiteContainerHeight = 625.r;
+                                          _whiteContainerHeight = 675.r;
                                         });
                                       }
                                       else {
                                         setState(() {
-                                          _whiteContainerHeight = 675.r;
+                                          _whiteContainerHeight = 710.r;
                                         });
                                       }
                                     },
@@ -466,6 +527,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                             ],
                           ),
                         ),
+                        )
                       ],
                     ),
                   ),
@@ -479,29 +541,5 @@ class _RegistrationViewState extends State<RegistrationView> {
       ),
     );
 
-  }
-
-  //DatePicker Widget
-  Future<void> pickDate() async {
-    DateTime? _picked = await showDatePicker(
-      context: context, 
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900), 
-      lastDate:  DateTime.now(),
-      initialEntryMode: DatePickerEntryMode.input,
-      confirmText: "Confirm",
-      cancelText: "No",
-    );
-
-    if (_picked != null) {
-      //converts DateTime to String then splits the string by spaces then gets the date then splits the date by - 
-      String month = _picked.toString().split(" ")[0].split("-")[1];
-      String day = _picked.toString().split(" ")[0].split("-")[2];
-      String year = _picked.toString().split(" ")[0].split("-")[0];
-
-      setState(() {
-        _ageController.text = "$month/$day/$year";
-      });
-    }
   }
 }
