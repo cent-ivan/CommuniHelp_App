@@ -18,7 +18,7 @@ List<String> options =["Male", "Female"]; //for radio list
 class _RegistrationViewState extends State<RegistrationView> {
 
   //DefaultBox height
-  double _whiteContainerHeight = 625.r;
+  double _whiteContainerHeight = 675.r;
 
   //form global key
   final _formKey = GlobalKey<FormState>();
@@ -85,7 +85,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                   height: _whiteContainerHeight,
                   width: 328.r,
                   decoration: BoxDecoration(
-                    color: const Color(0x99FCFCFC),
+                    color: const Color(0xB3FCFCFC),
                     borderRadius: BorderRadius.circular(12.r)
                   ),
         
@@ -104,7 +104,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                   color: const Color(0xFF3D424A),
                                   fontSize: 20.r,
                                   fontWeight: FontWeight.bold,
-                                  letterSpacing: 2
+                                  letterSpacing: 1.5
                                 ),
                               ),
 
@@ -128,10 +128,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   ),
                                 ),
 
@@ -158,10 +158,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   ),
 
                                   //Date picker
@@ -187,7 +187,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               SizedBox(height: 13.r,),
 
-                              //Dropdown address / StreamBuilder
+                              //Dropdown address
                               Row(
                                   children: [
                                     StreamBuilder<QuerySnapshot>(
@@ -217,22 +217,23 @@ class _RegistrationViewState extends State<RegistrationView> {
                                               );
                                             }
                                           }
+                                
                                           return DropdownButton(
                                             hint: const Text("Your Municipality"),
-                                            value: viewModel.municipalityValue,
+                                            value: viewModel.municipalId,
                                             items: municipalities, 
                                             iconSize: 28.r,
                                             underline: Container(
-                                              height: 2,
+                                              height: 2.3,
                                               color: const Color(0xFF3D424A),
                                             ),
                                             onChanged: (value) {
-                                              viewModel.updateMunicipality(value);
+                                              viewModel.updateMunicipal(value);
                                               if (value != null) {
-                                                viewModel.barangayValue = null;
+                                                viewModel.barangayId = null;
                                               }
                                               else {
-                                                viewModel.updateMunicipality(value);
+                                                viewModel.updateMunicipal(value);
                                               }
                                             }
                                           );
@@ -243,9 +244,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     SizedBox(width: 20.r,),
 
                                     StreamBuilder<QuerySnapshot>(
-                                      stream: viewModel.isActive? 
-                                        FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalityValue).collection('Cities').snapshots() :
-                                        FirebaseFirestore.instance.collection('municipalities').snapshots(), 
+                                      stream: FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalId).collection('Cities').snapshots(),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasError) {
                                           return Center(child: Text("some error occured ${snapshot.error}"),);
@@ -269,27 +268,21 @@ class _RegistrationViewState extends State<RegistrationView> {
                                                   )
                                                 ),
                                               );
-                                              // if (viewModel.checkCollection(municipal)) {
-                                              //   print("Collection boss");
-                                                
-                                              // } 
-                                              // else{
-                                              //   print("di collection ${municipal.data().toString()}");
-                                              // }
                                             }
                                           }
+
                                           return DropdownButton(
                                             hint: Text(
                                               "Your Barangay",
                                               style: TextStyle(
-                                                color: viewModel.isActive? const Color(0xFF3D424A) : const Color(0xFF808080)
+                                                color: viewModel.isActive ? const Color(0xFF3D424A) : const Color(0xFF808080)
                                               )
                                             ),
-                                            value: viewModel.barangayValue,
-                                            items: viewModel.isActive? barangays : null, 
+                                            value: viewModel.barangayId,
+                                            items: viewModel.isActive ? barangays : null, 
                                             iconSize: 28.r,
                                             underline: Container(
-                                              height: 2,
+                                              height: 2.3,
                                               color: const Color(0xFF3D424A),
                                             ),
                                             onChanged: (value) {
@@ -303,7 +296,23 @@ class _RegistrationViewState extends State<RegistrationView> {
                               ),
                           
 
-                              SizedBox(height: 13.r,),
+                              SizedBox(height: 19.r,),
+
+
+                              //Gender Title
+                              Row(
+                                children: [
+                                  Text(
+                                    "Gender",
+                                    style: TextStyle(
+                                      color: const Color(0xFF3D424A),
+                                      fontSize: 20.r,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1.5.r
+                                    ),
+                                  ),
+                                ],
+                              ),
 
                               //Gender radio bottons
                               Row(
@@ -347,7 +356,26 @@ class _RegistrationViewState extends State<RegistrationView> {
                                   ),
                                 ],
                               ),
+                              
+                              SizedBox(height: 13.r,),
 
+                              const Divider(color: Color(0xE63D424A),),
+
+                
+                              //Contact Title
+                              Row(
+                                children: [
+                                  Text(
+                                    "Contact Details",
+                                    style: TextStyle(
+                                      color: const Color(0xFF3D424A),
+                                      fontSize: 20.r,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1.5.r
+                                    ),
+                                  ),
+                                ],
+                              ),
 
                               //contact number
                               TextFormField(
@@ -364,10 +392,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
 
@@ -391,10 +419,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
 
@@ -423,10 +451,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
 
@@ -457,12 +485,12 @@ class _RegistrationViewState extends State<RegistrationView> {
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
                                         setState(() {
-                                          _whiteContainerHeight = 625.r;
+                                          _whiteContainerHeight = 675.r;
                                         });
                                       }
                                       else {
                                         setState(() {
-                                          _whiteContainerHeight = 675.r;
+                                          _whiteContainerHeight = 710.r;
                                         });
                                       }
                                     },

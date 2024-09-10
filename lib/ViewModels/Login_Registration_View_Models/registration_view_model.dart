@@ -9,28 +9,18 @@ class RegistrationViewModel extends ChangeNotifier{
   final TextEditingController contactController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
   String? municipalityValue;
   String? barangayValue;
 
+  String? municipalId;
+  String? barangayId;
+
   bool isActive = false;
 
-  //final AuthService _auth =  AuthService();
-
-  void updateMunicipality(String? newValue) {
-    municipalityValue = newValue;
-    isActive = true;
-    notifyListeners();
-  }
-
-  void updateBarangay(String? newValue) {
-    barangayValue = newValue;
-    notifyListeners();
-  }
-
   //checks if the snapshot is a collection
-  bool checkCollection(QueryDocumentSnapshot snapshot) {
+  bool checkCollection(DocumentSnapshot snapshot) {
     Object data  = snapshot.data()!;
+    print(data);
     if (data is Map) {
       return true;
     }
@@ -48,7 +38,7 @@ class RegistrationViewModel extends ChangeNotifier{
       lastDate:  DateTime.now(),
       initialEntryMode: DatePickerEntryMode.input,
       confirmText: "Confirm",
-      cancelText: "No",
+      cancelText: "Cancel",
     );
 
     if (picked != null) {
@@ -59,5 +49,33 @@ class RegistrationViewModel extends ChangeNotifier{
 
        ageController.text = "$month/$day/$year";
     }
+  }
+
+
+  //Firestore methods-------------------------------------------------------------------
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Future updateMunicipal(String? newValue) async {
+    
+    municipalId = newValue;
+    //Gets municipal
+    DocumentSnapshot docMunicipal = await _db.collection("municipalities").doc(municipalId).get();
+    if (docMunicipal.exists) {
+      municipalityValue = docMunicipal["name"];
+      isActive = true;
+    }
+
+    notifyListeners();
+  }
+
+  Future updateBarangay(String? newValue) async {
+    barangayId = newValue;
+    //Gets barangay
+    DocumentSnapshot docBarangay = await _db.collection("municipalities").doc(municipalId).collection("Cities").doc(barangayId).get();
+    if (docBarangay.exists) {
+      barangayValue = docBarangay ["name"];
+    }
+
+    notifyListeners();
   }
 }
