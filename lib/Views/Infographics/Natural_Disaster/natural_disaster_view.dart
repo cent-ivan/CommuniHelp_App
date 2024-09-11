@@ -15,7 +15,7 @@ class NaturalDisasterView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 50, 20, 10).r,
           child: SizedBox(
-            height: 800.r,
+            height: MediaQuery.of(context).size.height + 200.r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -13,7 +13,7 @@ class InfographicsSection extends StatelessWidget {
     return Container(
       height: 215.r,
       padding: const EdgeInsets.all(10).r,
-      margin: const EdgeInsets.fromLTRB(9, 0, 9, 12).r,
+      margin: const EdgeInsets.fromLTRB(4, 0, 4, 12).r,
       decoration: BoxDecoration(
         color:  const Color(0x80A4EACD),
         borderRadius: BorderRadius.all(Radius.circular(18.r))
@@ -22,7 +22,7 @@ class InfographicsSection extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            margin: const EdgeInsets.fromLTRB(9, 3, 9, 6).r,
+            margin: const EdgeInsets.fromLTRB(8, 3, 8, 6).r,
             child: Text(
               "Infographics",
               style: TextStyle(
@@ -46,7 +46,7 @@ class InfographicsSection extends StatelessWidget {
                       Navigator.of(context).pushNamed('/naturalinfo');
                     },
                     height: 100.r,
-                    minWidth: 145.r,
+                    minWidth: 135.r,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15.r))
                     ),
@@ -64,8 +64,8 @@ class InfographicsSection extends StatelessWidget {
                   Text(
                     "Natural nga sakuna",
                     style: TextStyle(
-                      fontSize: 12.r,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 11.r,
+                      fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.outline, 
                     ),
                   ),
@@ -83,7 +83,7 @@ class InfographicsSection extends StatelessWidget {
                       Navigator.of(context).pushNamed('/manmadeinfo');
                     },
                     height: 100.r,
-                    minWidth: 145.r,
+                    minWidth: 135.r,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15.r))
                     ),
@@ -105,8 +105,8 @@ class InfographicsSection extends StatelessWidget {
                   Text(
                     "Man-made nga sakuna",
                     style: TextStyle(
-                      fontSize: 12.r,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 11.r,
+                      fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.outline, 
                     ),
                   ),
