@@ -119,7 +119,7 @@ class _AmbulanceButtonState extends State<AmbulanceButton> {
                         padding: const EdgeInsets.fromLTRB(50, 0, 50, 0).r,
                         child: CircleAvatar(
                           radius: 25.r,
-                          backgroundImage: const AssetImage('assets/images/rescuer.png'),
+                          backgroundImage: const AssetImage('assets/images/medical_team.png'),
                         ),
                       ),
 
@@ -161,16 +161,16 @@ class _AmbulanceButtonState extends State<AmbulanceButton> {
 }
 
 
-class PoliceButton extends StatefulWidget {
+class BFPButton extends StatefulWidget {
   final int numberOfContacts;
   final Color? color;
-  const PoliceButton({super.key, required this.numberOfContacts, required this.color});
+  const BFPButton({super.key, required this.numberOfContacts, required this.color});
 
   @override
-  State<PoliceButton> createState() => _PoliceButtonState();
+  State<BFPButton> createState() => _BFPButtonState();
 }
 
-class _PoliceButtonState extends State<PoliceButton> {
+class _BFPButtonState extends State<BFPButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -194,10 +194,10 @@ class _PoliceButtonState extends State<PoliceButton> {
                     children: [
                       //TODO: Change image, number and name of hotline
                       Container(
-                        padding: const EdgeInsets.fromLTRB(30, 0, 50, 0).r,
+                        padding: const EdgeInsets.fromLTRB(50, 0, 50, 0).r,
                         child: CircleAvatar(
                           radius: 25.r,
-                          backgroundImage: const AssetImage('assets/images/rescuer.png'),
+                          backgroundImage: const AssetImage('assets/images/firefighter.png'),
                         ),
                       ),
 
@@ -207,7 +207,7 @@ class _PoliceButtonState extends State<PoliceButton> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              viewModel.policeContacts[index].number!, //gets the name from the list
+                              viewModel.bfpContacts[index].number!, //gets the name from the list
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.outline,
                                 fontSize: 16.r,
@@ -216,7 +216,7 @@ class _PoliceButtonState extends State<PoliceButton> {
                             ),
                         
                             Text(
-                              viewModel.policeContacts[index].contactName!, //gets the name from the list
+                              viewModel.bfpContacts[index].contactName!, //gets the name from the list
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.outline,
                                 fontSize: 12.r,
