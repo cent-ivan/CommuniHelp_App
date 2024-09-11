@@ -80,7 +80,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
         child: Padding(
           padding: const EdgeInsets.all(13).r,
           child: SizedBox(
-            height: (700 + (viewModel.mddrmoContacts.length.toDouble() * 5) * ((viewModel.ambulanceContacts.length.toDouble() * 5) + (viewModel.policeContacts.length.toDouble() * 10))).r,
+            height: (700 + (viewModel.mddrmoContacts.length.toDouble() * 5) * ((viewModel.ambulanceContacts.length.toDouble() * 5) + (viewModel.bfpContacts.length.toDouble() * 10))).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -160,7 +160,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                   alignment: Alignment.topLeft,
                   margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                   child: Text(
-                    "Numero it Pulisya",
+                    "Numero it Bombero",
                     style: TextStyle(
                       fontSize: 20.r,
                       fontWeight: FontWeight.bold,
@@ -172,7 +172,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                 //Police number
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15).r,
-                  child: PoliceButton(numberOfContacts: viewModel.policeContacts.length, color: const Color(0x4D57BEE6), )
+                  child: BFPButton(numberOfContacts: viewModel.bfpContacts.length, color: Colors.amber[300], )
                 ),
       
               ],

@@ -38,7 +38,8 @@ class ChecklistItem extends StatelessWidget {
 
         //Checkbox Container
         child: Container(
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
+            borderRadius: BorderRadiusDirectional.circular(8.r),
             color: Colors.white,
           ),
           padding: const EdgeInsets.all(3).r,
@@ -60,14 +61,14 @@ class ChecklistItem extends StatelessWidget {
                     ? image is String
                     ? Image.asset(
                   image,
-                  width: 50.r,
-                  height: 50.r,
+                  width: 45.r,
+                  height: 45.r,
                   fit: BoxFit.cover,
                 )
                     : Image.file(
                   File((image as XFile).path),
-                  width: 50.r,
-                  height: 50.r,
+                  width: 45.r,
+                  height: 45.r,
                   fit: BoxFit.cover,
                 )
                     : Container(

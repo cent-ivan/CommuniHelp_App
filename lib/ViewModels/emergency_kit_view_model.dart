@@ -4,8 +4,8 @@ import 'package:image_picker/image_picker.dart';
 
 class EmergencyKitViewModel extends ChangeNotifier {
   List<EmergencyKitModel> importantsList = [
-    EmergencyKitModel(title: 'Bottled Water', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/water.jpg'),
-    EmergencyKitModel(title: 'Canned Food', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/food.jpg'),
+    EmergencyKitModel(title: 'Bottled Water', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/water.png'),
+    EmergencyKitModel(title: 'Canned Food', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/food.png'),
     EmergencyKitModel(title: 'First Aid Kit', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/firstaid.jpg'),
     EmergencyKitModel(title: 'Extra cash', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/money.jpg'),
     EmergencyKitModel(title: 'Prescription medicines', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/medicine.jpg'),

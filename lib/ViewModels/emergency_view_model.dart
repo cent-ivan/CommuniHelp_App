@@ -12,7 +12,7 @@ class EmergencyViewModel extends ChangeNotifier{
   List<EmergencyContactsModel> queryContacts = [];
   List<EmergencyContactsModel> mddrmoContacts = [];
   List<EmergencyContactsModel> ambulanceContacts = [];
-  List<EmergencyContactsModel> policeContacts = [];
+  List<EmergencyContactsModel> bfpContacts = [];
   
 
   void addContact(){
@@ -20,7 +20,7 @@ class EmergencyViewModel extends ChangeNotifier{
     queryContacts.add(EmergencyContactsModel(contactType: "MDRRMO", number: "0912345678190", contactName: "GLOBE - MDRRMO Nabas"));
 
     queryContacts.add(EmergencyContactsModel(contactType: "AMBULANCE", number: "0912345678121", contactName: "TNT - Ambulance Nabas"));
-    queryContacts.add(EmergencyContactsModel(contactType: "POLICE", number: "0912345678199", contactName: "TNT - PNP Nabas"));
+    queryContacts.add(EmergencyContactsModel(contactType: "BFP", number: "0912345678199", contactName: "TNT - BFP Nabas"));
     notifyListeners();
 
     filterContact();
@@ -36,8 +36,8 @@ class EmergencyViewModel extends ChangeNotifier{
         ambulanceContacts.add(contact);
         notifyListeners();
       }
-      else if (contact.contactType!.contains("POLICE")) {
-        policeContacts.add(contact);
+      else if (contact.contactType!.contains("BFP")) {
+        bfpContacts.add(contact);
         notifyListeners();
       }
       else {
