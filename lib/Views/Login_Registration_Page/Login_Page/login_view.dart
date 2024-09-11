@@ -14,6 +14,8 @@ class _LoginViewState extends State<LoginView> {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
+  double _loginHeight = 310.r;
+
   bool _isObscure =  true;
 
   //controllers
@@ -36,7 +38,7 @@ class _LoginViewState extends State<LoginView> {
           ),
         
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 30, 8, 8).r,
+            padding: const EdgeInsets.fromLTRB(3, 30, 3, 8).r,
             child: Column(
               children: [
                 //Logo and title 
@@ -44,7 +46,7 @@ class _LoginViewState extends State<LoginView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 300.r,
+                      width: 350.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),
@@ -52,7 +54,7 @@ class _LoginViewState extends State<LoginView> {
 
                     //Logo and title
                     Positioned(
-                      top: 120.r,
+                      top: 130.r,
                       child: Text(
                         "CommuniHelp",
                         style: TextStyle(
@@ -72,13 +74,13 @@ class _LoginViewState extends State<LoginView> {
                     ),
         
                     Positioned(
-                      top: 160.r,
+                      top: 170.r,
                       child: Text(
                         "Disaster Preparedness Asssistance and Utility App",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
-                          fontSize: 12.r,
+                          fontSize: 10.r,
                           shadows: [
                             Shadow(
                               color: Colors.white,
@@ -96,7 +98,7 @@ class _LoginViewState extends State<LoginView> {
         
                 //Login box
                 Container(
-                  height: 310.r,
+                  height: _loginHeight,
                   width: 320.r,
                   decoration: BoxDecoration(
                     color: const Color(0x99FCFCFC),
@@ -219,6 +221,9 @@ class _LoginViewState extends State<LoginView> {
                                       }
                                       else {
                                         Navigator.pushReplacementNamed(context, '/home');
+                                        setState(() {
+                                          _loginHeight = 330.r;
+                                        });
                                       }
                                     },
                                     color: const Color(0xFF3D424A),

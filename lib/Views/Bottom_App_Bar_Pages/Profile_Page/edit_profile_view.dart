@@ -20,7 +20,7 @@ class _EditProfileViewState extends State<EditProfileView> {
 
   String currentOption = options[0];
   
-  double _screenSize = 895.r;
+  double _screenSize = 895.r + 130.r;
   double spaceBetweenDetails = 20.r;
   double spaceBetweenLabel = 2.5.r;
   
@@ -48,7 +48,7 @@ class _EditProfileViewState extends State<EditProfileView> {
         body: SingleChildScrollView(
           child: Container(
             height: _screenSize,
-            padding: const EdgeInsets.fromLTRB(20, 25, 20, 5).r,
+            padding: const EdgeInsets.fromLTRB(12, 25, 12, 5).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -133,7 +133,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                             controller: viewModel.nameController,
                             cursorColor: const Color(0xFF3D424A),
                             style: TextStyle(
-                              fontSize: 18.r
+                              fontSize: 14.r
                             ),
                             decoration: InputDecoration(
                             hintText: "Edit Name",
@@ -164,7 +164,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                             cursorColor: const Color(0xFF3D424A),
                             readOnly: true,
                             style: TextStyle(
-                              fontSize: 18.r
+                              fontSize: 14.r
                             ),
                             decoration: InputDecoration(
                               hintText: "Edit Birthday",
@@ -250,9 +250,11 @@ class _EditProfileViewState extends State<EditProfileView> {
                           SizedBox(height: spaceBetweenDetails,),
                     
                           //Barangay and Municipality
-                          Row(
+                          Wrap(
+                            spacing: 4.r,
+                            runSpacing: 4.r,
                             //crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,7 +291,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                                       municipal["name"],
                                                       style: TextStyle(
                                                       color: const Color(0xFF3D424A),
-                                                      fontSize: 14.r
+                                                      fontSize: 12.r
                                                       )
                                                     )
                                                   ),
@@ -321,6 +323,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                   
                                 ],
                               ),
+
+                              SizedBox(height: 3.r,),
                     
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -357,7 +361,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                                       barangay["name"],
                                                       style: TextStyle(
                                                       color: const Color(0xFF3D424A),
-                                                      fontSize: 14.r
+                                                      fontSize: 12.r
                                                       )
                                                     )
                                                   ),
@@ -502,7 +506,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 //validated the text field and adds to the firebase, pass to register view model
                                 _formKey.currentState!.save();
                                 setState(() {
-                                  _screenSize = 895.r;
+                                  _screenSize = 895.r + 130.r;
                                 });
                   
                                 //calls update
@@ -520,7 +524,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                               }
                               else {
                                 setState(() {
-                                  _screenSize = 950.r;
+                                  _screenSize = _screenSize + 70.r;
                                 });
                               }
                             },

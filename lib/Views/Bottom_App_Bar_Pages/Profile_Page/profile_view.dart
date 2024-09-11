@@ -24,7 +24,7 @@ class _ProfileViewState extends State<ProfileView> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           child: Container(
-            height: 815.r,
+            height: MediaQuery.of(context).size.height + 250,
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 5).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,6 +299,7 @@ class _ProfileViewState extends State<ProfileView> {
                             MaterialButton(
                               onPressed: (){
                                 Navigator.pushReplacementNamed(context, '/editprofile');
+                                print(MediaQuery.of(context).size.height);
                               },
                               height: 50.r,
                               minWidth: 340.r,

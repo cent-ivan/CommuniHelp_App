@@ -18,7 +18,7 @@ List<String> options =["Male", "Female"]; //for radio list
 class _RegistrationViewState extends State<RegistrationView> {
 
   //DefaultBox height
-  double _whiteContainerHeight = 675.r;
+  double _whiteContainerHeight = 750.r + 20.r;
 
   //form global key
   final _formKey = GlobalKey<FormState>();
@@ -32,7 +32,7 @@ class _RegistrationViewState extends State<RegistrationView> {
       body: SingleChildScrollView(
         child: Container(
           width: 500.r,
-          height: 980.r,
+          height: 1110.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/background/Register.jpg'),
@@ -41,7 +41,7 @@ class _RegistrationViewState extends State<RegistrationView> {
           ),
 
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 25, 8, 8).r,
+            padding: const EdgeInsets.fromLTRB(8, 25, 8, 5).r,
             child: Column(
               children: [
                 //Logo and Title
@@ -188,7 +188,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                               SizedBox(height: 13.r,),
 
                               //Dropdown address
-                              Row(
+                              Wrap(
+                                spacing: 12.r,
+                                runSpacing: 4.r,
+                                crossAxisAlignment: WrapCrossAlignment.start,
                                   children: [
                                     StreamBuilder<QuerySnapshot>(
                                       stream: FirebaseFirestore.instance.collection('municipalities').snapshots(), 
@@ -240,9 +243,8 @@ class _RegistrationViewState extends State<RegistrationView> {
                                         }
                                       }
                                     ),
-
-                                    SizedBox(width: 20.r,),
-
+                              
+                              
                                     StreamBuilder<QuerySnapshot>(
                                       stream: FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalId).collection('Cities').snapshots(),
                                       builder: (context, snapshot) {
@@ -270,7 +272,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                               );
                                             }
                                           }
-
+                              
                                           return DropdownButton(
                                             hint: Text(
                                               "Your Barangay",
@@ -485,12 +487,12 @@ class _RegistrationViewState extends State<RegistrationView> {
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
                                         setState(() {
-                                          _whiteContainerHeight = 675.r;
+                                          _whiteContainerHeight = 750.r + 20.r;
                                         });
                                       }
                                       else {
                                         setState(() {
-                                          _whiteContainerHeight = 710.r;
+                                          _whiteContainerHeight = 850.r;
                                         });
                                       }
                                     },
