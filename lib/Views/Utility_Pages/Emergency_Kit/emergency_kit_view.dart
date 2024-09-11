@@ -70,7 +70,7 @@ class _PcardState extends State<Pcard> {
       body: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.lightBlue[100],
+          color: const Color(0x4D57BEE6),
         ),
         margin: const EdgeInsets.all(16.0),
         padding: const EdgeInsets.all(16.0),
