@@ -1,8 +1,8 @@
 import 'package:communihelp_app/ViewModels/Login_Registration_View_Models/registration_view_model.dart';
-import 'package:communihelp_app/ViewModels/anouncement_view_model.dart';
-import 'package:communihelp_app/ViewModels/emergency_kit_view_model.dart';
-import 'package:communihelp_app/ViewModels/emergency_view_model.dart';
-import 'package:communihelp_app/ViewModels/profile_view_model.dart';
+import 'package:communihelp_app/ViewModels/Home_View_Models/anouncement_view_model.dart';
+import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_kit_view_model.dart';
+import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_view_model.dart';
+import 'package:communihelp_app/ViewModels/Home_View_Models/profile_view_model.dart';
 import 'package:communihelp_app/ViewModels/theme.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/edit_profile_view.dart';
 import 'package:communihelp_app/Views/Login_Registration_Page/Login_Page/login_view.dart';

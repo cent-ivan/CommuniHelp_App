@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:communihelp_app/ViewModels/emergency_kit_view_model.dart';
+import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_kit_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../../ViewModels/emergency_kit_view_model.dart';
+import '../../../ViewModels/Home_View_Models/emergency_kit_view_model.dart';
 
 class EmergencyKitView extends StatefulWidget {
   const EmergencyKitView({super.key});
