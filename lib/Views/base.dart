@@ -1,6 +1,6 @@
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Community_Page/community_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Contacts_Page/contacts_view.dart';
-import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Dashboard_Page/dashboard_view.dart';
+import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Home_Page/dashboard_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

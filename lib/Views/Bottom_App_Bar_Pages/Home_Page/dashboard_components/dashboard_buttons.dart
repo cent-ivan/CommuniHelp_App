@@ -1,5 +1,5 @@
 //Infographics Section
-import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Dashboard_Page/dashboard_components/utility_buttons.dart';
+import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Home_Page/dashboard_components/utility_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
