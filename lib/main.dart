@@ -1,4 +1,4 @@
-import 'package:communihelp_app/ViewModels/Login_Registration_View_Models/registration_view_model.dart';
+import 'package:communihelp_app/ViewModels/Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_kit_view_model.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_view_model.dart';
@@ -57,7 +57,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return  ScreenUtilInit(
-      //designSize: Size(sizeWidth, sizeHeight), //hi from diorj
+      
       builder: (context, child) => MaterialApp(
 
         //TODO:add classes to Led Light and Report Damage (No designs yet)
