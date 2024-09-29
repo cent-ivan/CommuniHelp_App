@@ -162,6 +162,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Barangay",
@@ -188,6 +189,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   ),
                         
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Municipality",
