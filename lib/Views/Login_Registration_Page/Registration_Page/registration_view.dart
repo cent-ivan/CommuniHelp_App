@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/ViewModels/Registration_View_Models/register_firebase_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../../ViewModels/Login_Registration_View_Models/registration_view_model.dart';
+import '../../../ViewModels/Registration_View_Models/registration_view_model.dart';
 
 class RegistrationView extends StatefulWidget {
   const RegistrationView({super.key});
@@ -20,10 +21,18 @@ class _RegistrationViewState extends State<RegistrationView> {
   //DefaultBox height
   double _whiteContainerHeight = 750.r + 20.r;
 
+  //password values
+  bool _isObscure1 =  true;
+  bool _isObscure2  = true;
+
   //form global key
   final _formKey = GlobalKey<FormState>();
 
+  //gender current value
   String currentOption = options[0];
+
+  //register view model instance
+  RegisterFirebaseViewModel firebaseViewModel = RegisterFirebaseViewModel();
   
 
   @override
@@ -149,7 +158,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                               //Birthdate
                               TextFormField(
-                                controller: viewModel.ageController,
+                                controller: viewModel.bdayController,
                                 readOnly: true,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
@@ -446,6 +455,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                               //password
                               TextFormField(
                                 controller: viewModel.passwordController,
+                                obscureText: _isObscure1,
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Password",
@@ -457,7 +467,56 @@ class _RegistrationViewState extends State<RegistrationView> {
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
-                                  )
+                                  ),
+                                  suffixIcon: IconButton(
+                                    color: const Color(0xFF3D424A),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isObscure1 = ! _isObscure1;
+                                      });
+                                    },
+                                    icon: _isObscure1 ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off) ,
+                                  ) 
+                                ),
+
+                                validator: (value) {
+                                  if (value!.isEmpty){
+                                    return "Please enter a password";
+                                  }
+                                  else if (value.length < 4) {
+                                    return "Password must be 6 characters or longer";
+                                  }
+                                  else{
+                                    return null;
+                                  }
+                                },
+                              ),
+
+                              //confirm password
+                              TextFormField(
+                                controller: viewModel.confirmPasswordController,
+                                obscureText: _isObscure2,
+                                cursorColor: const Color(0xFF3D424A),
+                                decoration: InputDecoration(
+                                  hintText: "Comfirm Password",
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF3D424A)
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
+                                  ),
+                                  suffixIcon: IconButton(
+                                    color: const Color(0xFF3D424A),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isObscure2 = ! _isObscure2;
+                                      });
+                                    },
+                                    icon: _isObscure2 ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off) ,
+                                  ) 
                                 ),
 
                                 validator: (value) {
@@ -483,12 +542,65 @@ class _RegistrationViewState extends State<RegistrationView> {
                                     height: 50.r,
                                     minWidth: 100.r,
                                     onPressed: () {
-                                      if (_formKey.currentState!.validate()){
+                                      if (_formKey.currentState!.validate() && viewModel.barangayValue != null){
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
                                         setState(() {
                                           _whiteContainerHeight = 750.r + 20.r;
                                         });
+                                        firebaseViewModel.addUser(
+                                          context, 
+                                          viewModel.nameController.text, 
+                                          viewModel.bdayController.text, 
+                                          currentOption, 
+                                          viewModel.barangayValue!, 
+                                          viewModel.municipalityValue!, 
+                                          viewModel.emailController.text, 
+                                          viewModel.contactController.text, 
+                                          viewModel.passwordController.text, 
+                                          viewModel.confirmPasswordController.text
+                                        );
+                                        
+                                        Navigator.pushReplacementNamed(context, '/login');
+                                      }
+                                      else if (viewModel.barangayValue == null || viewModel.municipalityValue ==  null) {
+                                        //edit the design
+                                        showDialog(
+                                          context: context, 
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              backgroundColor: const Color(0xB3FCFCFC),
+                                              title: const Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.error_outline,
+                                                    color: Colors.white,
+                                                  ),
+
+                                                  SizedBox(width: 8,),
+
+                                                  Text("Notice"),
+                                                ],
+                                              ),
+                                              titleTextStyle: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold
+                                              ),
+
+                                              contentPadding: const EdgeInsets.only(left: 2),
+                                              content: Container(
+                                                padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
+                                                height: 95,
+                                                child: const Text(
+                                                  "Some input fields are still missing",
+                                                  style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              ),
+                                            );
+                                          },
+                                        );
                                       }
                                       else {
                                         setState(() {

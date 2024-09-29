@@ -502,31 +502,71 @@ class _EditProfileViewState extends State<EditProfileView> {
                           //Save Button
                           MaterialButton( 
                             onPressed: (){
-                              if (_formKey.currentState!.validate()){
-                                //validated the text field and adds to the firebase, pass to register view model
-                                _formKey.currentState!.save();
-                                setState(() {
-                                  _screenSize = 895.r + 130.r;
-                                });
-                  
-                                //calls update
-                                viewModel.updateProfile(
-                                  viewModel.nameController.text, 
-                                  viewModel.birthdateController.text, 
-                                  currentOption, 
-                                  viewModel.barangayValue!, 
-                                  viewModel.municipalityValue!, 
-                                  viewModel.emailController.text,
-                                  viewModel.contactController.text
-                                  
+                              if (_formKey.currentState!.validate() && viewModel.barangayValue != null){
+                                  //validated the text field and adds to the firebase, pass to register view model
+                                  _formKey.currentState!.save();
+                                  setState(() {
+                                    _screenSize = 895.r + 130.r;
+                                  });
+                    
+                                  //calls update
+                                  viewModel.updateProfile(
+                                    viewModel.nameController.text, 
+                                    viewModel.birthdateController.text, 
+                                    currentOption, 
+                                    viewModel.barangayValue!, 
+                                    viewModel.municipalityValue!, 
+                                    viewModel.emailController.text,
+                                    viewModel.contactController.text
+                                    
+                                  );
+                                  Navigator.pushReplacementNamed(context, '/home');
+                              }
+                              else if (viewModel.barangayValue == null || viewModel.municipalityValue ==  null) {
+                                //edit the design
+                                showDialog(
+                                  context: context, 
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      backgroundColor: const Color(0xFFDFB6B2),
+                                      title: const Row(
+                                        children: [
+                                          Icon(
+                                            Icons.error_outline,
+                                            color: Colors.white,
+                                          ),
+
+                                          SizedBox(width: 8,),
+
+                                          Text("Catched Error"),
+                                        ],
+                                      ),
+                                      titleTextStyle: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold
+                                      ),
+
+                                      contentPadding: const EdgeInsets.only(left: 2),
+                                      content: Container(
+                                        padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
+                                        height: 95,
+                                        child: const Text(
+                                          "You didnt put barangay boi",
+                                          style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      ),
+                                    );
+                                  },
                                 );
-                                Navigator.pushReplacementNamed(context, '/home');
                               }
                               else {
                                 setState(() {
                                   _screenSize = _screenSize + 70.r;
                                 });
                               }
+                              
                             },
                             height: 50.r,
                             minWidth: 340.r,
