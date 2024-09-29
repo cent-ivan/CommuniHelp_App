@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 class RegistrationViewModel extends ChangeNotifier{
   //text field controllers
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController ageController = TextEditingController();
+  final TextEditingController bdayController = TextEditingController();
   final TextEditingController contactController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+
   String? municipalityValue;
   String? barangayValue;
 
@@ -16,6 +18,7 @@ class RegistrationViewModel extends ChangeNotifier{
   String? barangayId;
 
   bool isActive = false;
+  
 
   //checks if the snapshot is a collection
   bool checkCollection(DocumentSnapshot snapshot) {
@@ -26,7 +29,6 @@ class RegistrationViewModel extends ChangeNotifier{
     }
     return false;
   }
-
 
 
   //DatePicker Widget
@@ -47,12 +49,13 @@ class RegistrationViewModel extends ChangeNotifier{
       String day = picked.toString().split(" ")[0].split("-")[2];
       String year = picked.toString().split(" ")[0].split("-")[0];
 
-       ageController.text = "$month/$day/$year";
+       bdayController.text = "$month/$day/$year";
     }
   }
 
+  
 
-  //Firestore methods-------------------------------------------------------------------
+  //Dropdown Firestore methods-------------------------------------------------------------------
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future updateMunicipal(String? newValue) async {
