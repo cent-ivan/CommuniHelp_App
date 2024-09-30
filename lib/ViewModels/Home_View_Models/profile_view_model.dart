@@ -95,7 +95,7 @@ class ProfileViewModel extends ChangeNotifier{
   Future updateBarangay(String? newValue) async {
     barangayId = newValue;
     //Gets barangay
-    DocumentSnapshot docBarangay = await _db.collection("municipalities").doc(municipalId).collection("Cities").doc(barangayId).get();
+    DocumentSnapshot docBarangay = await _db.collection("municipalities").doc(municipalId).collection("barangays").doc(barangayId).get();
     if (docBarangay .exists) {
       barangayValue = docBarangay ["name"];
       
