@@ -8,13 +8,13 @@
         {
             "name": "communihelp_app",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
         },
         {
             "name": "communihelp_app (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
         },
         {
             "name": "communihelp_app (release mode)",
