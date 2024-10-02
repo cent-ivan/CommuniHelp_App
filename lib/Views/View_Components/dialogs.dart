@@ -20,4 +20,43 @@ class GlobalDialogUtil{
   void removeDialog(context) {
     Navigator.pop(context);
   }
+
+  //dialog for catched errors
+  void unknownErrorDialog(BuildContext context , String message){
+    showDialog(context: context, 
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          title: Row(
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+
+              const SizedBox(width: 8,),
+
+              const Text("Unknown Error"),
+            ],
+          ),
+          titleTextStyle: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold
+          ),
+
+          contentPadding: const EdgeInsets.only(left: 2),
+          content: Container(
+            padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
+            height: 95,
+            child: Text(
+              message,
+              style: const TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          ),
+        );
+      },
+    );
+  }
 }
