@@ -4,6 +4,8 @@ import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Home_Page/dashboard_v
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+//import '../FirebaseServices/FirestoreServices/get_user_data.dart';
+import '../FirebaseServices/auth.dart';
 
 class HomeBase extends StatefulWidget {
   const HomeBase({super.key});
@@ -13,6 +15,7 @@ class HomeBase extends StatefulWidget {
 }
 
 class _HomeBaseState extends State<HomeBase> {
+
   final PageStorageBucket bucket = PageStorageBucket();
   int _currentIndex = 0;
 
@@ -22,13 +25,15 @@ class _HomeBaseState extends State<HomeBase> {
     const CommunityView(),
     const ProfileView()
   ];
+  
 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  const AppBarBase(),
 
-      drawer: const DrawerBase(),
+      drawer: DrawerBase(),
 
       body: PageStorage(
         bucket: bucket,
@@ -233,8 +238,9 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget{
   const AppBarBase({
     super.key,
   });
-
+  
   @override
+  
   Widget build(BuildContext context) {
     return AppBar(
       title: ShaderMask(
@@ -288,9 +294,12 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget{
 //--------------------------------------------------------------------------------------
 //DRAWER WIDGET BASE
 class DrawerBase extends StatelessWidget {
-  const DrawerBase({
+  DrawerBase({
     super.key,
   });
+
+  //access authorization servcies
+  final AuthService _auth =  AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -495,7 +504,7 @@ class DrawerBase extends StatelessWidget {
                     elevation: 1,
                     color: const Color(0xE6FEAE49),
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/login');
+                      _auth.signOut(context);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -19,7 +19,7 @@ List<String> options =["Male", "Female"]; //for radio list
 class _RegistrationViewState extends State<RegistrationView> {
 
   //DefaultBox height
-  double _whiteContainerHeight = 750.r + 20.r;
+  double _whiteContainerHeight = 750.r + 40.r;
 
   //password values
   bool _isObscure1 =  true;
@@ -255,7 +255,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                               
                               
                                     StreamBuilder<QuerySnapshot>(
-                                      stream: FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalId).collection('Cities').snapshots(),
+                                      stream: FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalId).collection('Barangays').snapshots(),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasError) {
                                           return Center(child: Text("some error occured ${snapshot.error}"),);
@@ -546,7 +546,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
                                         setState(() {
-                                          _whiteContainerHeight = 750.r + 20.r;
+                                          _whiteContainerHeight = 750.r + 60.r;
                                         });
                                         firebaseViewModel.addUser(
                                           context, 
@@ -569,17 +569,22 @@ class _RegistrationViewState extends State<RegistrationView> {
                                           context: context, 
                                           builder: (context) {
                                             return AlertDialog(
-                                              backgroundColor: const Color(0xB3FCFCFC),
+                                              backgroundColor: const Color(0xE6FCFCFC),
                                               title: const Row(
                                                 children: [
                                                   Icon(
                                                     Icons.error_outline,
-                                                    color: Colors.white,
+                                                    color: Color(0xFF3D424A),
                                                   ),
 
                                                   SizedBox(width: 8,),
 
-                                                  Text("Notice"),
+                                                  Text(
+                                                    "Notice",
+                                                    style: TextStyle(
+                                                      color: Color(0xFF3D424A)
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                               titleTextStyle: const TextStyle(
@@ -589,7 +594,7 @@ class _RegistrationViewState extends State<RegistrationView> {
 
                                               contentPadding: const EdgeInsets.only(left: 2),
                                               content: Container(
-                                                padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
+                                                padding: const EdgeInsets.only(left: 15, top: 25, right: 15),
                                                 height: 95,
                                                 child: const Text(
                                                   "Some input fields are still missing",
@@ -601,10 +606,15 @@ class _RegistrationViewState extends State<RegistrationView> {
                                             );
                                           },
                                         );
+
+                                        setState(() {
+                                          _whiteContainerHeight = 750.r + 60.r;
+                                        });
                                       }
+                              
                                       else {
                                         setState(() {
-                                          _whiteContainerHeight = 850.r;
+                                          _whiteContainerHeight = 830.r;
                                         });
                                       }
                                     },
