@@ -1,7 +1,8 @@
-import 'package:communihelp_app/ViewModels/Home_View_Models/profile_view_model.dart';
+import 'package:communihelp_app/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -11,6 +12,7 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  
   double spaceBetweenDetails = 20.r;
   double spaceBetweenLabel = 2.5.r;
   AssetImage profileImage = const AssetImage('assets/images/rescuer.png');
@@ -26,7 +28,7 @@ class _ProfileViewState extends State<ProfileView> {
           child: Container(
             height: MediaQuery.of(context).size.height + 250,
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 5).r,
-            child: Column(
+            child: Consumer<GetUserData>(builder: (context, userData, child) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
@@ -56,7 +58,7 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
 
                 //Personal Details
-                Consumer<ProfileViewModel>(builder: (context, viewModel, child) => Column(
+                Column(
                   children: [
                       Container(
                         padding: EdgeInsets.all(12.r),
@@ -92,7 +94,7 @@ class _ProfileViewState extends State<ProfileView> {
                               SizedBox(height: spaceBetweenLabel,),
                         
                               Text(
-                                viewModel.profile.name!,
+                                userData.name,
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.outline,
                                   fontSize: 18.r,
@@ -118,7 +120,7 @@ class _ProfileViewState extends State<ProfileView> {
                               SizedBox(height: spaceBetweenLabel,),
                         
                               Text(
-                                viewModel.profile.birthdate!,
+                                userData.birthdate,
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.outline,
                                   fontSize: 18.r,
@@ -145,7 +147,7 @@ class _ProfileViewState extends State<ProfileView> {
                         
                               //Gender display
                               Text(
-                                viewModel.profile.gender!,
+                                userData.gender,
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.outline,
                                   fontSize: 18.r,
@@ -177,7 +179,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       SizedBox(height: 3.r,),
                         
                                       Text(
-                                        viewModel.profile.barangay!,
+                                        userData.barangay,
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.outline,
                                           fontSize: 18.r,
@@ -204,7 +206,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       SizedBox(height: 3.r,),
                         
                                       Text(
-                                        viewModel.profile.municipality!,
+                                        userData.municipality,
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.outline,
                                           fontSize: 18.r,
@@ -261,7 +263,7 @@ class _ProfileViewState extends State<ProfileView> {
                       
                             //Show Email Address
                             Text(
-                              viewModel.profile.email!,
+                              userData.email,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.outline,
                                 fontSize: 18.r,
@@ -286,7 +288,7 @@ class _ProfileViewState extends State<ProfileView> {
                             SizedBox(height: spaceBetweenLabel,),
                       
                             Text(
-                              viewModel.profile.mobileNumber!,
+                              userData.mobileNumber,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.outline,
                                 fontSize: 18.r,
@@ -301,7 +303,6 @@ class _ProfileViewState extends State<ProfileView> {
                             MaterialButton(
                               onPressed: (){
                                 Navigator.pushReplacementNamed(context, '/editprofile');
-                                print(MediaQuery.of(context).size.height);
                               },
                               height: 50.r,
                               minWidth: 340.r,
@@ -324,11 +325,12 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                       )
                     ],
-                  ),
-                )
+                ),
+                
 
               ],
-            ),
+            )
+          )
           ),
 
         ),

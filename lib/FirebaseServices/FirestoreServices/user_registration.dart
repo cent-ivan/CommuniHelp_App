@@ -8,11 +8,11 @@ class FireStoreAddService {
   Future addUserDetails(UserModel user) async {
     //adds user details to Firestore Database
     await _db.collection("users").doc(user.uid).set(user.toJson())
-      .whenComplete( ()=> "Goods na boss")
+      .whenComplete( ()=> "Good")
       
       // ignore: body_might_complete_normally_catch_error
       .catchError((error){ 
-          print("May error boss : ${error.toString()}");
+          print("Error Occured : ${error.toString()}");
         }
       );
   }

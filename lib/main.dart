@@ -1,3 +1,4 @@
+import 'package:communihelp_app/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModels/Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_kit_view_model.dart';
@@ -17,11 +18,14 @@ import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Emergency_Page/emerge
 import 'package:communihelp_app/Views/Utility_Pages/Report_Damage/report_damage_view.dart';
 import 'package:communihelp_app/Views/Utility_Pages/Weather_Page/weather_view.dart';
 import 'package:communihelp_app/Views/base.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +48,7 @@ void main() async{
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
+        ChangeNotifierProvider(create: ((context) => GetUserData())),
       ],
       child: const MainApp(),
     )
@@ -53,15 +58,32 @@ void main() async{
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
+
   @override
   Widget build(BuildContext context) {
 
     return  ScreenUtilInit(
       
-      builder: (context, child) => MaterialApp(
+      builder: (context, child) => GetMaterialApp(
 
-        //TODO:add classes to Led Light and Report Damage (No designs yet)
-        home: const LoginView(),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator(
+                color: Color(0xFF57BEE6),
+              );
+            }
+            else if (snapshot.hasData) {
+              return const HomeBase();
+            }
+            else {
+              return const LoginView();
+            }
+
+          },
+        ),
+
         routes: {
           '/home' : (context) => const HomeBase(),
           '/evacuationfinder': (context) => const EvacautionFinderView(),

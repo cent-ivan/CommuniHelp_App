@@ -1,6 +1,7 @@
-import 'package:communihelp_app/FirebaseServices/user_registration.dart';
+import 'package:communihelp_app/FirebaseServices/FirestoreServices/user_registration.dart';
 import 'package:communihelp_app/Models/user_model.dart';
 import 'package:communihelp_app/Views/View_Components/dialogs.dart';
+import 'package:communihelp_app/Views/View_Components/login_dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,60 @@ class AuthService {
 
   //access dialogs
   final GlobalDialogUtil _globalUtil = GlobalDialogUtil(); //utilities like loading and removing dialogs
+  final LoginDialogs _loginDialogs = LoginDialogs();
 
+
+
+  //----Firebase authentication methods-----------------------------------------------------------------
+  //User login method
+  Future logInEmailPassword(BuildContext context, String email, String password) async {
+    try {
+      _globalUtil.circularProgress(context); //loading screen
+
+      UserCredential credential = await  _auth.signInWithEmailAndPassword(email: email, password: password);
+
+      if (context.mounted){
+        _globalUtil.removeDialog(context);
+      }
+
+      return credential.user;
+    }
+    on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case "invalid-email":
+          if (context.mounted){
+            _globalUtil.removeDialog(context);
+            _loginDialogs.displayMessage(context, "Invalid Email. Check your email");
+          }
+          break;
+        case "wrong-password":
+          if (context.mounted){
+            _globalUtil.removeDialog(context);
+            _loginDialogs.displayMessage(context, "Wrong Password. Double check your password and try again.");
+          }
+          break;
+        case "user-not-found":
+          if (context.mounted){
+            _globalUtil.removeDialog(context);
+            _loginDialogs.displayMessage(context, "User not found. User may not exist.");
+          }
+          break;
+        default:
+        if (context.mounted) {
+          _globalUtil.removeDialog(context);
+          _globalUtil.unknownErrorDialog(context, error.message.toString());
+        }
+      }
+    }
+    catch (error) {
+      if (context.mounted){
+        _globalUtil.removeDialog(context);
+        _globalUtil.unknownErrorDialog(context, error.toString());
+      }
+    }
+  }
+
+  //register user methods----
   Future registerEmailPassword(BuildContext context, String email, String userPassword, UserModel userDetail) async{
     try {
       _globalUtil.circularProgress(context); //loading screen
@@ -34,8 +88,20 @@ class AuthService {
       return user;
     }
     catch (error) {
-      print("Hey");
+      if (context.mounted){
+        _globalUtil.removeDialog(context);
+        _globalUtil.unknownErrorDialog(context, error.toString());
+      }
     }
   }
 
+  //Log out
+  Future<void> signOut(BuildContext context) async {
+    _globalUtil.circularProgress(context);
+    await Future.delayed(const Duration(seconds: 1));
+    if (context.mounted) {
+      _globalUtil.removeDialog(context);
+    }
+    await FirebaseAuth.instance.signOut();
+  }
 }

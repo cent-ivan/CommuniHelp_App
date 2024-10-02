@@ -510,16 +510,16 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   });
                     
                                   //calls update
-                                  viewModel.updateProfile(
-                                    viewModel.nameController.text, 
-                                    viewModel.birthdateController.text, 
-                                    currentOption, 
-                                    viewModel.barangayValue!, 
-                                    viewModel.municipalityValue!, 
-                                    viewModel.emailController.text,
-                                    viewModel.contactController.text
+                                  // viewModel.updateProfile(
+                                  //   viewModel.nameController.text, 
+                                  //   viewModel.birthdateController.text, 
+                                  //   currentOption, 
+                                  //   viewModel.barangayValue!, 
+                                  //   viewModel.municipalityValue!, 
+                                  //   viewModel.emailController.text,
+                                  //   viewModel.contactController.text
                                     
-                                  );
+                                  // );
                                   Navigator.pushReplacementNamed(context, '/home');
                               }
                               else if (viewModel.barangayValue == null || viewModel.municipalityValue ==  null) {

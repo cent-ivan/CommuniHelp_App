@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../ViewModels/Login_View_Models/login_firebase_view_model.dart';
 
 class LoginView extends StatefulWidget {
 
@@ -11,6 +11,9 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  //access view model
+  final LoginFirebaseViewModel loginViewModel = LoginFirebaseViewModel();
+
   //form global key
   final _formKey = GlobalKey<FormState>();
 
@@ -19,7 +22,7 @@ class _LoginViewState extends State<LoginView> {
   bool _isObscure =  true;
 
   //controllers
-  final TextEditingController _numberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -133,33 +136,31 @@ class _LoginViewState extends State<LoginView> {
                           key: _formKey,
                           child: Column(
                             children: [
-
-                              //mobile number
+                              //email
                               TextFormField(
-                                controller: _numberController,
+                                controller: _emailController,
                                 cursorColor: const Color(0xFF3D424A),
-                                keyboardType: TextInputType.number, //accepts only intgers
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
                                 decoration: InputDecoration(
-                                  hintText: "Mobile Number",
+                                  hintText: "Email",
                                   hintStyle: const TextStyle(
                                     color: Color(0xFF3D424A)
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                                    borderSide: BorderSide(width: 2.r, color: const Color(0xFF3D424A))
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 2.5.r, color: const Color(0xFF3D424A))
                                   )
                                 ),
 
                                 validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Please enter your mobile number";
+                                  if (value!.isEmpty){
+                                    return "Please enter an email";
                                   }
-                                  else {
+                                  else if (!value.contains('@')){
+                                    return "Enter a valid email";
+                                  }
+                                  else{
                                     return null;
                                   }
                                 },
@@ -218,9 +219,9 @@ class _LoginViewState extends State<LoginView> {
                                       if (_formKey.currentState!.validate()){
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
+                                        loginViewModel.loginUser(context, _emailController.text, _passwordController.text);
                                       }
                                       else {
-                                        Navigator.pushReplacementNamed(context, '/home');
                                         setState(() {
                                           _loginHeight = 330.r;
                                         });

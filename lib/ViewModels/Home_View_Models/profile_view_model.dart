@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:communihelp_app/Models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class ProfileViewModel extends ChangeNotifier{
+
   //text field controllers
   final TextEditingController nameController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
@@ -16,42 +16,26 @@ class ProfileViewModel extends ChangeNotifier{
 
   bool isActive  = false;
 
-  //pseudo data
-  String name = "John Doe";
-  String birthdate = "June 03, 2002";
-  String gender = "Male"; 
-  String barangay = "Unidos"; 
-  String municipality = "Nabas"; 
-  String email = "johnd@gmail.com";
-  String mobileNumber = "09123990034";
+  // String name = ""; 
+  // String birthdate = "";
+  // String gender = ""; 
+  // String barangay = ""; 
+  // String municipality = ""; 
+  // String email = "";
+  // String mobileNumber = "";
 
-  late UserModel profile = loadProfile(name, birthdate, gender, barangay, municipality,email,  mobileNumber);
+  // void loadProfile(String uname, String bday, String ugender, String ubarangay, String umunicipality, String uemail, String umobileNumber) {
+  //   name = uname;
+  //   birthdate = bday;
+  //   gender = ugender;
+  //   barangay = ubarangay;
+  //   municipality = umunicipality;
+  //   email = uemail;
+  //   mobileNumber = umobileNumber;
 
-  UserModel loadProfile(String name, String birthdate, String gender, String? barangay, String? municipality, String email, String mobileNumber){
-    return UserModel(
-      name: name, 
-      birthdate: birthdate, 
-      gender: gender, 
-      barangay: barangay, 
-      municipality: municipality, 
-      email: email,
-      mobileNumber: mobileNumber
-    );
-  }
-
-  void updateProfile(String updateName, String updateBirthdate, String updateGender, String updateBarangay, String updateMunicipality, String updateEmail, String updateMobileNumber){
-    name = updateName;
-    birthdate = updateBirthdate;
-    gender = updateGender;
-    barangay = updateBarangay;
-    municipality = updateMunicipality;
-    email = updateEmail;
-    mobileNumber = updateMobileNumber;
-
-    profile = loadProfile(name, birthdate, gender, barangay, municipality, email, mobileNumber);
-    notifyListeners();
-  }
-
+  //   notifyListeners();  // Notify listeners after updating the variables
+  //   print("Loaded profile: Name: $uname");
+  // }
 
   //DatePicker Widget
   Future<void> pickDate(BuildContext context) async {
@@ -95,7 +79,7 @@ class ProfileViewModel extends ChangeNotifier{
   Future updateBarangay(String? newValue) async {
     barangayId = newValue;
     //Gets barangay
-    DocumentSnapshot docBarangay = await _db.collection("municipalities").doc(municipalId).collection("Cities").doc(barangayId).get();
+    DocumentSnapshot docBarangay = await _db.collection("municipalities").doc(municipalId).collection("Barangays").doc(barangayId).get();
     if (docBarangay .exists) {
       barangayValue = docBarangay ["name"];
       
