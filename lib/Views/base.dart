@@ -4,7 +4,8 @@ import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Home_Page/dashboard_v
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-//import '../FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:provider/provider.dart';
+import '../FirebaseServices/FirestoreServices/get_user_data.dart';
 import '../FirebaseServices/auth.dart';
 
 class HomeBase extends StatefulWidget {
@@ -25,11 +26,11 @@ class _HomeBaseState extends State<HomeBase> {
     const CommunityView(),
     const ProfileView()
   ];
-  
 
-  
+
   @override
   Widget build(BuildContext context) {
+    final getService = Provider.of<GetUserData>(context);
     return Scaffold(
       appBar:  const AppBarBase(),
 
@@ -184,6 +185,7 @@ class _HomeBaseState extends State<HomeBase> {
                     minWidth: 20.r,
                     onPressed: () {
                       setState(() {
+                        getService.getUser();
                         _currentIndex = 3;
                       });
                     },
@@ -303,6 +305,7 @@ class DrawerBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final getService = Provider.of<GetUserData>(context);
     return Drawer(
       elevation: 0,
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -503,8 +506,9 @@ class DrawerBase extends StatelessWidget {
                   child: MaterialButton(
                     elevation: 1,
                     color: const Color(0xE6FEAE49),
-                    onPressed: () {
+                    onPressed: () { 
                       _auth.signOut(context);
+                      getService.reloadData();
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

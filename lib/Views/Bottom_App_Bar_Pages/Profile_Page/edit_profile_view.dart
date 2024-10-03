@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/FirebaseServices/FirestoreServices/user_registration.dart';
+import 'package:communihelp_app/Models/user_model.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/profile_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,6 +27,14 @@ class _EditProfileViewState extends State<EditProfileView> {
   double _screenSize = 895.r + 130.r;
   double spaceBetweenDetails = 20.r;
   double spaceBetweenLabel = 2.5.r;
+
+  //Firestore instance for update
+  final firestoreService = FireStoreAddService();
+
+  //show current user
+  final user = FirebaseAuth.instance.currentUser!;
+
+  GetUserData userData = GetUserData();
   
   @override
   Widget build(BuildContext context) {
@@ -342,7 +354,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   SizedBox(height: 3.r,),
                     
                                   StreamBuilder<QuerySnapshot>(
-                                        stream: FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalId).collection('Cities').snapshots(),
+                                        stream: FirebaseFirestore.instance.collection('municipalities').doc(viewModel.municipalId).collection('Barangays').snapshots(),
                                         builder: (context, snapshot) {
                                           if (snapshot.hasError) {
                                             return Center(child: Text("Error occured: ${snapshot.error}"),);
@@ -407,49 +419,48 @@ class _EditProfileViewState extends State<EditProfileView> {
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                    
-                          SizedBox(height: 10.r,),
+
                   
-                          Text(
-                            "Email",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.outline,
-                              fontSize: 14.r,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
+                          // Text(
+                          //   "Email",
+                          //   style: TextStyle(
+                          //     color: Theme.of(context).colorScheme.outline,
+                          //     fontSize: 14.r,
+                          //     fontWeight: FontWeight.w500
+                          //   ),
+                          // ),
                   
-                          SizedBox(height: spaceBetweenLabel,),
+                          // SizedBox(height: spaceBetweenLabel,),
                   
                           //edit email
-                          TextFormField(
-                            controller: viewModel.emailController,
-                            cursorColor: const Color(0xFF3D424A),
-                            style: TextStyle(
-                              fontSize: 18.r
-                            ),
-                            decoration: InputDecoration(
-                              hintText: "Edit Email",
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
-                              )
-                            ),
+                          // TextFormField(
+                          //   controller: viewModel.emailController,
+                          //   cursorColor: const Color(0xFF3D424A),
+                          //   style: TextStyle(
+                          //     fontSize: 18.r
+                          //   ),
+                          //   decoration: InputDecoration(
+                          //     hintText: "Edit Email",
+                          //     enabledBorder: UnderlineInputBorder(
+                          //       borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+                          //     ),
+                          //     focusedBorder: UnderlineInputBorder(
+                          //       borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+                          //     )
+                          //   ),
                   
-                            validator: (value) {
-                              if (value!.isEmpty){
-                                return "Please enter an email";
-                              }
-                              else if (!value.contains('@')){
-                                return "Enter a valid email";
-                              }
-                              else{
-                                return null;
-                              }
-                            },
-                          ),
+                          //   validator: (value) {
+                          //     if (value!.isEmpty){
+                          //       return "Please enter an email";
+                          //     }
+                          //     else if (!value.contains('@')){
+                          //       return "Enter a valid email";
+                          //     }
+                          //     else{
+                          //       return null;
+                          //     }
+                          //   },
+                          // ),
                   
                   
                           SizedBox(height: spaceBetweenDetails,),
@@ -497,8 +508,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                             },
                           ),
                     
-                          SizedBox(height: 35.r,),
-                  
+                          SizedBox(height: 25.r,),
+
                           //Save Button
                           MaterialButton( 
                             onPressed: (){
@@ -507,19 +518,24 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   _formKey.currentState!.save();
                                   setState(() {
                                     _screenSize = 895.r + 130.r;
+
+                                    userData.reloadData();
+
+                                    firestoreService.addUserDetails(UserModel(
+                                      uid: user.uid,
+                                      name: viewModel.nameController.text, 
+                                      birthdate: viewModel.birthdateController.text, 
+                                      gender: currentOption, 
+                                      barangay: viewModel.barangayValue!, 
+                                      municipality: viewModel.municipalityValue!, 
+                                      email: user.email, 
+                                      mobileNumber: viewModel.contactController.text
+                                      )
+                                    );
                                   });
-                    
-                                  //calls update
-                                  // viewModel.updateProfile(
-                                  //   viewModel.nameController.text, 
-                                  //   viewModel.birthdateController.text, 
-                                  //   currentOption, 
-                                  //   viewModel.barangayValue!, 
-                                  //   viewModel.municipalityValue!, 
-                                  //   viewModel.emailController.text,
-                                  //   viewModel.contactController.text
-                                    
-                                  // );
+
+                                  
+                                  
                                   Navigator.pushReplacementNamed(context, '/home');
                               }
                               else if (viewModel.barangayValue == null || viewModel.municipalityValue ==  null) {
@@ -584,6 +600,44 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 ),
                               ),
                             ),
+                          ),
+                          
+                          SizedBox(height: 15.r,),
+
+                          //change email and password link
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  
+                                }, 
+                                child: Text(
+                                  "Change email here",
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.outline,
+                                    fontSize: 14.r,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline
+                                  ),
+                                )
+                              ),
+
+                              TextButton(
+                                onPressed: () {
+                                  
+                                }, 
+                                child: Text(
+                                  "Change password here",
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.outline,
+                                    fontSize: 14.r,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline
+                                  ),
+                                )
+                              ),
+                            ],
                           )
                         ],
                       )

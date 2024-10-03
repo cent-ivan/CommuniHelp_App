@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+//import '../../Models/user_model.dart';
+
 class ProfileViewModel extends ChangeNotifier{
 
   //text field controllers
@@ -16,27 +18,7 @@ class ProfileViewModel extends ChangeNotifier{
 
   bool isActive  = false;
 
-  // String name = ""; 
-  // String birthdate = "";
-  // String gender = ""; 
-  // String barangay = ""; 
-  // String municipality = ""; 
-  // String email = "";
-  // String mobileNumber = "";
-
-  // void loadProfile(String uname, String bday, String ugender, String ubarangay, String umunicipality, String uemail, String umobileNumber) {
-  //   name = uname;
-  //   birthdate = bday;
-  //   gender = ugender;
-  //   barangay = ubarangay;
-  //   municipality = umunicipality;
-  //   email = uemail;
-  //   mobileNumber = umobileNumber;
-
-  //   notifyListeners();  // Notify listeners after updating the variables
-  //   print("Loaded profile: Name: $uname");
-  // }
-
+ 
   //DatePicker Widget
   Future<void> pickDate(BuildContext context) async {
     DateTime? picked = await showDatePicker(
@@ -86,4 +68,5 @@ class ProfileViewModel extends ChangeNotifier{
     }
     notifyListeners();
   }
+
 }
