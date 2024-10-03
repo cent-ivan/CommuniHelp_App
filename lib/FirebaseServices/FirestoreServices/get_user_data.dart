@@ -6,13 +6,21 @@ import 'package:flutter/material.dart';
 
 class GetUserData extends ChangeNotifier {
   //show current user
-  final user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser!;
 
   //Firestore instance
   final _db = FirebaseFirestore.instance;
 
   GetUserData() {
-    getUser();
+    FirebaseAuth.instance.authStateChanges().listen((User? newUser) {
+      user = newUser;
+      if (newUser == null) {
+        print("Reloads bitch");
+        reloadData(); // Clear user data on sign out
+      } else {
+        getUser(); // Fetch new user data on sign in
+      }
+    });
   }
 
   String name = ""; 
@@ -23,17 +31,12 @@ class GetUserData extends ChangeNotifier {
   String email = "";
   String mobileNumber = "";
 
-  // String? name; 
-  // String? birthdate;
-  // String? gender; 
-  // String? barangay; 
-  // String? municipality; 
-  // String? email;
-  // String? mobileNumber;
   
   Future getUser() async{
+    if (user == null) return;
+
+    String id = user!.uid;
     print("Running");
-    String id = user.uid;
 
     try {
       DocumentSnapshot doc = await _db.collection("users").doc(id).get();
@@ -55,6 +58,20 @@ class GetUserData extends ChangeNotifier {
       print("Error: ${error.toString()}");
     }
     print("Added: $name");
+  }
+
+  void reloadData() {
+    print("Reloaded...");
+
+    name = "";
+    birthdate = "";
+    gender = "";
+    barangay = "";
+    municipality = "";
+    email = "";
+    mobileNumber = "";
+
+    notifyListeners();
   }
  
 }

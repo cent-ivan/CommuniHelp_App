@@ -59,4 +59,64 @@ class GlobalDialogUtil{
       },
     );
   }
+
+  //signing out screen
+  void circularLoggingIn(context){
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              strokeWidth: 6,
+              color: Color(0xFF57BEE6),
+            ),
+
+            SizedBox(height: 15,),
+        
+            Text(
+              "Logging In",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold
+              ),
+            )
+          ],
+        );
+      }
+    );
+  }
+
+  //signing out screen
+  void circularSignout(context){
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              strokeWidth: 6,
+              color: Color(0xFF57BEE6),
+            ),
+
+            const SizedBox(height: 15,),
+        
+            Text(
+              "Signing Out",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold
+              ),
+            )
+          ],
+        );
+      }
+    );
+  }
 }
