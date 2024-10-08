@@ -29,6 +29,16 @@ class FireStoreAddService {
       );
   }
 
-  //Update email in authentication
 
+  //Update email in authentication
+  Future editFirestoreEmail(UserModel user, String newEmail) async {
+    await _db.collection("users").doc(user.uid).update({"Email": newEmail})
+      .whenComplete( ()=> "Good")
+      
+      // ignore: body_might_complete_normally_catch_error
+      .catchError((error){ 
+          print("Error Occured : ${error.toString()}");
+        }
+      );
+  }
 }

@@ -16,13 +16,12 @@ class EditProfileView extends StatefulWidget {
   State<EditProfileView> createState() => _EditProfileViewState();
 }
 
-List<String> options =["Male", "Female"]; //for radio list
+
 
 class _EditProfileViewState extends State<EditProfileView> {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
-  String currentOption = options[0];
   
   double _screenSize = 895.r + 130.r;
   double spaceBetweenDetails = 20.r;
@@ -35,9 +34,10 @@ class _EditProfileViewState extends State<EditProfileView> {
   final user = FirebaseAuth.instance.currentUser!;
 
   GetUserData userData = GetUserData();
-  
+
   @override
   Widget build(BuildContext context) {
+    final getService = Provider.of<GetUserData>(context);
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -50,7 +50,7 @@ class _EditProfileViewState extends State<EditProfileView> {
           backgroundColor: Theme.of(context).colorScheme.primary,
           leading: IconButton(
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/home');
+              Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back_ios),
           ),
@@ -144,6 +144,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                           TextFormField(
                             controller: viewModel.nameController,
                             cursorColor: const Color(0xFF3D424A),
+                            textCapitalization: TextCapitalization.sentences,
                             style: TextStyle(
                               fontSize: 14.r
                             ),
@@ -201,7 +202,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   
                             validator: (value) {
                               if (value!.isEmpty){
-                                return "Please enter name";
+                                return "Please enter birth date";
                               }
                               else{
                                 return null;
@@ -231,10 +232,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                               Radio<String>(
                                 activeColor: const Color(0xFF854F6C),
                                 value: options[0],
-                                groupValue: currentOption,
+                                groupValue: viewModel.currentOption,
                                 onChanged: (value) {
                                   setState(() {
-                                    currentOption = value.toString();
+                                    viewModel.currentOption = value.toString();
                                   });
                                 },
                               ),
@@ -246,10 +247,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                               Radio(
                                 activeColor: const Color(0xFF854F6C),
                                 value: options[1],
-                                groupValue: currentOption,
+                                groupValue: viewModel.currentOption,
                                 onChanged: (value) {
                                   setState(() {
-                                    currentOption = value.toString();
+                                    viewModel.currentOption = value.toString();
                                   });
                                 },
                               ),
@@ -265,8 +266,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                           Wrap(
                             spacing: 4.r,
                             runSpacing: 4.r,
-                            //crossAxisAlignment: CrossAxisAlignment.start,
-                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -525,7 +524,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                       uid: user.uid,
                                       name: viewModel.nameController.text, 
                                       birthdate: viewModel.birthdateController.text, 
-                                      gender: currentOption, 
+                                      gender: viewModel.currentOption, 
                                       barangay: viewModel.barangayValue!, 
                                       municipality: viewModel.municipalityValue!, 
                                       email: user.email, 
@@ -534,9 +533,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                                     );
                                   });
 
-                                  
-                                  
-                                  Navigator.pushReplacementNamed(context, '/home');
+                                  getService.getUser();                     
+                                  Navigator.pop(context);
                               }
                               else if (viewModel.barangayValue == null || viewModel.municipalityValue ==  null) {
                                 //edit the design
@@ -554,7 +552,7 @@ class _EditProfileViewState extends State<EditProfileView> {
 
                                           SizedBox(width: 8,),
 
-                                          Text("Catched Error"),
+                                          Text("No address selected"),
                                         ],
                                       ),
                                       titleTextStyle: const TextStyle(
@@ -564,10 +562,10 @@ class _EditProfileViewState extends State<EditProfileView> {
 
                                       contentPadding: const EdgeInsets.only(left: 2),
                                       content: Container(
-                                        padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
+                                        padding: const EdgeInsets.only(left: 15, top: 20, right: 20),
                                         height: 95,
                                         child: const Text(
-                                          "You didnt put barangay boi",
+                                          "Make sure you select an address ",
                                           style: TextStyle(
                                           fontSize: 16,
                                         ),
@@ -604,10 +602,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                           
                           SizedBox(height: 15.r,),
 
-                          //change email and password link
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
+                              //change email
                               TextButton(
                                 onPressed: () {
                                   
@@ -623,6 +621,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 )
                               ),
 
+                              //change password
                               TextButton(
                                 onPressed: () {
                                   

@@ -634,7 +634,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                   //Back to login link
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.pushReplacementNamed(context, '/login');
+                                      Navigator.pop(context);
                                     }, 
                                     child: Text(
                                       "Member na ako",

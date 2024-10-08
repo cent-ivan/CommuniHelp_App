@@ -1,4 +1,5 @@
 import 'package:communihelp_app/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/ViewModels/Home_View_Models/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -18,15 +19,17 @@ class _ProfileViewState extends State<ProfileView> {
   AssetImage profileImage = const AssetImage('assets/images/rescuer.png');
 
 
+
   @override
   Widget build(BuildContext context) {
+    final viewModel= Provider.of<ProfileViewModel>(context);
     return PopScope(
       canPop: false,
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height + 250,
+            height: MediaQuery.of(context).size.height + 100,
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 5).r,
             child: Consumer<GetUserData>(builder: (context, userData, child) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -302,7 +305,8 @@ class _ProfileViewState extends State<ProfileView> {
                             //edit button
                             MaterialButton(
                               onPressed: (){
-                                Navigator.pushReplacementNamed(context, '/editprofile');
+                                viewModel.loadData(context);
+                                Navigator.pushNamed(context, '/editprofile');
                               },
                               height: 50.r,
                               minWidth: 340.r,
