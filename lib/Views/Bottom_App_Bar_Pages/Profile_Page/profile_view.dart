@@ -45,12 +45,19 @@ class _ProfileViewState extends State<ProfileView> {
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                       fontSize: 24.r,
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Colors.white,
+                          offset: const Offset(0, 0),
+                          blurRadius: 50.r
+                        )
+                      ]
                     ),
                   ),
                 ),
 
-                SizedBox(height: 18.r,),
+                SizedBox(height: 8.r,),
 
                 //Profile Picture
                 Center(

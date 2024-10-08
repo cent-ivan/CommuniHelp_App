@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+
 class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
 
@@ -518,9 +519,11 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   setState(() {
                                     _screenSize = 895.r + 130.r;
 
+                                    
+
                                     userData.reloadData();
 
-                                    firestoreService.addUserDetails(UserModel(
+                                    firestoreService.updateUserDetails(UserModel(
                                       uid: user.uid,
                                       name: viewModel.nameController.text, 
                                       birthdate: viewModel.birthdateController.text, 
@@ -529,12 +532,14 @@ class _EditProfileViewState extends State<EditProfileView> {
                                       municipality: viewModel.municipalityValue!, 
                                       email: user.email, 
                                       mobileNumber: viewModel.contactController.text
-                                      )
+                                      ), context
                                     );
                                   });
+                                  
 
-                                  getService.getUser();                     
-                                  Navigator.pop(context);
+                                  getService.getUser();
+              
+                                  
                               }
                               else if (viewModel.barangayValue == null || viewModel.municipalityValue ==  null) {
                                 //edit the design

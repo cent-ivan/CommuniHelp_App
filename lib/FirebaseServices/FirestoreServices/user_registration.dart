@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Models/user_model.dart';
 
+
 class FireStoreAddService {
   //Firestore instance
   final _db = FirebaseFirestore.instance;
@@ -15,9 +16,10 @@ class FireStoreAddService {
           print("Error Occured : ${error.toString()}");
         }
       );
+
   }
 
-  Future updateUserDetails(UserModel user) async {
+  Future updateUserDetails(UserModel user, context) async {
     //updates user details to Firestore Database
     await _db.collection("users").doc(user.uid).set(user.toJson())
       .whenComplete( ()=> "Good")
@@ -27,6 +29,7 @@ class FireStoreAddService {
           print("Error Occured : ${error.toString()}");
         }
       );
+
   }
 
 
