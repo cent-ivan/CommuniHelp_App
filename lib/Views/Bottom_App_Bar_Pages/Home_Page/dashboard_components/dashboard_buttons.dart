@@ -80,7 +80,7 @@ class InfographicsSection extends StatelessWidget {
                   //Man-made Disaster Button
                   MaterialButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/manmadeinfo');
+                      Navigator.pushNamed(context,'/manmadeinfo');
                     },
                     height: 100.r,
                     minWidth: 135.r,

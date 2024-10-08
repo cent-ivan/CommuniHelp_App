@@ -24,7 +24,7 @@ class UtilityButtons extends StatelessWidget {
             //Evacuation Button
             MaterialButton(
               onPressed: () {
-                Navigator.of(context).popAndPushNamed('/evacuationfinder');
+                Navigator.pushNamed(context,'/evacuationfinder');
               },
               height: 80.r,
               minWidth: 100.r,
@@ -58,7 +58,7 @@ class UtilityButtons extends StatelessWidget {
             //News Button
             MaterialButton(
               onPressed: () {
-                Navigator.of(context).popAndPushNamed('/newsfeed');
+                Navigator.pushNamed(context,'/newsfeed');
               },
               height: 80.r,
               minWidth: 95.r,
@@ -90,7 +90,7 @@ class UtilityButtons extends StatelessWidget {
             //Weather Button  
             MaterialButton(
               onPressed: () {
-                Navigator.of(context).popAndPushNamed('/weatherupdate');
+                Navigator.pushNamed(context,'/weatherupdate');
               },
               height: 80.r,
               minWidth: 95.r,
@@ -122,7 +122,7 @@ class UtilityButtons extends StatelessWidget {
             //Emergency Kit Button
             MaterialButton(
               onPressed: () {
-                Navigator.of(context).popAndPushNamed('/emergencykit');
+                Navigator.pushNamed(context,'/emergencykit');
               },
               height: 80.r,
               minWidth: 95.r,
@@ -212,7 +212,7 @@ class UtilityButtons extends StatelessWidget {
               //Report Button
               MaterialButton(
                 onPressed: () {
-                  Navigator.of(context).popAndPushNamed('/report');
+                  Navigator.pushNamed(context,'/report');
                 },
                 height: 80.r,
                 minWidth: 95.r,
