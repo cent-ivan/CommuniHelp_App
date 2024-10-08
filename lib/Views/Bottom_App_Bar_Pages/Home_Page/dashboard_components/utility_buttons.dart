@@ -31,7 +31,7 @@ class UtilityButtons extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +47,7 @@ class UtilityButtons extends StatelessWidget {
                         style: TextStyle(
                         fontSize: 12.r,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.outline, 
+                        color: const Color(0xFF3D424A), 
                       ),
                     ),
                   ),
@@ -65,7 +65,7 @@ class UtilityButtons extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,7 +80,7 @@ class UtilityButtons extends StatelessWidget {
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.outline, 
+                      color: const Color(0xFF3D424A), 
                     ),
                   ),
                 ],
@@ -97,7 +97,7 @@ class UtilityButtons extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,7 +112,7 @@ class UtilityButtons extends StatelessWidget {
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.outline, 
+                      color: const Color(0xFF3D424A), 
                     ),
                   ),
                 ],
@@ -129,7 +129,7 @@ class UtilityButtons extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,7 +144,7 @@ class UtilityButtons extends StatelessWidget {
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.outline, 
+                      color: const Color(0xFF3D424A), 
                     ),
                   ),
                 ],
@@ -159,7 +159,7 @@ class UtilityButtons extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -174,7 +174,7 @@ class UtilityButtons extends StatelessWidget {
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.outline, 
+                      color: const Color(0xFF3D424A), 
                     ),
                   ),
                 ],
@@ -219,7 +219,7 @@ class UtilityButtons extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.r))
                 ),
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.surfaceContainer,
                 splashColor: const Color(0x4D57BEE6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -234,7 +234,7 @@ class UtilityButtons extends StatelessWidget {
                         style: TextStyle(
                         fontSize: 11.r,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.outline, 
+                        color: const Color(0xFF3D424A), 
                       ),
                     ),
                   ],

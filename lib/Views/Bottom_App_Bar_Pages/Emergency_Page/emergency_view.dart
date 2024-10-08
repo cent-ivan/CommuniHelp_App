@@ -126,7 +126,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                     //MDRRMO Number
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15.r),
-                      child: MDRRMOButton(numberOfContacts: viewModel.mddrmoContacts.length,color: const Color(0x4DFEAE49),)
+                      child: MDRRMOButton(numberOfContacts: viewModel.mddrmoContacts.length,color: const Color(0xBFFEAE49),)
                     ),
                   ],
                 ),

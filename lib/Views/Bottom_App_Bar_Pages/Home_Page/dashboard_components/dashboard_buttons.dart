@@ -50,7 +50,7 @@ class InfographicsSection extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15.r))
                     ),
-                    color: Theme.of(context).colorScheme.primary,
+                    color: const Color(0xFFF2F2F2),
                     splashColor: const Color(0xFFB9EFD8),
                     elevation: 3,
                     child: Image(
@@ -87,7 +87,7 @@ class InfographicsSection extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15.r))
                     ),
-                    color: Theme.of(context).colorScheme.primary,
+                    color: const Color(0xFFF2F2F2),
                     splashColor: const Color(0x80FEAE49),
                     elevation: 3,
                     child: CircleAvatar(
