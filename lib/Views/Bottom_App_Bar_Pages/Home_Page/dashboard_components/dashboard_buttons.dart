@@ -43,7 +43,7 @@ class InfographicsSection extends StatelessWidget {
                   //Natural Disaster Button
                   MaterialButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/naturalinfo');
+                      Navigator.pushNamed(context,'/naturalinfo');
                     },
                     height: 100.r,
                     minWidth: 135.r,
