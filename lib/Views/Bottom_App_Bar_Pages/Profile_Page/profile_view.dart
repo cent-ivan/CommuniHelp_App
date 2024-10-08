@@ -26,10 +26,15 @@ class _ProfileViewState extends State<ProfileView> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height + 100,
+            decoration: BoxDecoration(
+              image:  DecorationImage(image: Theme.of(context).colorScheme.primary == const Color(0xFFF2F2F2) ? 
+                const AssetImage('assets/images/background/ProfileBackground.png') : const AssetImage('assets/images/background/ProfileDarkBackground.png'), 
+              fit: BoxFit.cover),
+            
+            ),
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 5).r,
             child: Consumer<GetUserData>(builder: (context, userData, child) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
