@@ -12,7 +12,7 @@ class EmergencyKitViewModel extends ChangeNotifier {
     EmergencyKitModel(title: 'Hygiene kit', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/hygiene.jpeg'),
     EmergencyKitModel(title: 'Radyo de baterya', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/phone.jpg'),
     EmergencyKitModel(title: 'Extra clothes', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/clothes.jpg'),
-    EmergencyKitModel(title: 'Mga importanteng documento (national id, passport, birth certificate)', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/documents.jpg'),
+    EmergencyKitModel(title: 'Mga importanteng dokyumento (national id, passport, birth certificate)', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/documents.jpg'),
   ];
 
   //image picker datatype
@@ -29,7 +29,7 @@ class EmergencyKitViewModel extends ChangeNotifier {
   Future<void> imageSelect() async
   {
     final ImagePicker picker = ImagePicker();
-    final XFile? pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedImage = await picker.pickImage(source: ImageSource.gallery, imageQuality: 60);
     image = pickedImage;
     notifyListeners();
   }
@@ -38,7 +38,7 @@ class EmergencyKitViewModel extends ChangeNotifier {
   void addItem(String itemName, BuildContext context) {
     importantsList.add(EmergencyKitModel(title: itemName, isChecked: false, imagePath: image));
     notifyListeners();
-    Navigator.of(context).pop();
+    Navigator.pop(context);
   }
 
   //deletes an item

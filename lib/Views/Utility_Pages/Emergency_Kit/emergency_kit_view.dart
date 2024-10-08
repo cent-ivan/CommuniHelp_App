@@ -65,7 +65,7 @@ class _PcardState extends State<Pcard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
 
       body: Container(
         decoration: BoxDecoration(
@@ -81,7 +81,7 @@ class _PcardState extends State<Pcard> {
               'Emergency Kit Checklist', 
               style: TextStyle(
                 fontSize: 18.r,
-                color: const Color(0xFF3D424A),
+                color: Theme.of(context).colorScheme.outline,
                 fontWeight: FontWeight.bold,
               ),
             ),

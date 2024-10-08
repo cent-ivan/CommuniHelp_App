@@ -39,17 +39,18 @@ class ChecklistItem extends StatelessWidget {
         //Checkbox Container
         child: Container(
           decoration:  BoxDecoration(
-            borderRadius: BorderRadiusDirectional.circular(8.r),
-            color: Colors.white,
+            borderRadius: BorderRadiusDirectional.circular(10.r),
+            color: const Color.fromARGB(255, 222, 222, 227),
           ),
-          padding: const EdgeInsets.all(3).r,
+          padding: const EdgeInsets.all(4).r,
           child: Row(
             children: [
               
+
               //Checkbox code
               Checkbox(
                 activeColor: Colors.greenAccent,
-                side: BorderSide(color: Colors.blue.shade900),
+                side: BorderSide(color: Colors.blue.shade900, width: 3),
                 value: gotitem,
                 onChanged: onChanged,
               ),
@@ -72,8 +73,8 @@ class ChecklistItem extends StatelessWidget {
                   fit: BoxFit.cover,
                 )
                     : Container(
-                  width: 40.r,
-                  height: 40.r,
+                  width: 35.r,
+                  height: 35.r,
                   decoration: BoxDecoration(
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(5),
