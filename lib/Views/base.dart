@@ -30,7 +30,7 @@ class _HomeBaseState extends State<HomeBase> {
 
   @override
   Widget build(BuildContext context) {
-    final getService = Provider.of<GetUserData>(context);
+    //final getService = Provider.of<GetUserData>(context);
     return Scaffold(
       appBar:  const AppBarBase(),
 
@@ -185,7 +185,6 @@ class _HomeBaseState extends State<HomeBase> {
                     minWidth: 20.r,
                     onPressed: () {
                       setState(() {
-                        getService.getUser();
                         _currentIndex = 3;
                       });
                     },
@@ -337,11 +336,7 @@ class DrawerBase extends StatelessWidget {
                         iconSize: 25,
                         color: Theme.of(context).colorScheme.outline,
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            '/home',
-                            (Route<dynamic> route) => false,
-                          );
+                          Navigator.pop(context);
                         },
                       ),
       
@@ -357,11 +352,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: (){
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            '/home',
-                            (Route<dynamic> route) => false,
-                          );
+                          Navigator.pop(context);
                         },
                       )
                     ],

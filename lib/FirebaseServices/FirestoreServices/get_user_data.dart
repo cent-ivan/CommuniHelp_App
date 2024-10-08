@@ -8,6 +8,8 @@ class GetUserData extends ChangeNotifier {
   //show current user
   User? user = FirebaseAuth.instance.currentUser!;
 
+  int counter = 0;
+
   //Firestore instance
   final _db = FirebaseFirestore.instance;
 
@@ -15,7 +17,6 @@ class GetUserData extends ChangeNotifier {
     FirebaseAuth.instance.authStateChanges().listen((User? newUser) {
       user = newUser;
       if (newUser == null) {
-        print("Reloads bitch");
         reloadData(); // Clear user data on sign out
       } else {
         getUser(); // Fetch new user data on sign in
@@ -36,12 +37,9 @@ class GetUserData extends ChangeNotifier {
     if (user == null) return;
 
     String id = user!.uid;
-    print("Running");
-
     try {
       DocumentSnapshot doc = await _db.collection("users").doc(id).get();
       if (doc.exists) {
-        print("ID: $id");
         UserModel userDetails = UserModel.fromJson(doc.data() as Map<String, dynamic>);
         name = userDetails.name!;
         birthdate = userDetails.birthdate!;
@@ -50,6 +48,7 @@ class GetUserData extends ChangeNotifier {
         municipality = userDetails.municipality!;
         email = userDetails.email!;
         mobileNumber = userDetails.mobileNumber!;
+        counter += 1;
         
         notifyListeners();
 
@@ -58,6 +57,7 @@ class GetUserData extends ChangeNotifier {
       print("Error: ${error.toString()}");
     }
     print("Added: $name");
+    print("Calls: $counter");
   }
 
   void reloadData() {

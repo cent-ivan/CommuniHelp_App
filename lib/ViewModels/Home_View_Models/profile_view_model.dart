@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 //import '../../Models/user_model.dart';
+List<String> options =["Male", "Female"]; //for radio list
 
 class ProfileViewModel extends ChangeNotifier{
+  
+  String currentOption = options[0];
 
   //text field controllers
   final TextEditingController nameController = TextEditingController();
@@ -18,6 +23,24 @@ class ProfileViewModel extends ChangeNotifier{
 
   bool isActive  = false;
 
+
+  //inserts user data to textcontrollers
+  void loadData(BuildContext context) {
+    final getService = Provider.of<GetUserData>(context,listen: false);
+    for (var option in options) {
+      if (option == getService.gender){
+        currentOption = option;
+      }
+    }
+    
+    nameController.text = getService.name;
+    birthdateController.text = getService.birthdate;
+    emailController.text = getService.email;
+    contactController.text = getService.mobileNumber;
+    print("running..");
+
+    notifyListeners();
+  }
  
   //DatePicker Widget
   Future<void> pickDate(BuildContext context) async {
@@ -44,6 +67,7 @@ class ProfileViewModel extends ChangeNotifier{
 
 
   //Firestore methods-------------------------------------------------------------------
+  //TODO: check if its online
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future updateMunicipal(String? newValue) async {
@@ -68,5 +92,6 @@ class ProfileViewModel extends ChangeNotifier{
     }
     notifyListeners();
   }
+
 
 }
