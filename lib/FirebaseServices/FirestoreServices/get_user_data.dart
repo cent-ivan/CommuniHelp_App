@@ -8,7 +8,6 @@ class GetUserData extends ChangeNotifier {
   //show current user
   User? user = FirebaseAuth.instance.currentUser!;
 
-  int counter = 0;
 
   //Firestore instance
   final _db = FirebaseFirestore.instance;
@@ -48,8 +47,6 @@ class GetUserData extends ChangeNotifier {
         municipality = userDetails.municipality!;
         email = userDetails.email!;
         mobileNumber = userDetails.mobileNumber!;
-        counter += 1;
-        
         notifyListeners();
 
       }
@@ -57,7 +54,6 @@ class GetUserData extends ChangeNotifier {
       print("Error: ${error.toString()}");
     }
     print("Added: $name");
-    print("Calls: $counter");
   }
 
   void reloadData() {
@@ -74,4 +70,5 @@ class GetUserData extends ChangeNotifier {
     notifyListeners();
   }
  
+       
 }

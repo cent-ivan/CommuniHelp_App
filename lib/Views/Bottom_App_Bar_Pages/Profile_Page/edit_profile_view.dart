@@ -538,7 +538,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   
 
                                   getService.getUser();
-              
+                                  Navigator.pop(context);
                                   
                               }
                               else if (viewModel.barangayValue == null || viewModel.municipalityValue ==  null) {

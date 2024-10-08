@@ -1,13 +1,15 @@
+import 'package:communihelp_app/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Models/emergency_contacts_model.dart';
 import 'package:flutter/material.dart';
 
 class EmergencyViewModel extends ChangeNotifier{
+  final getService = GetUserData(); //access data from firestore
 
   EmergencyViewModel(){
     addContact();
   }
 
-  final String municipalityName = "Nabas";
+  String municipalityName = "No data";
 
   List<EmergencyContactsModel> queryContacts = [];
   List<EmergencyContactsModel> mddrmoContacts = [];
@@ -44,6 +46,12 @@ class EmergencyViewModel extends ChangeNotifier{
         return;
       }
     }
+  }
+
+  Future loadMunicipality() async {
+    await getService.getUser();
+    municipalityName = getService.municipality;
+    notifyListeners();
   }
 
 }

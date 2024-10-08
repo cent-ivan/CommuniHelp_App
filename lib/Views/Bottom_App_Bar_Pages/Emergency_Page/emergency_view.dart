@@ -15,13 +15,13 @@ class _EmergencyViewState extends State<EmergencyView> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        appBar: const EmergencyAppBar(),
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      appBar: const EmergencyAppBar(),
 
-        body: const EmergencyNumbers(),
-      )
+      body: const EmergencyNumbers(),
     );
+
   }
 }
 
@@ -33,6 +33,7 @@ class EmergencyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const EmergencyAppBar({
     super.key,
   });
+
 
   @override
   Widget build(BuildContext context) {

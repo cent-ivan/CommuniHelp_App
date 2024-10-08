@@ -1,3 +1,4 @@
+import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Community_Page/community_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Contacts_Page/contacts_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Home_Page/dashboard_view.dart';
@@ -27,10 +28,15 @@ class _HomeBaseState extends State<HomeBase> {
     const ProfileView()
   ];
 
+  final getService = GetUserData();
+  @override
+  void initState() {
+    super.initState();
+    getService.getUser();
+  }
 
   @override
   Widget build(BuildContext context) {
-    //final getService = Provider.of<GetUserData>(context);
     return Scaffold(
       appBar:  const AppBarBase(),
 
@@ -545,12 +551,14 @@ class FloatingActionButtonBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final emergencyViewModel = Provider.of<EmergencyViewModel>(context);
     return SizedBox.fromSize(
       size: Size.square(50.r),
       child: FloatingActionButton(
         elevation: 0,
         shape: const CircleBorder(),
         onPressed: () {
+          emergencyViewModel.loadMunicipality();
           Navigator.pushNamed(context, '/emergency');
         },
         backgroundColor: const Color(0xFFFEAE49),
