@@ -6,8 +6,8 @@ import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/profile_
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../FirebaseServices/FirestoreServices/get_user_data.dart';
-import '../FirebaseServices/auth.dart';
+import '../Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import '../Databases/FirebaseServices/auth.dart';
 
 class HomeBase extends StatefulWidget {
   const HomeBase({super.key});

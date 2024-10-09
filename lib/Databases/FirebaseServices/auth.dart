@@ -1,4 +1,4 @@
-import 'package:communihelp_app/FirebaseServices/FirestoreServices/user_registration.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
 import 'package:communihelp_app/Models/user_model.dart';
 import 'package:communihelp_app/Views/View_Components/dialogs.dart';
 import 'package:communihelp_app/Views/View_Components/login_dialogs.dart';

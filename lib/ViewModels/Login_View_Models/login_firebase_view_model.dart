@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../FirebaseServices/auth.dart';
+import '../../Databases/FirebaseServices/auth.dart';
 
 class LoginFirebaseViewModel {
   //Firebase Service obj

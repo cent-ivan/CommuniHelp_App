@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:communihelp_app/FirebaseServices/FirestoreServices/get_user_data.dart';
-import 'package:communihelp_app/FirebaseServices/FirestoreServices/user_registration.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
 import 'package:communihelp_app/Models/user_model.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/profile_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
