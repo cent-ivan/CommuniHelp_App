@@ -131,6 +131,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                               TextFormField(
                                 controller: viewModel.nameController,
                                 cursorColor: const Color(0xFF3D424A),
+                                style: TextStyle(
+                                  color: Color(0xFF3D424A),
+                                ),
                                 decoration: InputDecoration(
                                   hintText: "Name",
                                   hintStyle: const TextStyle(
@@ -161,6 +164,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 controller: viewModel.bdayController,
                                 readOnly: true,
                                 cursorColor: const Color(0xFF3D424A),
+                                style: TextStyle(
+                                  color: Color(0xFF3D424A),
+                                ),
                                 decoration: InputDecoration(
                                   hintText: "Birthdate (mm/dd/yyyy)",
                                   hintStyle: const TextStyle(
@@ -221,7 +227,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                                   child: Text(
                                                     municipal["name"],
                                                     style: TextStyle(
-                                                    color: const Color(0xFF3D424A),
+                                                    color: Color(0xFF3D424A),
                                                     fontSize: 14.r
                                                     )
                                                   )
@@ -231,10 +237,20 @@ class _RegistrationViewState extends State<RegistrationView> {
                                           }
                                 
                                           return DropdownButton(
-                                            hint: const Text("Your Municipality"),
+                                            hint: const Text(
+                                              "Your Municipality",
+                                              style: TextStyle(
+                                                color: Color(0xFF3D424A),
+                                              ),
+                                            ),
                                             value: viewModel.municipalId,
-                                            items: municipalities, 
+                                            items: municipalities,
+                                            style: TextStyle(
+                                              color: Color(0xFF3D424A),
+                                            ),
                                             iconSize: 28.r,
+                                            iconEnabledColor: Color(0xFF3D424A),
+                                            dropdownColor: Color(0xFFEDEDED),
                                             underline: Container(
                                               height: 2.3,
                                               color: const Color(0xFF3D424A),
@@ -273,7 +289,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                                   child: Text(
                                                     barangay["name"],
                                                     style: TextStyle(
-                                                    color: const Color(0xFF3D424A),
+                                                    color: Color(0xFF3D424A),
                                                     fontSize: 14.r
                                                     )
                                                   )
@@ -292,6 +308,8 @@ class _RegistrationViewState extends State<RegistrationView> {
                                             value: viewModel.barangayId,
                                             items: viewModel.isActive ? barangays : null, 
                                             iconSize: 28.r,
+                                            iconEnabledColor: Color(0xFF3D424A),
+                                            dropdownColor: Color(0xFFEDEDED),
                                             underline: Container(
                                               height: 2.3,
                                               color: const Color(0xFF3D424A),
@@ -329,7 +347,12 @@ class _RegistrationViewState extends State<RegistrationView> {
                               Row(
                                 children: [
                                   Radio<String>(
-                                    activeColor: const Color(0xFF854F6C),
+                                    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.disabled)) {
+                                      return const Color(0xFF854F6C);
+                                    }
+                                    return const Color(0xFF854F6C);
+                                  }),
                                     value: options[0],
                                     groupValue: currentOption,
                                     onChanged: (value) {
@@ -349,7 +372,12 @@ class _RegistrationViewState extends State<RegistrationView> {
                                    SizedBox(width: 60.r,),
 
                                   Radio(
-                                    activeColor: const Color(0xFF854F6C),
+                                    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.disabled)) {
+                                      return const Color(0xFF854F6C);
+                                    }
+                                    return const Color(0xFF854F6C);
+                                  }),
                                     value: options[1],
                                     groupValue: currentOption,
                                     onChanged: (value) {
@@ -391,6 +419,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                               //contact number
                               TextFormField(
                                 controller: viewModel.contactController,
+                                style: const TextStyle(
+                                  color: Color(0xFF3D424A),
+                                ),
                                 cursorColor: const Color(0xFF3D424A),
                                 maxLength: 11,
                                 keyboardType: TextInputType.number, //accepts only intgers
@@ -424,6 +455,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                               TextFormField(
                                 controller: viewModel.emailController,
                                 cursorColor: const Color(0xFF3D424A),
+                                style: const TextStyle(
+                                  color: Color(0xFF3D424A),
+                                ),
                                 decoration: InputDecoration(
                                   hintText: "Email",
                                   hintStyle: const TextStyle(
@@ -457,6 +491,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 controller: viewModel.passwordController,
                                 obscureText: _isObscure1,
                                 cursorColor: const Color(0xFF3D424A),
+                                style: const TextStyle(
+                                  color: Color(0xFF3D424A),
+                                ),
                                 decoration: InputDecoration(
                                   hintText: "Password",
                                   hintStyle: const TextStyle(
@@ -497,6 +534,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 controller: viewModel.confirmPasswordController,
                                 obscureText: _isObscure2,
                                 cursorColor: const Color(0xFF3D424A),
+                                style: const TextStyle(
+                                  color: Color(0xFF3D424A),
+                                ),
                                 decoration: InputDecoration(
                                   hintText: "Comfirm Password",
                                   hintStyle: const TextStyle(
