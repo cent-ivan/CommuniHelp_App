@@ -1,6 +1,8 @@
 
 import 'package:hive_flutter/hive_flutter.dart';
 
+part 'emergency_kit_model.g.dart';
+
 @HiveType(typeId: 0)
 class EmergencyKitModel {
   @HiveField(0)

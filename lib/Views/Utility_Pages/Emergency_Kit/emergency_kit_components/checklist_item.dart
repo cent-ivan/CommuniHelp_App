@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -59,7 +58,7 @@ class ChecklistItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 10).r,
                 child: image != null
-                    ? image is String
+                    ? (image is String && image.startsWith("assets/"))
                     ? Image.asset(
                   image,
                   width: 45.r,
@@ -67,7 +66,7 @@ class ChecklistItem extends StatelessWidget {
                   fit: BoxFit.cover,
                 )
                     : Image.file(
-                  File((image as XFile).path),
+                  File(image),
                   width: 45.r,
                   height: 45.r,
                   fit: BoxFit.cover,
@@ -79,11 +78,7 @@ class ChecklistItem extends StatelessWidget {
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Icon(
-                    Icons.help_outline,
-                    size: 30.r,
-                    color: Colors.white,
-                  ),
+                  child: Image.asset('assets/images/dashboard/checklist_images/no_pictures.png')
                 ),
               ),
 

@@ -17,6 +17,7 @@ class _EmergencyKitViewState extends State<EmergencyKitView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -65,46 +66,88 @@ class _PcardState extends State<Pcard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
 
-      body: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: const Color(0x4D57BEE6),
-        ),
-        margin: const EdgeInsets.all(16.0),
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Emergency Kit Checklist', 
-              style: TextStyle(
-                fontSize: 18.r,
-                color: Theme.of(context).colorScheme.outline,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            Expanded(
-              child: Consumer<EmergencyKitViewModel>( builder: (context, emergencyValue, child) =>  ListView.builder (
-                  itemCount: emergencyValue.importantsList.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return ChecklistItem (
-                      itemname: emergencyValue.importantsList[index].title!,
-                      gotitem: emergencyValue.importantsList[index].isChecked!,
-                      onChanged: (value) => emergencyValue.checkBoxChanged(index, value),
-                      image: emergencyValue.importantsList[index].imagePath,
-                      deleteFunction: (context) => emergencyValue.deleteitem(index),
-                    );
-                  },
-                
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: const Color(0xFF57BEE6),
+                ),
+                margin: const EdgeInsets.only(top: 5),
+                padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Emergency Kit Checklist', 
+                      style: TextStyle(
+                        fontSize: 18.r,
+                        color: Theme.of(context).colorScheme.outline,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+        
+                    const SizedBox(height: 10),
+        
+                    SizedBox(
+                      height: 435,
+                      child: Consumer<EmergencyKitViewModel>( builder: (context, emergencyValue, child) =>  ListView.builder (
+                          itemCount: emergencyValue.db.importantsList.length,
+                          itemBuilder: (BuildContext context, index) {
+                            return ChecklistItem (
+                              itemname: emergencyValue.db.importantsList[index].title,
+                              gotitem: emergencyValue.db.importantsList[index].isChecked!,
+                              onChanged: (value) => emergencyValue.checkBoxChangedImportant(index, value),
+                              image: emergencyValue.db.importantsList[index].imagePath,
+                              deleteFunction: (context) => emergencyValue.deleteitem(index),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+        
+              
+        
+              const SizedBox(height: 10),
+        
+              Text(
+                'My Checklist', 
+                style: TextStyle(
+                  fontSize: 18.r,
+                  color: Theme.of(context).colorScheme.outline,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+        
+              const SizedBox(height: 10),
+        
+              Expanded(
+                child: Consumer<EmergencyKitViewModel>( builder: (context, emergencyValue, child) =>  ListView.builder (
+                    itemCount: emergencyValue.db.storage.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return ChecklistItem (
+                        itemname: emergencyValue.db.storage[index].title,
+                        gotitem: emergencyValue.db.storage[index].isChecked!,
+                        onChanged: (value) => emergencyValue.checkBoxChangedStorage(index, value),
+                        image: emergencyValue.db.storage[index].imagePath,
+                        deleteFunction: (context) => emergencyValue.deleteitem(index),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
 

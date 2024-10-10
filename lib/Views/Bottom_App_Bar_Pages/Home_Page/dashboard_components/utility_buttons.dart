@@ -1,6 +1,11 @@
 //Utility Buttons
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_kit_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+
 
 class UtilityButtons extends StatelessWidget {
   const UtilityButtons({
@@ -8,7 +13,11 @@ class UtilityButtons extends StatelessWidget {
   });
 
   @override
+  
   Widget build(BuildContext context) {
+    final getService = Provider.of<GetUserData>(context);
+    final viewModel = Provider.of<EmergencyKitViewModel>(context);
+
     return Wrap(
       spacing: 5.r,
       runSpacing: 10.r,
@@ -122,6 +131,7 @@ class UtilityButtons extends StatelessWidget {
             //Emergency Kit Button
             MaterialButton(
               onPressed: () {
+                viewModel.loadData(getService.user!.uid);
                 Navigator.pushNamed(context,'/emergencykit');
               },
               height: 80.r,

@@ -16,7 +16,7 @@ class AddChecklistDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return SafeArea(
       child: Column
         (
         mainAxisSize: MainAxisSize.min,
@@ -60,7 +60,7 @@ class AddChecklistDialog extends StatelessWidget {
               //Button for picking an image
               MaterialButton(
                 color: const Color(0xFF3D424A),
-                onPressed: emergencyKitViewModel.imageSelect,
+                onPressed:() { emergencyKitViewModel.imageSelect(); },
                 child: const Icon(
                   Icons.image,
                   color: Color(0xFFF5F5F5),
@@ -70,7 +70,7 @@ class AddChecklistDialog extends StatelessWidget {
           ),
           
       
-          emergencyKitViewModel.image != null ? Image.file(File(emergencyKitViewModel.image!.path)) : Container(),
+          emergencyKitViewModel.image != null ? Image.file(File(emergencyKitViewModel.image!)) : Container(),
         ],
       ),
     );
