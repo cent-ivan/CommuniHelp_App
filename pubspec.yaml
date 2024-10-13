@@ -18,6 +18,7 @@ dependencies:
   get: ^4.6.6
   image_picker: ^1.0.0
   flutter_slidable: ^3.1.0
+  flutter_keyboard_visibility: ^6.0.0
 
   #Hive local storage
   hive: ^2.2.3
