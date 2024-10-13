@@ -67,10 +67,7 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                 ),
 
-                Divider(
-                  color: Theme.of(context).colorScheme.surface,
-                  height: 24.r,
-                ),
+                SizedBox(height: 45.r,),
 
                 //Personal Details
                 Column(

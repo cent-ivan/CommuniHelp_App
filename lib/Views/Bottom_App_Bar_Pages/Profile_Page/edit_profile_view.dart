@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
 import 'package:communihelp_app/Models/user_model.dart';
+import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/profile_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   final _formKey = GlobalKey<FormState>();
 
   
-  double _screenSize = 895.r + 130.r;
+  double _screenSize = 895.r + 100.r;
   double spaceBetweenDetails = 20.r;
   double spaceBetweenLabel = 2.5.r;
 
@@ -39,6 +40,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   Widget build(BuildContext context) {
     final getService = Provider.of<GetUserData>(context);
+    final emergencyViewModel = Provider.of<EmergencyViewModel>(context);
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -60,6 +62,12 @@ class _EditProfileViewState extends State<EditProfileView> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           child: Container(
+            decoration: BoxDecoration(
+              image:  DecorationImage(image: Theme.of(context).colorScheme.primary == const Color(0xFFF2F2F2) ? 
+                const AssetImage('assets/images/background/ProfileBackground.png') : const AssetImage('assets/images/background/ProfileDarkBackground.png'), 
+              fit: BoxFit.cover),
+            
+            ),
             height: _screenSize,
             padding: const EdgeInsets.fromLTRB(12, 25, 12, 5).r,
             child: Column(
@@ -74,7 +82,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                     children: [
                       CircleAvatar(
                         backgroundImage: const AssetImage('assets/images/rescuer.png'),
-                        radius: 40.r,
+                        radius: 65.r,
                       ),
                   
                       //Edit Profile Button
@@ -112,16 +120,13 @@ class _EditProfileViewState extends State<EditProfileView> {
                   ),
                 ),
 
-                Divider(
-                  color: Theme.of(context).colorScheme.surface,
-                  height: 45.r,
-                ),
+                SizedBox(height: 45.r,),
 
                 //Personal Details
                 Container(
                   padding: EdgeInsets.all(12.r),
                     decoration: BoxDecoration(
-                    color:  const Color(0xFFF5F5F5),
+                    color:  const Color(0xF2F5F5F5),
                     borderRadius: BorderRadius.all(Radius.circular(10.r))
                   ),
                   child: Form(
@@ -147,7 +152,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                             cursorColor: const Color(0xFF3D424A),
                             textCapitalization: TextCapitalization.sentences,
                             style: TextStyle(
-                              fontSize: 14.r
+                              fontSize: 14.r,
+                              color: const Color(0xFF3D424A)
                             ),
                             decoration: InputDecoration(
                             hintText: "Edit Name",
@@ -178,7 +184,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                             cursorColor: const Color(0xFF3D424A),
                             readOnly: true,
                             style: TextStyle(
-                              fontSize: 14.r
+                              fontSize: 14.r,
+                              color: const Color(0xFF3D424A)
                             ),
                             decoration: InputDecoration(
                               hintText: "Edit Birthday",
@@ -218,7 +225,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                           Text(
                             "Gender",
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.outline,
+                              color: const Color(0xFF3D424A),
                               fontSize: 14.r,
                               fontWeight: FontWeight.w500,
                               letterSpacing: 1.5
@@ -231,7 +238,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                           Row(
                             children: [
                               Radio<String>(
-                                activeColor: const Color(0xFF854F6C),
+                                fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.disabled)) {
+                                      return const Color(0xFF854F6C);
+                                    }
+                                    return const Color(0xFF854F6C);
+                                  }),
                                 value: options[0],
                                 groupValue: viewModel.currentOption,
                                 onChanged: (value) {
@@ -241,12 +253,17 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 },
                               ),
                                                 
-                              Text(options[0]),
+                              Text(options[0], style: TextStyle(color: const Color(0xFF3D424A)),),
                   
                               SizedBox(width: 60.r,),
                   
                               Radio(
-                                activeColor: const Color(0xFF854F6C),
+                                fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.disabled)) {
+                                      return const Color(0xFF854F6C);
+                                    }
+                                    return const Color(0xFF854F6C);
+                                  }),
                                 value: options[1],
                                 groupValue: viewModel.currentOption,
                                 onChanged: (value) {
@@ -256,7 +273,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 },
                               ),
                   
-                              Text(options[1]),
+                              Text(options[1], style: TextStyle(color: const Color(0xFF3D424A)),),
                             ],
                           ),
                     
@@ -274,7 +291,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   Text(
                                     "Municipality",
                                     style: TextStyle(
-                                      color: Theme.of(context).colorScheme.outline,
+                                      color: const Color(0xFF3D424A),
                                       fontSize: 14.r,
                                       fontWeight: FontWeight.w500,
                                       letterSpacing: 1.5
@@ -311,10 +328,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                                               }
                                             }
                                             return DropdownButton(
-                                              hint: const Text("Your Municipality"),
+                                              hint: const Text("Your Municipality", style: TextStyle(color: Color(0xFF3D424A)),),
                                               value: viewModel.municipalId,
                                               items: municipalities, 
                                               iconSize: 28.r,
+                                              iconEnabledColor: const Color(0xFF3D424A),
+                                              dropdownColor: Color(0xFFEDEDED),
                                               underline: Container(
                                                 height: 2,
                                                 color: const Color(0xFF3D424A),
@@ -344,7 +363,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   Text(
                                     "Barangay",
                                     style: TextStyle(
-                                      color: Theme.of(context).colorScheme.outline,
+                                      color: const Color(0xFF3D424A),
                                       fontSize: 14.r,
                                       fontWeight: FontWeight.w500,
                                       letterSpacing: 1.5
@@ -390,6 +409,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                                               value: viewModel.barangayId,
                                               items: viewModel.isActive? barangays : null, 
                                               iconSize: 28.r,
+                                              iconEnabledColor: const Color(0xFF3D424A),
+                                              dropdownColor: Color(0xFFEDEDED),
                                               underline: Container(
                                                 height: 2,
                                                 color: const Color(0xFF3D424A),
@@ -468,7 +489,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                           Text(
                             "Mobile number",
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.outline,
+                              color: const Color(0xFF3D424A),
                               fontSize: 14.r,
                               fontWeight: FontWeight.w500
                             ),
@@ -486,7 +507,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                               FilteringTextInputFormatter.digitsOnly,
                             ],
                             style: TextStyle(
-                              fontSize: 18.r
+                              fontSize: 18.r,
+                              color: const Color(0xFF3D424A)
                             ),
                             decoration: InputDecoration(
                             hintText: "Edit Contact Number",
@@ -517,11 +539,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   //validated the text field and adds to the firebase, pass to register view model
                                   _formKey.currentState!.save();
                                   setState(() {
-                                    _screenSize = 895.r + 130.r;
-
-                                    
-
+                                    _screenSize = 895.r + 100.r;
+                           
                                     userData.reloadData();
+                                    emergencyViewModel.reloadLists();
 
                                     firestoreService.updateUserDetails(UserModel(
                                       uid: user.uid,
@@ -618,7 +639,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 child: Text(
                                   "Change email here",
                                   style: TextStyle(
-                                    color: Theme.of(context).colorScheme.outline,
+                                    color: const Color(0xFF3D424A),
                                     fontSize: 14.r,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline
@@ -634,7 +655,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 child: Text(
                                   "Change password here",
                                   style: TextStyle(
-                                    color: Theme.of(context).colorScheme.outline,
+                                    color: const Color(0xFF3D424A),
                                     fontSize: 14.r,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline
