@@ -382,7 +382,7 @@ class DrawerBase extends StatelessWidget {
       
                       TextButton(
                         child: Text(
-                          "Notifactions",
+                          "Notifications",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
