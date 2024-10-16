@@ -22,10 +22,7 @@ class _ContactsViewState extends State<ContactsView> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(13).r,
-          child: Container(
-            child: const Text("Enter your code here:"), //remove the text widget
-            
-          ),
+          child: const Text("Enter your code here:"),
         ),
       
       

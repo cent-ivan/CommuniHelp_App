@@ -104,7 +104,7 @@ class GlobalDialogUtil{
               color: Color(0xFF57BEE6),
             ),
 
-            const SizedBox(height: 15,),
+            SizedBox(height: 15,),
         
             Text(
               "Signing Out",
