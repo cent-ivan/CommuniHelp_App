@@ -1,3 +1,4 @@
+import 'package:communihelp_app/Views/Utility_Pages/Evacuation_Finder/Evacuation_Widgets/map_widget.dart';
 import 'package:flutter/material.dart';
 
 class EvacautionFinderView extends StatefulWidget {
@@ -39,6 +40,8 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           },
         ),
       ),
+
+      body: const MapWidget(),
     );
   }
 }
