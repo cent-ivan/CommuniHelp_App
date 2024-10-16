@@ -1,12 +1,14 @@
+import 'package:logger/logger.dart';
+
 class CheckTest {
-  //final emergencyViewModel = EmergencyViewModel();
+  var logger = Logger();//showing debug messages
 
 
   void checkCGList(List cgList) {
-    print("Coast Guard List ${cgList.length}");
+    logger.d("Coast Guard List ${cgList.length}");
   }
 
   void displayCalled(String methodName) {
-    print(">>> $methodName called...");
+    logger.d(">>> $methodName called...");
   } 
 }
