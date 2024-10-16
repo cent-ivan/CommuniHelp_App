@@ -18,17 +18,6 @@ class RegistrationViewModel extends ChangeNotifier{
   String? barangayId;
 
   bool isActive = false;
-  
-
-  //checks if the snapshot is a collection
-  bool checkCollection(DocumentSnapshot snapshot) {
-    Object data  = snapshot.data()!;
-    print(data);
-    if (data is Map) {
-      return true;
-    }
-    return false;
-  }
 
 
   //DatePicker Widget
