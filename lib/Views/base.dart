@@ -29,11 +29,6 @@ class _HomeBaseState extends State<HomeBase> {
   ];
 
   final getService = GetUserData();
-  @override
-  void initState() {
-    super.initState();
-    getService.getUser();
-  }
 
   @override
   Widget build(BuildContext context) {
