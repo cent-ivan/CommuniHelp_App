@@ -37,7 +37,6 @@ class ProfileViewModel extends ChangeNotifier{
     birthdateController.text = getService.birthdate;
     emailController.text = getService.email;
     contactController.text = getService.mobileNumber;
-    print("running..");
 
     notifyListeners();
   }
