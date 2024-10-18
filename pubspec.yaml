@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  #utilities
   provider: ^6.1.2
   flutter_screenutil: ^5.9.3
   get: ^4.6.6
@@ -16,6 +18,7 @@ dependencies:
   flutter_slidable: ^3.1.0
   flutter_keyboard_visibility: ^6.0.0
   logger: ^2.4.0
+  connectivity_plus: ^6.1.0
 
   #Firebase and firestore
   firebase_auth: ^5.1.4

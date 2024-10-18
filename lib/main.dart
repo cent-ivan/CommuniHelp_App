@@ -28,6 +28,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
+import 'ViewModels/Connection_Controller/dependency_injection.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,6 +64,8 @@ void main() async{
       child: const MainApp(),
     )
   );
+
+  DependencyInjection.init();
 }
 
 class MainApp extends StatelessWidget {
