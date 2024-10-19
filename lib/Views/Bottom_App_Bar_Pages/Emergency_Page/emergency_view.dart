@@ -79,9 +79,9 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
   Widget build(BuildContext context) {
     return Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(13).r,
+          padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16).r,
           child: SizedBox(
-            height: (700 + (viewModel.mddrmoContacts.length.toDouble() * 5) * ((viewModel.ambulanceContacts.length.toDouble() * 5) + (viewModel.bfpContacts.length.toDouble() * 10))).r,
+            height: (500 + (viewModel.mddrmoContacts.length.toDouble() * 7) * ((viewModel.ambulanceContacts.length.toDouble() * 8) + (viewModel.bfpContacts.length.toDouble() * 10) + (viewModel.cgContacts.length.toDouble() * 6))).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -115,7 +115,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                       alignment: Alignment.topLeft,
                       margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                       child: Text(
-                        "MDDRMO Rescuers",
+                        "LDDRMO Rescuers",
                         style: TextStyle(
                           fontSize: 20.r,
                           fontWeight: FontWeight.bold,
@@ -127,10 +127,14 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                     //MDRRMO Number
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15.r),
-                      child: MDRRMOButton(numberOfContacts: viewModel.mddrmoContacts.length,color: const Color(0xBFFEAE49),)
+                      child: viewModel.mddrmoContacts.isEmpty ? null
+                        : LDRRMOButton(numberOfContacts: viewModel.mddrmoContacts.length,color: const Color(0xBFFEAE49),
+                      )
                     ),
                   ],
                 ),
+
+                SizedBox(height: 15.r,),
                     
                     
                 //Ambulance Title
@@ -150,13 +154,15 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                 //Ambulance number
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15.r),
-                  child: AmbulanceButton(numberOfContacts: viewModel.ambulanceContacts.length, color: const Color(0xFFF2F2F2), )
+                  child: viewModel.ambulanceContacts.isEmpty ? Container(color: Colors.amber,)
+                  : AmbulanceButton(numberOfContacts: viewModel.ambulanceContacts.length, color: const Color(0xFFF2F2F2), 
+                  )
                 ),
       
 
-                SizedBox(height: 10.r,),
+                SizedBox(height: 15.r,),
                     
-                //Police Title
+                //bombero Title
                 Container(
                   alignment: Alignment.topLeft,
                   margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
@@ -170,10 +176,32 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                   ),
                 ),
                     
-                //Police number
+                //bombero number
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15).r,
                   child: BFPButton(numberOfContacts: viewModel.bfpContacts.length, color: Colors.amber[300], )
+                ),
+                
+                SizedBox(height: 10.r,),
+                    
+                //Costguard Title
+                Container(
+                  alignment: Alignment.topLeft,
+                  margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
+                  child: Text(
+                    "Numero it Coastguard",
+                    style: TextStyle(
+                      fontSize: 20.r,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.outline, 
+                    ),
+                  ),
+                ),
+                    
+                //Coastgaurd number
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15).r,
+                  child: CoastButton(numberOfContacts: viewModel.cgContacts.length, color: const Color.fromARGB(255, 248, 181, 113), )
                 ),
       
               ],
