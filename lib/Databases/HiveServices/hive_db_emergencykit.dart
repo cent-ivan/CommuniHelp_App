@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../Models/emergency_kit_model.dart';
+import '../../Models/Emergency_kit_model/emergency_kit_model.dart';
 
-class LocalDatabase{
+class ChecklistLocalDatabase{
   List storage = [
   ];
 
@@ -25,23 +25,15 @@ class LocalDatabase{
   //initiate hive box
   final _emergencykitbox = Hive.box<List>('emergencykit');
 
-
+  //loads before opening
   void loadData(String uid) async{
-    print("loaded..");
     var storedList = _emergencykitbox.get(uid);
     final keys = _emergencykitbox.keys;
     if (keys.contains(uid) && storedList != null) {
-      print("True $uid");
-      print("True $storage");
       //remove for deployment
-      print(storedList.length);
       storage = storedList;
-      for (var model in storage) {
-        print(model.title);
-      }
     }
     else {
-      print("reloaded..");
       _emergencykitbox.put(uid, storage);
       var storedList = _emergencykitbox.get(uid);
       storage = storedList!;
@@ -51,12 +43,10 @@ class LocalDatabase{
 
 
   void updateData(String uid) {
-    print("updated... put($uid,$storage)");
     _emergencykitbox.put(uid, storage);
   }
 
   void reloadData() {
-    print("reloaded..");
     storage = [];
   }
 

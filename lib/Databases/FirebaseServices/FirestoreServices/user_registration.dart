@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Models/user_model.dart';
+import 'package:logger/logger.dart';
 
 
 class FireStoreAddService {
+  var logger = Logger();//showing debug messages
+  
+
   //Firestore instance
   final _db = FirebaseFirestore.instance;
 
@@ -13,7 +17,7 @@ class FireStoreAddService {
       
       // ignore: body_might_complete_normally_catch_error
       .catchError((error){ 
-          print("Error Occured : ${error.toString()}");
+          logger.e("Error Occured : ${error.toString()}");
         }
       );
 
@@ -26,7 +30,7 @@ class FireStoreAddService {
       
       // ignore: body_might_complete_normally_catch_error
       .catchError((error){ 
-          print("Error Occured : ${error.toString()}");
+          logger.e("Error Occured : ${error.toString()}");
         }
       );
 
@@ -40,7 +44,7 @@ class FireStoreAddService {
       
       // ignore: body_might_complete_normally_catch_error
       .catchError((error){ 
-          print("Error Occured : ${error.toString()}");
+          logger.e("Error Occured : ${error.toString()}");
         }
       );
   }

@@ -77,7 +77,7 @@ class _PcardState extends State<Pcard> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: const Color(0xFF57BEE6),
+                color: const Color(0x4D57BEE6),
               ),
               margin: const EdgeInsets.only(top: 5),
               padding: const EdgeInsets.all(5.0),

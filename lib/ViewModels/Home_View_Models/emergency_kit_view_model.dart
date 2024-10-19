@@ -1,12 +1,12 @@
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/HiveServices/hive_db_emergencykit.dart';
-import 'package:communihelp_app/Models/emergency_kit_model.dart';
+import 'package:communihelp_app/Models/Emergency_kit_model/emergency_kit_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EmergencyKitViewModel extends ChangeNotifier {
-  LocalDatabase db = LocalDatabase(); //access local db methods
+  ChecklistLocalDatabase db = ChecklistLocalDatabase(); //access local db methods
 
   GetUserData getService = GetUserData();
   late String uid = "";

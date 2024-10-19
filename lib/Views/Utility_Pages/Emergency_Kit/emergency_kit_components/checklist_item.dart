@@ -39,7 +39,7 @@ class ChecklistItem extends StatelessWidget {
         child: Container(
           decoration:  BoxDecoration(
             borderRadius: BorderRadiusDirectional.circular(10.r),
-            color: const Color.fromARGB(255, 222, 222, 227),
+            color: const Color(0xFFF7F7F7),
           ),
           padding: const EdgeInsets.all(4).r,
           child: Row(
