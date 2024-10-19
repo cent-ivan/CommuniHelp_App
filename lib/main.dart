@@ -1,4 +1,5 @@
-import 'package:communihelp_app/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Models/Emergency_kit_model/emergency_kit_model.dart';
 import 'package:communihelp_app/ViewModels/Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_kit_view_model.dart';
@@ -23,8 +24,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
+
+import 'ViewModels/Connection_Controller/dependency_injection.dart';
 
 
 void main() async{
@@ -36,6 +40,13 @@ void main() async{
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
   ]);
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(EmergencyKitModelAdapter());
+
+  await Hive.openBox<List>('emergencykit');
+  await Hive.openBox<List>('emergencycontact');
+
   
   runApp(
     MultiProvider(
@@ -53,6 +64,8 @@ void main() async{
       child: const MainApp(),
     )
   );
+
+  DependencyInjection.init();
 }
 
 class MainApp extends StatelessWidget {

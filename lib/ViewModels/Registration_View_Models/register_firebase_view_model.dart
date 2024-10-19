@@ -1,4 +1,4 @@
-import 'package:communihelp_app/FirebaseServices/auth.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/auth.dart';
 import 'package:communihelp_app/Models/user_model.dart';
 import 'package:flutter/material.dart';
 

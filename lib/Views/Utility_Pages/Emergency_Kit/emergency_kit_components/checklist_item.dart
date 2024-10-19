@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -39,17 +38,18 @@ class ChecklistItem extends StatelessWidget {
         //Checkbox Container
         child: Container(
           decoration:  BoxDecoration(
-            borderRadius: BorderRadiusDirectional.circular(8.r),
-            color: Colors.white,
+            borderRadius: BorderRadiusDirectional.circular(10.r),
+            color: const Color(0xFFF7F7F7),
           ),
-          padding: const EdgeInsets.all(3).r,
+          padding: const EdgeInsets.all(4).r,
           child: Row(
             children: [
               
+
               //Checkbox code
               Checkbox(
                 activeColor: Colors.greenAccent,
-                side: BorderSide(color: Colors.blue.shade900),
+                side: BorderSide(color: Colors.blue.shade900, width: 3),
                 value: gotitem,
                 onChanged: onChanged,
               ),
@@ -58,7 +58,7 @@ class ChecklistItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 10).r,
                 child: image != null
-                    ? image is String
+                    ? (image is String && image.startsWith("assets/"))
                     ? Image.asset(
                   image,
                   width: 45.r,
@@ -66,23 +66,19 @@ class ChecklistItem extends StatelessWidget {
                   fit: BoxFit.cover,
                 )
                     : Image.file(
-                  File((image as XFile).path),
+                  File(image),
                   width: 45.r,
                   height: 45.r,
                   fit: BoxFit.cover,
                 )
                     : Container(
-                  width: 40.r,
-                  height: 40.r,
+                  width: 35.r,
+                  height: 35.r,
                   decoration: BoxDecoration(
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Icon(
-                    Icons.help_outline,
-                    size: 30.r,
-                    color: Colors.white,
-                  ),
+                  child: Image.asset('assets/images/dashboard/checklist_images/no_pictures.png')
                 ),
               ),
 

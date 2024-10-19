@@ -1,3 +1,4 @@
+import 'package:communihelp_app/Views/Utility_Pages/Evacuation_Finder/Evacuation_Widgets/map_widget.dart';
 import 'package:flutter/material.dart';
 
 class EvacautionFinderView extends StatefulWidget {
@@ -35,10 +36,12 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           icon: const Icon(Icons.arrow_back_ios_new),
           iconSize: 20,
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+            Navigator.pop(context);
           },
         ),
       ),
+
+      body: const MapWidget(),
     );
   }
 }

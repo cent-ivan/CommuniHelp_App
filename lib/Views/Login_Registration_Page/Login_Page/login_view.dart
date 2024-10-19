@@ -139,6 +139,10 @@ class _LoginViewState extends State<LoginView> {
                               //email
                               TextFormField(
                                 controller: _emailController,
+                                style: TextStyle(
+                                  color: Color(0xFF3D424A),
+                                  fontWeight: FontWeight.bold
+                                ),
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Email",
@@ -172,6 +176,9 @@ class _LoginViewState extends State<LoginView> {
                               TextFormField(
                                 controller: _passwordController,
                                 obscureText: _isObscure,
+                                style: TextStyle(
+                                  color: Color(0xFF3D424A),
+                                ),
                                 cursorColor: const Color(0xFF3D424A),
                                 decoration: InputDecoration(
                                   hintText: "Password",

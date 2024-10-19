@@ -1,12 +1,15 @@
+import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Community_Page/community_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Contacts_Page/contacts_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Home_Page/dashboard_view.dart';
 import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import '../FirebaseServices/FirestoreServices/get_user_data.dart';
-import '../FirebaseServices/auth.dart';
+import '../Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import '../Databases/FirebaseServices/auth.dart';
+import '../ViewModels/Connection_Controller/Controller/network_controller.dart';
 
 class HomeBase extends StatefulWidget {
   const HomeBase({super.key});
@@ -27,12 +30,14 @@ class _HomeBaseState extends State<HomeBase> {
     const ProfileView()
   ];
 
+  final getService = GetUserData();
+
+  final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
   @override
   Widget build(BuildContext context) {
-    //final getService = Provider.of<GetUserData>(context);
     return Scaffold(
-      appBar:  const AppBarBase(),
+      appBar:  AppBarBase(),
 
       drawer: DrawerBase(),
 
@@ -46,8 +51,8 @@ class _HomeBaseState extends State<HomeBase> {
 
       //BOTTOM APPBAR BASE
       bottomNavigationBar: BottomAppBar(
-        padding: const EdgeInsets.fromLTRB(5, 5, 5, 5).r,
-        height: 58.r,
+        padding: const EdgeInsets.fromLTRB(5, 10, 5, 8).r,
+        height: 85.r,
         elevation: 5.r,
         color: Theme.of(context).colorScheme.primary,
         shape: const CircularNotchedRectangle(),
@@ -70,6 +75,7 @@ class _HomeBaseState extends State<HomeBase> {
                         _currentIndex = 0;
                       });
                     },
+                    splashColor: Theme.of(context).colorScheme.primary,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -84,7 +90,6 @@ class _HomeBaseState extends State<HomeBase> {
        
       
                         Expanded(
-                          flex: 0,
                           child: Text(
                             "Home",
                             style: TextStyle(
@@ -108,6 +113,7 @@ class _HomeBaseState extends State<HomeBase> {
                         _currentIndex = 1;
                       });
                     },
+                    splashColor: Theme.of(context).colorScheme.primary,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -121,7 +127,6 @@ class _HomeBaseState extends State<HomeBase> {
                         ),
       
                         Expanded(
-                          flex: 0,
                           child: Text(
                             "Contacts",
                             style: TextStyle(
@@ -151,6 +156,7 @@ class _HomeBaseState extends State<HomeBase> {
                         _currentIndex = 2;
                       });
                     },
+                    splashColor: Theme.of(context).colorScheme.primary,
                     child: Column(
                       children: [
       
@@ -163,7 +169,6 @@ class _HomeBaseState extends State<HomeBase> {
                         ),
       
                         Expanded(
-                          flex: 0,
                           child: Text(
                             "Forum",
                             style: TextStyle(
@@ -188,6 +193,7 @@ class _HomeBaseState extends State<HomeBase> {
                         _currentIndex = 3;
                       });
                     },
+                    splashColor: Theme.of(context).colorScheme.primary,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -202,7 +208,6 @@ class _HomeBaseState extends State<HomeBase> {
       
                       
                         Expanded(
-                          flex: 0,
                           child: Text(
                             "Profile",
                             style: TextStyle(
@@ -239,9 +244,7 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget{
   const AppBarBase({
     super.key,
   });
-  
   @override
-  
   Widget build(BuildContext context) {
     return AppBar(
       title: ShaderMask(
@@ -376,7 +379,7 @@ class DrawerBase extends StatelessWidget {
       
                       TextButton(
                         child: Text(
-                          "Notifactions",
+                          "Notifications",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -545,12 +548,14 @@ class FloatingActionButtonBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final emergencyViewModel = Provider.of<EmergencyViewModel>(context);
     return SizedBox.fromSize(
       size: Size.square(50.r),
       child: FloatingActionButton(
         elevation: 0,
         shape: const CircleBorder(),
         onPressed: () {
+          emergencyViewModel.loadMunicipality();
           Navigator.pushNamed(context, '/emergency');
         },
         backgroundColor: const Color(0xFFFEAE49),

@@ -1,52 +1,90 @@
-import 'package:communihelp_app/Models/emergency_kit_model.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Databases/HiveServices/hive_db_emergencykit.dart';
+import 'package:communihelp_app/Models/Emergency_kit_model/emergency_kit_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EmergencyKitViewModel extends ChangeNotifier {
-  List<EmergencyKitModel> importantsList = [
-    EmergencyKitModel(title: 'Bottled Water', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/water.png'),
-    EmergencyKitModel(title: 'Canned Food', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/food.png'),
-    EmergencyKitModel(title: 'First Aid Kit', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/firstaid.jpg'),
-    EmergencyKitModel(title: 'Extra cash', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/money.jpg'),
-    EmergencyKitModel(title: 'Prescription medicines', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/medicine.jpg'),
-    EmergencyKitModel(title: 'Hygiene kit', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/hygiene.jpeg'),
-    EmergencyKitModel(title: 'Radyo de baterya', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/phone.jpg'),
-    EmergencyKitModel(title: 'Extra clothes', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/clothes.jpg'),
-    EmergencyKitModel(title: 'Mga importanteng documento (national id, passport, birth certificate)', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/documents.jpg'),
-  ];
+  ChecklistLocalDatabase db = ChecklistLocalDatabase(); //access local db methods
+
+  GetUserData getService = GetUserData();
+  late String uid = "";
 
   //image picker datatype
-  XFile? image;
+  String? image;
 
-  //checkbox clicking checkbox
-  void checkBoxChanged(int index, bool? value)
-  {
-    importantsList[index].isChecked = value;
+  void loadData(String uid) {
+    db.loadData(uid);
     notifyListeners();
   }
 
+
+  //checkbox clicking checkbox
+  void checkBoxChangedStorage(int index, bool? value)
+  {
+    checkUser();
+    db.storage[index].isChecked = value;
+    db.updateData(uid);
+    notifyListeners();
+  } 
+
+  //checkbox clicking checkbox
+  void checkBoxChangedImportant(int index, bool? value)
+  {
+    checkUser();
+    db.importantsList[index].isChecked = value;
+    db.updateData(uid);
+    notifyListeners();
+  } 
+ 
   //Image select
   Future<void> imageSelect() async
   {
     final ImagePicker picker = ImagePicker();
-    final XFile? pickedImage = await picker.pickImage(source: ImageSource.gallery);
-    image = pickedImage;
+    final XFile? pickedImage = await picker.pickImage(source: ImageSource.gallery, imageQuality: 60);
+    if (pickedImage != null) {
+      image = pickedImage.path;
+    }
+    else {
+      image = 'assets/images/dashboard/checklist_images/no_pictures.png';
+    }
     notifyListeners();
   }
 
   //adding a checklist to the list
   void addItem(String itemName, BuildContext context) {
-    importantsList.add(EmergencyKitModel(title: itemName, isChecked: false, imagePath: image));
+    checkUser();
+    db.storage.add(EmergencyKitModel(title: itemName, isChecked: false, imagePath: image));
+    db.updateData(uid);
     notifyListeners();
-    Navigator.of(context).pop();
+    Navigator.pop(context);
   }
 
   //deletes an item
   void deleteitem(int index)
   {
-    importantsList.removeAt(index);
+    checkUser();
+    db.storage.removeAt(index);
+    db.updateData(uid);
     notifyListeners();
   }
 
-  
+  //checls first
+  void checkUser() {
+    uid = getService.user?.uid ?? '';
+    FirebaseAuth.instance.authStateChanges().listen((User? newUser) {
+      if (newUser != null) {
+        if (uid != newUser.uid) {
+          db.reloadData();
+          uid =  newUser.uid;
+          notifyListeners();
+        }
+        else {
+          uid = getService.user!.uid;
+          notifyListeners();
+        }
+      }
+    });
+  }
 }

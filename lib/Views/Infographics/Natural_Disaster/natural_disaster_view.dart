@@ -1,4 +1,4 @@
-import 'package:communihelp_app/Views/Infographics/Natural_Disaster/Natural_Info_Components/natural_infographic_buttons..dart';
+import 'package:communihelp_app/Views/Infographics/Natural_Disaster/Natural_Info_Components/natural_infographic_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

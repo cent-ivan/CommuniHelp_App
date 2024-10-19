@@ -1,4 +1,4 @@
-import 'package:communihelp_app/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModels/Home_View_Models/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,10 +26,15 @@ class _ProfileViewState extends State<ProfileView> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height + 100,
+            decoration: BoxDecoration(
+              image:  DecorationImage(image: Theme.of(context).colorScheme.primary == const Color(0xFFF2F2F2) ? 
+                const AssetImage('assets/images/background/ProfileBackground.png') : const AssetImage('assets/images/background/ProfileDarkBackground.png'), 
+              fit: BoxFit.cover),
+            
+            ),
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 5).r,
             child: Consumer<GetUserData>(builder: (context, userData, child) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,12 +45,19 @@ class _ProfileViewState extends State<ProfileView> {
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                       fontSize: 24.r,
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Colors.white,
+                          offset: const Offset(0, 0),
+                          blurRadius: 50.r
+                        )
+                      ]
                     ),
                   ),
                 ),
 
-                SizedBox(height: 18.r,),
+                SizedBox(height: 8.r,),
 
                 //Profile Picture
                 Center(
@@ -55,10 +67,7 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                 ),
 
-                Divider(
-                  color: Theme.of(context).colorScheme.surface,
-                  height: 24.r,
-                ),
+                SizedBox(height: 45.r,),
 
                 //Personal Details
                 Column(

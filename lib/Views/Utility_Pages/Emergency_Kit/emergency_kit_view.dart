@@ -17,6 +17,7 @@ class _EmergencyKitViewState extends State<EmergencyKitView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -41,7 +42,7 @@ class _EmergencyKitViewState extends State<EmergencyKitView> {
           icon: const Icon(Icons.arrow_back_ios_new),
           iconSize: 20.r,
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+            Navigator.pop(context);
           },
         ),
       ),
@@ -65,42 +66,82 @@ class _PcardState extends State<Pcard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
+      backgroundColor: Theme.of(context).colorScheme.surface,
 
       body: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: const Color(0x4D57BEE6),
-        ),
-        margin: const EdgeInsets.all(16.0),
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(5.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: const Color(0x4D57BEE6),
+              ),
+              margin: const EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Emergency Kit Checklist', 
+                    style: TextStyle(
+                      fontSize: 18.r,
+                      color: Theme.of(context).colorScheme.outline,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+      
+                  const SizedBox(height: 10),
+      
+                  SizedBox(
+                    height: 350,
+                    child: Consumer<EmergencyKitViewModel>( builder: (context, emergencyValue, child) =>  ListView.builder (
+                        itemCount: emergencyValue.db.importantsList.length,
+                        itemBuilder: (BuildContext context, index) {
+                          return ChecklistItem (
+                            itemname: emergencyValue.db.importantsList[index].title,
+                            gotitem: emergencyValue.db.importantsList[index].isChecked!,
+                            onChanged: (value) => emergencyValue.checkBoxChangedImportant(index, value),
+                            image: emergencyValue.db.importantsList[index].imagePath,
+                            deleteFunction: (context) => emergencyValue.deleteitem(index),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+      
+            
+      
+            const SizedBox(height: 10),
+      
             Text(
-              'Emergency Kit Checklist', 
+              'My Checklist', 
               style: TextStyle(
                 fontSize: 18.r,
-                color: const Color(0xFF3D424A),
+                color: Theme.of(context).colorScheme.outline,
                 fontWeight: FontWeight.bold,
               ),
             ),
-
+      
             const SizedBox(height: 10),
-
+      
             Expanded(
               child: Consumer<EmergencyKitViewModel>( builder: (context, emergencyValue, child) =>  ListView.builder (
-                  itemCount: emergencyValue.importantsList.length,
+                  itemCount: emergencyValue.db.storage.length,
                   itemBuilder: (BuildContext context, index) {
                     return ChecklistItem (
-                      itemname: emergencyValue.importantsList[index].title!,
-                      gotitem: emergencyValue.importantsList[index].isChecked!,
-                      onChanged: (value) => emergencyValue.checkBoxChanged(index, value),
-                      image: emergencyValue.importantsList[index].imagePath,
+                      itemname: emergencyValue.db.storage[index].title,
+                      gotitem: emergencyValue.db.storage[index].isChecked!,
+                      onChanged: (value) => emergencyValue.checkBoxChangedStorage(index, value),
+                      image: emergencyValue.db.storage[index].imagePath,
                       deleteFunction: (context) => emergencyValue.deleteitem(index),
                     );
                   },
-                
                 ),
               ),
             ),
@@ -134,51 +175,53 @@ class _PcardState extends State<Pcard> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Consumer<EmergencyKitViewModel>( builder: (context, emergencyValue, child) => AlertDialog(
-            shape: RoundedRectangleBorder
-              (
-              borderRadius: BorderRadius.circular(10),
-            ),
-            backgroundColor: const Color(0xFFF5F5F5),
-            title: Text('Add New Item',
-              style: TextStyle
+        return SingleChildScrollView(
+          child: Consumer<EmergencyKitViewModel>( builder: (context, emergencyValue, child) => AlertDialog(
+              shape: RoundedRectangleBorder
                 (
-                fontSize: 20.r,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xFF3D424A),
-          
+                borderRadius: BorderRadius.circular(10),
               ),
-            ),
-          
-          
-            content: AddChecklistDialog(
-              textController: textController, 
-              emergencyKitViewModel: emergencyValue
-            ),
-          
-            actions: [
-              TextButton(
-                onPressed: () => emergencyValue.addItem(textController.text, context),
-                child: Text('Add',
-                    style: TextStyle(
-                      fontSize: 20.r,
-                      color: Colors.blue[900] ,
-                      fontWeight: FontWeight.bold,
-                  )
+              backgroundColor: const Color(0xFFF5F5F5),
+              title: Text('Add New Item',
+                style: TextStyle
+                  (
+                  fontSize: 20.r,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF3D424A),
+            
                 ),
               ),
-          
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text('Cancel',
-                  style: TextStyle(
-                    fontSize: 20.r,
-                    color: const Color(0xFF3D424A),
-                    fontWeight: FontWeight.bold,
+            
+            
+              content: AddChecklistDialog(
+                textController: textController, 
+                emergencyKitViewModel: emergencyValue
+              ),
+            
+              actions: [
+                TextButton(
+                  onPressed: () => emergencyValue.addItem(textController.text, context),
+                  child: Text('Add',
+                      style: TextStyle(
+                        fontSize: 20.r,
+                        color: Colors.blue[900] ,
+                        fontWeight: FontWeight.bold,
+                    )
                   ),
                 ),
-              ),
-            ],
+            
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Cancel',
+                    style: TextStyle(
+                      fontSize: 20.r,
+                      color: const Color(0xFF3D424A),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

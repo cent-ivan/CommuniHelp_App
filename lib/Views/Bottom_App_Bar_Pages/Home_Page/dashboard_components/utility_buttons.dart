@@ -1,6 +1,11 @@
 //Utility Buttons
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_kit_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+
 
 class UtilityButtons extends StatelessWidget {
   const UtilityButtons({
@@ -8,7 +13,11 @@ class UtilityButtons extends StatelessWidget {
   });
 
   @override
+  
   Widget build(BuildContext context) {
+    final getService = Provider.of<GetUserData>(context);
+    final viewModel = Provider.of<EmergencyKitViewModel>(context);
+
     return Wrap(
       spacing: 5.r,
       runSpacing: 10.r,
@@ -24,14 +33,14 @@ class UtilityButtons extends StatelessWidget {
             //Evacuation Button
             MaterialButton(
               onPressed: () {
-                Navigator.of(context).popAndPushNamed('/evacuationfinder');
+                Navigator.pushNamed(context,'/evacuationfinder');
               },
               height: 80.r,
               minWidth: 100.r,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +56,7 @@ class UtilityButtons extends StatelessWidget {
                         style: TextStyle(
                         fontSize: 12.r,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.outline, 
+                        color: const Color(0xFF3D424A), 
                       ),
                     ),
                   ),
@@ -58,14 +67,14 @@ class UtilityButtons extends StatelessWidget {
             //News Button
             MaterialButton(
               onPressed: () {
-                Navigator.of(context).popAndPushNamed('/newsfeed');
+                Navigator.pushNamed(context,'/newsfeed');
               },
               height: 80.r,
               minWidth: 95.r,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,7 +89,7 @@ class UtilityButtons extends StatelessWidget {
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.outline, 
+                      color: const Color(0xFF3D424A), 
                     ),
                   ),
                 ],
@@ -90,14 +99,14 @@ class UtilityButtons extends StatelessWidget {
             //Weather Button  
             MaterialButton(
               onPressed: () {
-                Navigator.of(context).popAndPushNamed('/weatherupdate');
+                Navigator.pushNamed(context,'/weatherupdate');
               },
               height: 80.r,
               minWidth: 95.r,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,7 +121,7 @@ class UtilityButtons extends StatelessWidget {
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.outline, 
+                      color: const Color(0xFF3D424A), 
                     ),
                   ),
                 ],
@@ -122,14 +131,15 @@ class UtilityButtons extends StatelessWidget {
             //Emergency Kit Button
             MaterialButton(
               onPressed: () {
-                Navigator.of(context).popAndPushNamed('/emergencykit');
+                viewModel.loadData(getService.user!.uid);
+                Navigator.pushNamed(context,'/emergencykit');
               },
               height: 80.r,
               minWidth: 95.r,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,7 +154,7 @@ class UtilityButtons extends StatelessWidget {
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.outline, 
+                      color: const Color(0xFF3D424A), 
                     ),
                   ),
                 ],
@@ -159,7 +169,7 @@ class UtilityButtons extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
               ),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -174,7 +184,7 @@ class UtilityButtons extends StatelessWidget {
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.outline, 
+                      color: const Color(0xFF3D424A), 
                     ),
                   ),
                 ],
@@ -212,14 +222,14 @@ class UtilityButtons extends StatelessWidget {
               //Report Button
               MaterialButton(
                 onPressed: () {
-                  Navigator.of(context).popAndPushNamed('/report');
+                  Navigator.pushNamed(context,'/report');
                 },
                 height: 80.r,
                 minWidth: 95.r,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.r))
                 ),
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.surfaceContainer,
                 splashColor: const Color(0x4D57BEE6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -234,7 +244,7 @@ class UtilityButtons extends StatelessWidget {
                         style: TextStyle(
                         fontSize: 11.r,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.outline, 
+                        color: const Color(0xFF3D424A), 
                       ),
                     ),
                   ],

@@ -17,6 +17,7 @@ class AddChecklistDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
       child: Column
         (
         mainAxisSize: MainAxisSize.min,
@@ -70,7 +71,7 @@ class AddChecklistDialog extends StatelessWidget {
           ),
           
       
-          emergencyKitViewModel.image != null ? Image.file(File(emergencyKitViewModel.image!.path)) : Container(),
+          emergencyKitViewModel.image != null ? Image.file(File(emergencyKitViewModel.image!)) : Container(),
         ],
       ),
     );

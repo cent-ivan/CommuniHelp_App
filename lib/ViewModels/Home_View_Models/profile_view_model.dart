@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:communihelp_app/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +37,6 @@ class ProfileViewModel extends ChangeNotifier{
     birthdateController.text = getService.birthdate;
     emailController.text = getService.email;
     contactController.text = getService.mobileNumber;
-    print("running..");
 
     notifyListeners();
   }
