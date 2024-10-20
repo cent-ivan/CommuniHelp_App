@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:logger/logger.dart';
-import '../../../ViewModel/Login_View_Models/login_firebase_view_model.dart';
 
-class LoginView extends StatefulWidget {
-
-  const LoginView({super.key});
+class LoginResponderView extends StatefulWidget {
+  const LoginResponderView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<LoginResponderView> createState() => _LoginResponderViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
-  Logger logger =  Logger();
-
-  //access view model
-  final LoginFirebaseViewModel loginViewModel = LoginFirebaseViewModel();
-
+class _LoginResponderViewState extends State<LoginResponderView> {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
-  double _loginHeight = 310.r;
+  double _loginHeight = 330.r;
 
   bool _isObscure =  true;
 
@@ -38,7 +30,7 @@ class _LoginViewState extends State<LoginView> {
           height: 755.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/background/Login.jpg'),
+              image: AssetImage('assets/images/background/LoginResponder.jpg'),
               fit: BoxFit.cover
             ),
           ),
@@ -52,7 +44,7 @@ class _LoginViewState extends State<LoginView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 350.r,
+                      width: 520.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),
@@ -60,7 +52,7 @@ class _LoginViewState extends State<LoginView> {
 
                     //Logo and title
                     Positioned(
-                      top: 130.r,
+                      top: 140.r,
                       child: Text(
                         "CommuniHelp",
                         style: TextStyle(
@@ -80,13 +72,13 @@ class _LoginViewState extends State<LoginView> {
                     ),
         
                     Positioned(
-                      top: 170.r,
+                      top: 180.r,
                       child: Text(
-                        "Disaster Preparedness Asssistance and Utility App",
+                        "RESPONDER AND VOLUNTEERS",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
-                          fontSize: 10.r,
+                          fontSize: 14.r,
                           shadows: [
                             Shadow(
                               color: Colors.white,
@@ -227,17 +219,8 @@ class _LoginViewState extends State<LoginView> {
                                     minWidth: 100.r,
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()){
-                                        //check if user is a responder
-                                        if (_emailController.text.contains("GT3RS@HELPER") && _passwordController.text.contains("9112")) {
-                                          Navigator.pushNamed(context, '/responderlogin');
-                                        }
-                                        else {
-                                          //validated the text field and adds to the firebase, pass to register view model
-                                          logger.d("called in login");
-                                          _formKey.currentState!.save();
-                                          loginViewModel.loginUser(context, _emailController.text, _passwordController.text);
-                                        }
-          
+                                        //validated the text field and adds to the firebase, pass to register view model
+                                        _formKey.currentState!.save();
                                       }
                                       else {
                                         setState(() {
@@ -257,8 +240,25 @@ class _LoginViewState extends State<LoginView> {
                                     ),
                                   )
                                 ],
-                              )
+                              ),
 
+                              SizedBox(height: 35.r,),
+
+
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }, 
+                                child: Text(
+                                  "BACK TO USER LOGIN",
+                                  style: TextStyle(
+                                    fontSize: 14.r,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline ,
+                                    color: const Color(0xFF3D424A)
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -277,7 +277,7 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/register');
+                          Navigator.pushNamed(context, '/responderregister');
                         }, 
                         child: Text(
                           "Register Account",

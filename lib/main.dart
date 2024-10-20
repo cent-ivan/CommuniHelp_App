@@ -1,3 +1,5 @@
+import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
+import 'package:communihelp_app/CommuniHelp_Responder/View/Registration_Responder/registration_responder_view.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.dart';
 import 'package:communihelp_app/ViewModel/Registration_View_Models/registration_view_model.dart';
@@ -110,7 +112,11 @@ class MainApp extends StatelessWidget {
           '/report': (context) => const ReportDamageView(),
           '/login': (context) => const LoginView(),
           '/register': (context) => const RegistrationView(),
-          '/editprofile': (context) => const EditProfileView()
+          '/editprofile': (context) => const EditProfileView(),
+
+          //Responder routes
+          '/responderlogin': (context) => const LoginResponderView(),
+          '/responderregister' : (context) => const RegistrationResponderView()
         },
         theme: lightMode,
         darkTheme: darktMode,
