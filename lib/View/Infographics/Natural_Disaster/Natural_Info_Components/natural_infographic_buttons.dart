@@ -23,6 +23,7 @@ class NaturalInfoButtons extends StatelessWidget {
 
         //Typhoon Button
         MaterialButton(
+          color: Theme.of(context).colorScheme.primary,
           splashColor: const Color(0x80FEAE49),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.r)),
@@ -62,6 +63,7 @@ class NaturalInfoButtons extends StatelessWidget {
         
         //Flood Button
         MaterialButton(
+          color: Theme.of(context).colorScheme.primary,
           splashColor: const Color(0x80FEAE49),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.r)),
@@ -101,6 +103,7 @@ class NaturalInfoButtons extends StatelessWidget {
     
         //Landslide Button
         MaterialButton(
+          color: Theme.of(context).colorScheme.primary,
           splashColor: const Color(0x80FEAE49),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.r)),
@@ -140,6 +143,7 @@ class NaturalInfoButtons extends StatelessWidget {
     
         //Earthquake Button
         MaterialButton(
+          color: Theme.of(context).colorScheme.primary,
           splashColor: const Color(0x80FEAE49),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.r)),
