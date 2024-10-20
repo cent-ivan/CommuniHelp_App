@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:logger/logger.dart';
 
-import '../../../Models/Emergency_contact_model/emergency_contacts_model.dart';
+import '../../../Model/Emergency_contact_model/emergency_contacts_model.dart';
 
 class GetEmergencyContacts {
   //Firestore instance

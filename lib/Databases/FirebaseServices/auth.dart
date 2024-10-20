@@ -1,7 +1,7 @@
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
-import 'package:communihelp_app/Models/user_model.dart';
-import 'package:communihelp_app/Views/View_Components/dialogs.dart';
-import 'package:communihelp_app/Views/View_Components/login_dialogs.dart';
+import 'package:communihelp_app/Model/user_model.dart';
+import 'package:communihelp_app/View/View_Components/dialogs.dart';
+import 'package:communihelp_app/View/View_Components/login_dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
