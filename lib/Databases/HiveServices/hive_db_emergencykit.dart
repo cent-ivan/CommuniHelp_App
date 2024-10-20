@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../Models/Emergency_kit_model/emergency_kit_model.dart';
+import '../../Model/Emergency_kit_model/emergency_kit_model.dart';
 
 class ChecklistLocalDatabase{
   List storage = [

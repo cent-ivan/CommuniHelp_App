@@ -1,24 +1,24 @@
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
-import 'package:communihelp_app/Models/Emergency_kit_model/emergency_kit_model.dart';
-import 'package:communihelp_app/ViewModels/Registration_View_Models/registration_view_model.dart';
-import 'package:communihelp_app/ViewModels/Home_View_Models/anouncement_view_model.dart';
-import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_kit_view_model.dart';
-import 'package:communihelp_app/ViewModels/Home_View_Models/emergency_view_model.dart';
-import 'package:communihelp_app/ViewModels/Home_View_Models/profile_view_model.dart';
-import 'package:communihelp_app/ViewModels/theme.dart';
-import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/edit_profile_view.dart';
-import 'package:communihelp_app/Views/Login_Registration_Page/Login_Page/login_view.dart';
-import 'package:communihelp_app/Views/Login_Registration_Page/Registration_Page/registration_view.dart';
-import 'package:communihelp_app/Views/Utility_Pages/Emergency_Kit/emergency_kit_view.dart';
-import 'package:communihelp_app/Views/Utility_Pages/Evacuation_Finder/evacaution_finder_view.dart';
-import 'package:communihelp_app/Views/Infographics/Man_Made_Disaster/manmade_disaster_view.dart';
-import 'package:communihelp_app/Views/Infographics/Natural_Disaster/natural_disaster_view.dart';
-import 'package:communihelp_app/Views/Utility_Pages/News_Feed/news_view.dart';
-import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
-import 'package:communihelp_app/Views/Bottom_App_Bar_Pages/Emergency_Page/emergency_view.dart';
-import 'package:communihelp_app/Views/Utility_Pages/Report_Damage/report_damage_view.dart';
-import 'package:communihelp_app/Views/Utility_Pages/Weather_Page/weather_view.dart';
-import 'package:communihelp_app/Views/base.dart';
+import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.dart';
+import 'package:communihelp_app/ViewModel/Registration_View_Models/registration_view_model.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_kit_view_model.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
+import 'package:communihelp_app/ViewModel/theme.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/edit_profile_view.dart';
+import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/login_view.dart';
+import 'package:communihelp_app/View/Login_Registration_Page/Registration_Page/registration_view.dart';
+import 'package:communihelp_app/View/Utility_Pages/Emergency_Kit/emergency_kit_view.dart';
+import 'package:communihelp_app/View/Utility_Pages/Evacuation_Finder/evacaution_finder_view.dart';
+import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/manmade_disaster_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/natural_disaster_view.dart';
+import 'package:communihelp_app/View/Utility_Pages/News_Feed/news_view.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Emergency_Page/emergency_view.dart';
+import 'package:communihelp_app/View/Utility_Pages/Report_Damage/report_damage_view.dart';
+import 'package:communihelp_app/View/Utility_Pages/Weather_Page/weather_view.dart';
+import 'package:communihelp_app/View/base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
-import 'ViewModels/Connection_Controller/dependency_injection.dart';
+import 'ViewModel/Connection_Controller/dependency_injection.dart';
 
 
 void main() async{
