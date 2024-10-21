@@ -36,7 +36,7 @@ class GlobalDialogUtil{
 
               const SizedBox(width: 8,),
 
-              const Text("Unknown Error"),
+              const Text("Error"),
             ],
           ),
           titleTextStyle: const TextStyle(
