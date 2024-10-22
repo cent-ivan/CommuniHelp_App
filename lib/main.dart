@@ -2,6 +2,7 @@ import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login
 import 'package:communihelp_app/CommuniHelp_Responder/View/Registration_Responder/registration_responder_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/responder_base.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Model/Emergency_contact_model/emergency_contacts_model.dart';
 import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.dart';
 import 'package:communihelp_app/ViewModel/Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
@@ -49,6 +50,7 @@ void main() async{
   //Hive local db
   await Hive.initFlutter();
   Hive.registerAdapter(EmergencyKitModelAdapter());
+  Hive.registerAdapter(EmergencyContactsModelAdapter());
 
   await Hive.openBox<List>('emergencykit');
   await Hive.openBox<List>('emergencycontact');

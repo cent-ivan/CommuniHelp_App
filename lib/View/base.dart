@@ -308,6 +308,7 @@ class DrawerBase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final getService = Provider.of<GetUserData>(context);
+    final getCollection = Provider.of<EmergencyViewModel>(context);
     return Drawer(
       elevation: 0,
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -502,6 +503,7 @@ class DrawerBase extends StatelessWidget {
                     color: const Color(0xE6FEAE49),
                     onPressed: () { 
                       _auth.signOut(context);
+                      getCollection.reloadLists();
                       getService.reloadData();
                     },
                     child: Row(
