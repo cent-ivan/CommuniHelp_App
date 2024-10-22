@@ -4,6 +4,7 @@ class GlobalDialogUtil{
   //loading screen
   void circularProgress(context){
     showDialog(
+      barrierColor: Color(0xFFFFFFFF),
       context: context, 
       builder: (context) {
         return const Center(
@@ -63,6 +64,7 @@ class GlobalDialogUtil{
   //signing out screen
   void circularLoggingIn(context){
     showDialog(
+      barrierColor: Color(0x80FFFFFF),
       context: context, 
       builder: (context) {
         return const Column(
@@ -79,7 +81,7 @@ class GlobalDialogUtil{
             Text(
               "Logging In",
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.bold
               ),
@@ -93,6 +95,7 @@ class GlobalDialogUtil{
   //signing out screen
   void circularSignout(context){
     showDialog(
+      barrierColor: Color(0x80FFFFFF),
       context: context, 
       builder: (context) {
         return const Column(
