@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
 import 'package:communihelp_app/Model/user_model.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,11 +38,13 @@ class _EditProfileViewState extends State<EditProfileView> {
   final user = FirebaseAuth.instance.currentUser!;
 
   GetUserData userData = GetUserData();
+  GetAnnouncement getAnnouncement = GetAnnouncement();
 
   @override
   Widget build(BuildContext context) {
     final getService = Provider.of<GetUserData>(context);
     final emergencyViewModel = Provider.of<EmergencyViewModel>(context);
+    final getAnnouncement = Provider.of<AnnouncementViewModel>(context);
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -559,6 +563,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   
 
                                   getService.getUser();
+                                  getAnnouncement.addAnnouncement();
                                   Navigator.pop(context);
                                   
                               }

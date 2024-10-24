@@ -24,7 +24,7 @@ class GetUserData extends ChangeNotifier {
   String mobileNumber = "";
 
 
-  GetUserData() {
+  GetUserData._() {
     FirebaseAuth.instance.authStateChanges().listen((User? newUser) {
       user = newUser;
       if (newUser == null) {
@@ -34,6 +34,14 @@ class GetUserData extends ChangeNotifier {
         
       }
     });
+  }
+
+  // Static instance of the singleton
+  static final GetUserData _instance = GetUserData._();
+
+  // Public factory constructor
+  factory GetUserData() {
+    return _instance; // Return the same instance every time
   }
 
   

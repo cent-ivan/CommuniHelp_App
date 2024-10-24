@@ -1,3 +1,4 @@
+import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Community_Page/community_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/contacts_view.dart';
@@ -31,6 +32,7 @@ class _HomeBaseState extends State<HomeBase> {
   ];
 
   final getService = GetUserData();
+  final getAnnouncement =  AnnouncementViewModel();
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
@@ -309,6 +311,7 @@ class DrawerBase extends StatelessWidget {
   Widget build(BuildContext context) {
     final getService = Provider.of<GetUserData>(context);
     final getCollection = Provider.of<EmergencyViewModel>(context);
+    
     return Drawer(
       elevation: 0,
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -504,6 +507,7 @@ class DrawerBase extends StatelessWidget {
                     onPressed: () { 
                       _auth.signOut(context);
                       getCollection.reloadLists();
+                      //getAnnouncement.addAnnouncement();
                       getService.reloadData();
                     },
                     child: Row(
