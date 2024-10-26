@@ -33,6 +33,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
+import 'Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'ViewModel/Connection_Controller/dependency_injection.dart';
 
 
@@ -69,6 +70,7 @@ void main() async{
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
         ChangeNotifierProvider(create: ((context) => GetUserData())),
+        ChangeNotifierProvider(create: ((context) => GetAnnouncement())),
 
         ChangeNotifierProvider(create: ((context) => Director())),
       ],

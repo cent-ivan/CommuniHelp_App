@@ -48,7 +48,9 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
 
             IconButton(
               onPressed: () {
+                setState(() {
                   viewModel.addAnnouncement();
+                });   
                 }, 
               icon: Icon(
                 Icons.refresh,
@@ -89,7 +91,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                           gradient: LinearGradient(
                             colors: item.isUrgent! ? 
                             [const Color(0xCCFEAE49), const Color(0x80FEC57C), Theme.of(context).colorScheme.surface, ]
-                            : [const Color(0xD9F3F3F3), const Color(0x99F5F5F5), Theme.of(context).colorScheme.surface, ], 
+                            : [const Color(0xFFADADAD), const Color(0x99F5F5F5), Theme.of(context).colorScheme.surface, ], 
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             tileMode: TileMode.decal
@@ -122,7 +124,8 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 item.content!,
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
-                                  fontSize: 11.r
+                                  fontSize: 12.r,
+                                  color: Color(0xFF3D424A)
                                 ),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 6, 
@@ -167,7 +170,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
       builder: (context) {
         return AlertDialog(
           scrollable: true,
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xFFF2F2F2),
           content: SizedBox(
             height: item.content!.length + 165.r,
             child: Padding(
@@ -191,7 +194,8 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12.r
+                                    fontSize: 12.r,
+                                    color: Color(0xFF3D424A)
                                   ),
                                 ),
                               ),
@@ -204,6 +208,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                     "Date: ${item.date!.day}/${item.date!.month}/${item.date!.year}",
                                     style: TextStyle(
                                       fontSize: 12.r,
+                                      color: Color(0xFF3D424A),
                                       letterSpacing: 2,
                                       decoration: TextDecoration.underline ,
                                     ),
@@ -216,7 +221,8 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 item.content!,
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
-                                  fontSize: 14.r
+                                  fontSize: 14.r,
+                                  color: Color(0xFF3D424A)
                                 ),
                               ),
                             ),
@@ -227,10 +233,15 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                     margin: EdgeInsets.only(top: 25).r,
                     child: MaterialButton(
                       elevation: 0,
-                      color: Color(0xE6F5F5F5),
+                      color: Color(0xFFADADAD),
                       onPressed:() {Navigator.pop(context);},
                       child: Center(
-                        child: Text("Close"),
+                        child: Text(
+                          "Close",
+                          style: TextStyle(
+                            color: Color(0xFF3D424A)
+                          ),
+                        ),
                       ),
                     ),
                   )

@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Model/announcement_model.dart';
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
-class GetAnnouncement{
+class GetAnnouncement extends ChangeNotifier{
   var logger = Logger();//showing debug messages
 
   List<AnnouncementModel> announcements = []; //list of announcements
@@ -59,6 +60,7 @@ class GetAnnouncement{
             content: data["Content"],
           ),
         );
+        notifyListeners();
       }
     }
 
