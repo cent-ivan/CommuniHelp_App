@@ -7,9 +7,15 @@ import '../../Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 class AnnouncementViewModel extends ChangeNotifier{
   Logger logger = Logger(); //for debug messages
 
-  AnnouncementViewModel() {
+  AnnouncementViewModel._() {
     logger.i("Announcement called");
     addAnnouncement();
+  }
+
+  static final AnnouncementViewModel _instance = AnnouncementViewModel._();
+
+  factory AnnouncementViewModel() {
+    return _instance;
   }
 
 

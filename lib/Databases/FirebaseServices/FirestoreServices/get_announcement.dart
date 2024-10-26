@@ -41,8 +41,6 @@ class GetAnnouncement extends ChangeNotifier{
 
   // Use snapshots() to listen for changes in the collection
   collection.snapshots().listen((qrySnapshot) {
-    // Clear the current list to prevent duplicates
-    announcements.clear();
     
     // Process each document in the snapshot
     for (var doc in qrySnapshot.docs) {
