@@ -13,7 +13,7 @@ ThemeData lightMode = ThemeData(
 
 ThemeData darktMode = ThemeData(
   brightness: Brightness.dark,
-  colorScheme: const ColorScheme.dark(
+  colorScheme: ColorScheme.dark(
     surface: Color(0xFF31363C), //for backgorund
     primary: Color(0xFF3D424A), 
     secondary: Color(0xFF31373C),

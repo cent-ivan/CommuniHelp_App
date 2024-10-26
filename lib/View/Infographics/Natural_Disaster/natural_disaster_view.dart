@@ -13,9 +13,10 @@ class NaturalDisasterView extends StatelessWidget {
 
       body: SingleChildScrollView(
         child: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/background/InfoNatural.jpg'),
+              image: Theme.of(context).colorScheme.primary ==  Color(0xFFF2F2F2) ? 
+              AssetImage('assets/images/background/InfoNatural.jpg') : AssetImage('assets/images/background/InfoNaturalDark.jpg'),
               fit: BoxFit.cover
             ),
           ),
@@ -110,7 +111,7 @@ class NaturalDisasterView extends StatelessWidget {
                         margin: EdgeInsets.symmetric(horizontal: 20.r),
                         padding: EdgeInsets.all(8.r),
                         decoration: BoxDecoration(
-                          color: Color(0xD9F2F2F2),
+                          color: Theme.of(context).colorScheme.primary ==  Color(0xFFF2F2F2) ? Color(0xD9F2F2F2) : Color(0xE631373C),
                           borderRadius: BorderRadius.circular(8.r)
                         ),
                         child: Text(
