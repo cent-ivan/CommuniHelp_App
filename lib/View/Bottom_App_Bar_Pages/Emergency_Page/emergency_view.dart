@@ -81,7 +81,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16).r,
           child: SizedBox(
-            height: (960 + (viewModel.mddrmoContacts.length.toDouble() * 8) * ((viewModel.ambulanceContacts.length.toDouble() * 8) + (viewModel.bfpContacts.length.toDouble() - 3 * 10) + (viewModel.cgContacts.length.toDouble() * 10))).r,
+            height: (980 + (viewModel.mddrmoContacts.length.toDouble() * 8) * ((viewModel.ambulanceContacts.length.toDouble() * 8) + (viewModel.bfpContacts.length.toDouble() - 3 * 10) + (viewModel.cgContacts.length.toDouble() * 10))).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -106,7 +106,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                 ),
                     
                     
-                SizedBox(height: 15.r,),
+                SizedBox(height: 12.r,),
       
                 //MDDRMO Title
                 Column(
