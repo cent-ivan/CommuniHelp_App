@@ -7,7 +7,7 @@ class LoginDialogs {
       context: context, 
       builder: (context) {
         return AlertDialog(
-          backgroundColor: const Color(0xE6FCFCFC),
+          backgroundColor: const Color(0xF2FCFCFC),
           title: const Text(
               "Login failed",
               style: TextStyle(
@@ -27,6 +27,7 @@ class LoginDialogs {
           message,
           style: const TextStyle(
             fontSize: 16,
+            color: Color(0xFF3D424A)
           ),
         ),
       ),

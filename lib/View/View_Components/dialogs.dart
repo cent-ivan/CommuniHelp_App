@@ -48,7 +48,7 @@ class GlobalDialogUtil{
           contentPadding: const EdgeInsets.only(left: 2),
           content: Container(
             padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
-            height: 95,
+            height: 120,
             child: Text(
               message,
               style: const TextStyle(
