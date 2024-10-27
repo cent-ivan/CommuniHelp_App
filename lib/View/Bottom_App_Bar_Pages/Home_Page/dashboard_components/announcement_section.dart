@@ -117,6 +117,19 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 ),
                               ),
                             ),
+
+                            Container(
+                              padding: const EdgeInsets.symmetric(vertical: 5).r,
+                                  
+                              child: Text(
+                                  "Date Posted: ${item.date!.day}/${item.date!.month}/${item.date!.year}",
+                                  style: TextStyle(
+                                  fontSize: 12.r,
+                                  color: Color(0xFF3D424A),
+                                  
+                                ),
+                              ),
+                            ),
                           
                             Padding(
                               padding: const EdgeInsets.all(9),
@@ -172,7 +185,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
           scrollable: true,
           backgroundColor: Color(0xFFF2F2F2),
           content: SizedBox(
-            height: item.content!.length + 165.r,
+            height: item.content!.length + 175.r,
             child: Padding(
               padding: const EdgeInsets.all(5).r,
               child: Column(
@@ -200,6 +213,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 ),
                               ),
                             ),
+
 
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9).r,
