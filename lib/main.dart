@@ -4,6 +4,8 @@ import 'package:communihelp_app/CommuniHelp_Responder/View/responder_base.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/Emergency_contact_model/emergency_contacts_model.dart';
 import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
+import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/natural_dis_view_model.dart';
 import 'package:communihelp_app/ViewModel/Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_kit_view_model.dart';
@@ -66,6 +68,7 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => AnnouncementViewModel())),
         ChangeNotifierProvider(create: ((context) => ProfileViewModel())),
         ChangeNotifierProvider(create: ((context) => EmergencyKitViewModel())),
+        ChangeNotifierProvider(create: ((context) => NaturalDisasterViewModel())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
@@ -137,7 +140,10 @@ class MainApp extends StatelessWidget {
           //Responder routes
           '/responderlogin': (context) => const LoginResponderView(),
           '/responderregister' : (context) => const RegistrationResponderView(),
-          '/responderhome' : (context) => const HomeBaseResponder()
+          '/responderhome' : (context) => const HomeBaseResponder(),
+
+          //Infograhics routes
+          '/viewinfopage': (context) => const InfoPageView(),
         },
         theme: lightMode,
         darkTheme: darktMode,

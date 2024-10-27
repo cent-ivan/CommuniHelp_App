@@ -1,5 +1,7 @@
+import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/natural_dis_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class NaturalInfoButtons extends StatelessWidget {
   const NaturalInfoButtons({
@@ -8,6 +10,7 @@ class NaturalInfoButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel =  Provider.of<NaturalDisasterViewModel>(context);
     return Column(
       children: [
         Text(
@@ -30,7 +33,8 @@ class NaturalInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-        
+            viewModel.getPath("Typhoon");
+            Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
             padding: EdgeInsets.all(10.r),
@@ -70,7 +74,8 @@ class NaturalInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-        
+            viewModel.getPath("Flood");
+            Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
             padding: EdgeInsets.all(10.r),
