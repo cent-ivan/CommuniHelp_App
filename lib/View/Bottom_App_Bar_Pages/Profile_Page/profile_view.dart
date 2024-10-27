@@ -30,7 +30,7 @@ class _ProfileViewState extends State<ProfileView> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height + 100,
+            height: 900.r,
             decoration: BoxDecoration(
               image:  DecorationImage(image: Theme.of(context).colorScheme.primary == const Color(0xFFF2F2F2) ? 
                 const AssetImage('assets/images/background/ProfileBackground.png') : const AssetImage('assets/images/background/ProfileDarkBackground.png'), 

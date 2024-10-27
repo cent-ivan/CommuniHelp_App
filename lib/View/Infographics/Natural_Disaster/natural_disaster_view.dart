@@ -20,7 +20,7 @@ class NaturalDisasterView extends StatelessWidget {
               fit: BoxFit.cover
             ),
           ),
-          height: MediaQuery.of(context).size.height + 140.r,
+          height: 980.r,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 50, 0, 10).r,
             child: Column(
