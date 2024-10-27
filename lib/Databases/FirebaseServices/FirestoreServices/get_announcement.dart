@@ -8,30 +8,6 @@ class GetAnnouncement extends ChangeNotifier{
 
   List<AnnouncementModel> announcements = []; //list of announcements
 
-  //Firestore instance
-  //final _db = FirebaseFirestore.instance;
-
-  //gets gets announcement
-  // Future getAnnouncement(String municipality) async {
-  //   CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance.collection("announcements").doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_announcement");
-
-  //   try{
-  //     Stream<QuerySnapshot<Map<String, dynamic>>> qrySnapshot = collection.snapshots();
-  //     //final data =  qrySnapshot.docs.map((doc) => doc.data());
-  //     for (var doc in qrySnapshot.docs) {
-  //       DocumentSnapshot qry = await _db.collection("announcements").doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_announcement").doc(doc.id).get();
-
-  //       if (qry.exists) {
-  //         Map<String, dynamic> data =  qry.data() as Map<String, dynamic>; //converts object into map
-  //         announcementViewModel.announcements.add(AnnouncementModel(isUrgent: data["Urgent"], level: data["Level"], date: data["Date"].toDate(), municipality: data["Municipality"], title: data["Title"], content: data["Content"]));
-  //       }
-  //     }
-
-  //   }
-  //   catch (error) {
-  //     logger.e("Error: ${error.toString()}");
-  //   }
-  // }
 
   void listenToAnnouncements(String municipality) {
   CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance
@@ -41,6 +17,9 @@ class GetAnnouncement extends ChangeNotifier{
 
   // Use snapshots() to listen for changes in the collection
   collection.snapshots().listen((qrySnapshot) {
+    if (announcements.isNotEmpty) {
+      announcements.clear();
+    }
     
     // Process each document in the snapshot
     for (var doc in qrySnapshot.docs) {

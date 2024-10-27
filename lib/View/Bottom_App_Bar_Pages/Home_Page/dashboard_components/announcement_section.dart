@@ -125,7 +125,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   fontSize: 12.r,
-                                  color: Color(0xFF3D424A)
+                                  color: item.isUrgent! ? Theme.of(context).colorScheme.outline :Color(0xFF3D424A)
                                 ),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 6, 

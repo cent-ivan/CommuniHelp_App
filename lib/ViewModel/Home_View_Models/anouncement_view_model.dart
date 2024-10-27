@@ -27,14 +27,7 @@ class AnnouncementViewModel extends ChangeNotifier{
   Future addAnnouncement() async{
     await getData.getUser();
     String municipalityName = getData.municipality;
-    dbAnnouncement.announcements = [];
     dbAnnouncement.listenToAnnouncements(municipalityName);
     notifyListeners();
-  }
-
-  void clearList() {
-    dbAnnouncement.announcements.clear();
-    notifyListeners();
-    logger.i("cleared");
   }
 }
