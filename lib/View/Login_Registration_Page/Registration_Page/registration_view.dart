@@ -598,7 +598,8 @@ class _RegistrationViewState extends State<RegistrationView> {
                                           viewModel.emailController.text, 
                                           viewModel.contactController.text, 
                                           viewModel.passwordController.text, 
-                                          viewModel.confirmPasswordController.text
+                                          viewModel.confirmPasswordController.text,
+                                          "user"
                                         );
                                         
                                         Navigator.pushReplacementNamed(context, '/login');

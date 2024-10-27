@@ -556,7 +556,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                                       barangay: viewModel.barangayValue!, 
                                       municipality: viewModel.municipalityValue!, 
                                       email: user.email, 
-                                      mobileNumber: viewModel.contactController.text
+                                      mobileNumber: viewModel.contactController.text,
+                                      type: "user"
                                       ), context
                                     );
                                   });
