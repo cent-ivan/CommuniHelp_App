@@ -38,6 +38,7 @@ class _HomeBaseState extends State<HomeBase> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     return Scaffold(
       appBar:  AppBarBase(),
 
