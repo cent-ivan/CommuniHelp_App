@@ -42,8 +42,9 @@ class GetAnnouncement extends ChangeNotifier{
         }
       }
 
-      // Here you can call any method you want after new data is added
-      onNewDataAdded(); // Define this method to handle any additional logic you need
+    sortUrgent();
+    // Here you can call any method you want after new data is added
+    onNewDataAdded(); // Define this method to handle any additional logic you need
     }, onError: (error) {
       logger.e("Error: ${error.toString()}");
     });
@@ -59,6 +60,7 @@ void sortUrgent() {
     logger.i("Called Sort Urgent");
     //sorts 
     announcements.sort((a, b) => b.date!.compareTo(a.date!));
+    announcements.sort((a, b) => b.isUrgent! ? 1 : -1);
   }
 
   
