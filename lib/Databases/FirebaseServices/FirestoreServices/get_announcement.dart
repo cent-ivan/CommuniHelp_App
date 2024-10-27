@@ -10,42 +10,43 @@ class GetAnnouncement extends ChangeNotifier{
 
 
   void listenToAnnouncements(String municipality) {
-  CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance
-      .collection("announcements")
-      .doc(municipality.toUpperCase())
-      .collection("${municipality.toUpperCase()}_announcement");
+    CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance
+        .collection("announcements")
+        .doc(municipality.toUpperCase())
+        .collection("${municipality.toUpperCase()}_announcement");
+      
 
-  // Use snapshots() to listen for changes in the collection
-  collection.snapshots().listen((qrySnapshot) {
-    if (announcements.isNotEmpty) {
-      announcements.clear();
-    }
-    
-    // Process each document in the snapshot
-    for (var doc in qrySnapshot.docs) {
-      // Check if the document exists
-      if (doc.exists) {
-        Map<String, dynamic> data = doc.data(); // Convert object into map
-        // Add the announcement to the list
-        announcements.add(
-          AnnouncementModel(
-            isUrgent: data["Urgent"],
-            level: data["Level"],
-            date: data["Date"].toDate(),
-            municipality: data["Municipality"],
-            title: data["Title"],
-            content: data["Content"],
-          ),
-        );
-        notifyListeners();
+    // Use snapshots() to listen for changes in the collection
+    collection.snapshots().listen((qrySnapshot) {
+      if (announcements.isNotEmpty) {
+        announcements.clear();
       }
-    }
+      
+      // Process each document in the snapshot
+      for (var doc in qrySnapshot.docs) {
+        // Check if the document exists
+        if (doc.exists) {
+          Map<String, dynamic> data = doc.data(); // Convert object into map
+          // Add the announcement to the list
+          announcements.add(
+            AnnouncementModel(
+              isUrgent: data["Urgent"],
+              level: data["Level"],
+              date: data["Date"].toDate(),
+              municipality: data["Municipality"],
+              title: data["Title"],
+              content: data["Content"],
+            ),
+          );
+          notifyListeners();
+        }
+      }
 
-    // Here you can call any method you want after new data is added
-    onNewDataAdded(); // Define this method to handle any additional logic you need
-  }, onError: (error) {
-    logger.e("Error: ${error.toString()}");
-  });
+      // Here you can call any method you want after new data is added
+      onNewDataAdded(); // Define this method to handle any additional logic you need
+    }, onError: (error) {
+      logger.e("Error: ${error.toString()}");
+    });
 }
 
 // Method to handle actions when new data is added
