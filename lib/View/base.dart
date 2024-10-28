@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import '../Databases/FirebaseServices/auth.dart';
 import '../ViewModel/Connection_Controller/Controller/network_controller.dart';
+import 'package:flutter_exit_app/flutter_exit_app.dart';
 
 class HomeBase extends StatefulWidget {
   const HomeBase({super.key});
@@ -308,6 +309,8 @@ class DrawerBase extends StatelessWidget {
   //access authorization servcies
   final AuthService _auth =  AuthService();
 
+  final NetworkController network =  Get.put(NetworkController()); //checksconnction
+
   @override
   Widget build(BuildContext context) {
     final getService = Provider.of<GetUserData>(context);
@@ -505,12 +508,13 @@ class DrawerBase extends StatelessWidget {
                   child: MaterialButton(
                     elevation: 1,
                     color: const Color(0xE6FEAE49),
-                    onPressed: () { 
+                    disabledColor: Colors.grey.shade800,
+                    onPressed: network.isOnline.value ? () {
                       _auth.signOut(context);
                       getCollection.reloadLists();
                       //getAnnouncement.addAnnouncement();
-                      getService.reloadData();
-                    },
+                      getService.reloadData(); 
+                    } : () => _handleExit(context),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -523,7 +527,7 @@ class DrawerBase extends StatelessWidget {
                         const SizedBox( width: 5,),
                   
                         Text(
-                            "Logout",
+                            network.isOnline.value ? "Logout" : "Exit App",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -542,6 +546,47 @@ class DrawerBase extends StatelessWidget {
       
         ],
       ),
+    );
+  }
+
+  //for exitting the app
+  void _handleExit(BuildContext context) {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          title: Text("Lumabas sa App?", style: TextStyle(fontWeight: FontWeight.bold),),
+          contentPadding: EdgeInsets.symmetric(horizontal: 0),
+          actions: [
+            TextButton(
+                  child: Text(
+                    'Oo',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.outline,
+                      fontSize: 16.r
+                    ),
+                  ),
+                  onPressed: () {
+                    FlutterExitApp.exitApp();
+                  },
+                ),
+
+                TextButton(
+                  child: Text(
+                    'Hindi',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.outline,
+                      fontSize: 16.r
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+          ],
+        );
+      }
     );
   }
 }
