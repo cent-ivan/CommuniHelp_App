@@ -185,7 +185,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
           scrollable: true,
           backgroundColor: Color(0xFFF2F2F2),
           content: SizedBox(
-            height: item.content!.length + 175.r,
+            height: item.content!.length + 190.r,
             child: Padding(
               padding: const EdgeInsets.all(5).r,
               child: Column(

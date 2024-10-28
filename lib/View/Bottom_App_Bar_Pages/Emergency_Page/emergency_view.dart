@@ -81,25 +81,28 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16).r,
           child: SizedBox(
-            height: (980 + (viewModel.mddrmoContacts.length.toDouble() * 8) * ((viewModel.ambulanceContacts.length.toDouble() * 8) + (viewModel.bfpContacts.length.toDouble() - 3 * 10) + (viewModel.cgContacts.length.toDouble() * 10))).r,
+            height: (550 + (viewModel.mddrmoContacts.length.toDouble() * 6) * ((viewModel.ambulanceContacts.length.toDouble() * 10) + (viewModel.bfpContacts.length.toDouble() * 6) + (viewModel.cgContacts.length.toDouble() * 6))).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 
                 //Municipality Tag
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.all(Radius.circular(15.r))
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10).r,
-                    child: Text(
-                      viewModel.municipalityName,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.outline,
-                        fontSize: 16.r,
-                        fontWeight: FontWeight.w500
+                GestureDetector(
+                  onTap: () => viewModel.loadMunicipality(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.all(Radius.circular(15.r))
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10).r,
+                      child: Text(
+                        viewModel.municipalityName,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.outline,
+                          fontSize: 16.r,
+                          fontWeight: FontWeight.w500
+                        ),
                       ),
                     ),
                   ),

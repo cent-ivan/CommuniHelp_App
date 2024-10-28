@@ -1,6 +1,5 @@
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_emergency_contacts.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
-import 'package:communihelp_app/Test_Files/check_test.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +16,6 @@ class EmergencyViewModel extends ChangeNotifier{
   final getCollection = GetEmergencyContacts();
   final getStoredCollection = EmergencyContactLocalDatabase();
 
-  final test = CheckTest();//TODO: remove in deployment
 
   String municipalityName = "No data";
 
@@ -90,7 +88,6 @@ class EmergencyViewModel extends ChangeNotifier{
 
 
   void reloadLists() {
-    test.displayCalled("reloadList"); //test for display
     getCollection.queryContacts = [];
     getStoredCollection.reloadData();
     mddrmoContacts = [];
@@ -105,10 +102,12 @@ class EmergencyViewModel extends ChangeNotifier{
     municipalityName = getService.municipality;
     if (getCollection.queryContacts.isEmpty){
       getCollection.getLDRRMOContacts(municipalityName);
+      await Future.delayed(Duration(seconds: 3, milliseconds: 500));
       getCollection.getHostpitalContacts(municipalityName);
+      await Future.delayed(Duration(seconds: 2, milliseconds: 300));
       getCollection.getBFPContacts(municipalityName);
       getCollection.getCoastContacts(municipalityName);
-      await Future.delayed(Duration(seconds: 2, milliseconds: 5));
+      await Future.delayed(Duration(seconds: 2, milliseconds: 500));
       getStoredCollection.loadData();
       filterContact();
       getCollection.addToLocal(); //adds the newly get contacts from firestore to Hive db
