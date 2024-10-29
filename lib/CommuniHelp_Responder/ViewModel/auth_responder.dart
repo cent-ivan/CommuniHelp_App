@@ -1,14 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
 import 'package:communihelp_app/Model/user_model.dart';
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:communihelp_app/View/View_Components/login_dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
+class AuthResponder {
+  Logger logger = Logger();
 
-class AuthService {
   //Firebase instance
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  //Firestore instance
+  final _db = FirebaseFirestore.instance;
   
   //access firestrore service
   final FireStoreAddService _firestoreAddService  = FireStoreAddService();
@@ -17,20 +24,44 @@ class AuthService {
   final GlobalDialogUtil _globalUtil = GlobalDialogUtil(); //utilities like loading and removing dialogs
   final LoginDialogs _loginDialogs = LoginDialogs();
 
+  final userData = GetUserData();
+
+
   //----Firebase authentication methods-----------------------------------------------------------------
   //User login method
   Future logInEmailPassword(BuildContext context, String email, String password) async {
     
     try {
-      _globalUtil.circularLoggingIn(context); //loading screen
+       _globalUtil.circularLoggingIn(context); //loading screen
 
-      UserCredential credential = await  _auth.signInWithEmailAndPassword(email: email, password: password);
+       //checks first if responder or no
+      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('users').get();
+      List<QueryDocumentSnapshot> docs = snapshot.docs;
+      for (var doc in docs) {
+        if (doc.get("Email") == email) {
+          DocumentSnapshot snap = await _db.collection("users").doc(doc.id).get();
+          if (snap.exists) {
+            Map<String, dynamic> userData = doc.data() as Map<String, dynamic>;
+            if (userData["Type"] ==  "responder") {
+             
+              UserCredential credential = await  _auth.signInWithEmailAndPassword(email: email, password: password); //logins if responder
+              if (context.mounted){
+                _globalUtil.removeDialog(context);
+              }
 
-      if (context.mounted){
-        _globalUtil.removeDialog(context);
+              return credential.user;
+            }
+          }
+          else {
+          if (context.mounted){
+              _globalUtil.removeDialog(context);
+              _loginDialogs.displayMessage(context, "Invalid User. This user is not a RESPONDER!"); //shows if not a responer type
+            }
+          }
+
+        } 
       }
-
-      return credential.user;
+      
     }
     on FirebaseAuthException catch (error) {
       switch (error.code) {
@@ -104,7 +135,7 @@ class AuthService {
   //Log out
   Future<void> signOut(BuildContext context) async {
     _globalUtil.circularSignout(context);
-    await Future.delayed(const Duration(seconds: 1,milliseconds: 5));
+    await Future.delayed(const Duration(seconds: 1,milliseconds: 500));
     if (context.mounted) {
       _globalUtil.removeDialog(context);
     }

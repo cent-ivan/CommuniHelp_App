@@ -32,7 +32,6 @@ class _HomeBaseState extends State<HomeBase> {
     const ProfileView()
   ];
 
-  final getService = GetUserData();
   final getAnnouncement =  AnnouncementViewModel();
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction

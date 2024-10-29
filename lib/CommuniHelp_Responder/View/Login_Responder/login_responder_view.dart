@@ -1,5 +1,10 @@
+import 'package:communihelp_app/CommuniHelp_Responder/ViewModel/auth_responder.dart';
+import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+import '../../../auth_director.dart';
 
 class LoginResponderView extends StatefulWidget {
   const LoginResponderView({super.key});
@@ -12,7 +17,10 @@ class _LoginResponderViewState extends State<LoginResponderView> {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
-  double _loginHeight = 330.r;
+  //Dialogs
+  final GlobalDialogUtil _messageDialog = GlobalDialogUtil();
+
+  double _loginHeight = 350.r;
 
   bool _isObscure =  true;
 
@@ -20,8 +28,12 @@ class _LoginResponderViewState extends State<LoginResponderView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  //access view model
+  final AuthResponder _authResponder = AuthResponder();
+
   @override
   Widget build(BuildContext context) {
+    final director =  Provider.of<Director>(context);
     return Scaffold(
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -74,7 +86,7 @@ class _LoginResponderViewState extends State<LoginResponderView> {
                     Positioned(
                       top: 180.r,
                       child: Text(
-                        "RESPONDER AND VOLUNTEERS",
+                        "RESPONDERS AND VOLUNTEERS",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -221,10 +233,13 @@ class _LoginResponderViewState extends State<LoginResponderView> {
                                       if (_formKey.currentState!.validate()){
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
+                    
+                                        _authResponder.logInEmailPassword(context, _emailController.text, _passwordController.text);
                                       }
                                       else {
                                         setState(() {
-                                          _loginHeight = 330.r;
+                                          _loginHeight = 358.r;
+                                
                                         });
                                       }
                                     },
@@ -247,7 +262,8 @@ class _LoginResponderViewState extends State<LoginResponderView> {
 
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  director.changeDirection();
+                                  //Navigator.pop(context);
                                 }, 
                                 child: Text(
                                   "BACK TO USER LOGIN",
@@ -277,7 +293,8 @@ class _LoginResponderViewState extends State<LoginResponderView> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/responderregister');
+                          registerPassword(context);
+                          
                         }, 
                         child: Text(
                           "Register Account",
@@ -313,5 +330,73 @@ class _LoginResponderViewState extends State<LoginResponderView> {
       ),
     );
     
+  }
+
+    void registerPassword(BuildContext context) {
+
+    final TextEditingController passwordController = TextEditingController();
+
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Enter Password"),
+          content: TextField(
+            controller: passwordController,
+            obscureText: true,
+            style: TextStyle(
+            color: Color(0xFF3D424A),
+            ),
+            cursorColor: const Color(0xFF3D424A),
+            decoration: InputDecoration(
+            hintText: "Password",
+            hintStyle: const TextStyle(
+            color: Color(0xFF3D424A)
+            ),
+            enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
+            ),
+            focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
+            ),
+            ),
+                  
+            
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (passwordController.text == "REGISTER"){
+                  Navigator.popAndPushNamed(context, '/responderregister');
+                }
+                else {
+                  _messageDialog.unknownErrorDialog(context, "Wrong Password");
+                }
+              }, 
+              child: Text(
+                "Enter",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.outline,
+                  fontSize: 16.r
+                ),
+              )
+            ),
+        
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              }, 
+              child: Text(
+                "Cancel",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.outline,
+                  fontSize: 16.r
+                ),
+              )
+            ),
+          ],
+        );
+      }
+    );
   }
 }
