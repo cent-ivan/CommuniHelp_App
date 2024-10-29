@@ -5,6 +5,7 @@ import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get
 import 'package:communihelp_app/Model/Emergency_contact_model/emergency_contacts_model.dart';
 import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
 import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/natural_dis_view_model.dart';
 import 'package:communihelp_app/ViewModel/Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
@@ -69,6 +70,7 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => ProfileViewModel())),
         ChangeNotifierProvider(create: ((context) => EmergencyKitViewModel())),
         ChangeNotifierProvider(create: ((context) => NaturalDisasterViewModel())),
+        ChangeNotifierProvider(create: ((context) => CommunityViewModel())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
