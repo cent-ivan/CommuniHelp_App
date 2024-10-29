@@ -20,6 +20,7 @@ class AuthService {
   //----Firebase authentication methods-----------------------------------------------------------------
   //User login method
   Future logInEmailPassword(BuildContext context, String email, String password) async {
+    
     try {
       _globalUtil.circularLoggingIn(context); //loading screen
 
@@ -48,7 +49,13 @@ class AuthService {
         case "user-not-found":
           if (context.mounted){
             _globalUtil.removeDialog(context);
-            _loginDialogs.displayMessage(context, "User not found. User may not exist.");
+            _loginDialogs.displayMessage(context, "User not found. User may not exist. Register to have an account!");
+          }
+          break;
+        case "network-request-failed":
+          if (context.mounted){
+            _globalUtil.removeDialog(context);
+            _loginDialogs.displayMessage(context, "No connection. Connect to a stable connection");
           }
           break;
         default:
@@ -61,7 +68,7 @@ class AuthService {
     catch (error) {
       if (context.mounted){
         _globalUtil.removeDialog(context);
-        _globalUtil.unknownErrorDialog(context, error.toString());
+        _globalUtil.unknownErrorDialog(context, error.toString(), );
       }
     }
   }

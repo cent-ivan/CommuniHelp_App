@@ -161,35 +161,6 @@ class UtilityButtons extends StatelessWidget {
               )
             ),
         
-            //Flashlight button
-            MaterialButton(
-              onPressed: () {},
-              height: 80.r,
-              minWidth: 105.r,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25.r))
-              ),
-              color: Theme.of(context).colorScheme.surfaceContainer,
-              splashColor: const Color(0x4D57BEE6),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image(
-                    width: 35.r,
-                    image: const AssetImage('assets/images/dashboard/flashlight.png')
-                  ),
-            
-                  Text(
-                  "Led Light",
-                      style: TextStyle(
-                      fontSize: 12.r,
-                      fontWeight: FontWeight.bold,
-                      color: const Color(0xFF3D424A), 
-                    ),
-                  ),
-                ],
-              )
-            ),
         
         
           ],

@@ -10,11 +10,12 @@ class GetUserData extends ChangeNotifier {
 
 
   //show current user
-  User? user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser;
 
   //Firestore instance
   final _db = FirebaseFirestore.instance;
 
+  String uid = "";
   String name = ""; 
   String birthdate = "";
   String gender = ""; 
@@ -22,9 +23,10 @@ class GetUserData extends ChangeNotifier {
   String municipality = ""; 
   String email = "";
   String mobileNumber = "";
+  String type = "";
 
 
-  GetUserData() {
+  GetUserData._() {
     FirebaseAuth.instance.authStateChanges().listen((User? newUser) {
       user = newUser;
       if (newUser == null) {
@@ -36,13 +38,21 @@ class GetUserData extends ChangeNotifier {
     });
   }
 
-  
+  // Static instance of the singleton
+  static final GetUserData _instance = GetUserData._();
+
+  // Public factory constructor
+  factory GetUserData() {
+    return _instance; // Return the same instance every time
+  }
 
   
+
   Future getUser() async{
     if (user == null) return;
 
     String id = user!.uid;
+    uid = user!.uid;
     try {
       await Future.delayed(Duration(seconds: 2));
       DocumentSnapshot doc = await _db.collection("users").doc(id).get();
@@ -55,6 +65,7 @@ class GetUserData extends ChangeNotifier {
         municipality = userDetails.municipality!;
         email = userDetails.email!;
         mobileNumber = userDetails.mobileNumber!;
+        type = userDetails.type!;
         notifyListeners();
 
       }
@@ -72,6 +83,7 @@ class GetUserData extends ChangeNotifier {
     municipality = "";
     email = "";
     mobileNumber = "";
+    type = "";
     notifyListeners();
   }
  

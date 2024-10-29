@@ -19,6 +19,9 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   logger: ^2.4.0
   connectivity_plus: ^6.1.0
+  url_launcher: ^6.3.1
+  flutter_carousel_widget: ^3.1.0
+  flutter_exit_app: ^1.1.4 #for exitting the app
 
   #Firebase and firestore
   firebase_auth: ^5.1.4
@@ -52,12 +55,15 @@ flutter:
   assets:
     - assets/images/dashboard/
     - assets/images/dashboard/checklist_images/
-    - assets/images/infographics/
-    - assets/images/infographics/button_images/
     - assets/images/bottom_app_bar/
     - assets/images/logo/
     - assets/images/background/
     - assets/images/
+
+    #inforgrpahics assets
+    - assets/images/infographics/
+    - assets/images/infographics/button_images/
+    - assets/images/infographics/natural_infographics/
 
       # fonts:
   #   - family: Still searching for fonts

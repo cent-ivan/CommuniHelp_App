@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 import '../../../ViewModel/Login_View_Models/login_firebase_view_model.dart';
+import '../../../auth_director.dart';
 
 class LoginView extends StatefulWidget {
 
@@ -30,6 +32,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final director =  Provider.of<Director>(context);
     return Scaffold(
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -229,7 +232,8 @@ class _LoginViewState extends State<LoginView> {
                                       if (_formKey.currentState!.validate()){
                                         //check if user is a responder
                                         if (_emailController.text.contains("GT3RS@HELPER") && _passwordController.text.contains("9112")) {
-                                          Navigator.pushNamed(context, '/responderlogin');
+                                          director.changeDirection();
+                                          //Navigator.pushNamed(context, '/responderlogin');
                                         }
                                         else {
                                           //validated the text field and adds to the firebase, pass to register view model

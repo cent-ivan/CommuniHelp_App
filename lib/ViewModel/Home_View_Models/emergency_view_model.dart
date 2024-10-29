@@ -1,18 +1,21 @@
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_emergency_contacts.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
-import 'package:communihelp_app/Test_Files/check_test.dart';
+import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
+import '../../Databases/HiveServices/hive_db_emergencycontact.dart';
 import '../../Model/Emergency_contact_model/emergency_contacts_model.dart';
 
 class EmergencyViewModel extends ChangeNotifier{
   var logger = Logger();//showing debug messages
+  final NetworkController network =  Get.put(NetworkController()); //checksconnction
   
   final getService = GetUserData(); //access data from firestore
   final getCollection = GetEmergencyContacts();
+  final getStoredCollection = EmergencyContactLocalDatabase();
 
-  final test = CheckTest();//TODO: remove in deployment
 
   String municipalityName = "No data";
 
@@ -24,7 +27,17 @@ class EmergencyViewModel extends ChangeNotifier{
 
 
   void filterContact(){
+    if (network.isOnline.value){
+      onlineFilter();
+    }
+    else {
+      offlineFilter();
+    }
+  }
+
+  void onlineFilter(){
     for (var contact in getCollection.queryContacts){
+      logger.i("Inside Hive: $contact");
       if (contact.contactType!.contains("LDRRMO")) {
         mddrmoContacts.add(contact);
         notifyListeners();
@@ -45,16 +58,43 @@ class EmergencyViewModel extends ChangeNotifier{
         return;
       }
     }
-    
   }
 
+  void offlineFilter() {
+    logger.i("Offline");
+    for (var contact in getStoredCollection.queryContacts){
+      logger.i("Inside Hive: $contact");
+      if (contact.contactType!.contains("LDRRMO")) {
+        mddrmoContacts.add(contact);
+        notifyListeners();
+      }
+      else if (contact.contactType!.contains("AMBULANCE")){
+        ambulanceContacts.add(contact);
+        notifyListeners();
+      }
+      else if (contact.contactType!.contains("BFP")) {
+        bfpContacts.add(contact);
+        notifyListeners();
+      }
+      else if (contact.contactType!.contains("COAST")) {
+        cgContacts.add(contact);
+        notifyListeners();
+      }
+      else {
+        return;
+      }
+    }
+  }
+
+
   void reloadLists() {
-    test.displayCalled("reloadList"); //test for display
     getCollection.queryContacts = [];
+    getStoredCollection.reloadData();
     mddrmoContacts = [];
     ambulanceContacts = [];
     bfpContacts = [];
     cgContacts = [];
+    notifyListeners();
   }
 
   Future loadMunicipality() async {
@@ -62,15 +102,18 @@ class EmergencyViewModel extends ChangeNotifier{
     municipalityName = getService.municipality;
     if (getCollection.queryContacts.isEmpty){
       getCollection.getLDRRMOContacts(municipalityName);
+      await Future.delayed(Duration(seconds: 3, milliseconds: 500));
       getCollection.getHostpitalContacts(municipalityName);
+      await Future.delayed(Duration(seconds: 2, milliseconds: 300));
       getCollection.getBFPContacts(municipalityName);
       getCollection.getCoastContacts(municipalityName);
-      await Future.delayed(Duration(seconds: 5, milliseconds: 5));
+      await Future.delayed(Duration(seconds: 2, milliseconds: 500));
+      getStoredCollection.loadData();
       filterContact();
-      
+      getCollection.addToLocal(); //adds the newly get contacts from firestore to Hive db
     }
     else {
-      getCollection.display();
+      logger.d("Exists..");
     }
 
     notifyListeners();

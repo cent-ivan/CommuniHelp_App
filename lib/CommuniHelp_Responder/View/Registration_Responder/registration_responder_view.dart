@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/ViewModel/Registration_View_Models/register_firebase_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +31,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
   String currentOption = options[0];
 
   //register view model instance
-  // RegisterFirebaseViewModel firebaseViewModel = RegisterFirebaseViewModel();
+  RegisterFirebaseViewModel firebaseViewModel = RegisterFirebaseViewModel();
   
 
   @override
@@ -586,20 +587,21 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
                                         setState(() {
                                           _whiteContainerHeight = 750.r + 60.r;
                                         });
-                                        // firebaseViewModel.addUser(
-                                        //   context, 
-                                        //   viewModel.nameController.text, 
-                                        //   viewModel.bdayController.text, 
-                                        //   currentOption, 
-                                        //   viewModel.barangayValue!, 
-                                        //   viewModel.municipalityValue!, 
-                                        //   viewModel.emailController.text, 
-                                        //   viewModel.contactController.text, 
-                                        //   viewModel.passwordController.text, 
-                                        //   viewModel.confirmPasswordController.text
-                                        // );
+                                        firebaseViewModel.addUser(
+                                          context, 
+                                          viewModel.nameController.text, 
+                                          viewModel.bdayController.text, 
+                                          currentOption, 
+                                          viewModel.barangayValue!, 
+                                          viewModel.municipalityValue!, 
+                                          viewModel.emailController.text, 
+                                          viewModel.contactController.text, 
+                                          viewModel.passwordController.text, 
+                                          viewModel.confirmPasswordController.text,
+                                          "responder"
+                                        );
                                         
-                                        Navigator.pushReplacementNamed(context, '/responderlogin');
+                                        Navigator.pop(context);
                                       }
                                       else if (viewModel.barangayValue == null || viewModel.municipalityValue ==  null) {
                                         //edit the design

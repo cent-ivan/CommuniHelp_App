@@ -1,7 +1,9 @@
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 
@@ -18,7 +20,7 @@ class _ProfileViewState extends State<ProfileView> {
   double spaceBetweenLabel = 2.5.r;
   AssetImage profileImage = const AssetImage('assets/images/rescuer.png');
 
-
+  final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class _ProfileViewState extends State<ProfileView> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height + 100,
+            height: 900.r,
             decoration: BoxDecoration(
               image:  DecorationImage(image: Theme.of(context).colorScheme.primary == const Color(0xFFF2F2F2) ? 
                 const AssetImage('assets/images/background/ProfileBackground.png') : const AssetImage('assets/images/background/ProfileDarkBackground.png'), 
@@ -313,15 +315,16 @@ class _ProfileViewState extends State<ProfileView> {
                       
                             //edit button
                             MaterialButton(
-                              onPressed: (){
+                              onPressed: network.isOnline.value ? (){
                                 viewModel.loadData(context);
                                 Navigator.pushNamed(context, '/editprofile');
-                              },
+                              } : null,
                               height: 50.r,
                               minWidth: 340.r,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(15.r))
                               ),
+                              disabledColor: network.isOnline.value ? const Color(0xFF57BEE6) : const Color(0xFFADADAD),
                               color: const Color(0xFF57BEE6),
                               child: Center(
                                 child: Text(

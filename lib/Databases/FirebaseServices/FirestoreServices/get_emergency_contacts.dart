@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:logger/logger.dart';
 
 import '../../../Model/Emergency_contact_model/emergency_contacts_model.dart';
+import '../../HiveServices/hive_db_emergencycontact.dart';
 
 class GetEmergencyContacts {
   //Firestore instance
   final _db = FirebaseFirestore.instance;
   
   var logger = Logger();//showing debug messages
+
+  final getStoredCollection = EmergencyContactLocalDatabase();//local hive db
 
   List<EmergencyContactsModel> queryContacts = [];
 
@@ -45,6 +48,8 @@ class GetEmergencyContacts {
           queryContacts.add(EmergencyContactsModel(contactType: "LDRRMO", municipality: municipality, number: data["number"][0], contactName: "$telecomName: $municipality LDRRMO"));
         }
       }
+
+
     }
     catch (error) {
       logger.e("Error: ${error.toString()}");
@@ -145,11 +150,9 @@ class GetEmergencyContacts {
     }
   }
 
-  //checks the query contacts
-  void display() {
-    for (var contact in queryContacts) {
-      logger.i("\n${contact.contactName} = ${contact.number}");
-    }
+  void addToLocal() {
+    getStoredCollection.updateData(queryContacts);
   }
+
 
 }

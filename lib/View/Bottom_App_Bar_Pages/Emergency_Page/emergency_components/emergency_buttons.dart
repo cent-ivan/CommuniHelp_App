@@ -1,8 +1,11 @@
 //Emergency Hotline Body
+import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //LDDRMO BUTTON
 class LDRRMOButton extends StatefulWidget {
@@ -15,6 +18,11 @@ class LDRRMOButton extends StatefulWidget {
 }
 
 class _LDRRMOButtonState extends State<LDRRMOButton> {
+  //access dialogs
+  GlobalDialogUtil dialogs = GlobalDialogUtil();
+
+  Logger logger = Logger(); //show message for debugging
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -25,7 +33,24 @@ class _LDRRMOButtonState extends State<LDRRMOButton> {
             return Padding(
               padding: const EdgeInsets.all(10).r,
               child: MaterialButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    //uri path to paste in phone call
+                    final Uri url = Uri(
+                      scheme: 'tel',
+                      path: viewModel.mddrmoContacts[index].number!
+                    );
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    }
+                    else {
+                      if (context.mounted) {
+                        dialogs.unknownErrorDialog(context, "Cannot be launched");
+                      }
+                      else {
+                        logger.e("Cannot be launch");
+                      }
+                    }
+                    
                   },
                   height: 115.r,
                   minWidth: 190.r,
@@ -103,6 +128,11 @@ class AmbulanceButton extends StatefulWidget {
 }
 
 class _AmbulanceButtonState extends State<AmbulanceButton> {
+  //access dialogs
+  GlobalDialogUtil dialogs = GlobalDialogUtil();
+
+  Logger logger = Logger(); //show message for debugging
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -113,7 +143,24 @@ class _AmbulanceButtonState extends State<AmbulanceButton> {
             return Padding(
               padding: const EdgeInsets.all(10).r,
               child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    //uri path to paste in phone call
+                    final Uri url = Uri(
+                      scheme: 'tel',
+                      path: viewModel.ambulanceContacts[index].number!
+                    );
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    }
+                    else {
+                      if (context.mounted) {
+                        dialogs.unknownErrorDialog(context, "Cannot be launched");
+                      }
+                      else {
+                        logger.e("Cannot be launch");
+                      }
+                    }
+                  },
                   height: 115.r,
                   minWidth: 190.r,
                   shape: RoundedRectangleBorder(
@@ -191,6 +238,11 @@ class BFPButton extends StatefulWidget {
 }
 
 class _BFPButtonState extends State<BFPButton> {
+  //access dialogs
+  GlobalDialogUtil dialogs = GlobalDialogUtil();
+
+  Logger logger = Logger(); //show message for debugging
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -201,7 +253,24 @@ class _BFPButtonState extends State<BFPButton> {
             return Padding(
               padding: const EdgeInsets.all(8).r,
               child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    //uri path to paste in phone call
+                    final Uri url = Uri(
+                      scheme: 'tel',
+                      path: viewModel.bfpContacts[index].number!,
+                    );
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    }
+                    else {
+                      if (context.mounted) {
+                        dialogs.unknownErrorDialog(context, "Cannot be launched");
+                      }
+                      else {
+                        logger.e("Cannot be launch");
+                      }
+                    }
+                  },
                   height: 115.r,
                   minWidth: 190.r,
                   shape: RoundedRectangleBorder(
@@ -212,7 +281,6 @@ class _BFPButtonState extends State<BFPButton> {
                   elevation: 0.r,
                   child: Row(
                     children: [
-                      //TODO: Change image, number and name of hotline
                       Container(
                         padding: const EdgeInsets.fromLTRB(50, 0, 50, 0).r,
                         child: CircleAvatar(
@@ -280,6 +348,11 @@ class CoastButton extends StatefulWidget {
 }
 
 class _CoastButtonState extends State<CoastButton> {
+  //access dialogs
+  GlobalDialogUtil dialogs = GlobalDialogUtil();
+
+  Logger logger = Logger(); //show message for debugging
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -290,7 +363,24 @@ class _CoastButtonState extends State<CoastButton> {
             return Padding(
               padding: const EdgeInsets.all(8).r,
               child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    //uri path to paste in phone call
+                    final Uri url = Uri(
+                      scheme: 'tel',
+                      path: viewModel.cgContacts[index].number!,
+                    );
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    }
+                    else {
+                      if (context.mounted) {
+                        dialogs.unknownErrorDialog(context, "Cannot be launched");
+                      }
+                      else {
+                        logger.e("Cannot be launch");
+                      }
+                    }
+                  },
                   height: 115.r,
                   minWidth: 190.r,
                   shape: RoundedRectangleBorder(

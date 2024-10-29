@@ -7,6 +7,7 @@ class UserModel {
   String? municipality;
   String? email;
   String? mobileNumber;
+  String? type;
 
   UserModel({
     this.uid,
@@ -16,7 +17,8 @@ class UserModel {
     required this.barangay, 
     required this.municipality, 
     required this.email,
-    required this.mobileNumber
+    required this.mobileNumber,
+    required this.type
   });
 
   //Uploading
@@ -28,7 +30,8 @@ class UserModel {
       "Barangay" : barangay,
       "Municipality" : municipality,
       "Email" : email,
-      "MobileNumber" : mobileNumber
+      "MobileNumber" : mobileNumber,
+      "Type": type
     };
   }
 
@@ -41,7 +44,8 @@ class UserModel {
       barangay: json["Barangay"], 
       municipality: json["Municipality"], 
       email: json["Email"], 
-      mobileNumber: json["MobileNumber"]
+      mobileNumber: json["MobileNumber"],
+      type: json["Type"]
     );
   }
 }

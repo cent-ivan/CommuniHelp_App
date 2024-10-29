@@ -1,7 +1,12 @@
 import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Registration_Responder/registration_responder_view.dart';
+import 'package:communihelp_app/CommuniHelp_Responder/View/responder_base.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Model/Emergency_contact_model/emergency_contacts_model.dart';
 import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
+import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/natural_dis_view_model.dart';
 import 'package:communihelp_app/ViewModel/Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_kit_view_model.dart';
@@ -21,6 +26,7 @@ import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Emergency_Page/emergen
 import 'package:communihelp_app/View/Utility_Pages/Report_Damage/report_damage_view.dart';
 import 'package:communihelp_app/View/Utility_Pages/Weather_Page/weather_view.dart';
 import 'package:communihelp_app/View/base.dart';
+import 'package:communihelp_app/auth_director.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +36,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
+import 'Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'ViewModel/Connection_Controller/dependency_injection.dart';
 
 
@@ -43,12 +50,16 @@ void main() async{
     DeviceOrientation.portraitDown
   ]);
 
+
+  //Hive local db
   await Hive.initFlutter();
   Hive.registerAdapter(EmergencyKitModelAdapter());
+  Hive.registerAdapter(EmergencyContactsModelAdapter());
 
   await Hive.openBox<List>('emergencykit');
   await Hive.openBox<List>('emergencycontact');
 
+  await Hive.openBox<bool>('director');
   
   runApp(
     MultiProvider(
@@ -58,10 +69,15 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => AnnouncementViewModel())),
         ChangeNotifierProvider(create: ((context) => ProfileViewModel())),
         ChangeNotifierProvider(create: ((context) => EmergencyKitViewModel())),
+        ChangeNotifierProvider(create: ((context) => NaturalDisasterViewModel())),
+        ChangeNotifierProvider(create: ((context) => CommunityViewModel())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
         ChangeNotifierProvider(create: ((context) => GetUserData())),
+        ChangeNotifierProvider(create: ((context) => GetAnnouncement())),
+
+        ChangeNotifierProvider(create: ((context) => Director())),
       ],
       child: const MainApp(),
     )
@@ -73,10 +89,10 @@ void main() async{
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
-
+  
   @override
   Widget build(BuildContext context) {
-
+    final director =  Provider.of<Director>(context);
     return  ScreenUtilInit(
       
       builder: (context, child) => GetMaterialApp(
@@ -84,13 +100,22 @@ class MainApp extends StatelessWidget {
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
+            director.loadDirection();
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator(
                 color: Color(0xFF57BEE6),
               );
             }
-            else if (snapshot.hasData) {
+            else if (snapshot.hasData && !director.isResponder) {
               return const HomeBase();
+            }
+            else if (snapshot.hasData && director.isResponder) {
+              //if logged in as responder
+              return const HomeBaseResponder();
+            }
+            else if (director.isResponder) {
+              //if goes to responder log in
+              return const LoginResponderView();
             }
             else {
               return const LoginView();
@@ -116,7 +141,11 @@ class MainApp extends StatelessWidget {
 
           //Responder routes
           '/responderlogin': (context) => const LoginResponderView(),
-          '/responderregister' : (context) => const RegistrationResponderView()
+          '/responderregister' : (context) => const RegistrationResponderView(),
+          '/responderhome' : (context) => const HomeBaseResponder(),
+
+          //Infograhics routes
+          '/viewinfopage': (context) => const InfoPageView(),
         },
         theme: lightMode,
         darkTheme: darktMode,
@@ -124,3 +153,6 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+
+
+

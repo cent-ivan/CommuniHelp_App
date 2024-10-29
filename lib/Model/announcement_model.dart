@@ -1,10 +1,17 @@
 class AnnouncementModel {
+  bool? isUrgent;
   String? level;
+  DateTime? date;
+  String? municipality;
   String? title;
   String? content;
 
+
   AnnouncementModel({
-    required this.level , 
+    required this.isUrgent,
+    required this.level,
+    required this.date,
+    required this.municipality,
     required this.title, 
     required this.content
   });
