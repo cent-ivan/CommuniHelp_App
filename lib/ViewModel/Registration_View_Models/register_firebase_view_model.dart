@@ -25,7 +25,7 @@ class RegisterFirebaseViewModel{
       municipality: municipality, 
       email: email, 
       mobileNumber: mobileNumber,
-      type: "user"
+      type: type
     );
   }
 }
