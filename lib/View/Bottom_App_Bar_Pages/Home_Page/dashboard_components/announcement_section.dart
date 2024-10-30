@@ -182,10 +182,13 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
       context: context,
       builder: (context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r))
+          ),
           scrollable: true,
           backgroundColor: Color(0xFFF2F2F2),
           content: SizedBox(
-            height: item.content!.length + 190.r,
+            height: item.content!.length + 230.r,
             child: Padding(
               padding: const EdgeInsets.all(5).r,
               child: Column(
@@ -197,6 +200,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                             Center(
                               child: Container(
                                 width: 155.r,
+                                padding: EdgeInsets.all(9).r,
                                 margin: const EdgeInsets.only(bottom: 20).r,
                                 decoration: BoxDecoration(
                                   color: item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26,
@@ -224,7 +228,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                       fontSize: 12.r,
                                       color: Color(0xFF3D424A),
                                       letterSpacing: 2,
-                                      decoration: TextDecoration.underline ,
+                          
                                     ),
                                   ),
                             ),
@@ -247,6 +251,9 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                     margin: EdgeInsets.only(top: 25).r,
                     child: MaterialButton(
                       elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))
+                      ),
                       color: Color(0xFFADADAD),
                       onPressed:() {Navigator.pop(context);},
                       child: Center(
