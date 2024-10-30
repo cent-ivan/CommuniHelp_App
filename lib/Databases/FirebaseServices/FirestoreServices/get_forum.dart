@@ -9,7 +9,7 @@ class GetForum {
   final _db = FirebaseFirestore.instance;
 
   Stream getCollection(String municipality) {
-    final Stream<QuerySnapshot<Map<String, dynamic>>> forumStream = FirebaseFirestore.instance.collection('forum').doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_forum").snapshots();
+    final Stream<QuerySnapshot<Map<String, dynamic>>> forumStream = _db.collection('forum').doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_forum").snapshots();
     return forumStream;
   }
 
