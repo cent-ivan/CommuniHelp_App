@@ -18,6 +18,7 @@ class RegisterFirebaseViewModel{
   UserModel createUserDetails(String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type) {
     return UserModel(
       uid: "",
+      profilePicUrl: "",
       name: name, 
       birthdate: birthdate, 
       gender: gender, 
