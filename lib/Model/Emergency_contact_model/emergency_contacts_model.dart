@@ -16,11 +16,15 @@ class EmergencyContactsModel {
   @HiveField(3)
   String? contactName;
 
+  @HiveField(4)
+  String? url;
+
 
   EmergencyContactsModel({
     required this.contactType, 
     required this.municipality,
     required this.number, 
     required this.contactName,
+    required this.url
   });
 }

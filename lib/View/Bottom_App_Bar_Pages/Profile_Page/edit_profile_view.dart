@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/automate.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/pick_profile_dialog.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
@@ -116,7 +117,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                     
                         //Edit Profile Button
                         Positioned(
-                          right: -10.r,
+                          right: 90.r,
                           bottom: 0.r,
                           child: MaterialButton(
                             minWidth: 40.r,
@@ -637,7 +638,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 //change email
                                 TextButton(
                                   onPressed: () {
-                                    
+        
                                   }, 
                                   child: Text(
                                     "Change email here",

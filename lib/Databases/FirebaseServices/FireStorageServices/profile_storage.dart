@@ -9,6 +9,7 @@ import 'package:logger/logger.dart';
 
 
 class ProfileStorage {
+  //Singleton pattern to avoid multiple instances
   static final ProfileStorage _instance = ProfileStorage._internal();
   factory ProfileStorage() {
     return _instance;
@@ -34,7 +35,6 @@ class ProfileStorage {
   Future uploadProfile(File image, String id, String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type) async {
     //final appDocDir = await getApplicationDocumentsDirectory(); //sample dela fterwards
     //logger.i("called: $appDocDir");
-    logger.d("user/profile/${id}_profile.jpg");
     String imagePath = "user/profile/${id}_profile.jpg"; //generate unqique reference
 
     final profileRef = storageRef.child(imagePath); //create reference in the storage

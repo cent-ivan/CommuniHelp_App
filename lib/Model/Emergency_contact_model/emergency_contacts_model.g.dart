@@ -22,13 +22,14 @@ class EmergencyContactsModelAdapter
       municipality: fields[1] as String?,
       number: fields[2] as String?,
       contactName: fields[3] as String?,
+      url: fields[4] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, EmergencyContactsModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.contactType)
       ..writeByte(1)
@@ -36,7 +37,9 @@ class EmergencyContactsModelAdapter
       ..writeByte(2)
       ..write(obj.number)
       ..writeByte(3)
-      ..write(obj.contactName);
+      ..write(obj.contactName)
+      ..writeByte(4)
+      ..write(obj.url);
   }
 
   @override

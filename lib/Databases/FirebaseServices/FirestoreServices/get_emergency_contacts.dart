@@ -40,12 +40,12 @@ class GetEmergencyContacts {
         if (data["number"].length > 1) {
           for (var number in data["number"]){
             final telecomName = formatTelecom(doc.id);
-            queryContacts.add(EmergencyContactsModel(contactType: "LDRRMO", municipality: municipality, number: number, contactName: "$telecomName: $municipality LDRRMO"));
+            queryContacts.add(EmergencyContactsModel(contactType: "LDRRMO", municipality: municipality, number: number, contactName: "$telecomName: $municipality LDRRMO", url: ""));
           }
         }
         else {
           final telecomName = formatTelecom(doc.id);
-          queryContacts.add(EmergencyContactsModel(contactType: "LDRRMO", municipality: municipality, number: data["number"][0], contactName: "$telecomName: $municipality LDRRMO"));
+          queryContacts.add(EmergencyContactsModel(contactType: "LDRRMO", municipality: municipality, number: data["number"][0], contactName: "$telecomName: $municipality LDRRMO", url: ""));
         }
       }
 
@@ -74,13 +74,13 @@ class GetEmergencyContacts {
               for (var number in data["number"]){
                 final telecomName = formatTelecom(doc.id);
                 final name = formatName(hostpital);
-                queryContacts.add(EmergencyContactsModel(contactType: "AMBULANCE", municipality: municipality, number: number, contactName: "$telecomName: $name"));
+                queryContacts.add(EmergencyContactsModel(contactType: "AMBULANCE", municipality: municipality, number: number, contactName: "$telecomName: $name", url: ""));
               }
             }
             else {
               final telecomName = formatTelecom(doc.id);
               final name = formatName(hostpital);
-              queryContacts.add(EmergencyContactsModel(contactType: "AMBULANCE", municipality: municipality, number: data["number"][0], contactName: "$telecomName: $name"));
+              queryContacts.add(EmergencyContactsModel(contactType: "AMBULANCE", municipality: municipality, number: data["number"][0], contactName: "$telecomName: $name", url: ""));
             }
           }
         }
@@ -109,12 +109,12 @@ class GetEmergencyContacts {
         if (data["number"].length > 1) {
           for (var number in data["number"]){
             final telecomName = formatTelecom(doc.id);
-            queryContacts.add(EmergencyContactsModel(contactType: "BFP", municipality: municipality, number: number, contactName: "$telecomName: BFP ${municipality.toUpperCase()} FIRE STATION"));
+            queryContacts.add(EmergencyContactsModel(contactType: "BFP", municipality: municipality, number: number, contactName: "$telecomName: BFP ${municipality.toUpperCase()} FIRE STATION", url: ""));
           }
         }
         else {
           final telecomName = formatTelecom(doc.id);
-          queryContacts.add(EmergencyContactsModel(contactType: "BFP", municipality: municipality, number: data["number"][0], contactName: "$telecomName: BFP ${municipality.toUpperCase()} FIRE STATION"));
+          queryContacts.add(EmergencyContactsModel(contactType: "BFP", municipality: municipality, number: data["number"][0], contactName: "$telecomName: BFP ${municipality.toUpperCase()} FIRE STATION", url: ""));
         }
       }
     }
@@ -136,12 +136,12 @@ class GetEmergencyContacts {
         if (data["number"].length > 1) {
           for (var number in data["number"]){
             final telecomName = formatTelecom(doc.id);
-            queryContacts.add(EmergencyContactsModel(contactType: "COAST", municipality: municipality, number: number, contactName: "$telecomName: DUMAGUIT COAST GUARD"));
+            queryContacts.add(EmergencyContactsModel(contactType: "COAST", municipality: municipality, number: number, contactName: "$telecomName: DUMAGUIT COAST GUARD", url: ""));
           }
         }
         else {
           final telecomName = formatTelecom(doc.id);
-          queryContacts.add(EmergencyContactsModel(contactType: "COAST", municipality: municipality, number: data["number"][0], contactName: "$telecomName: DUMAGUIT COAST GUARD"));
+          queryContacts.add(EmergencyContactsModel(contactType: "COAST", municipality: municipality, number: data["number"][0], contactName: "$telecomName: DUMAGUIT COAST GUARD", url: ""));
         }
       }
     }

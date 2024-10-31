@@ -64,6 +64,9 @@ flutter:
     - assets/images/logo/
     - assets/images/background/
     - assets/images/
+    - assets/images/bfp/
+    - assets/images/hosti/
+  
 
     #inforgrpahics assets
     - assets/images/infographics/
