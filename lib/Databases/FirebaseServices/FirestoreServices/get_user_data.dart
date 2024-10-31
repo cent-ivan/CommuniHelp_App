@@ -52,7 +52,6 @@ class GetUserData extends ChangeNotifier {
     if (user == null) return;
 
     String id = user!.uid;
-    uid = user!.uid;
     try {
       DocumentSnapshot doc = await _db.collection("users").doc(id).get();
       if (doc.exists) {
@@ -78,13 +77,13 @@ class GetUserData extends ChangeNotifier {
 
   void reloadData() {
     name = "";
+    userProfURL = "";
     birthdate = "";
     gender = "";
     barangay = "";
     municipality = "";
     email = "";
-    mobileNumber = "";
-    type = "";
+    mobileNumber = "";;
     notifyListeners();
   }
  

@@ -174,8 +174,19 @@ class ProfileViewModel extends ChangeNotifier{
   }
 
   //Firebase Storage methods------------------------------------------------------------
-  Future updateUserData() async {
-    await profileStorage.uploadProfile(profileImage!, user.uid, nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, user.email!, contactController.text, "user");
+  Future updateUserData(String id, String email, String type) async {
+
+    await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+  }
+
+  void refreshProfile() {
+    nameController.clear();
+    birthdateController.clear();
+    emailController.clear();
+    contactController.clear();
+    image = null;
+    profileImage = null;
+    notifyListeners();
   }
 
 }

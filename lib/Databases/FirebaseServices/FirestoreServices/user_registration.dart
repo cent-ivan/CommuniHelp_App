@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/user_model.dart';
 import 'package:logger/logger.dart';
 
 
 class FireStoreAddService {
   var logger = Logger();//showing debug messages
+
+  //userData
+  final userData = GetUserData();
   
 
   //Firestore instance
@@ -34,6 +38,7 @@ class FireStoreAddService {
         }
       );
     logger.i("Done Updating");
+    userData.getUser();
   }
 
 

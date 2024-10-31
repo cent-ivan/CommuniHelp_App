@@ -10,6 +10,7 @@ class GetAnnouncement extends ChangeNotifier{
 
 
   Future listenToAnnouncements(String municipality) async{
+    await Future.delayed(Duration(seconds: 3));
     CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance
         .collection("announcements")
         .doc(municipality.toUpperCase())

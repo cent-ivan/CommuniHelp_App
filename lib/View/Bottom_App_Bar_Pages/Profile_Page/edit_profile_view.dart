@@ -6,6 +6,7 @@ import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/use
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/pick_profile_dialog.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,6 +36,9 @@ class _EditProfileViewState extends State<EditProfileView> {
 
   //Firestore instance for update
   final firestoreService = FireStoreAddService();
+
+  //show current user
+  final user = FirebaseAuth.instance.currentUser!;
 
   GetUserData userData = GetUserData();
   GetAnnouncement getAnnouncement = GetAnnouncement();
@@ -554,8 +558,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                              
                                       userData.reloadData();
                                       emergencyViewModel.reloadLists();
-
-                                      viewModel.updateUserData();
+                                      logger.i("type ${userData.type}");
+                                      viewModel.updateUserData(user.uid, user.email!, userData.type);
                                     });
 
                                     Navigator.pop(context);
