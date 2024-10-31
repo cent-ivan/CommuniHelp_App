@@ -64,7 +64,7 @@ class _ProfileViewState extends State<ProfileView> {
                 //Profile Picture
                 Center(
                   child: CircleAvatar(
-                    backgroundImage: profileImage,
+                    backgroundImage: userData.userProfURL.isEmpty ? profileImage : profileImage,
                     radius: 50.r,
                   ),
                 ),

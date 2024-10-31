@@ -16,6 +16,7 @@ class GetUserData extends ChangeNotifier {
   final _db = FirebaseFirestore.instance;
 
   String uid = "";
+  String userProfURL = "";
   String name = ""; 
   String birthdate = "";
   String gender = ""; 
@@ -43,10 +44,9 @@ class GetUserData extends ChangeNotifier {
 
   // Public factory constructor
   factory GetUserData() {
-    return _instance; // Return the same instance every time
+    return _instance; // Returns the same instance every time
   }
 
-  
 
   Future getUser() async{
     if (user == null) return;
@@ -54,15 +54,16 @@ class GetUserData extends ChangeNotifier {
     String id = user!.uid;
     uid = user!.uid;
     try {
-      await Future.delayed(Duration(seconds: 2));
       DocumentSnapshot doc = await _db.collection("users").doc(id).get();
       if (doc.exists) {
+        //assign it from the model
         UserModel userDetails = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+        municipality = userDetails.municipality!;
         name = userDetails.name!;
+        userProfURL = userDetails.profilePicUrl!;
         birthdate = userDetails.birthdate!;
         gender = userDetails.gender!;
         barangay = userDetails.barangay!;
-        municipality = userDetails.municipality!;
         email = userDetails.email!;
         mobileNumber = userDetails.mobileNumber!;
         type = userDetails.type!;
@@ -70,7 +71,7 @@ class GetUserData extends ChangeNotifier {
 
       }
     } catch (error) {
-      logger.e("Error: ${error.toString()}");
+      logger.e("Error: ${user!.uid} ${error.toString()}");
     }
     logger.d("Added: $name");
   }

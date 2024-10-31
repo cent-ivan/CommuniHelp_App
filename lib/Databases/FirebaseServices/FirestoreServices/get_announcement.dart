@@ -9,7 +9,7 @@ class GetAnnouncement extends ChangeNotifier{
   List<AnnouncementModel> announcements = []; //list of announcements
 
 
-  void listenToAnnouncements(String municipality) {
+  Future listenToAnnouncements(String municipality) async{
     CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance
         .collection("announcements")
         .doc(municipality.toUpperCase())
