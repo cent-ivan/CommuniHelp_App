@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
@@ -92,10 +93,22 @@ class _EditProfileViewState extends State<EditProfileView> {
                           backgroundImage: FileImage(viewModel.profileImage!),
                           radius: 65.r,
                         )
-                        : CircleAvatar(
-                          backgroundImage: const AssetImage('assets/images/user.png'),
-                          radius: 65.r,
-                        ),
+                        : Center(
+                            child: userData.userProfURL.isNotEmpty ? CachedNetworkImage(
+                              imageUrl: userData.userProfURL,
+                              progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+                              errorWidget: (context, url, error) => Icon(Icons.error),
+                              imageBuilder: (context, imageProvider) => CircleAvatar(
+                                backgroundImage: imageProvider,
+                                radius: 65.r,
+                              )
+                            ) 
+                            :
+                            CircleAvatar(
+                              backgroundImage: const AssetImage('assets/images/rescuer.png'),
+                              radius: 60.r,
+                            ),
+                          ),
                     
                         //Edit Profile Button
                         Positioned(

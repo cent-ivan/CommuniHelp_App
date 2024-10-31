@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
@@ -63,9 +64,19 @@ class _ProfileViewState extends State<ProfileView> {
 
                 //Profile Picture
                 Center(
-                  child: CircleAvatar(
-                    backgroundImage: userData.userProfURL.isEmpty ? profileImage : profileImage,
-                    radius: 50.r,
+                  child: userData.userProfURL.isNotEmpty ? CachedNetworkImage(
+                    imageUrl: userData.userProfURL,
+                    progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    imageBuilder: (context, imageProvider) => CircleAvatar(
+                      backgroundImage: imageProvider,
+                      radius: 65.r,
+                    )
+                  ) 
+                  :
+                  CircleAvatar(
+                    backgroundImage: profileImage,
+                    radius: 60.r,
                   ),
                 ),
 
