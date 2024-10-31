@@ -559,7 +559,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                       email: user.email, 
                                       mobileNumber: viewModel.contactController.text,
                                       type: "responder"
-                                      ), context
+                                      ),
                                     );
                                   });
                                   

@@ -23,7 +23,7 @@ class FireStoreAddService {
 
   }
 
-  Future updateUserDetails(UserModel user, context) async {
+  Future updateUserDetails(UserModel user) async {
     //updates user details to Firestore Database
     await _db.collection("users").doc(user.uid).set(user.toJson())
       .whenComplete( ()=> "Good")
@@ -33,7 +33,7 @@ class FireStoreAddService {
           logger.e("Error Occured : ${error.toString()}");
         }
       );
-
+    logger.i("Done Updating");
   }
 
 

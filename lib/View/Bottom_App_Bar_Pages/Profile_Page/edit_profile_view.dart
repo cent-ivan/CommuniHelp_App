@@ -2,15 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
-import 'package:communihelp_app/Model/user_model.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/pick_profile_dialog.dart';
-import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 
@@ -24,6 +22,8 @@ class EditProfileView extends StatefulWidget {
 
 
 class _EditProfileViewState extends State<EditProfileView> {
+  Logger logger = Logger(); //for debug message
+  
   //form global key
   final _formKey = GlobalKey<FormState>();
 
@@ -35,9 +35,6 @@ class _EditProfileViewState extends State<EditProfileView> {
   //Firestore instance for update
   final firestoreService = FireStoreAddService();
 
-  //show current user
-  final user = FirebaseAuth.instance.currentUser!;
-
   GetUserData userData = GetUserData();
   GetAnnouncement getAnnouncement = GetAnnouncement();
 
@@ -46,16 +43,17 @@ class _EditProfileViewState extends State<EditProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    final getService = Provider.of<GetUserData>(context);
     final emergencyViewModel = Provider.of<EmergencyViewModel>(context);
-    final getAnnouncement = Provider.of<AnnouncementViewModel>(context);
     return PopScope(
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
           title: const Center(
             child: Text(
-              "Edit Profile"
+              "Edit Profile",
+              style: TextStyle(
+                fontWeight: FontWeight.bold
+              ),
             ),
           ),
           backgroundColor: Theme.of(context).colorScheme.primary,
@@ -88,7 +86,13 @@ class _EditProfileViewState extends State<EditProfileView> {
                   Center(
                     child: Stack(
                       children: [
+                        //------Edit profile---------------------------------------------------------
+                        viewModel.profileImage != null ?
                         CircleAvatar(
+                          backgroundImage: FileImage(viewModel.profileImage!),
+                          radius: 65.r,
+                        )
+                        : CircleAvatar(
                           backgroundImage: const AssetImage('assets/images/user.png'),
                           radius: 65.r,
                         ),
@@ -103,8 +107,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                               pickDialog.showPickScreen(context);
                             },
                             child: Image(
-                              width: 45.r,
-                              height: 45.r,
+                              width: 30.r,
+                              height: 30.r,
                               image: AssetImage('assets/images/dashboard/uploadphoto.png'),
                             ),
                           )
@@ -531,31 +535,16 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 if (_formKey.currentState!.validate() && viewModel.barangayValue != null){
                                     //validated the text field and adds to the firebase, pass to register view model
                                     _formKey.currentState!.save();
+    
                                     setState(() {
                                       _screenSize = 895.r + 100.r;
                              
                                       userData.reloadData();
                                       emergencyViewModel.reloadLists();
-            
-                                      firestoreService.updateUserDetails(UserModel(
-                                        uid: user.uid,
-                                        //TODO: swithc this to firebase URL
-                                        profilePicUrl: "",
-                                        name: viewModel.nameController.text, 
-                                        birthdate: viewModel.birthdateController.text, 
-                                        gender: viewModel.currentOption, 
-                                        barangay: viewModel.barangayValue!, 
-                                        municipality: viewModel.municipalityValue!, 
-                                        email: user.email, 
-                                        mobileNumber: viewModel.contactController.text,
-                                        type: "user"
-                                        ), context
-                                      );
+
+                                      viewModel.updateUserData();
                                     });
-                                    
-            
-                                    getService.getUser();
-                                    getAnnouncement.addAnnouncement();
+
                                     Navigator.pop(context);
                                     
                                 }
