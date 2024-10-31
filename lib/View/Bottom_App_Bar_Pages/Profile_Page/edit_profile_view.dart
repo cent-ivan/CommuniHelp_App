@@ -558,7 +558,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                              
                                       userData.reloadData();
                                       emergencyViewModel.reloadLists();
-                                      logger.i("type ${userData.type}");
+    
                                       viewModel.updateUserData(user.uid, user.email!, userData.type);
                                     });
 
