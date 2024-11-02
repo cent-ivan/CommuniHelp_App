@@ -25,6 +25,7 @@ class GetUserData extends ChangeNotifier {
   String email = "";
   String mobileNumber = "";
   String type = "";
+  List? posts;
 
 
   GetUserData._() {
@@ -66,6 +67,7 @@ class GetUserData extends ChangeNotifier {
         email = userDetails.email!;
         mobileNumber = userDetails.mobileNumber!;
         type = userDetails.type!;
+        posts = userDetails.posts!;
         notifyListeners();
 
       }

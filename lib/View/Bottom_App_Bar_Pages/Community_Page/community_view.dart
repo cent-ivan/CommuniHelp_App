@@ -105,7 +105,7 @@ class _CommunityViewState extends State<CommunityView> {
                       List<Map<String,bool>> collectionLikes = (data["Presses"] as List).map((item) => Map<String, bool>.from(item as Map)).toList();
                       viewModel.loadStatus(userData, collectionLikes);
                         return Container(
-                          height: ((data["Title"].length - 10) + (data["Content"].length - 25) + 260.r), //Height
+                          height: ((data["Title"].length - 10) + (data["Content"].length - 25) + 270.r), //Height
                           padding: EdgeInsets.only(left: 15, top: 20).r,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.r),

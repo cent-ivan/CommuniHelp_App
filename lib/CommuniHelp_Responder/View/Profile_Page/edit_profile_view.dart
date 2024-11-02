@@ -558,7 +558,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                                       municipality: viewModel.municipalityValue!, 
                                       email: user.email, 
                                       mobileNumber: viewModel.contactController.text,
-                                      type: "responder"
+                                      type: "responder",
+                                      posts: userData.posts
                                       ),
                                     );
                                   });

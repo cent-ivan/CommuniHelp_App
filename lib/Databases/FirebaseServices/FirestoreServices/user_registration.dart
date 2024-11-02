@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/logger.dart';
 
 
@@ -9,6 +10,9 @@ class FireStoreAddService {
 
   //userData
   final userData = GetUserData();
+
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
   
 
   //Firestore instance
@@ -29,7 +33,7 @@ class FireStoreAddService {
 
   Future updateUserDetails(UserModel user) async {
     //updates user details to Firestore Database
-    await _db.collection("users").doc(user.uid).set(user.toJson())
+    await _db.collection("users").doc(curUser!.uid).set(user.toJson())
       .whenComplete( ()=> "Good")
       
       // ignore: body_might_complete_normally_catch_error

@@ -599,10 +599,11 @@ class _RegistrationViewState extends State<RegistrationView> {
                                           viewModel.contactController.text, 
                                           viewModel.passwordController.text, 
                                           viewModel.confirmPasswordController.text,
-                                          "user"
+                                          "user",
+                                          []
                                         );
                                         
-                                        Navigator.pushReplacementNamed(context, '/login');
+                                        Navigator.pop(context);
                                       }
                                       else if (viewModel.barangayValue == null || viewModel.municipalityValue ==  null) {
                                         //edit the design

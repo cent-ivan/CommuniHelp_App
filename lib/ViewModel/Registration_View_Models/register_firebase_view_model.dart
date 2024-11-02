@@ -6,16 +6,16 @@ class RegisterFirebaseViewModel{
   final AuthService _auth =  AuthService();
 
   //adding user
-  Future addUser(BuildContext context, String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String password, String confirmPassword, String type) async {
+  Future addUser(BuildContext context, String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String password, String confirmPassword, String type, List posts) async {
     //creates a Model for the details of the user
-    final UserModel userDetails = createUserDetails(name, birthdate, gender, barangay, municipality, email, mobileNumber, type);
+    final UserModel userDetails = createUserDetails(name, birthdate, gender, barangay, municipality, email, mobileNumber, type, posts);
     if (password == confirmPassword) {
       await _auth. registerEmailPassword(context, email, password, userDetails);
     }
   }
 
 
-  UserModel createUserDetails(String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type) {
+  UserModel createUserDetails(String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type, List posts) {
     return UserModel(
       uid: "",
       profilePicUrl: "",
@@ -26,7 +26,8 @@ class RegisterFirebaseViewModel{
       municipality: municipality, 
       email: email, 
       mobileNumber: mobileNumber,
-      type: type
+      type: type,
+      posts: posts
     );
   }
 }

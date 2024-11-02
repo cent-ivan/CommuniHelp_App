@@ -598,7 +598,8 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
                                           viewModel.contactController.text, 
                                           viewModel.passwordController.text, 
                                           viewModel.confirmPasswordController.text,
-                                          "responder"
+                                          "responder",
+                                          []
                                         );
                                         
                                         Navigator.pop(context);
