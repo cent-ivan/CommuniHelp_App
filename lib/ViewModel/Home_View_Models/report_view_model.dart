@@ -103,7 +103,7 @@ class ReportViewModel extends ChangeNotifier {
   }
 
   //sends to Firebase Storage of report (report_storage)
-  Future postReport() async {
+  Future postReport(BuildContext context) async {
     String municipality = userData.municipality;
     String userName = userData.name;
 
@@ -117,8 +117,8 @@ class ReportViewModel extends ChangeNotifier {
     
     String formattedDateTime = formatter.format(philippineTime);
 
-
-    await reportStorage?.uploadReport(municipality, choosenImage!, userName, reportTitleController.text, locationController.text, contentController.text, formattedDateTime);
+    //goes to report_storage,
+    await reportStorage?.uploadReport(municipality, choosenImage!, userName, reportTitleController.text, locationController.text, contentController.text, formattedDateTime, context);
     
   }
 }

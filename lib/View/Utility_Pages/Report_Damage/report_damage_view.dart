@@ -367,7 +367,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                               }
                               else {
                                 logger.i("Posted");
-                                viewModel.postReport();
+                                viewModel.postReport(context);
                                 setState(() {
                                   viewModel.reportTitleController.clear();
                                   viewModel.contentController.clear();
@@ -405,6 +405,8 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                                 viewModel.locationController.clear();
                                 viewModel.choosenImage = null;
                               });
+                            
+                              
                             },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.circular(12.r))
