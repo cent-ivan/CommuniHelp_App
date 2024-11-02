@@ -4,9 +4,10 @@ class ForumModel {
   String? title;
   String? content;
   String? type;
-  DateTime? date;
+  String? date;
   List<Map>? presses;
   int? likes;
+  String? profileURL;
 
   ForumModel({
     required this.name,
@@ -16,7 +17,8 @@ class ForumModel {
     required this.type,
     required this.date,
     required this.presses,
-    required this.likes
+    required this.likes,
+    required this.profileURL
   });
 
   //Uploading
@@ -29,7 +31,8 @@ class ForumModel {
       "Type": type,
       "Date" : date,
       "Presses": presses,
-      "Likes": likes
+      "Likes": likes,
+      "Profile" : profileURL
     };
   }
 
@@ -42,7 +45,8 @@ class ForumModel {
       type: json["type"], 
       date: json["date"], 
       presses: json["presses"], 
-      likes: json["likes"]
+      likes: json["likes"],
+      profileURL: json["profileURL"]
     );
   }
 }

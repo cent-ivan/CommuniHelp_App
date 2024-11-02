@@ -7,27 +7,27 @@ import '../../Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 class AnnouncementViewModel extends ChangeNotifier{
   Logger logger = Logger(); //for debug messages
 
+  GetUserData getData = GetUserData();
+  GetAnnouncement dbAnnouncement = GetAnnouncement();
+
   AnnouncementViewModel._() {
-    logger.i("Announcement called");
     addAnnouncement();
   }
 
+  // Static instance of the singleton
   static final AnnouncementViewModel _instance = AnnouncementViewModel._();
 
+  // Public factory constructor
   factory AnnouncementViewModel() {
-    return _instance;
+    return _instance; // Returns the same instance every time
   }
-
-
-  GetUserData getData = GetUserData();
-  GetAnnouncement dbAnnouncement = GetAnnouncement();
 
 
   //Retrieve from database, make sure that aklan is in the first announcement
   Future addAnnouncement() async{
     await getData.getUser();
-    String municipalityName = getData.municipality;
-    dbAnnouncement.listenToAnnouncements(municipalityName);
+    String municipality = getData.municipality;
+    dbAnnouncement.listenToAnnouncements(municipality);
     notifyListeners();
   }
 }

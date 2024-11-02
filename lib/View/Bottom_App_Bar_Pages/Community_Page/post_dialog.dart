@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Model/forum_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Databases/FirebaseServices/FirestoreServices/get_forum.dart';
@@ -14,6 +17,13 @@ class PostDialog {
   final TextEditingController content = TextEditingController();
 
   final firestoreForum = GetForum();
+
+  static final  customCache = CacheManager(
+    Config(
+      "customCacheKey",
+      stalePeriod: Duration(days: 30)
+    )
+  );
 
   void addPost(BuildContext context) {
     final userData = Provider.of<GetUserData>(context, listen: false);
@@ -46,10 +56,17 @@ class PostDialog {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
-                                  radius: 20.r,
-                                  backgroundColor: Colors.black,
-                                ),
+                                child: CachedNetworkImage(
+                                    cacheManager: customCache,
+                                    key: UniqueKey(),
+                                    imageUrl: userData.userProfURL,
+                                    progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                    imageBuilder: (context, imageProvider) => CircleAvatar(
+                                      backgroundImage: imageProvider,
+                                      radius: 20.r,
+                                  )
+                                ) 
                               ),
                                     
                               Text(
@@ -66,7 +83,7 @@ class PostDialog {
                                 fontSize: 16.r
                               ),
                               decoration: InputDecoration(
-                                hintText: 'Pamagat ng iyong post ',
+                                hintText: 'Enter post title', //Pamagat ng iyong post 
                                 hintStyle: TextStyle(
                                   fontWeight: FontWeight.bold
                                 )
@@ -76,7 +93,7 @@ class PostDialog {
                               maxLines: 3,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Maglagay ng pamagat";
+                                  return "Enter a title first";
                                 }
                                 return null;
                               },
@@ -92,7 +109,7 @@ class PostDialog {
                               controller: content,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                hintText: 'Ano ang iyong gustong ibahagi?',
+                                hintText: "What's on your mind?", //Ano ang iyong gustong ibahagi?
                                 hintStyle: TextStyle(
                                   fontStyle: FontStyle.italic
                                 )
@@ -101,7 +118,7 @@ class PostDialog {
                               maxLines: 10,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Blangko ang iyong post";
+                                  return "Post is blank"; //Blangko ang iyong post
                                 }
                                 return null;
                               },
@@ -118,13 +135,17 @@ class PostDialog {
               actions: [
                 TextButton(
                   child: Text(
-                    'I-post',
+                    'Post', //I-post
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                       fontSize: 16.r
                     ),
                   ),
                   onPressed: () {
+                    final dateNow = DateTime.now();
+                    final timeNow = DateFormat.jm();
+                    String formattedDate = "${dateNow.day}/${dateNow.month}/${dateNow.year}, $timeNow";
+
                     if (_formKey.currentState!.validate()) {
                       firestoreForum.postForum(userData.municipality, ForumModel(
                         name: userData.name, 
@@ -132,9 +153,10 @@ class PostDialog {
                         title: title.text, 
                         content: content.text, 
                         type: "user", 
-                        date: DateTime.now(), 
+                        date: formattedDate, 
                         presses: [{userData.name : false}], 
-                        likes: 0
+                        likes: 0,
+                        profileURL: userData.userProfURL
                         )
                       );
 

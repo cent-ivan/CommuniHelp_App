@@ -1,12 +1,39 @@
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FireStorageServices/profile_storage.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/View/View_Components/dialogs.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:logger/logger.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 //import '../../Models/user_model.dart';
 List<String> options =["Male", "Female"]; //for radio list
 
 class ProfileViewModel extends ChangeNotifier{
+  static final ProfileViewModel _instance = ProfileViewModel._internal();
+  factory ProfileViewModel() {
+    return _instance;
+  }
+  ProfileViewModel._internal();
+
+  Logger logger = Logger(); //for debug message
+  final _dialog = GlobalDialogUtil(); //dialgs 
+  
+  //lazy initializer
+  ProfileStorage? _profileStorage;
+  ProfileStorage get profileStorage => _profileStorage ??= ProfileStorage();
+
+  
+  //show current user
+  final user = FirebaseAuth.instance.currentUser!;
   
   String currentOption = options[0];
 
@@ -22,6 +49,9 @@ class ProfileViewModel extends ChangeNotifier{
   String? barangayId;
 
   bool isActive  = false;
+
+  File? image; //edited image
+  File? profileImage; //Picked image
 
 
   //inserts user data to textcontrollers
@@ -64,9 +94,75 @@ class ProfileViewModel extends ChangeNotifier{
     }
   }
 
+  //Image profile picker GALLERY
+  pickImage(imageSource, BuildContext context) async {
+    try {
+      final ImagePicker picker = ImagePicker();
+      XFile? file  = await picker.pickImage(source: imageSource);
+      image = File(file!.path);
+      notifyListeners();
+    }
+    catch (e) {
+      if (context.mounted) {
+        _dialog.unknownErrorDialog(context, "Image Error: ${e.toString()}");
+      }
+      
+    }
+    
+  }
+
+  //Crop profile Picture
+  cropImage(File? image, BuildContext context) async {
+    try {
+      final ImageCropper cropper = ImageCropper();
+      CroppedFile? croppedFile  = await cropper.cropImage(
+        sourcePath: image!.path,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarColor: Color(0xFF57BEE6),
+            toolbarTitle: "Crop Image",
+            toolbarWidgetColor: Theme.of(context).colorScheme.surface,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false
+          )
+        ]
+      );
+      File? croppedImage = File(croppedFile!.path);
+      return croppedImage;
+  
+    }
+    catch (e) {
+      if (context.mounted) {
+        _dialog.unknownErrorDialog(context, "Image Error: ${e.toString()}");
+      }
+      
+    }
+  }
+
+  //changes the profile in edit profile
+  void changeEditProfile(File? newImage) {
+    profileImage = newImage;
+    notifyListeners();
+  }
+
+  void newImage(File? newImage) {
+    image = newImage;
+    notifyListeners();
+  }
+
+
+  void refreshProfile() {
+    nameController.clear();
+    birthdateController.clear();
+    emailController.clear();
+    contactController.clear();
+    image = null;
+    profileImage = null;
+    notifyListeners();
+  }
+
 
   //Firestore methods-------------------------------------------------------------------
-  //TODO: check if its online
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future updateMunicipal(String? newValue) async {
@@ -90,6 +186,39 @@ class ProfileViewModel extends ChangeNotifier{
       
     }
     notifyListeners();
+  }
+
+  //Firebase Storage methods------------------------------------------------------------
+  Future<File> uint8ListToFile(Uint8List data, String filename) async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = "${directory.path}/$filename";
+    File file = File(path);
+    return await file.writeAsBytes(data);
+  }
+
+
+  Future updateUserData(String id, String email, String type) async {
+    //Firebase Storage
+    final storageRef = FirebaseStorage.instance.ref();
+    
+    if (profileImage == null) {
+      final ref = storageRef.child("user/profile/${id}_profile.jpg"); //change
+
+      try {
+        const oneMegabyte = 1024 * 1024;
+        final Uint8List? data = await ref.getData(oneMegabyte);
+        //Data in Uint8List
+        profileImage = await uint8ListToFile(data!, "profile.jpg");
+
+
+        await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+      } on FirebaseException catch (e) {
+        logger.e("Error: ${e.toString()}");
+      }
+    }
+    else {
+      await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+    } 
   }
 
 

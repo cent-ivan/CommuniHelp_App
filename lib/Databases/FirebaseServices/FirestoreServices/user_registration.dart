@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/user_model.dart';
 import 'package:logger/logger.dart';
 
 
 class FireStoreAddService {
   var logger = Logger();//showing debug messages
+
+  //userData
+  final userData = GetUserData();
   
 
   //Firestore instance
@@ -23,7 +27,7 @@ class FireStoreAddService {
 
   }
 
-  Future updateUserDetails(UserModel user, context) async {
+  Future updateUserDetails(UserModel user) async {
     //updates user details to Firestore Database
     await _db.collection("users").doc(user.uid).set(user.toJson())
       .whenComplete( ()=> "Good")
@@ -33,7 +37,8 @@ class FireStoreAddService {
           logger.e("Error Occured : ${error.toString()}");
         }
       );
-
+    logger.i("Done Updating");
+    userData.getUser();
   }
 
 

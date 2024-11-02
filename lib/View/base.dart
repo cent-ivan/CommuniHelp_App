@@ -4,6 +4,7 @@ import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Community_Page/communi
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/contacts_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/dashboard_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -32,7 +33,9 @@ class _HomeBaseState extends State<HomeBase> {
     const ProfileView()
   ];
 
-  final getAnnouncement =  AnnouncementViewModel();
+  GetUserData getData = GetUserData();
+  final announcementViewModel = AnnouncementViewModel(); //calls announcement
+
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
@@ -314,7 +317,8 @@ class DrawerBase extends StatelessWidget {
   Widget build(BuildContext context) {
     final getService = Provider.of<GetUserData>(context);
     final getCollection = Provider.of<EmergencyViewModel>(context);
-    
+    //final announcementViewModel = Provider.of<AnnouncementViewModel>(context);
+    final profileViewModel = Provider.of<ProfileViewModel>(context);
     return Drawer(
       elevation: 0,
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -511,9 +515,10 @@ class DrawerBase extends StatelessWidget {
                     onPressed: network.isOnline.value ? () {
                       _auth.signOut(context);
                       getCollection.reloadLists();
-                      //getAnnouncement.addAnnouncement();
+                      //announcementViewModel.addAnnouncement();
+                      profileViewModel.refreshProfile();
                       getService.reloadData(); 
-                    } : () => _handleExit(context),
+                    } : () => _handleExit(context), //else exit user if offline,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

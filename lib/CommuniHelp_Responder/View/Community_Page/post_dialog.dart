@@ -1,6 +1,7 @@
 import 'package:communihelp_app/Model/forum_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Databases/FirebaseServices/FirestoreServices/get_forum.dart';
@@ -125,6 +126,10 @@ class PostDialog {
                     ),
                   ),
                   onPressed: () {
+                    final dateNow = DateTime.now();
+                    final timeNow = DateFormat.jm();
+                    String formattedDate = "${dateNow.day}/${dateNow.month}/${dateNow.year}, $timeNow";
+
                     if (_formKey.currentState!.validate()) {
                       firestoreForum.postForum(userData.municipality, ForumModel(
                         name: userData.name, 
@@ -132,9 +137,10 @@ class PostDialog {
                         title: title.text, 
                         content: content.text, 
                         type: "responder", 
-                        date: DateTime.now(), 
+                        date: formattedDate, 
                         presses: [{userData.name : false}], 
-                        likes: 0
+                        likes: 0,
+                        profileURL: userData.userProfURL
                         )
                       );
 

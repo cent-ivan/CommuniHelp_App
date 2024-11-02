@@ -8,7 +8,7 @@ class EmergencyContactsModel {
   String? contactType;
 
   @HiveField(1)
-  String? municipality;
+  String? telecom;
 
   @HiveField(2)
   String? number;
@@ -16,11 +16,15 @@ class EmergencyContactsModel {
   @HiveField(3)
   String? contactName;
 
+  @HiveField(4)
+  String? url;
+
 
   EmergencyContactsModel({
     required this.contactType, 
-    required this.municipality,
+    required this.telecom,
     required this.number, 
     required this.contactName,
+    required this.url
   });
 }

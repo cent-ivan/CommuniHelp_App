@@ -9,7 +9,8 @@ class GetAnnouncement extends ChangeNotifier{
   List<AnnouncementModel> announcements = []; //list of announcements
 
 
-  void listenToAnnouncements(String municipality) {
+  Future listenToAnnouncements(String municipality) async{
+    await Future.delayed(Duration(seconds: 3));
     CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance
         .collection("announcements")
         .doc(municipality.toUpperCase())
@@ -43,24 +44,22 @@ class GetAnnouncement extends ChangeNotifier{
       }
 
     sortUrgent();
-    // Here you can call any method you want after new data is added
-    onNewDataAdded(); // Define this method to handle any additional logic you need
+  
+    onNewDataAdded(); //Notification
     }, onError: (error) {
       logger.e("Error: ${error.toString()}");
     });
 }
-
-// Method to handle actions when new data is added
 void onNewDataAdded() {
-  // Add your custom logic here (e.g., updating UI, notifying user, etc.)
+  //  updating UI, notifying user
   logger.i("New announcements have been added.");
 }
 
 void sortUrgent() {
     logger.i("Called Sort Urgent");
     //sorts 
-    announcements.sort((a, b) => b.date!.compareTo(a.date!));
     announcements.sort((a, b) => b.isUrgent! ? 1 : -1);
+    announcements.sort((a, b) => b.date!.compareTo(a.date!));
   }
 
   

@@ -550,6 +550,7 @@ class _EditProfileViewState extends State<EditProfileView> {
 
                                     firestoreService.updateUserDetails(UserModel(
                                       uid: user.uid,
+                                      profilePicUrl: "",
                                       name: viewModel.nameController.text, 
                                       birthdate: viewModel.birthdateController.text, 
                                       gender: viewModel.currentOption, 
@@ -558,7 +559,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                       email: user.email, 
                                       mobileNumber: viewModel.contactController.text,
                                       type: "responder"
-                                      ), context
+                                      ),
                                     );
                                   });
                                   

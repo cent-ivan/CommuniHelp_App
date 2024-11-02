@@ -211,7 +211,7 @@ class UtilityButtons extends StatelessWidget {
                     ),
               
                     Text(
-                    "Report Damage",
+                    "Report",
                         style: TextStyle(
                         fontSize: 11.r,
                         fontWeight: FontWeight.bold,

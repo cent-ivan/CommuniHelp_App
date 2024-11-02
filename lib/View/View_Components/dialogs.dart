@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GlobalDialogUtil{
   //loading screen
@@ -27,6 +28,9 @@ class GlobalDialogUtil{
     showDialog(context: context, 
       builder: (context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r))
+          ),
           backgroundColor: Theme.of(context).colorScheme.surface,
           title: Row(
             children: [

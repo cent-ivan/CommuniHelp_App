@@ -182,6 +182,9 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
       context: context,
       builder: (context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r))
+          ),
           scrollable: true,
           backgroundColor: Color(0xFFF2F2F2),
           content: SizedBox(
