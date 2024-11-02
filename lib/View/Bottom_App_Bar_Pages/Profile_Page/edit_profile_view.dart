@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/automate.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/pick_profile_dialog.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
@@ -45,6 +46,8 @@ class _EditProfileViewState extends State<EditProfileView> {
 
   //show dialog pick image
   final pickDialog = PickProfileDialog();
+
+  Automate auto = Automate();
 
   @override
   Widget build(BuildContext context) {
@@ -560,6 +563,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                                       emergencyViewModel.reloadLists();
     
                                       viewModel.updateUserData(user.uid, user.email!, userData.type);
+
+
                                     });
 
                                     Navigator.pop(context);
@@ -637,7 +642,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 //change email
                                 TextButton(
                                   onPressed: () {
-        
+                                    auto.uploadImages();
                                   }, 
                                   child: Text(
                                     "Change email here",

@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Community_Page/post_dialog.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +23,14 @@ class _CommunityViewState extends State<CommunityView> {
   final dialog = PostDialog();
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
+
+  static final  customCache = CacheManager(
+    Config(
+      "customCacheKey",
+      stalePeriod: Duration(days: 30)
+    )
+  );
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +105,7 @@ class _CommunityViewState extends State<CommunityView> {
                       List<Map<String,bool>> collectionLikes = (data["Presses"] as List).map((item) => Map<String, bool>.from(item as Map)).toList();
                       viewModel.loadStatus(userData, collectionLikes);
                         return Container(
-                          height: ((data["Title"].length - 10) + (data["Content"].length - 25) + 250.r), //Height
+                          height: ((data["Title"].length - 10) + (data["Content"].length - 25) + 260.r), //Height
                           padding: EdgeInsets.only(left: 15, top: 20).r,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.r),
@@ -111,7 +121,24 @@ class _CommunityViewState extends State<CommunityView> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(right: 8).r,
-                                    child: CircleAvatar(
+                                    //for getting profile
+                                    child: data["Profile"] != null ? 
+                                    //if had picture
+                                    CachedNetworkImage(
+                                      cacheManager: customCache,
+                                      key: UniqueKey(),
+                                      imageUrl: data["Profile"],
+                                      progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+                                      errorWidget: (context, url, error) => CircleAvatar(
+                                        backgroundImage: AssetImage('assets/images/user.png') ,
+                                        radius: 20.r,
+                                      ),
+                                      imageBuilder: (context, imageProvider) => CircleAvatar(
+                                        backgroundImage: imageProvider,
+                                        radius: 20.r,
+                                      )
+                                    ) 
+                                    : CircleAvatar(
                                       radius: 20.r,
                                       backgroundColor: Colors.black,
                                     ),
@@ -129,7 +156,7 @@ class _CommunityViewState extends State<CommunityView> {
                                       ),
 
                                       Text(
-                                        "${data["Date"].toDate().day}-${data["Date"].toDate().month}-${data["Date"].toDate().year}"
+                                        data["Date"]
                                       )
 
                                     ],

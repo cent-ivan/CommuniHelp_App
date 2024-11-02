@@ -19,7 +19,7 @@ class EmergencyContactsModelAdapter
     };
     return EmergencyContactsModel(
       contactType: fields[0] as String?,
-      municipality: fields[1] as String?,
+      telecom: fields[1] as String?,
       number: fields[2] as String?,
       contactName: fields[3] as String?,
       url: fields[4] as String?,
@@ -33,7 +33,7 @@ class EmergencyContactsModelAdapter
       ..writeByte(0)
       ..write(obj.contactType)
       ..writeByte(1)
-      ..write(obj.municipality)
+      ..write(obj.telecom)
       ..writeByte(2)
       ..write(obj.number)
       ..writeByte(3)

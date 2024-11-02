@@ -1,13 +1,17 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FireStorageServices/profile_storage.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 //import '../../Models/user_model.dart';
@@ -147,6 +151,17 @@ class ProfileViewModel extends ChangeNotifier{
   }
 
 
+  void refreshProfile() {
+    nameController.clear();
+    birthdateController.clear();
+    emailController.clear();
+    contactController.clear();
+    image = null;
+    profileImage = null;
+    notifyListeners();
+  }
+
+
   //Firestore methods-------------------------------------------------------------------
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
@@ -174,19 +189,37 @@ class ProfileViewModel extends ChangeNotifier{
   }
 
   //Firebase Storage methods------------------------------------------------------------
+  Future<File> uint8ListToFile(Uint8List data, String filename) async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = "${directory.path}/$filename";
+    File file = File(path);
+    return await file.writeAsBytes(data);
+  }
+
+
   Future updateUserData(String id, String email, String type) async {
+    //Firebase Storage
+    final storageRef = FirebaseStorage.instance.ref();
+    
+    if (profileImage == null) {
+      final ref = storageRef.child("user/profile/${id}_profile.jpg"); //change
 
-    await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+      try {
+        const oneMegabyte = 1024 * 1024;
+        final Uint8List? data = await ref.getData(oneMegabyte);
+        //Data in Uint8List
+        profileImage = await uint8ListToFile(data!, "profile.jpg");
+
+
+        await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+      } on FirebaseException catch (e) {
+        logger.e("Error: ${e.toString()}");
+      }
+    }
+    else {
+      await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+    } 
   }
 
-  void refreshProfile() {
-    nameController.clear();
-    birthdateController.clear();
-    emailController.clear();
-    contactController.clear();
-    image = null;
-    profileImage = null;
-    notifyListeners();
-  }
 
 }

@@ -133,7 +133,7 @@ class _ResponderCommunityViewState extends State<ResponderCommunityView> {
                                       ),
 
                                       Text(
-                                        "${data["Date"].toDate().day}-${data["Date"].toDate().month}-${data["Date"].toDate().year}"
+                                        data["Date"]
                                       )
 
                                     ],

@@ -15,6 +15,9 @@ class GetEmergencyContacts {
   List<EmergencyContactsModel> queryContacts = [];
 
   String formatTelecom(String txt) {
+    if (txt.contains("HotlineCPNo.")) {
+      return "Hotline Cell Phone Number";
+    }
     final telecom = txt.split(RegExp(r'(?=[A-Z])'));
     final telecomName = telecom.join(" ");
 
@@ -40,12 +43,25 @@ class GetEmergencyContacts {
         if (data["number"].length > 1) {
           for (var number in data["number"]){
             final telecomName = formatTelecom(doc.id);
-            queryContacts.add(EmergencyContactsModel(contactType: "LDRRMO", municipality: municipality, number: number, contactName: "$telecomName: $municipality LDRRMO", url: ""));
+            //gets url of image
+            for (var doc in qrySnapshot.docs) {
+               if (doc.id.contains("Url")) {
+                final dataURL = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+                queryContacts.add(EmergencyContactsModel(contactType: "LDRRMO", telecom: telecomName , number: number, contactName: "$municipality LDRRMO", url: dataURL["urlPic"][0]));
+               }
+            }
+            
           }
         }
         else {
           final telecomName = formatTelecom(doc.id);
-          queryContacts.add(EmergencyContactsModel(contactType: "LDRRMO", municipality: municipality, number: data["number"][0], contactName: "$telecomName: $municipality LDRRMO", url: ""));
+          for (var doc in qrySnapshot.docs) {
+             if (doc.id.contains("Url")) {
+              final dataURL = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+              queryContacts.add(EmergencyContactsModel(contactType: "LDRRMO", telecom: telecomName, number: data["number"][0], contactName: "$municipality LDRRMO", url: dataURL["urlPic"][0]));
+             }
+          }
+          
         }
       }
 
@@ -69,19 +85,36 @@ class GetEmergencyContacts {
 
           //final data =  qrySnapshot.docs.map((doc) => doc.data());
           for (var doc in qrySnapshot.docs) {
-            final data = doc.data() as Map<String, dynamic>; //converts snapshot to dict
-            if (data["number"].length > 1) {
-              for (var number in data["number"]){
+
+            if (!doc.id.contains("Url")) {
+              final data = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+              if (data["number"].length > 1) {
+                for (var number in data["number"]){
+                  final telecomName = formatTelecom(doc.id);
+                  final name = formatName(hostpital);
+                  //gets url of image
+                  for (var doc in qrySnapshot.docs) {
+                    if (doc.id.contains("Url")) {
+                      final dataURL = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+                      queryContacts.add(EmergencyContactsModel(contactType: "AMBULANCE", telecom: telecomName, number: number, contactName: name, url: dataURL["urlPic"][0]));
+                    }
+                  }
+                  
+                }
+              }
+              else {
                 final telecomName = formatTelecom(doc.id);
                 final name = formatName(hostpital);
-                queryContacts.add(EmergencyContactsModel(contactType: "AMBULANCE", municipality: municipality, number: number, contactName: "$telecomName: $name", url: ""));
+                 for (var doc in qrySnapshot.docs) {
+                   if (doc.id.contains("Url")) {
+                    final dataURL = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+                    queryContacts.add(EmergencyContactsModel(contactType: "AMBULANCE", telecom: telecomName, number: data["number"][0], contactName: name, url: dataURL["urlPic"][0]));
+                   }
+                 }
+                
               }
             }
-            else {
-              final telecomName = formatTelecom(doc.id);
-              final name = formatName(hostpital);
-              queryContacts.add(EmergencyContactsModel(contactType: "AMBULANCE", municipality: municipality, number: data["number"][0], contactName: "$telecomName: $name", url: ""));
-            }
+            
           }
         }
       }
@@ -105,17 +138,33 @@ class GetEmergencyContacts {
       //final data =  qrySnapshot.docs.map((doc) => doc.data());
 
       for (var doc in qrySnapshot.docs) {
-        final data = doc.data() as Map<String, dynamic>; //converts snapshot to dict
-        if (data["number"].length > 1) {
-          for (var number in data["number"]){
+        if (!doc.id.contains("Url")) {
+          final data = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+          if (data["number"].length > 1) {
+            for (var number in data["number"]){
+              final telecomName = formatTelecom(doc.id);
+              //gets url of image
+              for (var doc in qrySnapshot.docs) {
+                 if (doc.id.contains("Url")) {
+                  final dataURL = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+                  queryContacts.add(EmergencyContactsModel(contactType: "BFP", telecom: telecomName, number: number, contactName: "BFP ${municipality.toUpperCase()} FIRE STATION", url: dataURL["urlPic"][0]));
+                 }
+              }
+              
+            }
+          }
+          else {
             final telecomName = formatTelecom(doc.id);
-            queryContacts.add(EmergencyContactsModel(contactType: "BFP", municipality: municipality, number: number, contactName: "$telecomName: BFP ${municipality.toUpperCase()} FIRE STATION", url: ""));
+            for (var doc in qrySnapshot.docs) {
+              if (doc.id.contains("Url")) {
+                final dataURL = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+                queryContacts.add(EmergencyContactsModel(contactType: "BFP", telecom: telecomName, number: data["number"][0], contactName: "BFP ${municipality.toUpperCase()} FIRE STATION", url: dataURL["urlPic"][0]));
+              }
+            }
+            
           }
         }
-        else {
-          final telecomName = formatTelecom(doc.id);
-          queryContacts.add(EmergencyContactsModel(contactType: "BFP", municipality: municipality, number: data["number"][0], contactName: "$telecomName: BFP ${municipality.toUpperCase()} FIRE STATION", url: ""));
-        }
+        
       }
     }
     catch (error) {
@@ -131,18 +180,34 @@ class GetEmergencyContacts {
       QuerySnapshot qrySnapshot = await collection.get();
       //final data =  qrySnapshot.docs.map((doc) => doc.data());
 
+      
       for (var doc in qrySnapshot.docs) {
-        final data = doc.data() as Map<String, dynamic>; //converts snapshot to dict
-        if (data["number"].length > 1) {
-          for (var number in data["number"]){
-            final telecomName = formatTelecom(doc.id);
-            queryContacts.add(EmergencyContactsModel(contactType: "COAST", municipality: municipality, number: number, contactName: "$telecomName: DUMAGUIT COAST GUARD", url: ""));
+        if (!doc.id.contains("Url")){
+          final data = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+          if (data["number"].length > 1) {
+            for (var number in data["number"]){
+              //gets url of image
+              for (var doc in qrySnapshot.docs) {
+                if (doc.id.contains("Url")) {
+                  final dataURL = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+                  queryContacts.add(EmergencyContactsModel(contactType: "COAST", telecom: "HOTLINE Cell Phone Number", number: number, contactName: "DUMAGUIT COAST GUARD", url: dataURL["urlPic"][0]));
+                }
+              }
+              
+            }
+          }
+          else {
+            //gets url of image
+            for (var doc in qrySnapshot.docs) {
+              if (doc.id.contains("Url")) {
+                final dataURL = doc.data() as Map<String, dynamic>; //converts snapshot to dict
+                queryContacts.add(EmergencyContactsModel(contactType: "COAST", telecom: "HOTLINE Cell Phone Number", number: data["number"][0], contactName: "DUMAGUIT COAST GUARD", url: dataURL["urlPic"][0]));
+              }
+            }
+            
           }
         }
-        else {
-          final telecomName = formatTelecom(doc.id);
-          queryContacts.add(EmergencyContactsModel(contactType: "COAST", municipality: municipality, number: data["number"][0], contactName: "$telecomName: DUMAGUIT COAST GUARD", url: ""));
-        }
+        
       }
     }
     catch (error) {

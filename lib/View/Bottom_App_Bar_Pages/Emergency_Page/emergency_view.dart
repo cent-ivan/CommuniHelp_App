@@ -42,7 +42,7 @@ class EmergencyAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 1.r,
       title: Text(
-        "Magtawag it tabang",
+        "Emergency Contacts",
         style: TextStyle(
           color: Theme.of(context).colorScheme.outline,
           fontSize: 23.r,
@@ -79,16 +79,20 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
   Widget build(BuildContext context) {
     return Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16).r,
+          padding: const EdgeInsets.fromLTRB(12, 20, 40, 20),
           child: SizedBox(
-            height: (550 + (viewModel.mddrmoContacts.length.toDouble() * 6) * ((viewModel.ambulanceContacts.length.toDouble() * 10) + (viewModel.bfpContacts.length.toDouble() * 6) + (viewModel.cgContacts.length.toDouble() * 6))).r,
+            height: (480 + (viewModel.mddrmoContacts.length.toDouble() * 4) * ((viewModel.ambulanceContacts.length.toDouble() * 10) + (viewModel.bfpContacts.length.toDouble() * 6) + (viewModel.cgContacts.length.toDouble() * 5))).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 
                 //Municipality Tag
                 GestureDetector(
-                  onTap: () => viewModel.loadMunicipality(),
+                  onTap: () {
+                    setState(() {
+                      viewModel.loadMunicipality();
+                    });
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
@@ -145,7 +149,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                   alignment: Alignment.topLeft,
                   margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                   child: Text(
-                    "Numero it Ambulansya",
+                    "List of Hostpitals",
                     style: TextStyle(
                       fontSize: 20.r,
                       fontWeight: FontWeight.bold,
@@ -170,7 +174,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                   alignment: Alignment.topLeft,
                   margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                   child: Text(
-                    "Numero it Bombero",
+                    "Number/s of Fire rescuer",
                     style: TextStyle(
                       fontSize: 20.r,
                       fontWeight: FontWeight.bold,
@@ -192,7 +196,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                   alignment: Alignment.topLeft,
                   margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                   child: Text(
-                    "Numero it Coastguard",
+                    "Number of Coastguard",
                     style: TextStyle(
                       fontSize: 20.r,
                       fontWeight: FontWeight.bold,
