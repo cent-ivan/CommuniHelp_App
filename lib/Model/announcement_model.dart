@@ -1,7 +1,7 @@
 class AnnouncementModel {
   bool? isUrgent;
   String? level;
-  DateTime? date;
+  String? date;
   String? municipality;
   String? title;
   String? content;
@@ -15,4 +15,15 @@ class AnnouncementModel {
     required this.title, 
     required this.content
   });
+
+  toJson() {
+    return {
+      "Urgent" : isUrgent,
+      "Level" : level,
+      "Date" : date,
+      "Content": content,
+      "Title": title,
+      "Municipality" : municipality
+    };
+  }
 }

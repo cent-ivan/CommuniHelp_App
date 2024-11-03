@@ -10,6 +10,8 @@ class ResponderUtilityButtons extends StatelessWidget {
     super.key,
   });
 
+  
+
   @override
   
   Widget build(BuildContext context) {
@@ -71,8 +73,8 @@ class ResponderUtilityButtons extends StatelessWidget {
               //Post Announcement
               MaterialButton(
                 onPressed: () {
-                  //TODO: make announcement page
-                  // Navigator.pushNamed(context,'/postannouncement');
+      
+                  Navigator.pushNamed(context, '/postannouncement');
                 },
                 height: 80.r,
                 minWidth: 95.r,
@@ -90,7 +92,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                     ),
               
                     Text(
-                    "Post it Anunsyo",
+                    "Post Announcement",
                         style: TextStyle(
                         fontSize: 11.r,
                         fontWeight: FontWeight.bold,
@@ -122,7 +124,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                     ),
               
                     Text(
-                    "Mga Balita",
+                    "View News Reports",
                         style: TextStyle(
                         fontSize: 12.r,
                         fontWeight: FontWeight.bold,
@@ -154,7 +156,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                     ),
               
                     Text(
-                    "Ang Panahon",
+                    "View Weather",
                         style: TextStyle(
                         fontSize: 12.r,
                         fontWeight: FontWeight.bold,
@@ -184,7 +186,7 @@ class ResponderUtilityButtons extends StatelessWidget {
       
                 Center(
                   child: Text(
-                    "Ipakita ang mga Report",
+                    "View Reports",
                         style: TextStyle(
                         fontSize: 16.r,
                         fontWeight: FontWeight.bold,
@@ -214,7 +216,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                       ),
                 
                       Text(
-                      "Mga Report",
+                      "Report",
                           style: TextStyle(
                           fontSize: 11.r,
                           fontWeight: FontWeight.bold,
