@@ -136,7 +136,7 @@ class PostDialog {
                         barangay: userData.barangay, 
                         title: title.text, 
                         content: content.text, 
-                        type: "responder", 
+                        type: userData.type, 
                         date: formattedDate, 
                         presses: [{userData.name : false}], 
                         likes: 0,

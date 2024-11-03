@@ -554,7 +554,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                   
 
                                   getService.getUser();
-                                  getAnnouncement.addAnnouncement();
+                                  getAnnouncement.loadAnnouncement();
                                   Navigator.pop(context);
                                   
                               }

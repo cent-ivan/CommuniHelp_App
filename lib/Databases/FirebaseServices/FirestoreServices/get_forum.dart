@@ -81,8 +81,4 @@ class GetForum {
 
   }
 
-  Future updateUser(UserModel user) async {
-    
-  }
-
 }

@@ -33,7 +33,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
               margin: const EdgeInsets.fromLTRB(9, 3, 0, 0).r,
               child: TextButton(
                 onPressed: () {
-                  viewModel.addAnnouncement();
+                  viewModel.loadAnnouncement();
                 },
                 child: Text(
                   "Announcement", 
@@ -49,7 +49,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  viewModel.addAnnouncement();
+                  viewModel.loadAnnouncement();
                 });   
                 }, 
               icon: Icon(
@@ -122,7 +122,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
                               padding: const EdgeInsets.symmetric(vertical: 5).r,
                                   
                               child: Text(
-                                  "Date Posted: ${item.date!.day}/${item.date!.month}/${item.date!.year}",
+                                  "Date Posted: ${item.date}",
                                   style: TextStyle(
                                   fontSize: 12.r,
                                   color: Color(0xFF3D424A),
@@ -219,15 +219,15 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9).r,
                                   
                                   child: Text(
-                                    "Date: ${item.date!.day}/${item.date!.month}/${item.date!.year}",
+                                    "Date: ${item.date}",
                                     style: TextStyle(
                                       fontSize: 12.r,
                                       color: Color(0xFF3D424A),
-                                      letterSpacing: 2,
-                                      decoration: TextDecoration.underline ,
                                     ),
                                   ),
                             ),
+
+                            SizedBox(height: 5.r,),
       
                             Padding(
                               padding: const EdgeInsets.all(8).r,
