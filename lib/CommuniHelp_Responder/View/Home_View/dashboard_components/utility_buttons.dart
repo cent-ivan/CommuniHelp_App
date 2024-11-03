@@ -198,7 +198,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                 //Report Button
                 MaterialButton(
                   onPressed: () {
-                    Navigator.pushNamed(context,'/report');
+                    Navigator.pushNamed(context,'/viewreport');
                   },
                   height: 80.r,
                   minWidth: 95.r,
