@@ -71,7 +71,9 @@ flutter:
     #inforgrpahics assets
     - assets/images/infographics/
     - assets/images/infographics/button_images/
-    - assets/images/infographics/natural_infographics/
+    - assets/images/infographics/natural_infographics/flood/
+    - assets/images/infographics/natural_infographics/typhoon/
+    - assets/images/infographics/natural_infographics/landslide/
 
       # fonts:
   #   - family: Still searching for fonts

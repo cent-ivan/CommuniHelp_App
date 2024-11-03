@@ -33,7 +33,7 @@ class NaturalInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Typhoon");
+            viewModel.getPath("Typhoon", "En");
             Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
@@ -74,7 +74,7 @@ class NaturalInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Flood");
+            viewModel.getPath("Flood", "En");
             Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
@@ -115,7 +115,7 @@ class NaturalInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-        
+            viewModel.getPath("Landlside", "En");
           },
           child: Padding(
             padding: EdgeInsets.all(10.r),
@@ -155,7 +155,7 @@ class NaturalInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-        
+            viewModel.getPath("Earthquake", "En");
           },
           child: Padding(
             padding: EdgeInsets.all(10.r),

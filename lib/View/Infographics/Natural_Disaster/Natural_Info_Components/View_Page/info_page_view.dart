@@ -35,7 +35,7 @@ class _InfoPageViewState extends State<InfoPageView> {
                     _currentPage = value; //change the index when next
                   });
                 },
-                children: viewModel.assetPaths[viewModel.disasterPath]!.map((infoPath) {
+                children: viewModel.assetEnglishPaths[viewModel.disasterPath]!.map((infoPath) {
                   return InteractiveViewer(
                     //for zoom
                     minScale: 0.5,
@@ -56,7 +56,7 @@ class _InfoPageViewState extends State<InfoPageView> {
                   color: Colors.transparent,
                   child: Row(
                     children: List<Widget>.generate( //generate the rows circles
-                      viewModel.assetPaths[viewModel.disasterPath]!.length,
+                      viewModel.assetEnglishPaths[viewModel.disasterPath]!.length,
                       (index) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5).r,
                         child: GestureDetector(
@@ -93,7 +93,7 @@ class _InfoPageViewState extends State<InfoPageView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List<Widget>.generate( //generate the rows circles
-                      viewModel.assetPaths[viewModel.disasterPath]!.length,
+                      viewModel.assetEnglishPaths[viewModel.disasterPath]!.length,
                       (index) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5).r,
                         child: GestureDetector(
