@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,13 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
+  static final  customCache = CacheManager(
+    Config(
+      "customCacheKey",
+      stalePeriod: Duration(days: 30)
+    )
+  );
+
   @override
   Widget build(BuildContext context) {
     final viewModel= Provider.of<ProfileViewModel>(context);
@@ -32,7 +41,7 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
           child: Container(
             height: 900.r,
             decoration: BoxDecoration(
-              image:  DecorationImage(image: Theme.of(context).colorScheme.primary == const Color(0xFFF2F2F2) ? 
+              image:  DecorationImage(image: Theme.of(context).colorScheme.primary == const Color(0xFFEFEFEF ) ? 
                 const AssetImage('assets/images/background/ProfileBackground.png') : const AssetImage('assets/images/background/ProfileDarkBackground.png'), 
               fit: BoxFit.cover),
             
@@ -63,9 +72,21 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
 
                 //Profile Picture
                 Center(
-                  child: CircleAvatar(
+                  child: userData.userProfURL.isNotEmpty ? CachedNetworkImage(
+                    cacheManager: customCache,
+                    key: UniqueKey(),
+                    imageUrl: userData.userProfURL,
+                    progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    imageBuilder: (context, imageProvider) => CircleAvatar(
+                      backgroundImage: imageProvider,
+                      radius: 65.r,
+                    )
+                  ) 
+                  :
+                  CircleAvatar(
                     backgroundImage: profileImage,
-                    radius: 50.r,
+                    radius: 60.r,
                   ),
                 ),
 

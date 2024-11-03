@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
-import 'package:communihelp_app/Model/user_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
@@ -548,20 +547,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                                     userData.reloadData();
                                     emergencyViewModel.reloadLists();
 
-                                    firestoreService.updateUserDetails(UserModel(
-                                      uid: user.uid,
-                                      profilePicUrl: "",
-                                      name: viewModel.nameController.text, 
-                                      birthdate: viewModel.birthdateController.text, 
-                                      gender: viewModel.currentOption, 
-                                      barangay: viewModel.barangayValue!, 
-                                      municipality: viewModel.municipalityValue!, 
-                                      email: user.email, 
-                                      mobileNumber: viewModel.contactController.text,
-                                      type: "responder",
-                                      posts: userData.posts
-                                      ),
-                                    );
+                                    viewModel.updateUserData(user.uid, user.email!, userData.type);
+
+                    
                                   });
                                   
 
