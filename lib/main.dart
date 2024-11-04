@@ -1,11 +1,14 @@
 import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Registration_Responder/registration_responder_view.dart';
+import 'package:communihelp_app/CommuniHelp_Responder/View/Resport_Page/see_report_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/responder_base.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/Emergency_contact_model/emergency_contacts_model.dart';
 import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.dart';
+import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/announcement_make.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/report_view_model.dart';
 import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/natural_dis_view_model.dart';
 import 'package:communihelp_app/ViewModel/Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
@@ -33,6 +36,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
@@ -60,6 +64,8 @@ void main() async{
   await Hive.openBox<List>('emergencycontact');
 
   await Hive.openBox<bool>('director');
+
+  await initializeDateFormatting('en_PH', null); // Initialize for Philippines locale
   
   runApp(
     MultiProvider(
@@ -71,6 +77,7 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => EmergencyKitViewModel())),
         ChangeNotifierProvider(create: ((context) => NaturalDisasterViewModel())),
         ChangeNotifierProvider(create: ((context) => CommunityViewModel())),
+        ChangeNotifierProvider(create: ((context) => ReportViewModel())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
@@ -138,11 +145,14 @@ class MainApp extends StatelessWidget {
           '/login': (context) => const LoginView(),
           '/register': (context) => const RegistrationView(),
           '/editprofile': (context) => const EditProfileView(),
+          
 
           //Responder routes
           '/responderlogin': (context) => const LoginResponderView(),
           '/responderregister' : (context) => const RegistrationResponderView(),
           '/responderhome' : (context) => const HomeBaseResponder(),
+          '/postannouncement': (context) => const AnnouncementMake(),
+          '/viewreport': (context) => const SeeReportView(),
 
           //Infograhics routes
           '/viewinfopage': (context) => const InfoPageView(),

@@ -142,9 +142,15 @@ class PostDialog {
                     ),
                   ),
                   onPressed: () {
-                    final dateNow = DateTime.now();
-                    final timeNow = DateFormat.jm();
-                    String formattedDate = "${dateNow.day}/${dateNow.month}/${dateNow.year}, $timeNow";
+                    //format time
+                    DateTime utcNow = DateTime.now().toUtc();
+                    
+                    // Converting UTC to Philippine time 
+                    DateTime philippineTime = utcNow.add(Duration(hours: 8));
+                    
+                    DateFormat formatter = DateFormat('dd-MM-yyyy, hh:mm a', 'en_PH');
+                    
+                    String formattedDateTime = formatter.format(philippineTime);
 
                     if (_formKey.currentState!.validate()) {
                       firestoreForum.postForum(userData.municipality, ForumModel(
@@ -152,8 +158,8 @@ class PostDialog {
                         barangay: userData.barangay, 
                         title: title.text, 
                         content: content.text, 
-                        type: "user", 
-                        date: formattedDate, 
+                        type: userData.type, 
+                        date: formattedDateTime, 
                         presses: [{userData.name : false}], 
                         likes: 0,
                         profileURL: userData.userProfURL

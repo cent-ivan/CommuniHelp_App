@@ -1,5 +1,9 @@
+import 'package:communihelp_app/View/Utility_Pages/Report_Damage/pick_image_dialog.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/report_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 
 class ReportDamageView extends StatefulWidget {
   const ReportDamageView({super.key});
@@ -9,16 +13,17 @@ class ReportDamageView extends StatefulWidget {
 }
 
 class _ReportDamageViewState extends State<ReportDamageView> {
+  Logger logger = Logger(); //for debug message
+  
   //form global key
   final _formKey = GlobalKey<FormState>();
 
-  //controller
-  final _reportTitleController = TextEditingController();
-  final _locationController = TextEditingController();
-  final _contentController = TextEditingController();
+
+  final imageDialog = PickImageDialog();
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<ReportViewModel>(context);
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -64,14 +69,14 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                       
                                   //Title text field
                                   SizedBox(
-                                    height: 40.r,
+                                    height: 50.r,
                                     width: 180.r,
                                     child: TextFormField(
-                                      controller: _reportTitleController,
+                                      controller: viewModel.reportTitleController,
                                       style: TextStyle(
                                         color: Color(0xFFFEAE49),
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 11.r
+                                        fontSize: 16.r
                                       ),
                                       decoration: InputDecoration(
                                         enabledBorder: OutlineInputBorder(
@@ -153,7 +158,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                         height: 40.r,
                         width: 350.r,
                         child: TextFormField(
-                          controller: _locationController,
+                          controller: viewModel.locationController,
                           style: TextStyle(
                             fontSize: 16.r,
                             color: Theme.of(context).colorScheme.outline,
@@ -196,7 +201,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                         height: 120.r,
                         width: 350.r,
                         child: TextFormField(
-                          controller: _contentController,
+                          controller: viewModel.contentController,
                           keyboardType: TextInputType.multiline,
                           maxLines: 8,
                           style: TextStyle(
@@ -237,35 +242,98 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                       SizedBox(height: 8.r,),
 
                       //Upload photo box
-                      Container(
-                        height: 150.r,
-                        width: 350.r,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8).r,
-                          border: Border.all(width: 1.5.r)
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 80.r,
-                              child: MaterialButton(
-                                onPressed: () {},
-                                child: const Image( 
-                                  image: AssetImage('assets/images/dashboard/uploadphoto.png')
+                      Center(
+                        child: Container(
+                          height: 200.r,
+                          width: 250.r,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8).r,
+                            border: Border.all(width: 1.5.r)
+                          ),
+                          child: viewModel.choosenImage == null ?
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 80.r,
+                                child: MaterialButton(
+                                  onPressed: () {
+                                    imageDialog.showPickScreen(context);
+                                  },
+                                  child: const Image( 
+                                    image: AssetImage('assets/images/dashboard/uploadphoto.png')
+                                  ),
                                 ),
                               ),
-                            ),
-
-                            Text(
-                              "Upload Photo",
-                              style: TextStyle(
-                                color: Color(0xFFFEAE49),
-                                fontSize: 16.r,
-                                fontWeight: FontWeight.bold
+                        
+                              TextButton(
+                                onPressed: () {
+                                  imageDialog.showPickScreen(context);
+                                }, 
+                                child: Text(
+                                "Pick a Photo",
+                                style: TextStyle(
+                                    color: Color(0xFFFEAE49),
+                                    fontSize: 16.r,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                )
                               ),
-                            )
-                          ],
+                        
+                            ],
+                          )
+                          //else
+                          : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  //shows big picture if tapped
+                                  showDialog(context: context, 
+                                  builder: (context) {
+                                    return SimpleDialog(
+                                      contentPadding: EdgeInsets.all(10).r,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(8.r),)
+                                      ),
+                                      children: [
+                                        Image.file(viewModel.choosenImage!, height: 250.r, width: 250.r, fit: BoxFit.cover,),
+                                      ],
+                                    );
+                                  }
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0).r,
+                                  child: Image.file(viewModel.choosenImage!, height: 130.r, width: 130.r, fit: BoxFit.cover,),
+                                ),
+                              ),
+
+                              //Choose what button
+                              MaterialButton(
+                                height: 25.r,
+                                minWidth: 40.r,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(8.r))
+                                ),
+                                color: Color(0xFF57BEE6),
+                                onPressed: (){
+                                  setState(() {
+                                    viewModel.choosenImage = null;
+                                  });
+                                },
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.r,
+                                    color: Theme.of(context).colorScheme.outline
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          )
                         ),
                       ),
                       
@@ -278,7 +346,38 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                           MaterialButton(
                             height: 65.r,
                             minWidth: 150.r,
-                            onPressed: () {},
+                            onPressed: () {
+                              //shows dialog if empty one
+                              if (viewModel.reportTitleController.text.isEmpty || viewModel.contentController.text.isEmpty || viewModel.contentController.text.isEmpty || viewModel.choosenImage == null) {
+                                showDialog(context: context, 
+                                builder: (context) {
+                                  return SimpleDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(8.r),)
+                                    ),
+                                    title: Text("Empty input fields"),
+                                    titleTextStyle: TextStyle(color: Theme.of(context).colorScheme.outline, fontWeight: FontWeight.bold, fontSize: 16.r),
+                                    contentPadding: EdgeInsets.all(16).r,
+                                    children: [
+                                      Text("Please, fill up all input fields")
+                                    ],
+                                  );
+                                }
+                                );
+                              }
+                              else {
+                                logger.i("Posted");
+                                viewModel.postReport(context);
+                                setState(() {
+                                  viewModel.reportTitleController.clear();
+                                  viewModel.contentController.clear();
+                                  viewModel.locationController.clear();
+                                  viewModel.choosenImage = null;
+                                });
+                              }
+
+
+                            },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.circular(12.r))
                             ),
@@ -299,7 +398,16 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                           MaterialButton(
                             height: 65.r,
                             minWidth: 150.r,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                viewModel.reportTitleController.clear();
+                                viewModel.contentController.clear();
+                                viewModel.locationController.clear();
+                                viewModel.choosenImage = null;
+                              });
+                            
+                              
+                            },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.circular(12.r))
                             ),

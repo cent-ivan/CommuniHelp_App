@@ -17,6 +17,7 @@ class CommunityViewModel extends ChangeNotifier{
     return getForum.getCollection(municipality);
   }
 
+  //check the user list if pressed or not
   void loadStatus(GetUserData user, List<Map<String,bool>> presses) {
     List<Map<String,bool>> collection = presses;
     for (int i = 0; i < collection.length; i++) {

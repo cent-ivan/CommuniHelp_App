@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
 import 'package:communihelp_app/Model/user_model.dart';
@@ -24,6 +25,9 @@ class ProfileStorage {
 
   //userData
   final userData = GetUserData();
+
+  //Firestore instance
+  final _db = FirebaseFirestore.instance;
 
   //Firestore instance for update
   final firestoreService = FireStoreAddService();
@@ -55,6 +59,8 @@ class ProfileStorage {
     
   }
 
+
+
   Future addUser(String url, String uid, String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type) async {
     firestoreService.updateUserDetails(UserModel(
       uid: uid,
@@ -67,10 +73,27 @@ class ProfileStorage {
       municipality: municipality, 
       email: email, 
       mobileNumber: mobileNumber,
-      type: type
+      type: type,
+      posts: userData.posts
       )
     );
 
+    updateProfileForum(municipality, url);
+  }
+
+  Future updateProfileForum(String municipality, String url) async {
+    for (String postIDS in userData.posts!) {
+      //posts to forum to Firestore Database
+      await _db.collection("forum").doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_forum").doc(postIDS).update({"Profile" : url})
+        .whenComplete( ()=> "Good")
+        
+        // ignore: body_might_complete_normally_catch_error
+        .catchError((error){ 
+            logger.e("Error Occured : ${error.toString()}");
+          }
+        );
+    }
+    
   }
   
 }

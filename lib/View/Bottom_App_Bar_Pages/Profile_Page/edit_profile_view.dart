@@ -77,7 +77,7 @@ class _EditProfileViewState extends State<EditProfileView> {
         body: SingleChildScrollView(
           child: Consumer<ProfileViewModel>(builder: (context, viewModel, child) => Container(
               decoration: BoxDecoration(
-                image:  DecorationImage(image: Theme.of(context).colorScheme.primary == const Color(0xFFF2F2F2) ? 
+                image:  DecorationImage(image: Theme.of(context).colorScheme.primary == const Color(0xFFEFEFEF) ? 
                   const AssetImage('assets/images/background/ProfileBackground.png') : const AssetImage('assets/images/background/ProfileDarkBackground.png'), 
                 fit: BoxFit.cover),
               

@@ -1,4 +1,5 @@
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
+import 'package:communihelp_app/Model/announcement_model.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -11,7 +12,7 @@ class AnnouncementViewModel extends ChangeNotifier{
   GetAnnouncement dbAnnouncement = GetAnnouncement();
 
   AnnouncementViewModel._() {
-    addAnnouncement();
+    loadAnnouncement();
   }
 
   // Static instance of the singleton
@@ -22,9 +23,16 @@ class AnnouncementViewModel extends ChangeNotifier{
     return _instance; // Returns the same instance every time
   }
 
+  Future addAnnouncement(AnnouncementModel announcement) async {
+    await getData.getUser();
+    String municipality = getData.municipality;
+    dbAnnouncement.addAnnouncement(municipality, announcement);
+    notifyListeners();
+  }
+
 
   //Retrieve from database, make sure that aklan is in the first announcement
-  Future addAnnouncement() async{
+  Future loadAnnouncement() async{
     await getData.getUser();
     String municipality = getData.municipality;
     dbAnnouncement.listenToAnnouncements(municipality);
