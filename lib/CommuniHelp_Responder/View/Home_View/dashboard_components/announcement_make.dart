@@ -1,5 +1,8 @@
+import 'package:communihelp_app/CommuniHelp_Responder/ViewModel/post_announcement_view_model.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class AnnouncementMake extends StatefulWidget {
   const AnnouncementMake({super.key});
@@ -17,213 +20,302 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
 
   bool isUrgent = false;
 
+  String levelValue = "AKLAN";
+
+  final postAnnouncementViewModel = PostAnnouncementViewModel();
+
   @override
   Widget build(BuildContext context) {
+    //user data
+    final userData = Provider.of<GetUserData>(context);
     return Scaffold(
       appBar: AnnouncementAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16).r,
-        child: SizedBox(
-              height: 800.r,
-              width: 500.r,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Today: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                      style: TextStyle(
-                        fontSize: 18.r,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.outline
-                      ),
-                    ),
-
-                    SizedBox(height: 20.r,),
-
-
-                    Text(
-                      "Title",
-                      style: TextStyle(
-                        fontSize: 16.r,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.outline
-                      ),
-                    ),
-        
-                    SizedBox(height: 10.r,),
-        
-                    //Title Text Field
-                    SizedBox(
-                      height: 50.r,
-                      width: 450.r,
-                      child: TextFormField(
-                        controller: _titleController,
+        child: SingleChildScrollView(
+          child: SizedBox(
+                height: 800.r,
+                width: 500.r,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Today: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                         style: TextStyle(
-                            fontSize: 16.r,
-                            color: Theme.of(context).colorScheme.outline,
-                            fontWeight: FontWeight.bold
-                          ),
-                          cursorColor: Theme.of(context).colorScheme.outline,
-                          decoration: InputDecoration(
-                          hintText: "Enter Title",
-                          hintStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.outline,
-                            fontStyle: FontStyle.italic
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8).r,
-                            borderSide: BorderSide(width: 2.r, color: Theme.of(context).colorScheme.outline)
-                          ),
-                            focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12).r,
-                            borderSide: BorderSide(width: 1.5.r, color: Theme.of(context).colorScheme.outline)
-                          )
+                          fontSize: 18.r,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.outline
                         ),
                       ),
-                      
-                    ),
-                    
-                    SizedBox(height: 16.r,),
-        
-                    Text(
-                      "Content",
-                      style: TextStyle(
-                        fontSize: 16.r,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.outline
-                      ),
-                    ),
-        
-                    SizedBox(height: 10.r,),
-        
-                    //Content Text Field
-                    SizedBox(
-                      height: 200.r,
-                      width: 450.r,
-                      child: TextFormField(
-                        controller: _contentController,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: 10,
+          
+                      SizedBox(height: 20.r,),
+          
+          
+                      Text(
+                        "Title",
                         style: TextStyle(
-                            fontSize: 16.r,
-                            color: Theme.of(context).colorScheme.outline,
-                            fontWeight: FontWeight.bold
-                          ),
-                          cursorColor: Theme.of(context).colorScheme.outline,
-                          decoration: InputDecoration(
-                          hintText: "Enter announcement content",
-                          hintStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.outline,
-                            fontStyle: FontStyle.italic
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8).r,
-                            borderSide: BorderSide(width: 2.r, color: Theme.of(context).colorScheme.outline)
-                          ),
-                            focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12).r,
-                            borderSide: BorderSide(width: 1.5.r, color: Theme.of(context).colorScheme.outline)
-                          )
+                          fontSize: 16.r,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.outline
                         ),
                       ),
-                      
-                    ),
-        
-                    SizedBox(height: 16.r,),
-        
-                    Text(
-                      "Is urgent?",
-                      style: TextStyle(
-                        fontSize: 16.r,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.outline
+          
+                      SizedBox(height: 10.r,),
+          
+                      //Title Text Field
+                      SizedBox(
+                        height: 50.r,
+                        width: 450.r,
+                        child: TextFormField(
+                          controller: _titleController,
+                          style: TextStyle(
+                              fontSize: 16.r,
+                              color: Theme.of(context).colorScheme.outline,
+                              fontWeight: FontWeight.bold
+                            ),
+                            cursorColor: Theme.of(context).colorScheme.outline,
+                            decoration: InputDecoration(
+                            hintText: "Enter Title",
+                            hintStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.outline,
+                              fontStyle: FontStyle.italic
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8).r,
+                              borderSide: BorderSide(width: 2.r, color: Theme.of(context).colorScheme.outline)
+                            ),
+                              focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12).r,
+                              borderSide: BorderSide(width: 1.5.r, color: Theme.of(context).colorScheme.outline)
+                            )
+                          ),
+                        ),
+                        
                       ),
-                    ),
-        
-                    SizedBox(height: 8.r,),
-        
-                    Switch(
-                      inactiveThumbColor: Theme.of(context).colorScheme.outline,
-                      activeColor: const Color(0xFFFEAE49),
-                      value: isUrgent, 
-                      onChanged: (value) {
-                        setState(() {
-                          isUrgent = value;
-                        });
-                      }
-                    ),
-
-                    SizedBox(height: 24.r,),
-
-                    //Post and Clear Buttons
-                    Center(
-                      child: Row(
+                      
+                      SizedBox(height: 16.r,),
+          
+                      Text(
+                        "Content",
+                        style: TextStyle(
+                          fontSize: 16.r,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.outline
+                        ),
+                      ),
+          
+                      SizedBox(height: 10.r,),
+          
+                      //Content Text Field
+                      SizedBox(
+                        height: 200.r,
+                        width: 450.r,
+                        child: TextFormField(
+                          controller: _contentController,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 10,
+                          style: TextStyle(
+                              fontSize: 16.r,
+                              color: Theme.of(context).colorScheme.outline,
+                              fontWeight: FontWeight.bold
+                            ),
+                            cursorColor: Theme.of(context).colorScheme.outline,
+                            decoration: InputDecoration(
+                            hintText: "Enter announcement content",
+                            hintStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.outline,
+                              fontStyle: FontStyle.italic
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8).r,
+                              borderSide: BorderSide(width: 2.r, color: Theme.of(context).colorScheme.outline)
+                            ),
+                              focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12).r,
+                              borderSide: BorderSide(width: 1.5.r, color: Theme.of(context).colorScheme.outline)
+                            )
+                          ),
+                        ),
+                        
+                      ),
+          
+                      SizedBox(height: 16.r,),
+          
+                      //Urgent and level section
+                      Row(
                         children: [
-                          MaterialButton(
-                              height: 65.r,
-                              minWidth: 150.r,
-                              onPressed: () {
-                                setState(() {
-                                  _titleController.clear();
-                                  _contentController.clear();
-                                  isUrgent = false;
-                                });
-                              
-                                
-                              },
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(12.r))
-                              ),
-                              color: Color(0xFFFEAE49),
-                              elevation: 1.r,
-                              child: Text(
-                                "Post",
+                          //Urgent Switch
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Urgent",
                                 style: TextStyle(
+                                  fontSize: 16.r,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20.r,
                                   color: Theme.of(context).colorScheme.outline
                                 ),
                               ),
-                          ),
-                      
-                          SizedBox(width: 10.r,),
-                      
-                          MaterialButton(
-                              height: 65.r,
-                              minWidth: 150.r,
-                              onPressed: () {
-                                setState(() {
-                                  _titleController.clear();
-                                  _contentController.clear();
-                                  isUrgent = false;
-                                });
-                              
-                                
-                              },
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(12.r))
+                          
+                              SizedBox(height: 8.r,),
+                                  
+                              Switch(
+                                inactiveThumbColor: Theme.of(context).colorScheme.outline,
+                                activeColor: const Color(0xFFFEAE49),
+                                value: isUrgent, 
+                                onChanged: (value) {
+                                  setState(() {
+                                    isUrgent = value;
+                                  });
+                                }
                               ),
-                              color: Color(0xFF57BEE6),
-                              elevation: 1.r,
-                              child: Text(
-                                "Clear",
+                          
+                            ],
+                          ),
+                          
+                          SizedBox(width: 44.r,),
+          
+                          //Dropdown
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Level",
                                 style: TextStyle(
+                                  fontSize: 16.r,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20.r,
                                   color: Theme.of(context).colorScheme.outline
                                 ),
                               ),
-                          ),
+          
+                              DropdownButton(
+                                value: levelValue,
+                                items: [
+                                  DropdownMenuItem(
+                                    value: userData.municipality,
+                                    child: Text("Municipal Level", style: TextStyle(color: Theme.of(context).colorScheme.outline),),
+                                  ),
+          
+                                  DropdownMenuItem(
+                                    value: "AKLAN",
+                                    child: Text("Province Level", style: TextStyle(color: Theme.of(context).colorScheme.outline)),
+                                  ),
+          
+                                  DropdownMenuItem(
+                                    value: "NATIONAL",
+                                    child: Text("National Level", style: TextStyle(color: Theme.of(context).colorScheme.outline)),
+                                  ),
+                                ], 
+                                style: TextStyle( color: Theme.of(context).colorScheme.outline),
+                                underline: Container(
+                                  height: 2,
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                                dropdownColor: Theme.of(context).colorScheme.primary,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    levelValue = newValue.toString();
+                                  });
+                                }
+                              )
+                            ],
+                          )
                         ],
                       ),
-                    )
-                  
-                  ],
+          
+                      
+          
+                      SizedBox(height: 24.r,),
+          
+                      //Post and Clear Buttons
+                      Center(
+                        child: Row(
+                          children: [
+                            MaterialButton(
+                                height: 65.r,
+                                minWidth: 150.r,
+                                onPressed: () {
+                                  if ( _titleController.text.isEmpty || _contentController.text.isEmpty) {
+                                    showDialog(context: context, 
+                                      builder: (context) {
+                                        return SimpleDialog(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(4.r),)
+                                          ),
+                                          children: [
+                                            Center(child: Text("Empty text fields.", style: TextStyle(fontWeight: FontWeight.bold),))
+                                          ],
+                                        );
+                                      }
+                                    );
+                                  }
+                                  else {
+                                    postAnnouncementViewModel.addAnnouncement(isUrgent, _titleController.text, _contentController.text, levelValue, userData.municipality);
+          
+                                    setState(() {
+                                      _titleController.clear();
+                                      _contentController.clear();
+                                      isUrgent = false;
+                                      levelValue = "AKLAN";
+                                    });
+                                  }
+                                     
+                                },
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(12.r))
+                                ),
+                                color: Color(0xFFFEAE49),
+                                elevation: 1.r,
+                                child: Text(
+                                  "Post",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.r,
+                                    color: Theme.of(context).colorScheme.outline
+                                  ),
+                                ),
+                            ),
+                        
+                            SizedBox(width: 10.r,),
+                        
+                            MaterialButton(
+                                height: 65.r,
+                                minWidth: 150.r,
+                                onPressed: () {
+                                  setState(() {
+                                    _titleController.clear();
+                                    _contentController.clear();
+                                    isUrgent = false;
+                                    levelValue = "AKLAN";
+                                  });
+                                
+                                  
+                                },
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(12.r))
+                                ),
+                                color: Color(0xFF57BEE6),
+                                elevation: 1.r,
+                                child: Text(
+                                  "Clear",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.r,
+                                    color: Theme.of(context).colorScheme.outline
+                                  ),
+                                ),
+                            ),
+                          ],
+                        ),
+                      )
+                    
+                    ],
+                  ),
                 ),
               ),
-            ),
+        ),
       )
     );
   }

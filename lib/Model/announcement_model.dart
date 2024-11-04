@@ -5,9 +5,12 @@ class AnnouncementModel {
   String? municipality;
   String? title;
   String? content;
+  DateTime? expiresAt;
 
 
-  AnnouncementModel({
+  AnnouncementModel(
+    {
+    this.expiresAt,
     required this.isUrgent,
     required this.level,
     required this.date,
@@ -23,7 +26,8 @@ class AnnouncementModel {
       "Date" : date,
       "Content": content,
       "Title": title,
-      "Municipality" : municipality
+      "Municipality" : municipality,
+      "Expires" : expiresAt
     };
   }
 }

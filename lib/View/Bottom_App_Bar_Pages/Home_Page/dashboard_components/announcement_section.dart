@@ -19,6 +19,7 @@ class AnnouncementSection extends StatefulWidget {
 
 class _AnnouncementSectionState extends State<AnnouncementSection> {
 
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AnnouncementViewModel>(builder: (context, viewModel, child) => Column(
@@ -64,7 +65,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
         viewModel.dbAnnouncement.announcements.isNotEmpty ?
         SizedBox(
           width: 380.r,
-          height: 180.r,
+          height: 200.r,
           child: SafeArea(
             child: ExpandableCarousel(
               options: ExpandableCarouselOptions(
@@ -83,10 +84,10 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                       onTap: () => showAnnouncement(item),
                       child: Container(
                         width: 300.r,
-                        height: 180.r,
+                        height: 200.r,
                         padding: const EdgeInsets.all(8).r,
                         decoration: BoxDecoration(
-                          border: Border.all(color: item.isUrgent! ? Colors.redAccent : Colors.transparent, width: 2),
+                          border: Border.all(color: item.isUrgent! ? Colors.redAccent : Colors.transparent, width: 4),
                           borderRadius: BorderRadius.all(const Radius.circular(9).r),
                           gradient: LinearGradient(
                             colors: item.isUrgent! ? 
@@ -101,25 +102,28 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
-                              width: 155.r,
-                              margin: const EdgeInsets.only(bottom: 8).r,
-                              decoration: BoxDecoration(
-                                color: item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26,
-                                borderRadius: BorderRadius.all(const Radius.circular(5).r)
-                              ),
-                              child: Text(
-                                item.isUrgent! ? "Urgent: ${item.title!}" : item.title!,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12.r
+                            Center(
+                              child: Container(
+                                width: 155.r,
+                                margin: const EdgeInsets.only(bottom: 8).r,
+                                decoration: BoxDecoration(
+                                  color: item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26,
+                                  borderRadius: BorderRadius.all(const Radius.circular(5).r)
+                                ),
+                                child: Text(
+                                  item.isUrgent! ? "ANNOUNCEMENT: ${item.title!}" : item.title!,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.r
+                                  ),
                                 ),
                               ),
                             ),
 
+                            //date
                             Container(
-                              padding: const EdgeInsets.symmetric(vertical: 5).r,
+                              padding: const EdgeInsets.symmetric(vertical: 3).r,
                                   
                               child: Text(
                                   "Date Posted: ${item.date}",
@@ -131,7 +135,25 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                               ),
                             ),
 
-                            SizedBox(height: 5.r,),
+                            //level
+                            Container(
+                              width: 90.r,
+                              margin: const EdgeInsets.only(bottom: 8).r, //item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26
+                              decoration: BoxDecoration(
+                                color: levelColor(item.level!, item.municipality!),
+                                borderRadius: BorderRadius.all(const Radius.circular(2).r)
+                              ),
+                              child: Text(
+                                item.level!,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10.r
+                                ),
+                              ),
+                            ),
+
+                            
                           
                             Padding(
                               padding: const EdgeInsets.all(9),
@@ -143,9 +165,11 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                   color: item.isUrgent! ? Theme.of(context).colorScheme.outline:Color(0xFF3D424A)
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 6, 
+                                maxLines: 3, 
                               ),
                             ),
+
+                            
                           ],
                         ),
                       ),
@@ -178,19 +202,30 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
     );
   }
 
+  Color levelColor(String level, String municipality) {
+    Color levelColor;
+    if (level.contains(municipality.toUpperCase())) {
+      levelColor =  Colors.black26;
+    }
+    else if (level.contains("AKLAN")) {
+      levelColor = Color(0xE6FEAE49);
+    }
+    else {
+      levelColor = Color(0xBF57BEE6);
+    }
+    return levelColor;
+  }
+
 
   void showAnnouncement(AnnouncementModel item) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8.r))
-          ),
           scrollable: true,
           backgroundColor: Color(0xFFF2F2F2),
           content: SizedBox(
-            height: item.content!.length + 190.r,
+            height: item.content!.length + 255.r,
             child: Padding(
               padding: const EdgeInsets.all(5).r,
               child: Column(
@@ -202,18 +237,41 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                             Center(
                               child: Container(
                                 width: 155.r,
-                                margin: const EdgeInsets.only(bottom: 20).r,
+                                padding: EdgeInsets.all(4).r,
+                                margin: const EdgeInsets.only(bottom: 14).r,
                                 decoration: BoxDecoration(
                                   color: item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26,
-                                  borderRadius: BorderRadius.all(const Radius.circular(5).r)
+                                  borderRadius: BorderRadius.all(const Radius.circular(5).r),
+                                  border: Border.all(color: item.isUrgent! ? Colors.redAccent : Colors.transparent, width: 2),
                                 ),
                                 child: Text(
-                                  item.isUrgent! ? "Urgent: ${item.title!}" : item.title!,
+                                  item.isUrgent! ? "ANNOUNCEMENT: ${item.title!}" : item.title!,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12.r,
+                                    fontSize: 14.r,
                                     color: Color(0xFF3D424A)
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            //level
+                            Center(
+                              child: Container(
+                                width: 90.r,
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4).r,
+                                margin: const EdgeInsets.only(bottom: 12).r, //item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26
+                                decoration: BoxDecoration(
+                                  color: levelColor(item.level!, item.municipality!),
+                                  borderRadius: BorderRadius.all(const Radius.circular(2).r),
+                                ),
+                                child: Text(
+                                  item.level!,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10.r
                                   ),
                                 ),
                               ),
@@ -232,10 +290,16 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                   ),
                             ),
 
+                            
+
                             SizedBox(height: 5.r,),
       
-                            Padding(
-                              padding: const EdgeInsets.all(8).r,
+                            Container(
+                              padding: EdgeInsets.all(14).r,
+                              decoration: BoxDecoration(
+                                color: Color(0xBFDEDEDE),
+                                borderRadius: BorderRadius.all(const Radius.circular(5).r),
+                              ),
                               child: Text(
                                 item.content!,
                                 textAlign: TextAlign.justify,
@@ -252,7 +316,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                     margin: EdgeInsets.only(top: 25).r,
                     child: MaterialButton(
                       elevation: 0,
-                      color: Color(0xFFADADAD),
+                      color: Color(0xFF57BEE6),
                       onPressed:() {Navigator.pop(context);},
                       child: Center(
                         child: Text(
@@ -273,9 +337,6 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
       }
     );
   }
-
-
-  
 }
 
 
