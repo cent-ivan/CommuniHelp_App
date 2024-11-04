@@ -35,17 +35,7 @@ class _InfoPageViewState extends State<InfoPageView> {
                     _currentPage = value; //change the index when next
                   });
                 },
-                children: viewModel.assetEnglishPaths[viewModel.disasterPath]!.map((infoPath) {
-                  return InteractiveViewer(
-                    //for zoom
-                    minScale: 0.5,
-                    maxScale: 8,
-                    child: Image(
-                      image: AssetImage(infoPath),
-                      fit: BoxFit.fitWidth,
-                    )
-                  );
-                }).toList(),
+                children: checkList(viewModel.userLanguage!, viewModel)
               ),
 
               //Top Page indicator
@@ -123,6 +113,28 @@ class _InfoPageViewState extends State<InfoPageView> {
         ),
       )
     );
+  }
+
+  //check first what language
+  List<Widget> checkList(String language, NaturalDisasterViewModel viewModel) {
+    List<Widget> result;
+    switch (language) {
+      case "En":
+        result = viewModel.assetEnglishPaths[viewModel.disasterPath]!.map((infoPath) {
+                return InteractiveViewer(
+                //for zoom
+                minScale: 0.5,
+                maxScale: 8,
+                child: Image(
+                  image: AssetImage(infoPath),
+                  fit: BoxFit.fitWidth,
+                )
+              );
+            }).toList();
+      default:
+        throw 'Invalid shape type';
+    }
+    return result;
   }
 }
 

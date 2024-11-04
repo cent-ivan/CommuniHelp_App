@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+
 class NaturalDisasterViewModel extends ChangeNotifier{
   String? pageTitle;
   String? disasterPath;
+  String? userLanguage;
 
   final Map<String, List<String>> assetEnglishPaths = {
     "Typhoon" : [
@@ -39,6 +41,7 @@ class NaturalDisasterViewModel extends ChangeNotifier{
   };
 
   void getPath(String disaster, String language) {
+    userLanguage = language;
     if (language.contains("En")) {
       for (String key in assetEnglishPaths.keys) {
         if (disaster == key) {

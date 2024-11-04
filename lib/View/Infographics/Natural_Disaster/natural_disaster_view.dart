@@ -15,7 +15,7 @@ class NaturalDisasterView extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: Theme.of(context).colorScheme.primary ==  Color(0xFFF2F2F2) ? 
+              image: Theme.of(context).colorScheme.primary ==  Color(0xFFEFEFEF) ? 
               AssetImage('assets/images/background/InfoNatural.jpg') : AssetImage('assets/images/background/InfoNaturalDark.jpg'),
               fit: BoxFit.cover
             ),
@@ -111,7 +111,7 @@ class NaturalDisasterView extends StatelessWidget {
                         margin: EdgeInsets.symmetric(horizontal: 20.r),
                         padding: EdgeInsets.all(8.r),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary ==  Color(0xFFF2F2F2) ? Color(0xD9F2F2F2) : Color(0xE631373C),
+                          color: Theme.of(context).colorScheme.primary ==  Color(0xFFEFEFEF) ? Color(0xD9F2F2F2) : Color(0xE631373C),
                           borderRadius: BorderRadius.circular(8.r)
                         ),
                         child: Text(
@@ -159,7 +159,7 @@ class NaturalAppBar extends StatelessWidget implements PreferredSizeWidget{
       backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 1,
       title: Text(
-        "Natural na sakuna",
+        "Natural Disasters",
         style: TextStyle(
           color: Theme.of(context).colorScheme.outline,
           fontSize: 20.r,
