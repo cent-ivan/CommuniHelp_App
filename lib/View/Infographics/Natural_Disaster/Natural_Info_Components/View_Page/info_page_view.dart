@@ -150,7 +150,7 @@ class NaturalAppBar extends StatelessWidget implements PreferredSizeWidget{
     final viewModel =  Provider.of<NaturalDisasterViewModel>(context);
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,//Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.secondary,//Theme.of(context).colorScheme.primary,
       elevation: 1,
       title: Text(
         viewModel.disasterPath!,
