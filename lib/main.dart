@@ -6,9 +6,15 @@ import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get
 import 'package:communihelp_app/Model/Emergency_contact_model/emergency_contacts_model.dart';
 import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/announcement_make.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_email.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_password.dart';
+import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/Manmade_Info_Components/View_Page/manmade_info_page_view.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
+import 'package:communihelp_app/View/base_controller.dart';
+import 'package:communihelp_app/View/settings_view.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/report_view_model.dart';
+import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/manmade_dis_view_model.dart';
 import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/natural_dis_view_model.dart';
 import 'package:communihelp_app/ViewModel/Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
@@ -71,11 +77,13 @@ void main() async{
     MultiProvider(
       providers: [
         //View Model for Pages
+        ChangeNotifierProvider(create: ((context) => BaseController())),
         ChangeNotifierProvider(create: ((context) => EmergencyViewModel())),
         ChangeNotifierProvider(create: ((context) => AnnouncementViewModel())),
         ChangeNotifierProvider(create: ((context) => ProfileViewModel())),
         ChangeNotifierProvider(create: ((context) => EmergencyKitViewModel())),
         ChangeNotifierProvider(create: ((context) => NaturalDisasterViewModel())),
+        ChangeNotifierProvider(create: ((context) => ManMadeDisasterViewModel())),
         ChangeNotifierProvider(create: ((context) => CommunityViewModel())),
         ChangeNotifierProvider(create: ((context) => ReportViewModel())),
 
@@ -145,6 +153,9 @@ class MainApp extends StatelessWidget {
           '/login': (context) => const LoginView(),
           '/register': (context) => const RegistrationView(),
           '/editprofile': (context) => const EditProfileView(),
+          '/changeemail': (context) => const ChangeEmail(),
+          '/changepass': (context) => const ChangePassword(),
+          '/settings': (context) => const SettingsView(),
           
 
           //Responder routes
@@ -156,6 +167,7 @@ class MainApp extends StatelessWidget {
 
           //Infograhics routes
           '/viewinfopage': (context) => const InfoPageView(),
+          '/viewmanmadeinfopage': (context) => const ManmadeInfoPageView()
         },
         theme: lightMode,
         darkTheme: darktMode,

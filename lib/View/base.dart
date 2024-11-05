@@ -1,9 +1,6 @@
+import 'package:communihelp_app/View/base_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
-import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Community_Page/community_view.dart';
-import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/contacts_view.dart';
-import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/dashboard_view.dart';
-import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,14 +21,6 @@ class HomeBase extends StatefulWidget {
 class _HomeBaseState extends State<HomeBase> {
 
   final PageStorageBucket bucket = PageStorageBucket();
-  int _currentIndex = 0;
-
-  final List<Widget> _screens = [
-    const DashboardView(),
-    const ContactsView(),
-    const CommunityView(),
-    const ProfileView()
-  ];
 
   GetUserData getData = GetUserData();
   final announcementViewModel = AnnouncementViewModel(); //calls announcement
@@ -42,6 +31,7 @@ class _HomeBaseState extends State<HomeBase> {
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
+    final baseController = Provider.of<BaseController>(context);
     return Scaffold(
       appBar:  AppBarBase(),
 
@@ -49,7 +39,7 @@ class _HomeBaseState extends State<HomeBase> {
 
       body: PageStorage(
         bucket: bucket,
-        child: _screens[_currentIndex],
+        child: baseController.screens[baseController.currentIndex],
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -77,9 +67,7 @@ class _HomeBaseState extends State<HomeBase> {
                   MaterialButton(
                     minWidth: 25.r,
                     onPressed: () {
-                      setState(() {
-                        _currentIndex = 0;
-                      });
+                      baseController.switchPage(0);
                     },
                     splashColor: Theme.of(context).colorScheme.primary,
                     child: Column(
@@ -89,8 +77,8 @@ class _HomeBaseState extends State<HomeBase> {
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/Home.png'),
-                            color: _currentIndex == 0? Theme.of(context).colorScheme.outline : Colors.grey,
-                            width: _currentIndex == 0 ? 30.r : 20.r,
+                            color:baseController.currentIndex == 0? Theme.of(context).colorScheme.outline : Colors.grey,
+                            width: baseController.currentIndex == 0 ? 30.r : 20.r,
                           ),
                         ),
        
@@ -99,8 +87,8 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Text(
                             "Home",
                             style: TextStyle(
-                              color: _currentIndex ==  0? Theme.of(context).colorScheme.outline : Colors.grey,
-                              fontWeight: _currentIndex == 0? FontWeight.bold : FontWeight.normal,
+                              color: baseController.currentIndex ==  0? Theme.of(context).colorScheme.outline : Colors.grey,
+                              fontWeight: baseController.currentIndex == 0? FontWeight.bold : FontWeight.normal,
                               fontSize: 12.r
                             ),
                           ),
@@ -115,9 +103,7 @@ class _HomeBaseState extends State<HomeBase> {
                   MaterialButton(
                     minWidth: 2.r,
                     onPressed: () {
-                      setState(() {
-                        _currentIndex = 1;
-                      });
+                      baseController.switchPage(1);
                     },
                     splashColor: Theme.of(context).colorScheme.primary,
                     child: Column(
@@ -127,8 +113,8 @@ class _HomeBaseState extends State<HomeBase> {
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/FindMale.png'),
-                            color: _currentIndex == 1? Theme.of(context).colorScheme.outline : Colors.grey,
-                            width: _currentIndex == 1 ? 30.r : 18.r,
+                            color: baseController.currentIndex == 1? Theme.of(context).colorScheme.outline : Colors.grey,
+                            width: baseController.currentIndex == 1 ? 30.r : 18.r,
                           ),
                         ),
       
@@ -136,8 +122,8 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Text(
                             "Contacts",
                             style: TextStyle(
-                              color: _currentIndex == 1 ? Theme.of(context).colorScheme.outline : Colors.grey,
-                              fontWeight: _currentIndex == 1? FontWeight.bold : FontWeight.normal,
+                              color: baseController.currentIndex == 1 ? Theme.of(context).colorScheme.outline : Colors.grey,
+                              fontWeight: baseController.currentIndex == 1? FontWeight.bold : FontWeight.normal,
                               fontSize: 12.r
                             ),
                           ),
@@ -158,9 +144,7 @@ class _HomeBaseState extends State<HomeBase> {
                   MaterialButton(
                     minWidth: 20.r,
                     onPressed: () {
-                      setState(() {
-                        _currentIndex = 2;
-                      });
+                      baseController.switchPage(2);
                     },
                     splashColor: Theme.of(context).colorScheme.primary,
                     child: Column(
@@ -169,8 +153,8 @@ class _HomeBaseState extends State<HomeBase> {
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/People.png'),
-                            color: _currentIndex == 2? Theme.of(context).colorScheme.outline : Colors.grey,
-                            width: _currentIndex == 2 ? 30.r : 20.r,
+                            color: baseController.currentIndex == 2? Theme.of(context).colorScheme.outline : Colors.grey,
+                            width: baseController.currentIndex == 2 ? 30.r : 20.r,
                           ),
                         ),
       
@@ -178,8 +162,8 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Text(
                             "Forum",
                             style: TextStyle(
-                              color: _currentIndex == 2 ? Theme.of(context).colorScheme.outline: Colors.grey,
-                              fontWeight: _currentIndex == 2? FontWeight.bold : FontWeight.normal,
+                              color: baseController.currentIndex == 2 ? Theme.of(context).colorScheme.outline: Colors.grey,
+                              fontWeight: baseController.currentIndex == 2? FontWeight.bold : FontWeight.normal,
                               fontSize: 12.r
                             ),
                           ),
@@ -195,9 +179,7 @@ class _HomeBaseState extends State<HomeBase> {
                   MaterialButton(
                     minWidth: 20.r,
                     onPressed: () {
-                      setState(() {
-                        _currentIndex = 3;
-                      });
+                      baseController.switchPage(3);
                     },
                     splashColor: Theme.of(context).colorScheme.primary,
                     child: Column(
@@ -207,8 +189,8 @@ class _HomeBaseState extends State<HomeBase> {
                         Expanded(
                           child: Image(
                             image: const AssetImage('assets/images/bottom_app_bar/Profile.png'),
-                            color: _currentIndex == 3? Theme.of(context).colorScheme.outline : Colors.grey,
-                            width: _currentIndex == 3 ? 30.r : 20.r,
+                            color: baseController.currentIndex == 3? Theme.of(context).colorScheme.outline : Colors.grey,
+                            width: baseController.currentIndex == 3 ? 30.r : 20.r,
                           ),
                         ),
       
@@ -217,8 +199,8 @@ class _HomeBaseState extends State<HomeBase> {
                           child: Text(
                             "Profile",
                             style: TextStyle(
-                              color: _currentIndex == 3 ? Theme.of(context).colorScheme.outline : Colors.grey,
-                              fontWeight: _currentIndex == 3? FontWeight.bold : FontWeight.normal,
+                              color: baseController.currentIndex == 3 ? Theme.of(context).colorScheme.outline : Colors.grey,
+                              fontWeight: baseController.currentIndex == 3? FontWeight.bold : FontWeight.normal,
                               fontSize: 12.r
                             ),
                           ),
@@ -317,8 +299,8 @@ class DrawerBase extends StatelessWidget {
   Widget build(BuildContext context) {
     final getService = Provider.of<GetUserData>(context);
     final getCollection = Provider.of<EmergencyViewModel>(context);
-    //final announcementViewModel = Provider.of<AnnouncementViewModel>(context);
     final profileViewModel = Provider.of<ProfileViewModel>(context);
+    final baseController = Provider.of<BaseController>(context);
     return Drawer(
       elevation: 0,
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -366,6 +348,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: (){
+                          baseController.switchPage(0);
                           Navigator.pop(context);
                         },
                       )
@@ -412,17 +395,19 @@ class DrawerBase extends StatelessWidget {
                   child: Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.privacy_tip), 
+                        icon: const Icon(Icons.settings), 
                         iconSize: 25,
                         color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/settings');
+                        },
                       ),
                       
                       const SizedBox( width: 15,),
       
                       TextButton(
                         child: Text(
-                          "Privacy Policy",
+                          "Settings",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -430,7 +415,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          
+                          Navigator.pushNamed(context, '/settings');
                         },
                       )
                     ],

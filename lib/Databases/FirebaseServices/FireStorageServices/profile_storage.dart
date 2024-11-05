@@ -54,7 +54,7 @@ class ProfileStorage {
     String url = await profileRef.getDownloadURL();
     logger.d("After URL: $url");
 
-
+    logger.i("ID: $id");
     addUser(url, id, name, birthdate, gender, barangay, municipality, email, mobileNumber, type);
     
   }

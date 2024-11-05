@@ -39,7 +39,7 @@ class _ProfileViewState extends State<ProfileView> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Container(
-            height: 900.r,
+            height: 830.r,
             decoration: BoxDecoration(
               image:  DecorationImage(image: Theme.of(context).colorScheme.primary == const Color(0xFFEFEFEF) ? 
                 const AssetImage('assets/images/background/ProfileBackground.png') : const AssetImage('assets/images/background/ProfileDarkBackground.png'), 
@@ -117,27 +117,66 @@ class _ProfileViewState extends State<ProfileView> {
                         
                               //Details---
                               //FullName
-                              Text(
-                                "Full Name",
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.outline,
-                                  fontSize: 14.r,
-                                  fontWeight: FontWeight.w500
-                                ),
-                              ),
-                        
-                              SizedBox(height: spaceBetweenLabel,),
-                        
-                              Text(
-                                userData.name,
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.outline,
-                                  fontSize: 18.r,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1
-                                ),
-                              ),
+                              Row(
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "Full Name",
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.outline,
+                                          fontSize: 14.r,
+                                          fontWeight: FontWeight.w500
+                                        ),
+                                      ),
+                                  
+                                      SizedBox(height: spaceBetweenLabel,),
+                                                          
+                                      Text(
+                                        userData.name,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.outline,
+                                          fontSize: 18.r,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  SizedBox(width: 60.r,),
+
+                                  //Gender
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Gender",
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.outline,
+                                          fontSize: 14.r,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 1.5
+                                        ),
+                                      ),
+
+                                      SizedBox(height: spaceBetweenLabel,),
                             
+                                      //Gender display
+                                      Text(
+                                        userData.gender,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.outline,
+                                          fontSize: 18.r,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                        
                         
                               SizedBox(height: spaceBetweenDetails,),
                         
@@ -167,32 +206,6 @@ class _ProfileViewState extends State<ProfileView> {
                         
                               SizedBox(height: spaceBetweenDetails,),
                         
-                              //Gender
-                              Text(
-                                "Gender",
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.outline,
-                                  fontSize: 14.r,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.5
-                                ),
-                              ),
-                        
-                              SizedBox(height: spaceBetweenLabel,),
-                        
-                              //Gender display
-                              Text(
-                                userData.gender,
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.outline,
-                                  fontSize: 18.r,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1,
-                                ),
-                              ),
-                        
-                        
-                              SizedBox(height: spaceBetweenDetails,),
                         
                               //Barangay and Municipality
                               Row(

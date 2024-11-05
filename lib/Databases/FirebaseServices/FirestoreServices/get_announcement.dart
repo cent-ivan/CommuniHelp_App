@@ -90,6 +90,15 @@ class GetAnnouncement extends ChangeNotifier{
 
   //add announcement to Firestore
   Future addAnnouncement(String municipality, AnnouncementModel announcement) async {
+    await _db.collection("announcements").doc(municipality.toUpperCase()).set({"Municipality" : municipality})
+    .whenComplete( ()=> "Good")
+      
+    // ignore: body_might_complete_normally_catch_error
+    .catchError((error){ 
+        logger.e("Error Occured : ${error.toString()}");
+      }
+    );
+
     await _db.collection("announcements").doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_announcement").doc().set(announcement.toJson())
     .whenComplete( ()=> "Good")
       

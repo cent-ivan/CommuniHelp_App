@@ -62,7 +62,7 @@ class InfographicsSection extends StatelessWidget {
                   SizedBox(height: 15.r,),
           
                   Text(
-                    "Natural nga sakuna",
+                    "Natural Disasters",
                     style: TextStyle(
                       fontSize: 11.r,
                       fontWeight: FontWeight.bold,
@@ -103,7 +103,7 @@ class InfographicsSection extends StatelessWidget {
                   SizedBox(height: 15.r,),
           
                   Text(
-                    "Man-made nga sakuna",
+                    "Man-made Disasters",
                     style: TextStyle(
                       fontSize: 11.r,
                       fontWeight: FontWeight.bold,
@@ -133,7 +133,7 @@ class UtilitySection extends StatelessWidget {
   Widget build(BuildContext context) {
     //Container of Utility Section
     return Container(
-      height: 445.r,
+      height: 485.r,
       padding: const EdgeInsets.all(10).r,
       margin: const EdgeInsets.fromLTRB(9, 15, 9, 9).r,
       decoration: BoxDecoration(
