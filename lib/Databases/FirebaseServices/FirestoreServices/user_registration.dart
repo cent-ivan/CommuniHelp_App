@@ -19,7 +19,6 @@ class FireStoreAddService {
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
   
-
   //Firestore instance
   final _db = FirebaseFirestore.instance;
 
@@ -38,7 +37,7 @@ class FireStoreAddService {
 
   Future updateUserDetails(UserModel user) async {
     //updates user details to Firestore Database
-    await _db.collection("users").doc(curUser!.uid).set(user.toJson())
+    await _db.collection("users").doc(curUser!.uid).update(user.toJson())
       .whenComplete( ()=> "Good")
       
       // ignore: body_might_complete_normally_catch_error
@@ -52,7 +51,7 @@ class FireStoreAddService {
 
 
   //Update email in authentication
-  Future editFirestoreEmail(String email, String password, String newEmail, BuildContext context) async {
+  Future updateAuthEmail(String uid ,String email, String password, String newEmail, BuildContext context) async {
     try {
       // Get the current user
       final currentUser = FirebaseAuth.instance.currentUser;
@@ -66,7 +65,22 @@ class FireStoreAddService {
         // Update the email address
         await currentUser.verifyBeforeUpdateEmail(newEmail);
 
+        if (currentUser.emailVerified) {
+          //calls adding to firestore
+          updateUserEmail(uid, newEmail);
+          if (context.mounted) {
+            _globalUtil.showWaiting(context);
+          }
+        }
+        else {
+          //if not yet verified show this
+          if (context.mounted) {
+            _globalUtil.showWaiting(context);
+          }
+        }
 
+        
+        
         logger.i('Email changed successfully');
       }
     } on FirebaseAuthException catch (e) {
@@ -74,25 +88,25 @@ class FireStoreAddService {
           case "invalid-email":
             if (context.mounted){
               _globalUtil.removeDialog(context);
-              _loginDialogs.displayMessage(context, "Invalid Email. Check your email");
+              _loginDialogs.displayError(context, "Invalid Email. Check your email");
             }
             break;
           case "wrong-password":
             if (context.mounted){
               _globalUtil.removeDialog(context);
-              _loginDialogs.displayMessage(context, "Wrong Password. Double check your password and try again.");
+              _loginDialogs.displayError(context, "Wrong Password. Double check your password and try again.");
             }
             break;
           case "user-not-found":
             if (context.mounted){
               _globalUtil.removeDialog(context);
-              _loginDialogs.displayMessage(context, "User not found. User may not exist. Register to have an account!");
+              _loginDialogs.displayError(context, "User not found. User may not exist. Register to have an account!");
             }
             break;
           case "network-request-failed":
             if (context.mounted){
               _globalUtil.removeDialog(context);
-              _loginDialogs.displayMessage(context, "No connection. Connect to a stable connection");
+              _loginDialogs.displayError(context, "No connection. Connect to a stable connection");
             }
             break;
           default:
@@ -109,4 +123,22 @@ class FireStoreAddService {
       }
     }
   }
+
+
+  //update email in the firestore
+  Future updateUserEmail(String id, String newEmail) async {
+    //updates user details to Firestore Database
+    await _db.collection("users").doc(id).update({"Email" : newEmail})
+      .whenComplete( ()=> "Good")
+      
+      // ignore: body_might_complete_normally_catch_error
+      .catchError((error){ 
+          logger.e("Error Occured : ${error.toString()}");
+        }
+      );
+    logger.i("Done Updating");
+    userData.getUser();
+  }
+
+
 }

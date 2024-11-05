@@ -1,5 +1,8 @@
+import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ChangeEmail extends StatefulWidget {
   const ChangeEmail({super.key});
@@ -16,8 +19,13 @@ class _ChangeEmailState extends State<ChangeEmail> {
   final passwrodController = TextEditingController();
   final newEmailController = TextEditingController();
 
+
+  //show current user
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<ProfileViewModel>(context);
     return Scaffold(
       appBar: ChangeEmailAppBar(),
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -151,7 +159,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
 
                   //new email input
                   TextFormField(
-                    controller: oldEmailController,
+                    controller: newEmailController,
                     cursorColor: Theme.of(context).colorScheme.outline,
                       style: TextStyle(
                       fontSize: 20.r
@@ -204,6 +212,13 @@ class _ChangeEmailState extends State<ChangeEmail> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
+
+                            viewModel.updateEmail(user.uid, oldEmailController.text, passwrodController.text, newEmailController.text, context);
+                            setState(() {
+                              oldEmailController.clear();
+                              passwrodController.clear();
+                              newEmailController.clear();
+                            });
                           }
                         },
                         child: Text(

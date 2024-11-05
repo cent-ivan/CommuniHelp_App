@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FireStorageServices/profile_storage.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -34,6 +35,9 @@ class ProfileViewModel extends ChangeNotifier{
   
   //show current user
   final user = FirebaseAuth.instance.currentUser!;
+
+  //accessing update user, email and password
+  final firestoreAdd = FireStoreAddService();
   
   String currentOption = options[0];
 
@@ -187,6 +191,13 @@ class ProfileViewModel extends ChangeNotifier{
     }
     notifyListeners();
   }
+
+
+  //change email
+  Future updateEmail(String id, String email, String password, String newEmail, BuildContext context) async {
+    await firestoreAdd.updateAuthEmail(id, email, password, newEmail, context);
+  }
+
 
   //Firebase Storage methods------------------------------------------------------------
   Future<File> uint8ListToFile(Uint8List data, String filename) async {
