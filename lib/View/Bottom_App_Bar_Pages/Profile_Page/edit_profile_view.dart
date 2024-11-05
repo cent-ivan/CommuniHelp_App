@@ -92,7 +92,7 @@ class _EditProfileViewState extends State<EditProfileView> {
             
                   //Profile Picture
                   Center(
-                    child: Stack(
+                    child: Column(
                       children: [
                         //------Edit profile---------------------------------------------------------
                         viewModel.profileImage != null ?
@@ -118,20 +118,18 @@ class _EditProfileViewState extends State<EditProfileView> {
                           ),
                     
                         //Edit Profile Button
-                        Positioned(
-                          right: 90.r,
-                          bottom: 0.r,
+                        Center(
                           child: MaterialButton(
                             minWidth: 40.r,
                             onPressed: () {
                               pickDialog.showPickScreen(context);
                             },
                             child: Image(
-                              width: 30.r,
-                              height: 30.r,
+                              width: 40.r,
+                              height: 40.r,
                               image: AssetImage('assets/images/dashboard/uploadphoto.png'),
                             ),
-                          )
+                          ),
                         )
                       ],
                     ),
