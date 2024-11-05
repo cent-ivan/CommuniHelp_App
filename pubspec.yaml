@@ -78,6 +78,12 @@ flutter:
     - assets/images/infographics/natural_infographics/landslide/landslide_En/
     - assets/images/infographics/natural_infographics/earthquake/earthquake_En/
 
+    #englisg manmade
+    - "assets/images/infographics/manmade_infographics/vehicular/vehicular_En/"
+    - "assets/images/infographics/manmade_infographics/burn/burn_En/"
+    - "assets/images/infographics/manmade_infographics/structural/structural_En/"
+    - "assets/images/infographics/manmade_infographics/pollution/pollution_En/"
+
       # fonts:
   #   - family: Still searching for fonts
   #     fonts:
