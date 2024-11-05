@@ -8,6 +8,8 @@ import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.da
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/announcement_make.dart';
 import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/Manmade_Info_Components/View_Page/manmade_info_page_view.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
+import 'package:communihelp_app/View/base_controller.dart';
+import 'package:communihelp_app/View/settings_view.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/report_view_model.dart';
 import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/manmade_dis_view_model.dart';
@@ -73,6 +75,7 @@ void main() async{
     MultiProvider(
       providers: [
         //View Model for Pages
+        ChangeNotifierProvider(create: ((context) => BaseController())),
         ChangeNotifierProvider(create: ((context) => EmergencyViewModel())),
         ChangeNotifierProvider(create: ((context) => AnnouncementViewModel())),
         ChangeNotifierProvider(create: ((context) => ProfileViewModel())),
@@ -148,6 +151,7 @@ class MainApp extends StatelessWidget {
           '/login': (context) => const LoginView(),
           '/register': (context) => const RegistrationView(),
           '/editprofile': (context) => const EditProfileView(),
+          '/settings': (context) => const SettingsView(),
           
 
           //Responder routes
