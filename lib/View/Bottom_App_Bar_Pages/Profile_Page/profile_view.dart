@@ -370,7 +370,16 @@ class _ProfileViewState extends State<ProfileView> {
                                   ),
                                 ),
                               ),
-                            )
+                            ),
+
+                            Text(
+                                network.isOnline.value ? "" : "No internet. Cannot edit",
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.outline,
+                                  fontSize: 10.r,
+                                  fontStyle: FontStyle.italic
+                                ),
+                              )
                           ],
                         ),
                       )
