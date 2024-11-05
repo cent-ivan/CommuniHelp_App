@@ -6,6 +6,8 @@ import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get
 import 'package:communihelp_app/Model/Emergency_contact_model/emergency_contacts_model.dart';
 import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/announcement_make.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_email.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_password.dart';
 import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/Manmade_Info_Components/View_Page/manmade_info_page_view.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
 import 'package:communihelp_app/View/base_controller.dart';
@@ -151,6 +153,8 @@ class MainApp extends StatelessWidget {
           '/login': (context) => const LoginView(),
           '/register': (context) => const RegistrationView(),
           '/editprofile': (context) => const EditProfileView(),
+          '/changeemail': (context) => const ChangeEmail(),
+          '/changepass': (context) => const ChangePassword(),
           '/settings': (context) => const SettingsView(),
           
 

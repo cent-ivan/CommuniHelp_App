@@ -1,12 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/user_model.dart';
+import 'package:communihelp_app/View/View_Components/dialogs.dart';
+import 'package:communihelp_app/View/View_Components/login_dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 
 class FireStoreAddService {
   var logger = Logger();//showing debug messages
+  final GlobalDialogUtil _globalUtil = GlobalDialogUtil(); //utilities like loading and removing dialogs
+  final LoginDialogs _loginDialogs = LoginDialogs();
 
   //userData
   final userData = GetUserData();
@@ -47,14 +52,61 @@ class FireStoreAddService {
 
 
   //Update email in authentication
-  Future editFirestoreEmail(UserModel user, String newEmail) async {
-    await _db.collection("users").doc(user.uid).update({"Email": newEmail})
-      .whenComplete( ()=> "Good")
-      
-      // ignore: body_might_complete_normally_catch_error
-      .catchError((error){ 
-          logger.e("Error Occured : ${error.toString()}");
-        }
-      );
+  Future editFirestoreEmail(String email, String password, String newEmail, BuildContext context) async {
+    try {
+      // Get the current user
+      final currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser != null) {
+        // Re-authenticate the user
+        final credential = EmailAuthProvider.credential(email: email, password: password);
+        
+        await currentUser.reauthenticateWithCredential(credential);
+
+        // Update the email address
+        await currentUser.verifyBeforeUpdateEmail(newEmail);
+
+
+        logger.i('Email changed successfully');
+      }
+    } on FirebaseAuthException catch (e) {
+        switch (e.code) {
+          case "invalid-email":
+            if (context.mounted){
+              _globalUtil.removeDialog(context);
+              _loginDialogs.displayMessage(context, "Invalid Email. Check your email");
+            }
+            break;
+          case "wrong-password":
+            if (context.mounted){
+              _globalUtil.removeDialog(context);
+              _loginDialogs.displayMessage(context, "Wrong Password. Double check your password and try again.");
+            }
+            break;
+          case "user-not-found":
+            if (context.mounted){
+              _globalUtil.removeDialog(context);
+              _loginDialogs.displayMessage(context, "User not found. User may not exist. Register to have an account!");
+            }
+            break;
+          case "network-request-failed":
+            if (context.mounted){
+              _globalUtil.removeDialog(context);
+              _loginDialogs.displayMessage(context, "No connection. Connect to a stable connection");
+            }
+            break;
+          default:
+          if (context.mounted) {
+            _globalUtil.removeDialog(context);
+            _globalUtil.unknownErrorDialog(context, e.message.toString());
+          }
+      }
+    }
+    catch (e) {
+      if (context.mounted){
+        _globalUtil.removeDialog(context);
+        _globalUtil.unknownErrorDialog(context, e.toString(), );
+      }
+    }
   }
 }
