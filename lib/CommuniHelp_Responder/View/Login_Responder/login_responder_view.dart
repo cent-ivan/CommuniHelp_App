@@ -340,18 +340,21 @@ class _LoginResponderViewState extends State<LoginResponderView> {
       context: context, 
       builder: (context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r),)
+          ),
           title: Text("Enter Password"),
           content: TextField(
             controller: passwordController,
             obscureText: true,
             style: TextStyle(
-            color: Color(0xFF3D424A),
+            color: Theme.of(context).colorScheme.outline,
             ),
-            cursorColor: const Color(0xFF3D424A),
+            cursorColor: Theme.of(context).colorScheme.outline,
             decoration: InputDecoration(
             hintText: "Password",
-            hintStyle: const TextStyle(
-            color: Color(0xFF3D424A)
+            hintStyle: TextStyle(
+            color: Theme.of(context).colorScheme.outline
             ),
             enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))

@@ -105,11 +105,11 @@ class _ResponderCommunityViewState extends State<ResponderCommunityView> {
                       List<Map<String,bool>> collectionLikes = (data["Presses"] as List).map((item) => Map<String, bool>.from(item as Map)).toList();
                       viewModel.loadStatus(userData, collectionLikes);
                         return Container(
-                          height: ((data["Title"].length - 10) + (data["Content"].length - 23) + 280.r), //Height
+                          height: ((data["Title"].length - 10) + (data["Content"].length - 20) + 290.r), //Height
                           padding: EdgeInsets.only(left: 15, top: 20).r,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.r),
-                            color: data["Type"] == "user" ? Theme.of(context).colorScheme.primary : Colors.amberAccent,
+                            color: data["Type"] == "user" ? Theme.of(context).colorScheme.primary : Color(0xFFFE9F49),
                           ),
                           margin: EdgeInsets.symmetric(vertical: 15).r,
                           child: Column(
@@ -131,15 +131,15 @@ class _ResponderCommunityViewState extends State<ResponderCommunityView> {
                                       progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
                                       errorWidget: (context, url, error) => CircleAvatar(
                                         backgroundImage: AssetImage('assets/images/user.png') ,
-                                        radius: 20.r,
+                                        radius: 25.r,
                                       ),
                                       imageBuilder: (context, imageProvider) => CircleAvatar(
                                         backgroundImage: imageProvider,
-                                        radius: 20.r,
+                                        radius: 25.r,
                                       )
                                     ) 
                                     : CircleAvatar(
-                                      radius: 20.r,
+                                      radius: 25.r,
                                       backgroundColor: Colors.black,
                                     ),
                                   ),
@@ -151,7 +151,7 @@ class _ResponderCommunityViewState extends State<ResponderCommunityView> {
                                         data["Type"] == "user" ? "${data["Name"]}, taga-${data["Barangay"]}" : "${data["Name"]}, taga-${data["Barangay"]} (Responder)",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 16.r
+                                          fontSize: 14.r
                                         ),
                                       ),
 

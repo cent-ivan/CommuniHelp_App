@@ -376,7 +376,7 @@ class DrawerBase extends StatelessWidget {
                   child: Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.privacy_tip), 
+                        icon: const Icon(Icons.settings), 
                         iconSize: 25,
                         color: Theme.of(context).colorScheme.outline,
                         onPressed: () {},
@@ -386,7 +386,7 @@ class DrawerBase extends StatelessWidget {
       
                       TextButton(
                         child: Text(
-                          "Privacy Policy",
+                          "Settings",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -394,7 +394,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          
+                          Navigator.pushNamed(context, '/settings');
                         },
                       )
                     ],

@@ -231,7 +231,7 @@ class _LoginViewState extends State<LoginView> {
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()){
                                         //check if user is a responder
-                                        if (_emailController.text.contains("GT3RS@HELPER") && _passwordController.text.contains("9112")) {
+                                        if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {
                                           director.changeDirection();
                                           //Navigator.pushNamed(context, '/responderlogin');
                                         }
