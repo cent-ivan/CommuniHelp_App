@@ -52,7 +52,7 @@ class UtilityButtons extends StatelessWidget {
             
                   Center(
                     child: Text(
-                    "Magusoy it Evacuation Center",
+                    "Search for Evacuation Center",
                         style: TextStyle(
                         fontSize: 12.r,
                         fontWeight: FontWeight.bold,
@@ -85,7 +85,7 @@ class UtilityButtons extends StatelessWidget {
                   ),
             
                   Text(
-                  "Mga Balita",
+                  "View News",
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
@@ -117,7 +117,7 @@ class UtilityButtons extends StatelessWidget {
                   ),
             
                   Text(
-                  "Ang Panahon",
+                  "View Weather",
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
@@ -134,7 +134,7 @@ class UtilityButtons extends StatelessWidget {
                 viewModel.loadData(getService.user!.uid);
                 Navigator.pushNamed(context,'/emergencykit');
               },
-              height: 80.r,
+              height: 75.r,
               minWidth: 95.r,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.r))
@@ -150,7 +150,7 @@ class UtilityButtons extends StatelessWidget {
                   ),
             
                   Text(
-                  "Akong Kit",
+                  "My Kit",
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
