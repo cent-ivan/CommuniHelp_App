@@ -19,6 +19,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
   final passwrodController = TextEditingController();
   final newEmailController = TextEditingController();
 
+  bool _isObscure =  true;
 
   //show current user
   final user = FirebaseAuth.instance.currentUser!;
@@ -110,6 +111,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                   //password input
                   TextFormField(
                     controller: passwrodController,
+                    obscureText: _isObscure,
                     cursorColor: Theme.of(context).colorScheme.outline,
                       style: TextStyle(
                       fontSize: 20.r
@@ -132,6 +134,15 @@ class _ChangeEmailState extends State<ChangeEmail> {
                         borderSide: BorderSide(width: 2.r, color: Colors.redAccent),
                         borderRadius: BorderRadius.circular(12).r
                       ),
+                      suffixIcon: IconButton(
+                        color: const Color(0xFF3D424A),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = ! _isObscure;
+                          });
+                        },
+                        icon: _isObscure ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off) ,
+                      ) 
                     ),
                     validator: (value) {
                       if (value!.isEmpty){
@@ -219,6 +230,8 @@ class _ChangeEmailState extends State<ChangeEmail> {
                               passwrodController.clear();
                               newEmailController.clear();
                             });
+
+                            Navigator.pop(context);
                           }
                         },
                         child: Text(

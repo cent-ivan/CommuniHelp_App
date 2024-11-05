@@ -171,4 +171,48 @@ class GlobalDialogUtil{
     );
   }
 
+
+  void showPassChange(BuildContext context) {
+    showDialog(context: context, 
+      builder: (context) {
+        return SimpleDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r),)
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: Text("Password Changed"),
+          titleTextStyle: TextStyle(
+            fontSize: 20.r,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.outline
+          ),
+          children: [
+
+            Padding(
+              padding: EdgeInsets.all(12).r,
+              child: SizedBox(
+                height: 55.r,
+                width: 55.r,
+                child: Image.asset('assets/images/dashboard/changed.png')
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(12).r,
+              child: Center(
+                child: Text("You password has been changed!", 
+                style: TextStyle(
+                    fontSize: 16.r,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.outline
+                  )
+                )
+              ),
+            ),
+          ],
+        );
+      }
+    );
+  }
+
 }

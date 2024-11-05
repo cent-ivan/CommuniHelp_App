@@ -1,5 +1,8 @@
+import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -14,10 +17,17 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   final oldEmailController = TextEditingController();
   final passwrodController = TextEditingController();
-  final newEmailController = TextEditingController();
+  final newPassController = TextEditingController();
+
+  bool _isObscure1 =  true;
+  bool _isObscure2 =  true;
+
+  //show current user
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<ProfileViewModel>(context);
     return Scaffold(
       appBar: ChangePasswordAppBar(),
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -102,6 +112,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   //password input
                   TextFormField(
                     controller: passwrodController,
+                    obscureText: _isObscure1,
                     cursorColor: Theme.of(context).colorScheme.outline,
                       style: TextStyle(
                       fontSize: 20.r
@@ -124,6 +135,15 @@ class _ChangePasswordState extends State<ChangePassword> {
                         borderSide: BorderSide(width: 2.r, color: Colors.redAccent),
                         borderRadius: BorderRadius.circular(12).r
                       ),
+                      suffixIcon: IconButton(
+                        color: const Color(0xFF3D424A),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure1 = ! _isObscure1;
+                          });
+                        },
+                        icon: _isObscure1 ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off) ,
+                      )
                     ),
                     validator: (value) {
                       if (value!.isEmpty){
@@ -149,9 +169,10 @@ class _ChangePasswordState extends State<ChangePassword> {
               
                   SizedBox(height: 12.r,),
 
-                  //new email input
+                  //new password input
                   TextFormField(
-                    controller: oldEmailController,
+                    controller: newPassController,
+                    obscureText: _isObscure2,
                     cursorColor: Theme.of(context).colorScheme.outline,
                       style: TextStyle(
                       fontSize: 20.r
@@ -174,7 +195,17 @@ class _ChangePasswordState extends State<ChangePassword> {
                         borderSide: BorderSide(width: 2.r, color: Colors.redAccent),
                         borderRadius: BorderRadius.circular(12).r
                       ),
+                      suffixIcon: IconButton(
+                        color: const Color(0xFF3D424A),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure2 = ! _isObscure2;
+                          });
+                        },
+                        icon: _isObscure2 ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off) ,
+                      )
                     ),
+                    
                     validator: (value) {
                       if (value!.isEmpty){
                         return "Please enter password";
@@ -201,6 +232,15 @@ class _ChangePasswordState extends State<ChangePassword> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
+                            
+                            viewModel.updatePassword(user.uid, oldEmailController.text, passwrodController.text, newPassController.text, context);
+                            setState(() {
+                              oldEmailController.clear();
+                              passwrodController.clear();
+                              newPassController.clear();
+                            });
+
+                            Navigator.pop(context);
                           }
                         },
                         child: Text(
@@ -227,7 +267,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           setState(() {
                             oldEmailController.clear();
                             passwrodController.clear();
-                            newEmailController.clear();
+                            newPassController.clear();
                           });
                         },
                         child: Text(

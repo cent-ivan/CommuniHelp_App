@@ -198,6 +198,11 @@ class ProfileViewModel extends ChangeNotifier{
     await firestoreAdd.updateAuthEmail(id, email, password, newEmail, context);
   }
 
+  //change password
+  Future updatePassword(String id, String email, String password, String newPass, BuildContext context) async {
+    await firestoreAdd.updateAuthPass(id, email, password, newPass, context);
+  }
+
 
   //Firebase Storage methods------------------------------------------------------------
   Future<File> uint8ListToFile(Uint8List data, String filename) async {
