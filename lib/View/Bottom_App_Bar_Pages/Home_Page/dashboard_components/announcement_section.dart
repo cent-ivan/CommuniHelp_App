@@ -223,6 +223,9 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
       builder: (context) {
         return AlertDialog(
           scrollable: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r),)
+          ),
           backgroundColor: Color(0xFFF2F2F2),
           content: SizedBox(
             height: item.content!.length + 255.r,
@@ -295,6 +298,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                             SizedBox(height: 5.r,),
       
                             Container(
+                              width: 250.r,
                               padding: EdgeInsets.all(14).r,
                               decoration: BoxDecoration(
                                 color: Color(0xBFDEDEDE),
