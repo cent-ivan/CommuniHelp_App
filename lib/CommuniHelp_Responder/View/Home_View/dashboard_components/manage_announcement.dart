@@ -41,6 +41,9 @@ class _ManageAnnouncementState extends State<ManageAnnouncement> {
               children: snapshot.data!.docs.map<Widget>((DocumentSnapshot document) {
                 Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
                 return GestureDetector(
+                  onTap: () {
+                    showAnnouncement(data);
+                  },
                   child: Container(
                     height: 80.r,
                     padding: EdgeInsets.all(8).r,
@@ -128,11 +131,152 @@ class _ManageAnnouncementState extends State<ManageAnnouncement> {
     );
   }
 
+  //for overflowing text
   String elipseText(String text, int maxLength) {
     if (text.length <= maxLength) {
       return text;
     }
     return '${text.substring(0, maxLength)}...';
+  }
+
+  //for level color tags
+  Color levelColor(String level, String municipality) {
+    Color levelColor;
+    if (level.contains(municipality.toUpperCase())) {
+      levelColor =  Colors.black26;
+    }
+    else if (level.contains("AKLAN")) {
+      levelColor = Color(0xE6FEAE49);
+    }
+    else {
+      levelColor = Color(0xBF57BEE6);
+    }
+    return levelColor;
+  }
+
+  void showAnnouncement(Map<String, dynamic> data) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          scrollable: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r),)
+          ),
+          backgroundColor: Color(0xFFF2F2F2),
+          content: SizedBox(
+            height: data["Content"].length + 255.r,
+            child: Padding(
+              padding: const EdgeInsets.all(5).r,
+              child: Column(
+                children: [
+                  //enter title
+                  Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Container(
+                                width: 155.r,
+                                padding: EdgeInsets.all(4).r,
+                                margin: const EdgeInsets.only(bottom: 14).r,
+                                decoration: BoxDecoration(
+                                  color: data["Urgent"] ? Color(0xE6FEAE49) : Colors.black26,
+                                  borderRadius: BorderRadius.all(const Radius.circular(5).r),
+                                  border: Border.all(color: data["Urgent"] ? Colors.redAccent : Colors.transparent, width: 2),
+                                ),
+                                child: Text(
+                                  data["Urgent"] ? "ANNOUNCEMENT:  ${data["Title"]}" : data["Title"],
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.r,
+                                    color: Color(0xFF3D424A)
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            //level
+                            Center(
+                              child: Container(
+                                width: 90.r,
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4).r,
+                                margin: const EdgeInsets.only(bottom: 12).r, //item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26
+                                decoration: BoxDecoration(
+                                  color: levelColor(data["Level"], data["Municipality"]),
+                                  borderRadius: BorderRadius.all(const Radius.circular(2).r),
+                                ),
+                                child: Text(
+                                  data["Level"],
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10.r
+                                  ),
+                                ),
+                              ),
+                            ),
+
+
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9).r,
+                                  
+                                  child: Text(
+                                    "Date: ${data["Date"]}",
+                                    style: TextStyle(
+                                      fontSize: 13.r,
+                                      color: Color(0xFF3D424A),
+                                    ),
+                                  ),
+                            ),
+
+                            
+
+                            SizedBox(height: 5.r,),
+      
+                            Container(
+                              width: 250.r,
+                              padding: EdgeInsets.all(14).r,
+                              decoration: BoxDecoration(
+                                color: Color(0xBFDEDEDE),
+                                borderRadius: BorderRadius.all(const Radius.circular(5).r),
+                              ),
+                              child: Text(
+                                data["Content"],
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  fontSize: 14.r,
+                                  color: Color(0xFF3D424A)
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                  Container(
+                    margin: EdgeInsets.only(top: 25).r,
+                    child: MaterialButton(
+                      elevation: 0,
+                      color: Color(0xFF57BEE6),
+                      onPressed:() {Navigator.pop(context);},
+                      child: Center(
+                        child: Text(
+                          "Close",
+                          style: TextStyle(
+                            color: Color(0xFF3D424A)
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+
+                ],
+              ),
+            ),
+          ),
+        );
+      }
+    );
   }
 }
 

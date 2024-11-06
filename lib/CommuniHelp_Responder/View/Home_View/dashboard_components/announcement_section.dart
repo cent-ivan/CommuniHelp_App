@@ -223,6 +223,9 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
       builder: (context) {
         return AlertDialog(
           scrollable: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r),)
+          ),
           backgroundColor: Color(0xFFF2F2F2),
           content: SizedBox(
             height: item.content!.length + 255.r,
@@ -284,7 +287,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
                                   child: Text(
                                     "Date: ${item.date}",
                                     style: TextStyle(
-                                      fontSize: 12.r,
+                                      fontSize: 13.r,
                                       color: Color(0xFF3D424A),
                                     ),
                                   ),
@@ -295,6 +298,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
                             SizedBox(height: 5.r,),
       
                             Container(
+                              width: 250.r,
                               padding: EdgeInsets.all(14).r,
                               decoration: BoxDecoration(
                                 color: Color(0xBFDEDEDE),
