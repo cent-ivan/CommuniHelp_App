@@ -15,7 +15,7 @@ class HomeBaseResponder extends StatefulWidget {
   State<HomeBaseResponder> createState() => _HomeBaseResponderState();
 }
 
-class _HomeBaseResponderState extends State<HomeBaseResponder> {
+class _HomeBaseResponderState extends State<HomeBaseResponder>  with SingleTickerProviderStateMixin{
   final PageStorageBucket bucket = PageStorageBucket();
   int _currentIndex = 0;
 
@@ -26,9 +26,10 @@ class _HomeBaseResponderState extends State<HomeBaseResponder> {
     const ResponderCommunityView(),
     const ResponderProfileView()
   ];
-
+  
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
+  
 
   @override
   Widget build(BuildContext context) {

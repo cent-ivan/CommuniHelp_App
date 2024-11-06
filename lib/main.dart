@@ -17,6 +17,7 @@ import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.
 import 'package:communihelp_app/ViewModel/Home_View_Models/report_view_model.dart';
 import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/manmade_dis_view_model.dart';
 import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/natural_dis_view_model.dart';
+import 'package:communihelp_app/ViewModel/News_View_Model/news_view_model.dart';
 import 'package:communihelp_app/ViewModel/Registration_View_Models/registration_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_kit_view_model.dart';
@@ -88,6 +89,7 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => ManMadeDisasterViewModel())),
         ChangeNotifierProvider(create: ((context) => CommunityViewModel())),
         ChangeNotifierProvider(create: ((context) => ReportViewModel())),
+        ChangeNotifierProvider(create: ((context) => NewsViewModel())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
