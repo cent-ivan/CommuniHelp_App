@@ -80,7 +80,7 @@ class _PcardState extends State<Pcard> {
                 color: const Color(0x4D57BEE6),
               ),
               margin: const EdgeInsets.only(top: 5),
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(15).r,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -96,7 +96,7 @@ class _PcardState extends State<Pcard> {
                   const SizedBox(height: 10),
       
                   SizedBox(
-                    height: 350,
+                    height: 280.r,
                     child: Consumer<EmergencyKitViewModel>( builder: (context, emergencyValue, child) =>  ListView.builder (
                         itemCount: emergencyValue.db.importantsList.length,
                         itemBuilder: (BuildContext context, index) {
@@ -117,7 +117,7 @@ class _PcardState extends State<Pcard> {
       
             
       
-            const SizedBox(height: 10),
+            const SizedBox(height: 16),
       
             Text(
               'My Checklist', 
