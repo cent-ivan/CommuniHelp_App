@@ -11,6 +11,7 @@ import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_em
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_password.dart';
 import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/Manmade_Info_Components/View_Page/manmade_info_page_view.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
+import 'package:communihelp_app/View/Utility_Pages/News_Feed/see_news_web.dart';
 import 'package:communihelp_app/View/base_controller.dart';
 import 'package:communihelp_app/View/settings_view.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
@@ -160,7 +161,8 @@ class MainApp extends StatelessWidget {
           '/editprofile': (context) => const EditProfileView(),
           '/changeemail': (context) => const ChangeEmail(),
           '/changepass': (context) => const ChangePassword(),
-          '/settings': (context) => const SettingsView(),
+          '/settings': (context) => const SettingsView(), 
+          '/webview': (context) => const WebViewScreen(),
           
 
           //Responder routes

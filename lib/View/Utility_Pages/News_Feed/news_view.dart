@@ -104,18 +104,24 @@ class _NewsViewState extends State<NewsView> with SingleTickerProviderStateMixin
 
 
 //News list cards
-class NewsListView extends StatelessWidget {
+class NewsListView extends StatefulWidget {
   final List<dynamic> articles;
   const NewsListView({super.key, required this.articles});
 
   @override
+  State<NewsListView> createState() => _NewsListViewState();
+}
+
+class _NewsListViewState extends State<NewsListView> {
+  @override
   Widget build(BuildContext context) {
-    return articles.isEmpty
+    final viewModel = Provider.of<NewsViewModel>(context);
+    return widget.articles.isEmpty
         ? const Center(child: Text("No news available"))
         : ListView.builder(
-            itemCount: articles.length,
+            itemCount: widget.articles.length,
             itemBuilder: (context, index) {
-              final article = articles[index];
+              final article = widget.articles[index];
               return ListTile(
                 tileColor: Theme.of(context).colorScheme.primary,
                 minVerticalPadding: 12.r,
@@ -143,12 +149,8 @@ class NewsListView extends StatelessWidget {
                 trailing: TextButton(
                   child: Text("Read More", style: TextStyle(color: Theme.of(context).colorScheme.outline, fontSize: 10.r),),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WebViewScreen(url: article['url']),
-                      ),
-                    );
+                    viewModel.assignUrl(article["url"]);
+                    Navigator.pushNamed(context, '/webview');
                   },
                 ),
               );
@@ -165,17 +167,3 @@ class NewsListView extends StatelessWidget {
   }
 }
 
-class WebViewScreen extends StatelessWidget {
-  final String url;
-  const WebViewScreen({super.key, required this.url});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("News Details")),
-      body: Center(
-        child: Text("WebView of $url"), // Replace this with actual WebView widget.
-      ),
-    );
-  }
-}

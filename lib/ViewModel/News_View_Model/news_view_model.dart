@@ -6,6 +6,14 @@ import 'package:logger/logger.dart';
 class NewsViewModel extends ChangeNotifier{
   Logger logger = Logger();
 
+  String url = "";
+
+  void assignUrl(String passedUrl) {
+    url = passedUrl;
+    notifyListeners();
+  }
+
+
   final apiKey = '83325436e3d949bd8da939c060580c9f';
   bool isLoading = true;
   List<dynamic> localArticles = [];

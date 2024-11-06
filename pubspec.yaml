@@ -27,6 +27,7 @@ dependencies:
   cached_network_image: ^3.4.1
   flutter_cache_manager: ^3.4.1
   http: ^1.2.2
+  webview_flutter: ^4.10.0
 
   #Firebase and firestore
   firebase_auth: ^5.1.4
