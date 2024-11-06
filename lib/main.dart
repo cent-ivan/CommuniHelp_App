@@ -50,6 +50,7 @@ import 'package:get/get.dart';
 import 'Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'ViewModel/Connection_Controller/dependency_injection.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -140,6 +141,7 @@ class MainApp extends StatelessWidget {
           },
         ),
 
+        navigatorKey: navigatorKey,
         routes: {
           '/home' : (context) => const HomeBase(),
           '/evacuationfinder': (context) => const EvacautionFinderView(),
