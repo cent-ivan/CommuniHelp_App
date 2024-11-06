@@ -110,5 +110,13 @@ class GetAnnouncement extends ChangeNotifier{
   }
 
 
-  
+  //delete announcement from Firestore
+  Future deleteAnnouncement(String announcementId, String municipality) async {
+    try {
+      await _db.collection("announcements").doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_announcement").doc(announcementId).delete();
+      logger.i('Document deleted successfully');
+    } catch (e) {
+      logger.i('Error deleting document: $e');
+    }
+  }
 }

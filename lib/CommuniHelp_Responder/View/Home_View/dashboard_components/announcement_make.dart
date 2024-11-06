@@ -45,13 +45,20 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Today: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                        style: TextStyle(
-                          fontSize: 18.r,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.outline
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Today: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                            style: TextStyle(
+                              fontSize: 18.r,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.outline
+                            ),
+                          ),
+
+                          
+                        ],
                       ),
           
                       SizedBox(height: 20.r,),

@@ -1,3 +1,4 @@
+import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/manage_announcement.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Registration_Responder/registration_responder_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Resport_Page/see_report_view.dart';
@@ -163,6 +164,7 @@ class MainApp extends StatelessWidget {
           '/responderregister' : (context) => const RegistrationResponderView(),
           '/responderhome' : (context) => const HomeBaseResponder(),
           '/postannouncement': (context) => const AnnouncementMake(),
+          '/manageannouncement': (context) => const ManageAnnouncement(),
           '/viewreport': (context) => const SeeReportView(),
 
           //Infograhics routes

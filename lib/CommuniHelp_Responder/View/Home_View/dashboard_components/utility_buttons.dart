@@ -74,7 +74,7 @@ class ResponderUtilityButtons extends StatelessWidget {
               MaterialButton(
                 onPressed: () {
       
-                  Navigator.pushNamed(context, '/postannouncement');
+                  Navigator.pushNamed(context, '/manageannouncement');
                 },
                 height: 80.r,
                 minWidth: 95.r,
