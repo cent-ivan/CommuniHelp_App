@@ -105,11 +105,11 @@ class _CommunityViewState extends State<CommunityView> {
                       List<Map<String,bool>> collectionLikes = (data["Presses"] as List).map((item) => Map<String, bool>.from(item as Map)).toList();
                       viewModel.loadStatus(userData, collectionLikes);
                         return Container(
-                          height: ((data["Title"].length - 10) + (data["Content"].length - 25) + 290.r), //Height
+                          height: ((data["Title"].length - 10) + (data["Content"].length - 18) + 290.r), //Height
                           padding: EdgeInsets.only(left: 15, top: 20).r,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.r),
-                            color: data["Type"] == "user" ? Theme.of(context).colorScheme.primary : Colors.amberAccent,
+                            color: data["Type"] == "user" ? Theme.of(context).colorScheme.primary : Color(0xFFFE9F49),
                           ),
                           margin: EdgeInsets.symmetric(vertical: 15).r,
                           child: Column(
@@ -135,14 +135,16 @@ class _CommunityViewState extends State<CommunityView> {
                                       ),
                                       imageBuilder: (context, imageProvider) => CircleAvatar(
                                         backgroundImage: imageProvider,
-                                        radius: 20.r,
+                                        radius: 25.r,
                                       )
                                     ) 
                                     : CircleAvatar(
-                                      radius: 20.r,
+                                      radius: 25.r,
                                       backgroundColor: Colors.black,
                                     ),
                                   ),
+
+                                  SizedBox(width: 12.r,),
                                         
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,6 +155,10 @@ class _CommunityViewState extends State<CommunityView> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16.r
                                         ),
+                                      ),
+
+                                      Text(
+                                        data["Type"].contains("responder") ? "Responder" : ""
                                       ),
 
                                       Text(

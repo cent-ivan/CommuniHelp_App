@@ -16,13 +16,12 @@ class AddChecklistDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      child: Column
-        (
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
+    return Column
+      (
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SingleChildScrollView(
+          child: Row(
             children: [
               
               //Input box for add dialog
@@ -32,7 +31,7 @@ class AddChecklistDialog extends StatelessWidget {
                   style: const TextStyle(
                     color: Color(0xFF3D424A)
                   ),
-      
+              
                   decoration: InputDecoration(
                     hintText: 'Enter checklist',
                     hintStyle: const TextStyle(
@@ -52,28 +51,28 @@ class AddChecklistDialog extends StatelessWidget {
                       ),
                       contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0).r
                   ),
-      
+              
                 ),
               ),
-      
+              
               SizedBox(height: 10.r,width: 10.r),
-      
+              
               //Button for picking an image
               MaterialButton(
-                color: const Color(0xFF3D424A),
                 onPressed: emergencyKitViewModel.imageSelect,
-                child: const Icon(
-                  Icons.image,
-                  color: Color(0xFFF5F5F5),
-                ),
+                child: Image(
+                  width: 40.r,
+                  height: 40.r,
+                  image: AssetImage('assets/images/dashboard/uploadphoto.png')
+                )
               ),
             ],
           ),
-          
-      
-          emergencyKitViewModel.image != null ? Image.file(File(emergencyKitViewModel.image!)) : Container(),
-        ],
-      ),
+        ),
+        
+    
+        emergencyKitViewModel.image != null ? Image.file(File(emergencyKitViewModel.image!)) : Container(),
+      ],
     );
   }
 }

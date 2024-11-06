@@ -77,7 +77,7 @@ class _EditProfileViewState extends State<EditProfileView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 
-                SizedBox(height: 24.r,),
+                SizedBox(height: 20.r,),
 
                 //Profile Picture
                 Center(
@@ -96,7 +96,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                           width: 25.r,
                           height: 25.r,
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Theme.of(context).colorScheme.secondary,
                             borderRadius: BorderRadius.circular(50.r),
                             border: Border.all(
                               color: Theme.of(context).colorScheme.outline
@@ -443,49 +443,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                               fontWeight: FontWeight.bold
                             ),
                           ),
-
-                  
-                          // Text(
-                          //   "Email",
-                          //   style: TextStyle(
-                          //     color: Theme.of(context).colorScheme.outline,
-                          //     fontSize: 14.r,
-                          //     fontWeight: FontWeight.w500
-                          //   ),
-                          // ),
-                  
-                          // SizedBox(height: spaceBetweenLabel,),
-                  
-                          //edit email
-                          // TextFormField(
-                          //   controller: viewModel.emailController,
-                          //   cursorColor: const Color(0xFF3D424A),
-                          //   style: TextStyle(
-                          //     fontSize: 18.r
-                          //   ),
-                          //   decoration: InputDecoration(
-                          //     hintText: "Edit Email",
-                          //     enabledBorder: UnderlineInputBorder(
-                          //       borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
-                          //     ),
-                          //     focusedBorder: UnderlineInputBorder(
-                          //       borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
-                          //     )
-                          //   ),
-                  
-                          //   validator: (value) {
-                          //     if (value!.isEmpty){
-                          //       return "Please enter an email";
-                          //     }
-                          //     else if (!value.contains('@')){
-                          //       return "Enter a valid email";
-                          //     }
-                          //     else{
-                          //       return null;
-                          //     }
-                          //   },
-                          // ),
-                  
+             
                   
                           SizedBox(height: spaceBetweenDetails,),
                   
@@ -630,7 +588,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                               //change email
                               TextButton(
                                 onPressed: () {
-                                  
+                                  Navigator.pushNamed(context, '/changeemail');
                                 }, 
                                 child: Text(
                                   "Change email here",
@@ -646,7 +604,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                               //change password
                               TextButton(
                                 onPressed: () {
-                                  
+                                  Navigator.pushNamed(context, '/changepass');
                                 }, 
                                 child: Text(
                                   "Change password here",

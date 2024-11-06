@@ -10,12 +10,12 @@ class ChecklistLocalDatabase{
     EmergencyKitModel(title: 'Bottled Water', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/water.png'),
     EmergencyKitModel(title: 'Canned Food`', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/food.png'),
     EmergencyKitModel(title: 'First Aid Kit', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/firstaid.jpg'),
-    EmergencyKitModel(title: 'Extrang pera', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/money.jpg'),
-    EmergencyKitModel(title: 'Prescription medicines', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/medicine.jpg'),
-    EmergencyKitModel(title: 'Hygiene kit', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/hygiene.jpeg'),
-    EmergencyKitModel(title: 'Radyo de baterya', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/phone.jpg'),
-    EmergencyKitModel(title: 'Extrang damit', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/clothes.jpg'),
-    EmergencyKitModel(title: 'Mga importanteng dokyumento (national id, passport, birth certificate)', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/documents.jpg'),
+    EmergencyKitModel(title: 'Extra Money', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/money.jpg'),
+    EmergencyKitModel(title: 'Prescription Medicines', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/medicine.jpg'),
+    EmergencyKitModel(title: 'Hygiene Kit', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/hygiene.jpeg'),
+    EmergencyKitModel(title: 'Battery Radio', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/phone.jpg'),
+    EmergencyKitModel(title: 'Extra Clothes', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/clothes.jpg'),
+    EmergencyKitModel(title: 'Important Documents(national id, passport, birth certificate)', isChecked: false, imagePath: 'assets/images/dashboard/checklist_images/documents.jpg'),
   ];
 
 

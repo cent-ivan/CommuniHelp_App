@@ -1,7 +1,9 @@
 import 'package:communihelp_app/View/Utility_Pages/Report_Damage/pick_image_dialog.dart';
+import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/report_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +22,8 @@ class _ReportDamageViewState extends State<ReportDamageView> {
 
 
   final imageDialog = PickImageDialog();
+
+  final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
   @override
   Widget build(BuildContext context) {
@@ -248,7 +252,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                           width: 250.r,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8).r,
-                            border: Border.all(width: 1.5.r)
+                            border: Border.all(width: 1.5.r, color: Theme.of(context).colorScheme.outline),
                           ),
                           child: viewModel.choosenImage == null ?
                           Column(
@@ -343,54 +347,70 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          MaterialButton(
-                            height: 65.r,
-                            minWidth: 150.r,
-                            onPressed: () {
-                              //shows dialog if empty one
-                              if (viewModel.reportTitleController.text.isEmpty || viewModel.contentController.text.isEmpty || viewModel.contentController.text.isEmpty || viewModel.choosenImage == null) {
-                                showDialog(context: context, 
-                                builder: (context) {
-                                  return SimpleDialog(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(8.r),)
-                                    ),
-                                    title: Text("Empty input fields"),
-                                    titleTextStyle: TextStyle(color: Theme.of(context).colorScheme.outline, fontWeight: FontWeight.bold, fontSize: 16.r),
-                                    contentPadding: EdgeInsets.all(16).r,
-                                    children: [
-                                      Text("Please, fill up all input fields")
-                                    ],
-                                  );
-                                }
-                                );
-                              }
-                              else {
-                                logger.i("Posted");
-                                viewModel.postReport(context);
-                                setState(() {
-                                  viewModel.reportTitleController.clear();
-                                  viewModel.contentController.clear();
-                                  viewModel.locationController.clear();
-                                  viewModel.choosenImage = null;
-                                });
-                              }
-
-
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(12.r))
-                            ),
-                            color: Color(0xFFFEAE49),
-                            elevation: 1.r,
-                            child: Text(
-                              "Send",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.r,
-                                color: Theme.of(context).colorScheme.outline
+                          Column(
+                            children: [
+                              MaterialButton(
+                                disabledColor: const Color(0xFFADADAD),
+                                height: 65.r,
+                                minWidth: 150.r,
+                                onPressed: network.isOnline.value ?
+                                () {
+                                  //shows dialog if empty one
+                                  if (viewModel.reportTitleController.text.isEmpty || viewModel.contentController.text.isEmpty || viewModel.contentController.text.isEmpty || viewModel.choosenImage == null) {
+                                    showDialog(context: context, 
+                                    builder: (context) {
+                                      return SimpleDialog(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(8.r),)
+                                        ),
+                                        title: Text("Empty input fields"),
+                                        titleTextStyle: TextStyle(color: Theme.of(context).colorScheme.outline, fontWeight: FontWeight.bold, fontSize: 16.r),
+                                        contentPadding: EdgeInsets.all(16).r,
+                                        children: [
+                                          Text("Please, fill up all input fields")
+                                        ],
+                                      );
+                                    }
+                                    );
+                                  }
+                                  else {
+                                    logger.i("Posted");
+                                    viewModel.postReport(context);
+                                    setState(() {
+                                      viewModel.reportTitleController.clear();
+                                      viewModel.contentController.clear();
+                                      viewModel.locationController.clear();
+                                      viewModel.choosenImage = null;
+                                    });
+                                  }
+                              
+                              
+                                } :
+                                null,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(12.r))
+                                ),
+                                color: Color(0xFFFEAE49),
+                                elevation: 1.r,
+                                child: Text(
+                                  "Send",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.r,
+                                    color: Theme.of(context).colorScheme.outline
+                                  ),
+                                ),
                               ),
-                            ),
+
+                              Text(
+                                network.isOnline.value ? "" : "No internet. Cannot send",
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.outline,
+                                  fontSize: 10.r,
+                                  fontStyle: FontStyle.italic
+                                ),
+                              )
+                            ],
                           ),
 
                           SizedBox(width: 10.r,),

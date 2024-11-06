@@ -45,7 +45,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.r))
                 ),
-                color: Theme.of(context).colorScheme.surfaceContainer,
+                color: Color(0xFFF2F2F2),
                 splashColor: const Color(0xFFFEAE49),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,14 +74,14 @@ class ResponderUtilityButtons extends StatelessWidget {
               MaterialButton(
                 onPressed: () {
       
-                  Navigator.pushNamed(context, '/postannouncement');
+                  Navigator.pushNamed(context, '/manageannouncement');
                 },
                 height: 80.r,
                 minWidth: 95.r,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.r))
                 ),
-                color: Theme.of(context).colorScheme.surfaceContainer,
+                color: Color(0xFFF2F2F2),
                 splashColor: const Color(0xFFFEAE49),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,7 +113,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.r))
                 ),
-                color: Theme.of(context).colorScheme.surfaceContainer,
+                color: Color(0xFFF2F2F2),
                 splashColor: const Color(0xFFFEAE49),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,7 +145,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.r))
                 ),
-                color: Theme.of(context).colorScheme.surfaceContainer,
+                color: Color(0xFFF2F2F2),
                 splashColor: const Color(0xFFFEAE49),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -205,7 +205,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(25.r))
                   ),
-                  color: Theme.of(context).colorScheme.surfaceContainer,
+                  color: Color(0xFFF2F2F2),
                   splashColor: const Color(0xFFFEAE49),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

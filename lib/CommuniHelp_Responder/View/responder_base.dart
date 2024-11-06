@@ -15,7 +15,7 @@ class HomeBaseResponder extends StatefulWidget {
   State<HomeBaseResponder> createState() => _HomeBaseResponderState();
 }
 
-class _HomeBaseResponderState extends State<HomeBaseResponder> {
+class _HomeBaseResponderState extends State<HomeBaseResponder>  with SingleTickerProviderStateMixin{
   final PageStorageBucket bucket = PageStorageBucket();
   int _currentIndex = 0;
 
@@ -26,9 +26,10 @@ class _HomeBaseResponderState extends State<HomeBaseResponder> {
     const ResponderCommunityView(),
     const ResponderProfileView()
   ];
-
+  
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
+  
 
   @override
   Widget build(BuildContext context) {
@@ -376,7 +377,7 @@ class DrawerBase extends StatelessWidget {
                   child: Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.privacy_tip), 
+                        icon: const Icon(Icons.settings), 
                         iconSize: 25,
                         color: Theme.of(context).colorScheme.outline,
                         onPressed: () {},
@@ -386,7 +387,7 @@ class DrawerBase extends StatelessWidget {
       
                       TextButton(
                         child: Text(
-                          "Privacy Policy",
+                          "Settings",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -394,7 +395,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          
+                          Navigator.pushNamed(context, '/settings');
                         },
                       )
                     ],

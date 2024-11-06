@@ -61,8 +61,8 @@ class ChecklistItem extends StatelessWidget {
                     ? (image is String && image.startsWith("assets/"))
                     ? Image.asset(
                   image,
-                  width: 45.r,
-                  height: 45.r,
+                  width: 35.r,
+                  height: 35.r,
                   fit: BoxFit.cover,
                 )
                     : Image.file(

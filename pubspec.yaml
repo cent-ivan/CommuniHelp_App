@@ -14,7 +14,7 @@ dependencies:
   provider: ^6.1.2
   flutter_screenutil: ^5.9.3
   get: ^4.6.6
-  image_picker: ^1.1.2
+  image_picker: ^1.0.0
   image_cropper: ^8.0.2
   flutter_slidable: ^3.1.0
   flutter_keyboard_visibility: ^6.0.0
@@ -23,15 +23,18 @@ dependencies:
   url_launcher: ^6.3.1
   flutter_carousel_widget: ^3.1.0
   flutter_exit_app: ^1.1.4 #for exitting the app
-  cached_network_image: ^3.4.1 #caching online images
-  flutter_cache_manager: ^3.4.1 #managing cache
-  path_provider: ^2.1.5
   intl: ^0.19.0
+  cached_network_image: ^3.4.1
+  flutter_cache_manager: ^3.4.1
+  http: ^1.2.2
+  webview_flutter: ^4.10.0
 
   #Firebase and firestore
   firebase_auth: ^5.1.4
   cloud_firestore: ^5.2.1
   firebase_core: ^3.3.0
+  firebase_storage: ^12.3.4
+  firebase_messaging: ^15.1.3
 
   
 
@@ -40,10 +43,10 @@ dependencies:
   hive_flutter: ^1.1.0
 
   #maps
+  flutter_map: ^7.0.2
   dio: ^5.7.0
   flutter_polyline_points: ^2.1.0
   google_maps_flutter: ^2.9.0
-  firebase_storage: ^12.3.4
 
 dev_dependencies:
   flutter_test:
@@ -66,23 +69,10 @@ flutter:
     - assets/images/background/
     - assets/images/
 
-  
-
     #inforgrpahics assets
     - assets/images/infographics/
     - assets/images/infographics/button_images/
-
-    #english natural infographcs 
-    - assets/images/infographics/natural_infographics/flood/flood_En/
-    - assets/images/infographics/natural_infographics/typhoon/typhoon_En/
-    - assets/images/infographics/natural_infographics/landslide/landslide_En/
-    - assets/images/infographics/natural_infographics/earthquake/earthquake_En/
-
-    #englisg manmade
-    - "assets/images/infographics/manmade_infographics/vehicular/vehicular_En/"
-    - "assets/images/infographics/manmade_infographics/burn/burn_En/"
-    - "assets/images/infographics/manmade_infographics/structural/structural_En/"
-    - "assets/images/infographics/manmade_infographics/pollution/pollution_En/"
+    - assets/images/infographics/natural_infographics/
 
       # fonts:
   #   - family: Still searching for fonts

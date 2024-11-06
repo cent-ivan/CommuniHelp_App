@@ -1,7 +1,9 @@
 import 'package:communihelp_app/CommuniHelp_Responder/ViewModel/post_announcement_view_model.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class AnnouncementMake extends StatefulWidget {
@@ -14,6 +16,8 @@ class AnnouncementMake extends StatefulWidget {
 class _AnnouncementMakeState extends State<AnnouncementMake> {
   //form global key
   final _formKey = GlobalKey<FormState>();
+
+  final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
   final _titleController = TextEditingController();
   final _contentController = TextEditingController();
@@ -41,13 +45,20 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Today: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                        style: TextStyle(
-                          fontSize: 18.r,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.outline
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Today: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                            style: TextStyle(
+                              fontSize: 18.r,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.outline
+                            ),
+                          ),
+
+                          
+                        ],
                       ),
           
                       SizedBox(height: 20.r,),
@@ -283,16 +294,16 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
                             MaterialButton(
                                 height: 65.r,
                                 minWidth: 150.r,
-                                onPressed: () {
+                                disabledColor: const Color(0xFFADADAD),
+                                onPressed: network.isOnline.value ?
+                                () {
                                   setState(() {
                                     _titleController.clear();
                                     _contentController.clear();
                                     isUrgent = false;
                                     levelValue = "AKLAN";
-                                  });
-                                
-                                  
-                                },
+                                  }); 
+                                } : null,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(12.r))
                                 ),

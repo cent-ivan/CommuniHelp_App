@@ -6,12 +6,12 @@ class SnackBars {
   
   Future noConnection() async{
     Get.rawSnackbar(
-        padding: EdgeInsets.symmetric(vertical: 7.r),
+        padding: EdgeInsets.symmetric(vertical: 5.r),
         messageText: Text(
           "Offline Mode. Not connected to the internet",
           style: TextStyle(
             color: Colors.white,
-            fontSize: 11.r,
+            fontSize: 10.r,
             fontWeight: FontWeight.bold
           ),
         ),

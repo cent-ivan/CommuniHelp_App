@@ -40,4 +40,14 @@ class PostReportService {
       );
     logger.i("Done Updating");
   }
+
+  //delete reports from Firestore
+  Future deleteAnnouncement(String announcementId, String municipality) async {
+    try {
+      await _db.collection("reports").doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_reports").doc(announcementId).delete();
+      logger.i('Document deleted successfully');
+    } catch (e) {
+      logger.i('Error deleting document: $e');
+    }
+  }
 }
