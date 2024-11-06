@@ -55,7 +55,7 @@ class NewsViewModel extends ChangeNotifier{
     
     String url;
     if (category == "Local News") {
-      url = 'https://newsapi.org/v2/everything?q=(disaster%20AND%20Typhoon%20AND%20philippines%20AND%20natural%20disaster)&sortBy=popularity&apiKey=$apiKey';
+      url = 'https://newsapi.org/v2/everything?q=(filipino%20AND%20Typhoon%20AND%20philippines%20AND%20natural%20disaster)&sortBy=popularity&apiKey=$apiKey';
     } else if (category == "International News") {
       url = 'https://newsapi.org/v2/everything?q=(Disaster%20AND%20safety%20AND%20world%20AND%20natural%20disaster)&sortBy=popularity&apiKey=$apiKey';
 

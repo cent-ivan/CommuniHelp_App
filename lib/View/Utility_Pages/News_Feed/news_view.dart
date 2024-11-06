@@ -2,6 +2,7 @@ import 'package:communihelp_app/ViewModel/News_View_Model/news_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class NewsView extends StatefulWidget {
@@ -24,7 +25,6 @@ class _NewsViewState extends State<NewsView> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<NewsViewModel>(context);
-    viewModel.callInit();
     return PopScope(
       canPop: false,
       child: DefaultTabController(
@@ -115,7 +115,6 @@ class NewsListView extends StatefulWidget {
 class _NewsListViewState extends State<NewsListView> {
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<NewsViewModel>(context);
     return widget.articles.isEmpty
         ? const Center(child: Text("No news available"))
         : ListView.builder(
@@ -149,8 +148,8 @@ class _NewsListViewState extends State<NewsListView> {
                 trailing: TextButton(
                   child: Text("Read More", style: TextStyle(color: Theme.of(context).colorScheme.outline, fontSize: 10.r),),
                   onPressed: () {
-                    viewModel.assignUrl(article["url"]);
-                    Navigator.pushNamed(context, '/webview');
+                    //launches to website
+                    launchUrl(Uri.parse(article["url"]));
                   },
                 ),
               );
@@ -164,6 +163,17 @@ class _NewsListViewState extends State<NewsListView> {
       return text;
     }
     return '${text.substring(0, maxLength)}...';
+  }
+
+
+  void seeHeadline(BuildContext context) {
+    showDialog(context: context,
+      builder: (context) {
+        return SimpleDialog(
+
+        );
+      }
+    );
   }
 }
 
