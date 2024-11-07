@@ -28,6 +28,7 @@ dependencies:
   flutter_cache_manager: ^3.4.1
   http: ^1.2.2
   webview_flutter: ^4.10.0
+  flutter_dotenv: ^5.2.1 #storing api keys
 
   #Firebase and firestore
   firebase_auth: ^5.1.4
@@ -62,12 +63,15 @@ flutter:
   uses-material-design: true
 
   assets:
+    - lib/.env
+    
     - assets/images/dashboard/
     - assets/images/dashboard/checklist_images/
     - assets/images/bottom_app_bar/
     - assets/images/logo/
     - assets/images/background/
     - assets/images/
+    - assets/images/weather/
 
     #inforgrpahics assets
     - assets/images/infographics/

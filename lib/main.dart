@@ -1,4 +1,5 @@
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/manage_announcement.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Registration_Responder/registration_responder_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Resport_Page/see_report_view.dart';
@@ -54,6 +55,7 @@ import 'ViewModel/Connection_Controller/dependency_injection.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async{
+  await dotenv.load(fileName: "lib/.env"); //initialize env
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -62,6 +64,7 @@ void main() async{
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
   ]);
+
 
 
   //Hive local db
