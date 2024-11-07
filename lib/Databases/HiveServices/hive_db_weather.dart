@@ -6,10 +6,10 @@ class HiveDbWeather extends ChangeNotifier{
   Logger logger = Logger(); //diplay debug messages
 
 
-  Map<String, dynamic> weatherData = {};
+  Map<dynamic, dynamic> weatherData = {};
 
   //initiate hive box
-  final _weather = Hive.box<Map<String, dynamic>>('weatherbox');
+  final _weather = Hive.box<Map<dynamic, dynamic>>('weatherbox');
 
   void loadData() {
     weatherData = _weather.get('WEATHER')!;
@@ -17,6 +17,7 @@ class HiveDbWeather extends ChangeNotifier{
   }
 
   void updateData() {
+    logger.i("inside: ${_weather.get('WEATHER')!}");
     _weather.put('WEATHER', weatherData);
     logger.i("Weather DB: Updated");
   }

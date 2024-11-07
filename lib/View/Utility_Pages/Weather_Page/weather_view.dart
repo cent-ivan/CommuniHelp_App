@@ -40,7 +40,7 @@ class _WeatherViewState extends State<WeatherView> {
   void initState() {
     super.initState();
     selectedMunicipality = userData.municipality;
-    fetchWeather(selectedMunicipality!);
+    fetchWeather(selectedMunicipality!, true);
   }
 
   @override
@@ -99,7 +99,14 @@ class _WeatherViewState extends State<WeatherView> {
                         selectedMunicipality = newValue;
                       });
                       if (newValue != null) {
-                        fetchWeather(newValue);
+                        //check if new value is Nabas to update at local
+                        if (newValue.contains(userData.municipality)) {
+                          fetchWeather(newValue, true);
+                        }
+                        else {
+                          fetchWeather(newValue, false);
+                        }
+                        
                       }
                     } : null,
                     items: municipalitiesAklan.map((String municipality) {
@@ -481,10 +488,10 @@ class _WeatherViewState extends State<WeatherView> {
   final apiKey = dotenv.env['WEATHER_API_KEY'];
   
   // Method to fetch weather data
-  Future<void> fetchWeather(String municipality) async {
+  Future<void> fetchWeather(String municipality, bool isMuni) async {
     if (network.isOnline.value) {
       //get data from api if online
-      final apiUrl = 'https://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$municipality,Aklan&days=5';  // Fetch 4-day forecast
+      final apiUrl = 'https://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$municipality,Aklan&days=5';  // Fetch 5-day forecast
       try {
         final response = await http.get(Uri.parse(apiUrl));
         if (response.statusCode == 200) {
@@ -517,12 +524,19 @@ class _WeatherViewState extends State<WeatherView> {
             };
   
           });
-          dbWeather.updateData();
+
+          if (isMuni) {
+            dbWeather.updateData();
+          }
+          else {
+            logger.e("Not municipality");
+          }
+          
         } else {
             logger.e('Failed to load weather data (status code: ${response.statusCode})');
         }
       } catch (e) {
-          logger.e('Error fetching weather data');
+          logger.e('Error fetching weather data ${e.toString()}');
         }
     }
     else {

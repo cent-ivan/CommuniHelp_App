@@ -75,7 +75,7 @@ void main() async{
 
   await Hive.openBox<List>('emergencykit');
   await Hive.openBox<List>('emergencycontact');
-  await Hive.openBox<Map<String, dynamic>>('weatherbox');
+  await Hive.openBox<Map<dynamic, dynamic>>('weatherbox');
 
   await Hive.openBox<bool>('director');
 
