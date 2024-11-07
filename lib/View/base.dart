@@ -28,10 +28,12 @@ class _HomeBaseState extends State<HomeBase> {
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
+
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
     final baseController = Provider.of<BaseController>(context);
+    
     return Scaffold(
       appBar:  AppBarBase(),
 

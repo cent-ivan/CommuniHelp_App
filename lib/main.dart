@@ -1,4 +1,5 @@
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/manage_announcement.dart';
+import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Registration_Responder/registration_responder_view.dart';
@@ -74,6 +75,7 @@ void main() async{
 
   await Hive.openBox<List>('emergencykit');
   await Hive.openBox<List>('emergencycontact');
+  await Hive.openBox<Map<String, dynamic>>('weatherbox');
 
   await Hive.openBox<bool>('director');
 
@@ -93,6 +95,7 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => CommunityViewModel())),
         ChangeNotifierProvider(create: ((context) => ReportViewModel())),
         ChangeNotifierProvider(create: ((context) => NewsViewModel())),
+        ChangeNotifierProvider(create: ((context) => HiveDbWeather())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),

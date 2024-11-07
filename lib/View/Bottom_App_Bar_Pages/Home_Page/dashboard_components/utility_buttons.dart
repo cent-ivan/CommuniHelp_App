@@ -20,6 +20,8 @@ class UtilityButtons extends StatelessWidget {
     final viewModel = Provider.of<EmergencyKitViewModel>(context);
     final newsViewModel = Provider.of<NewsViewModel>(context);
 
+    
+
     return Wrap(
       spacing: 5.r,
       runSpacing: 10.r,
@@ -68,10 +70,10 @@ class UtilityButtons extends StatelessWidget {
             
             //News Button
             MaterialButton(
-              onPressed: () {
+              onPressed:  () {
                 newsViewModel.callInit();
                 Navigator.pushNamed(context,'/newsfeed');
-              },
+              } ,
               height: 80.r,
               minWidth: 95.r,
               shape: RoundedRectangleBorder(

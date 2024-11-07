@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
+import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -27,9 +30,11 @@ class _WeatherViewState extends State<WeatherView> {
     'New Washington', 'Numancia', 'Tangalan'
   ];
 
+  final dbWeather = HiveDbWeather(); 
 
   String? selectedMunicipality;
-  Map<String, dynamic> weatherData = {};
+
+  final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
   @override
   void initState() {
@@ -39,7 +44,7 @@ class _WeatherViewState extends State<WeatherView> {
   }
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {   
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -85,20 +90,22 @@ class _WeatherViewState extends State<WeatherView> {
                 children: [
                   DropdownButton<String>(
                     dropdownColor: Theme.of(context).colorScheme.secondary,
+                    iconDisabledColor: Colors.grey,
                     hint: Text('Select Municipality'),
                     value: selectedMunicipality,
-                    onChanged: (String? newValue) {
+                    //disable if offline
+                    onChanged: network.isOnline.value ? (String? newValue) {
                       setState(() {
                         selectedMunicipality = newValue;
                       });
                       if (newValue != null) {
                         fetchWeather(newValue);
                       }
-                    },
+                    } : null,
                     items: municipalitiesAklan.map((String municipality) {
                       return DropdownMenuItem<String>(
                         value: municipality,
-                        child: Text(municipality, style: TextStyle(color: Theme.of(context).colorScheme.outline),),
+                        child: Text(municipality, style: TextStyle(color: network.isOnline.value ? Theme.of(context).colorScheme.outline: Colors.grey ) ,),
                       );
                     }).toList(),
                   ),
@@ -124,7 +131,7 @@ class _WeatherViewState extends State<WeatherView> {
               SizedBox(height: 20),
           
               // Display weather data with icons and styling
-              if (weatherData.isNotEmpty)
+              if (dbWeather.weatherData.isNotEmpty)
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -133,7 +140,7 @@ class _WeatherViewState extends State<WeatherView> {
 
                     Center(
                       child: Image(
-                        image: weatherSymbol(weatherData["Humidity"]),
+                        image: weatherSymbol(dbWeather.weatherData["Humidity"]),
                         height: 65.r,
                         width: 65.r,
                       )
@@ -143,7 +150,7 @@ class _WeatherViewState extends State<WeatherView> {
 
                     Center(
                       child: Text(
-                        weatherData["CurTemp"],
+                        dbWeather.weatherData["CurTemp"],
                         style: TextStyle(
                           color: Color(0xFFEDEDED),
                           fontSize: 42.r,
@@ -162,7 +169,7 @@ class _WeatherViewState extends State<WeatherView> {
                          SizedBox(width: 4.r),
                     
                         Text(
-                          weatherData["Municipality"],
+                          dbWeather.weatherData["Municipality"],
                           style: TextStyle(
                             color: Color(0xFFEDEDED),
                             fontSize: 20.r,
@@ -178,7 +185,7 @@ class _WeatherViewState extends State<WeatherView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [ 
                         Text(
-                          "Humidity: ${weatherData["Humidity"]}%",
+                          "Humidity: ${dbWeather.weatherData["Humidity"]}%",
                           style: TextStyle(
                             color: Color(0xFFEDEDED),
                             fontSize: 12.r,
@@ -191,7 +198,7 @@ class _WeatherViewState extends State<WeatherView> {
 
                     Center(
                       child: Text(
-                        "Windspeed: ${weatherData["Wind"]}",
+                        "Windspeed: ${dbWeather.weatherData["Wind"]}",
                         style: TextStyle(
                           color: Color(0xFFEDEDED),
                           fontSize: 12.r,
@@ -203,7 +210,7 @@ class _WeatherViewState extends State<WeatherView> {
 
                     Center(
                       child: Text(
-                        weatherData["Condition"],
+                        dbWeather.weatherData["Condition"],
                         style: TextStyle(
                           color: Color(0xFFEDEDED),
                           fontSize: 12.r,
@@ -252,7 +259,7 @@ class _WeatherViewState extends State<WeatherView> {
                                       ),
 
                                       Image(
-                                        image: weatherSymbol(weatherData["TomorrowHum"]),
+                                        image: weatherSymbol(dbWeather.weatherData["TomorrowHum"]),
                                         height: 25.r,
                                         width: 25.r,
                                       ),
@@ -260,7 +267,7 @@ class _WeatherViewState extends State<WeatherView> {
                                       Row(
                                         children: [
                                           Text(
-                                            "${weatherData["TomorrowTemp"]} / ${weatherData["TomorrowHum"].toString()}%",
+                                            "${dbWeather.weatherData["TomorrowTemp"]} / ${dbWeather.weatherData["TomorrowHum"].toString()}%",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xFFEDEDED)
@@ -288,7 +295,7 @@ class _WeatherViewState extends State<WeatherView> {
                                       ),
 
                                       Image(
-                                        image: weatherSymbol(weatherData["SecondDayHum"]),
+                                        image: weatherSymbol(dbWeather.weatherData["SecondDayHum"]),
                                         height: 25.r,
                                         width: 25.r,
                                       ),
@@ -296,7 +303,7 @@ class _WeatherViewState extends State<WeatherView> {
                                       Row(
                                         children: [
                                           Text(
-                                            "${weatherData["SecondDayTemp"]} / ${weatherData["SecondDayHum"].toString()}%",
+                                            "${dbWeather.weatherData["SecondDayTemp"]} / ${dbWeather.weatherData["SecondDayHum"].toString()}%",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xFFEDEDED)
@@ -324,7 +331,7 @@ class _WeatherViewState extends State<WeatherView> {
                                       ),
 
                                       Image(
-                                        image: weatherSymbol(weatherData["ThirdDayHum"]),
+                                        image: weatherSymbol(dbWeather.weatherData["ThirdDayHum"]),
                                         height: 25.r,
                                         width: 25.r,
                                       ),
@@ -332,7 +339,7 @@ class _WeatherViewState extends State<WeatherView> {
                                       Row(
                                         children: [
                                           Text(
-                                            "${weatherData["ThirdDayTemp"]} / ${weatherData["ThirdDayHum"].toString()}%",
+                                            "${dbWeather.weatherData["ThirdDayTemp"]} / ${dbWeather.weatherData["ThirdDayHum"].toString()}%",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xFFEDEDED)
@@ -360,7 +367,7 @@ class _WeatherViewState extends State<WeatherView> {
                                       ),
 
                                       Image(
-                                        image: weatherSymbol(weatherData["FourthDayHum"]),
+                                        image: weatherSymbol(dbWeather.weatherData["FourthDayHum"]),
                                         height: 25.r,
                                         width: 25.r,
                                       ),
@@ -368,7 +375,7 @@ class _WeatherViewState extends State<WeatherView> {
                                       Row(
                                         children: [
                                           Text(
-                                            "${weatherData["FourthDayTemp"]}  /  ${weatherData["FourthDayHum"].toString()}%",
+                                            "${dbWeather.weatherData["FourthDayTemp"]}  /  ${dbWeather.weatherData["FourthDayHum"].toString()}%",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xFFEDEDED)
@@ -396,7 +403,7 @@ class _WeatherViewState extends State<WeatherView> {
                                       ),
 
                                       Image(
-                                        image: weatherSymbol(weatherData["FifthDayHum"]),
+                                        image: weatherSymbol(dbWeather.weatherData["FifthDayHum"]),
                                         height: 25.r,
                                         width: 25.r,
                                       ),
@@ -404,7 +411,7 @@ class _WeatherViewState extends State<WeatherView> {
                                       Row(
                                         children: [
                                           Text(
-                                            "${weatherData["FifthDayTemp"]}  /  ${weatherData["FifthDayHum"].toString()}%",
+                                            "${dbWeather.weatherData["FifthDayTemp"]}  /  ${dbWeather.weatherData["FifthDayHum"].toString()}%",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xFFEDEDED)
@@ -475,46 +482,53 @@ class _WeatherViewState extends State<WeatherView> {
   
   // Method to fetch weather data
   Future<void> fetchWeather(String municipality) async {
+    if (network.isOnline.value) {
+      //get data from api if online
+      final apiUrl = 'https://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$municipality,Aklan&days=5';  // Fetch 4-day forecast
+      try {
+        final response = await http.get(Uri.parse(apiUrl));
+        if (response.statusCode == 200) {
+          final Map<String, dynamic> data = json.decode(response.body);
 
-    final apiUrl = 'https://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$municipality,Aklan&days=5';  // Fetch 4-day forecast
-    final response = await http.get(Uri.parse(apiUrl));
-    try {
-      final response = await http.get(Uri.parse(apiUrl));
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
+          // Extract current weather data
+          final currentWeather = data['current'];
+          final forecastData = data['forecast']['forecastday'];
 
-        // Extract current weather data
-        final currentWeather = data['current'];
-        final forecastData = data['forecast']['forecastday'];
+          setState(() {
+            dbWeather.weatherData = {
+              "CurTemp" : "${currentWeather['temp_c']}°C",
+              "Condition": currentWeather['condition']['text'],
+              "Wind" : "${currentWeather['wind_kph']} km/h",
+              "Humidity" : currentWeather['humidity'],
+              "Municipality": data["location"]["name"],
+              "Country" : data["location"]["country"],
 
-        setState(() {
-          weatherData = {
-            "CurTemp" : "${currentWeather['temp_c']}°C",
-            "Condition": currentWeather['condition']['text'],
-            "Wind" : "${currentWeather['wind_kph']} km/h",
-            "Humidity" : currentWeather['humidity'],
-            "Municipality": data["location"]["name"],
-            "Country" : data["location"]["country"],
-
-            //Forecast
-            "TomorrowTemp" : "${forecastData[0]['day']['avgtemp_c']}°C",
-            "TomorrowHum" : forecastData[0]['day']['avghumidity'],
-            "SecondDayTemp" : "${forecastData[1]['day']['avgtemp_c']}°C",
-            "SecondDayHum" : forecastData[1]['day']['avghumidity'],
-            "ThirdDayTemp" : "${forecastData[2]['day']['avgtemp_c']}°C",
-            "ThirdDayHum" : forecastData[2]['day']['avghumidity'],
-            "FourthDayTemp" : "${forecastData[3]['day']['avgtemp_c']}°C",
-            "FourthDayHum" : forecastData[3]['day']['avghumidity'],
-            "FifthDayTemp" : "${forecastData[4]['day']['avgtemp_c']}°C",
-            "FifthDayHum" : forecastData[4]['day']['avghumidity']
-          };
- 
-        });
-      } else {
-          logger.e('Failed to load weather data (status code: ${response.statusCode})');
-      }
-    } catch (e) {
-        logger.e('Error fetching weather data ${response.statusCode}');
+              //Forecast
+              "TomorrowTemp" : "${forecastData[0]['day']['avgtemp_c']}°C",
+              "TomorrowHum" : forecastData[0]['day']['avghumidity'],
+              "SecondDayTemp" : "${forecastData[1]['day']['avgtemp_c']}°C",
+              "SecondDayHum" : forecastData[1]['day']['avghumidity'],
+              "ThirdDayTemp" : "${forecastData[2]['day']['avgtemp_c']}°C",
+              "ThirdDayHum" : forecastData[2]['day']['avghumidity'],
+              "FourthDayTemp" : "${forecastData[3]['day']['avgtemp_c']}°C",
+              "FourthDayHum" : forecastData[3]['day']['avghumidity'],
+              "FifthDayTemp" : "${forecastData[4]['day']['avgtemp_c']}°C",
+              "FifthDayHum" : forecastData[4]['day']['avghumidity']
+            };
+  
+          });
+          dbWeather.updateData();
+        } else {
+            logger.e('Failed to load weather data (status code: ${response.statusCode})');
+        }
+      } catch (e) {
+          logger.e('Error fetching weather data');
+        }
     }
+    else {
+      //else get from Hive
+      dbWeather.loadData();
+    }
+    
   }
 }
