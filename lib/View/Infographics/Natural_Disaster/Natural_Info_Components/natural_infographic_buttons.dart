@@ -14,7 +14,7 @@ class NaturalInfoButtons extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "Uri it Natural na sakuna",
+          "Types of Natural Disaster",
           style: TextStyle(
             fontSize: 20.r,
             fontWeight: FontWeight.bold
@@ -52,7 +52,7 @@ class NaturalInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Bagyo",
+                  "Typhoon",
                   style: TextStyle(
                     fontSize: 18.r,
                     fontWeight: FontWeight.bold
@@ -93,7 +93,7 @@ class NaturalInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Baha",
+                  "Flood",
                   style: TextStyle(
                     fontSize: 18.r,
                     fontWeight: FontWeight.bold
@@ -175,7 +175,7 @@ class NaturalInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Linog",
+                  "Earthquake",
                   style: TextStyle(
                     fontSize: 18.r,
                     fontWeight: FontWeight.bold
