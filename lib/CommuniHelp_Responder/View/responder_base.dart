@@ -2,6 +2,7 @@ import 'package:communihelp_app/CommuniHelp_Responder/View/Community_Page/commun
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/responder_dashboard_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Profile_Page/profile_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/ViewModel/auth_responder.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/contacts_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class _HomeBaseResponderState extends State<HomeBaseResponder>  with SingleTicke
 
   final List<Widget> _screens = [
     const ResponderDashboardView(),
-    const Placeholder(),
+    const ContactsView(),
     
     const ResponderCommunityView(),
     const ResponderProfileView()

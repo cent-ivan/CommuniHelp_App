@@ -1,12 +1,15 @@
 import 'package:communihelp_app/Databases/HiveServices/hive_db_contacts_user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ContactsViewModel extends ChangeNotifier{
   final dbContact = HiveDbContactsUser();
 
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
 
   ContactsViewModel() {
-    dbContact.loadData();
+    dbContact.loadData(curUser!.uid);
     notifyListeners();
   }
 
@@ -23,9 +26,9 @@ class ContactsViewModel extends ChangeNotifier{
     dbContact.contacts[index]["Contact"] = editNumberController.text; 
   }
 
-  void deleteContact(int index) {
+  void deleteContact(int index, String uid) {
     dbContact.contacts.removeAt(index);
-    updateDB();
+    updateDB(uid);
   }
 
   //adds to list of contacts
@@ -38,7 +41,7 @@ class ContactsViewModel extends ChangeNotifier{
       return a["Name"]!.compareTo(b["Name"]!);
     });
 
-    updateDB();
+    updateDB(curUser!.uid);
     editNameController.clear();
     editNumberController.clear();
 
@@ -46,18 +49,18 @@ class ContactsViewModel extends ChangeNotifier{
   }
 
   //loads data from local db
-  void loadDB() {
-    dbContact.loadData();
+  void loadDB(String uid) {
+    dbContact.loadData(uid);
     notifyListeners();
   }
 
   //call to update new data
-  void updateDB() {
+  void updateDB(String uid) {
     //sorts alphabetically
     dbContact.contacts.sort((a, b) {
       return a["Name"]!.compareTo(b["Name"]!);
     });
-    dbContact.updateData();
+    dbContact.updateData(uid);
     notifyListeners();
   }
 }

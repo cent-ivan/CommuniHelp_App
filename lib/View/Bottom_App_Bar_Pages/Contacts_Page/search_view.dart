@@ -1,5 +1,6 @@
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
@@ -19,6 +20,9 @@ class _SearchViewState extends State<SearchView> {
   GlobalDialogUtil dialogs = GlobalDialogUtil();
   
   bool isEditMode = false; //switch from text to text field
+
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
 
   List<dynamic> tempContacts = [];
 
@@ -271,8 +275,8 @@ class _SearchViewState extends State<SearchView> {
                                   
                                   viewModel.changeName(index);
                                   viewModel.changeContact(index);
-                                  viewModel.updateDB();
-                                  viewModel.loadDB();
+                                  viewModel.updateDB(curUser!.uid);
+                                  viewModel.loadDB(curUser!.uid);
                                   setState(() {
                                     isEditMode = false;
                                   });
@@ -283,7 +287,7 @@ class _SearchViewState extends State<SearchView> {
                                 else if (viewModel.editNameController.text.isNotEmpty) {
                                   
                                   viewModel.changeName(index);
-                                  viewModel.updateDB();
+                                  viewModel.updateDB(curUser!.uid);
                                   setState(() {
                                     isEditMode = false;
                                   });
@@ -294,7 +298,7 @@ class _SearchViewState extends State<SearchView> {
                                 else if (viewModel.editNumberController.text.isNotEmpty) {
                                   
                                   viewModel.changeContact(index);
-                                  viewModel.updateDB();
+                                  viewModel.updateDB(curUser!.uid);
                                   setState(() {
                                     isEditMode = false;
                                   });
@@ -331,7 +335,7 @@ class _SearchViewState extends State<SearchView> {
                           //DELETE a contact
                           isEditMode ? IconButton(
                             onPressed: () {
-                              viewModel.deleteContact(index);
+                              viewModel.deleteContact(index, curUser!.uid);
                               Navigator.pop(context);
                             }, 
                             icon: Icon(Icons.delete, color: Colors.redAccent,)

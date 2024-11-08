@@ -2,6 +2,7 @@ import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_c
 import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/search_view.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
@@ -101,6 +102,7 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => HiveDbWeather())),
         ChangeNotifierProvider(create: ((context) => ContactsViewModel())),
         ChangeNotifierProvider(create: ((context) => UserSettingViewModel())),
+        ChangeNotifierProvider(create: ((context) => ResponderSettingViewModel())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
@@ -187,8 +189,8 @@ class MainApp extends StatelessWidget {
           '/viewinfopage': (context) => const InfoPageView(),
           '/viewmanmadeinfopage': (context) => const ManmadeInfoPageView()
         },
-        theme: !director.isResponder ? Provider.of<UserSettingViewModel>(context).themeData : null,
-        darkTheme: !director.isResponder ? Provider.of<UserSettingViewModel>(context).darktTheme : null,
+        theme: !director.isResponder ? Provider.of<UserSettingViewModel>(context).themeData : Provider.of<ResponderSettingViewModel>(context).themeData,
+        darkTheme: !director.isResponder ? Provider.of<UserSettingViewModel>(context).darktTheme : Provider.of<ResponderSettingViewModel>(context).darktTheme,
       ),
     );
   }

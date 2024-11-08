@@ -13,17 +13,26 @@ class HiveDbContactsUser{
     contacts.add(data);
   }
 
-  void loadData() {
-    if (_contactbox.containsKey('CONTACTS')) {
-      var gotContacts =_contactbox.get('CONTACTS')!;
+  void deleteKeys() {
+    _contactbox.deleteAll(_contactbox.keys);
+    logger.i("Deleted all");
+  }
+
+  void loadData(String uid) {
+    if (_contactbox.containsKey(uid)) {
+      var gotContacts =_contactbox.get(uid)!;
       
       contacts = gotContacts;
       logger.i("comtact got $contacts");
+      for (var key in _contactbox.keys) {
+        logger.i("key : $key");
+      }
+      
     }
     else {
       //IF NULL
-      _contactbox.put('CONTACTS', contacts);
-      var gotContacts =_contactbox.get('CONTACTS')!;
+      _contactbox.put(uid, contacts);
+      var gotContacts =_contactbox.get(uid)!;
       
       contacts = gotContacts;
     }
@@ -31,8 +40,8 @@ class HiveDbContactsUser{
   }
 
   //adds to local box
-  void updateData() {
-    _contactbox.put('CONTACTS', contacts);
+  void updateData(String uid) {
+    _contactbox.put(uid, contacts);
     logger.i("Contacs DB: Updated");
   }
 }
