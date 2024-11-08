@@ -381,7 +381,9 @@ class DrawerBase extends StatelessWidget {
                         icon: const Icon(Icons.settings), 
                         iconSize: 25,
                         color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/respondersettings');
+                        },
                       ),
                       
                       const SizedBox( width: 15,),

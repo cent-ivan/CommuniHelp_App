@@ -1,6 +1,5 @@
 import 'package:communihelp_app/View/base_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
-import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,6 @@ class _HomeBaseState extends State<HomeBase> {
 
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
-  final viewModel = ContactsViewModel();
 
   @override
   Widget build(BuildContext context) {
