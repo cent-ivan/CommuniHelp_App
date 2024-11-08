@@ -1,4 +1,5 @@
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,8 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
 
   @override
   Widget build(BuildContext context) {
+    final userSetting = Provider.of<UserSettingViewModel>(context);
+    var languageClass = Language(userSetting.userLanguage);
     return Consumer<AnnouncementViewModel>(builder: (context, viewModel, child) => Column(
       children: [
     
@@ -37,7 +40,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                   viewModel.loadAnnouncement();
                 },
                 child: Text(
-                  "Announcement", 
+                  languageClass.systemLang["Home"]["Announcement"], 
                     style: TextStyle(
                     fontSize: 25.r,
                     fontWeight: FontWeight.bold, 
