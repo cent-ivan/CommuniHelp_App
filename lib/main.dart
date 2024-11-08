@@ -2,6 +2,7 @@ import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_c
 import 'package:communihelp_app/CommuniHelp_Responder/View/responder_setting.dart';
 import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/search_view.dart';
+import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
@@ -104,6 +105,7 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => ContactsViewModel())),
         ChangeNotifierProvider(create: ((context) => UserSettingViewModel())),
         ChangeNotifierProvider(create: ((context) => ResponderSettingViewModel())),
+        ChangeNotifierProvider(create: ((context) => EvacuationFinderViewModel())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
