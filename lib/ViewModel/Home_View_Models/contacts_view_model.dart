@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class ContactsViewModel extends ChangeNotifier{
   final dbContact = HiveDbContactsUser();
 
+
   ContactsViewModel() {
     dbContact.loadData();
     notifyListeners();
@@ -52,6 +53,10 @@ class ContactsViewModel extends ChangeNotifier{
 
   //call to update new data
   void updateDB() {
+    //sorts alphabetically
+    dbContact.contacts.sort((a, b) {
+      return a["Name"]!.compareTo(b["Name"]!);
+    });
     dbContact.updateData();
     notifyListeners();
   }

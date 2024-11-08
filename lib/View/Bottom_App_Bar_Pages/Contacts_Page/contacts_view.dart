@@ -21,6 +21,8 @@ class _ContactsViewState extends State<ContactsView> {
   
   final viewModel = ContactsViewModel();
   bool isEditMode = false; //switch from text to text field
+
+  
   
   @override
   Widget build(BuildContext context) {
@@ -29,16 +31,17 @@ class _ContactsViewState extends State<ContactsView> {
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: Container(
-          padding: EdgeInsets.fromLTRB(12, 0, 12, 12),
+          padding: EdgeInsets.fromLTRB(12, 0, 16, 12),
           child: SingleChildScrollView(
             child: Consumer<ContactsViewModel>(builder: (context, viewModel, child) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 36.r,),
                 Text(
                   "My Contact List",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.outline,
-                    fontSize: 20.r,
+                    fontSize: 24.r,
                     fontWeight: FontWeight.bold
                   ),
                 ),
@@ -47,6 +50,10 @@ class _ContactsViewState extends State<ContactsView> {
             
                 //Search bar
                 TextField(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/searchcontact');
+                  },
+                  readOnly: true,
                   style: TextStyle(
                     fontSize: 18.r,
                     color: Theme.of(context).colorScheme.outline,
@@ -75,8 +82,8 @@ class _ContactsViewState extends State<ContactsView> {
                     
                 //List of contacts
                 SizedBox(
-                  height: 400.r,
-                  width: 350.r,
+                  height: 375.r,
+                  width: 295.r,
                   child: ListView.builder(
                     itemCount: viewModel.dbContact.contacts.length,
                     itemBuilder: (context, i) {
@@ -160,7 +167,9 @@ class _ContactsViewState extends State<ContactsView> {
 
   //show details of contact
   void showContactDetails(int index) {
+    viewModel.editNameController.text = viewModel.dbContact.contacts[index]["Name"];
     viewModel.editNumberController.text = viewModel.dbContact.contacts[index]["Contact"];
+
     showDialog(context: context, 
       barrierDismissible: false,
       builder: (context) {
@@ -175,7 +184,7 @@ class _ContactsViewState extends State<ContactsView> {
                 //edit name and delete row
                 SizedBox(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //Contact info column
                       Column(
@@ -232,58 +241,62 @@ class _ContactsViewState extends State<ContactsView> {
                     
 
                       //if edit mode show text box
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          isEditMode ? IconButton(
-                            //shows in check if edit mode
-                            onPressed: () {
-                              //if both
-                              if (viewModel.editNameController.text.isNotEmpty && viewModel.editNumberController.text.isNotEmpty) {
+                          //CHECK changes
+                          isEditMode ? Container(
+                            margin: EdgeInsets.only(left: 24.r),
+                            child: IconButton(
+                              //shows in check if edit mode
+                              onPressed: () {
+                                //if both
+                                if (viewModel.editNameController.text.isNotEmpty && viewModel.editNumberController.text.isNotEmpty) {
+                                  
+                                  viewModel.changeName(index);
+                                  viewModel.changeContact(index);
+                                  viewModel.updateDB();
+                                  viewModel.loadDB();
+                                  setState(() {
+                                    isEditMode = false;
+                                  });
+                                  Navigator.pop(context);
+                                      
+                                }
+                                //if name only
+                                else if (viewModel.editNameController.text.isNotEmpty) {
+                                  
+                                  viewModel.changeName(index);
+                                  viewModel.updateDB();
+                                  setState(() {
+                                    isEditMode = false;
+                                  });
+                                  Navigator.pop(context);
                                 
-                                viewModel.changeName(index);
-                                viewModel.changeContact(index);
-                                viewModel.updateDB();
-                                viewModel.loadDB();
-                                setState(() {
-                                  isEditMode = false;
-                                });
-                                Navigator.pop(context);
-                                showContactDetails(index);
-                              }
-                              //if name only
-                              else if (viewModel.editNameController.text.isNotEmpty) {
-                                
-                                viewModel.changeName(index);
-                                viewModel.updateDB();
-                                setState(() {
-                                  isEditMode = false;
-                                });
-                                Navigator.pop(context);
-                                showContactDetails(index);
-                              }
-                              //if number only
-                              else if (viewModel.editNumberController.text.isNotEmpty) {
-                                
-                                viewModel.changeContact(index);
-                                viewModel.updateDB();
-                                setState(() {
-                                  isEditMode = false;
-                                });
-                                Navigator.pop(context);
-                                showContactDetails(index);
-                              }
-                                        
-                              else {  
-                                setState(() {
-                                  isEditMode = false;
-                                });
-                                //exits if all empty
-                                Navigator.pop(context);
-                              }
-                            
-                            },
-                             icon: Icon(Icons.check, color: Colors.green,)
+                                }
+                                //if number only
+                                else if (viewModel.editNumberController.text.isNotEmpty) {
+                                  
+                                  viewModel.changeContact(index);
+                                  viewModel.updateDB();
+                                  setState(() {
+                                    isEditMode = false;
+                                  });
+                                  Navigator.pop(context);
+                              
+                                }
+                                          
+                                else {  
+                                  setState(() {
+                                    isEditMode = false;
+                                  });
+                                  //exits if all empty
+                                  Navigator.pop(context);
+                                }
+                              
+                              },
+                               icon: Icon(Icons.check, color: Colors.green,)
+                            ),
                           ) :    
                           IconButton(
                             //shows pencil if not in edit mode
@@ -293,15 +306,17 @@ class _ContactsViewState extends State<ContactsView> {
                               });
                               Navigator.pop(context);
                               showContactDetails(index);
+                            
                             },
                              icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.outline,)
                           ),
                       
                           
-                          //delete a contact
+                          //DELETE a contact
                           isEditMode ? IconButton(
                             onPressed: () {
                               viewModel.deleteContact(index);
+                              Navigator.pop(context);
                             }, 
                             icon: Icon(Icons.delete, color: Colors.redAccent,)
                           ) : Text(""),
@@ -310,7 +325,7 @@ class _ContactsViewState extends State<ContactsView> {
                         ],
                       ),
                   
-                      SizedBox(height: 32.r,),
+  
                       
                     ],
                   ),
@@ -415,8 +430,9 @@ class _ContactFloatingActionButtonState extends State<ContactFloatingActionButto
   @override
   Widget build(BuildContext context) {
     return SizedBox.fromSize(
-      size: Size.square(60.r),
+      size: Size.square(40.r),
       child: FloatingActionButton(
+        heroTag: 'addContactHero',
         onPressed: () {
           addContact();
           
@@ -425,7 +441,7 @@ class _ContactFloatingActionButtonState extends State<ContactFloatingActionButto
         foregroundColor: Colors.white,
         child: Icon(
           Icons.add,
-          size: 45.r,
+          size: 25.r,
         ),
       ),
     );

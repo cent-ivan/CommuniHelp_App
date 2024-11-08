@@ -6,7 +6,6 @@ class HiveDbContactsUser{
 
   List<dynamic> contacts = [];
 
-
   //initiate hive box
   final _contactbox = Hive.box<List<dynamic>>('contactbox');
 

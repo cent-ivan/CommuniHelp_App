@@ -1,5 +1,6 @@
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/manage_announcement.dart';
 import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/search_view.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
@@ -170,6 +171,7 @@ class MainApp extends StatelessWidget {
           '/changeemail': (context) => const ChangeEmail(),
           '/changepass': (context) => const ChangePassword(),
           '/settings': (context) => const SettingsView(), 
+          '/searchcontact' : (context) => const SearchView(),
           
 
           //Responder routes
