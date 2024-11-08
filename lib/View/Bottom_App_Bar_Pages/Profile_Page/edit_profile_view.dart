@@ -452,50 +452,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 fontWeight: FontWeight.bold
                               ),
                             ),
-            
-                    
-                            // Text(
-                            //   "Email",
-                            //   style: TextStyle(
-                            //     color: Theme.of(context).colorScheme.outline,
-                            //     fontSize: 14.r,
-                            //     fontWeight: FontWeight.w500
-                            //   ),
-                            // ),
-                    
-                            // SizedBox(height: spaceBetweenLabel,),
-                    
-                            //edit email
-                            // TextFormField(
-                            //   controller: viewModel.emailController,
-                            //   cursorColor: const Color(0xFF3D424A),
-                            //   style: TextStyle(
-                            //     fontSize: 18.r
-                            //   ),
-                            //   decoration: InputDecoration(
-                            //     hintText: "Edit Email",
-                            //     enabledBorder: UnderlineInputBorder(
-                            //       borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
-                            //     ),
-                            //     focusedBorder: UnderlineInputBorder(
-                            //       borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
-                            //     )
-                            //   ),
-                    
-                            //   validator: (value) {
-                            //     if (value!.isEmpty){
-                            //       return "Please enter an email";
-                            //     }
-                            //     else if (!value.contains('@')){
-                            //       return "Enter a valid email";
-                            //     }
-                            //     else{
-                            //       return null;
-                            //     }
-                            //   },
-                            // ),
-                    
-                    
+
+     
                             SizedBox(height: spaceBetweenDetails,),
                     
                             Text(
