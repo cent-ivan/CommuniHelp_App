@@ -1,3 +1,4 @@
+import 'package:communihelp_app/Databases/HiveServices/hive_db_settings.dart';
 import 'package:communihelp_app/ViewModel/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -5,9 +6,22 @@ import 'package:logger/logger.dart';
 class UserSettingViewModel extends ChangeNotifier{
   Logger logger = Logger();
 
+  //access local HiveServices
+  HiveDbSettings dbSettings = HiveDbSettings();
+
+
+  //Language
+  String userLanguage = "En"; //SYSTEM check for this
+
+
  //for theme
  ThemeData _themeData = lightMode;
  ThemeData _darktTheme = darktMode;
+
+ bool isLightMode = false;
+ bool isDarkMode = false;
+
+ 
 
  ThemeData get themeData => _themeData;
 
@@ -24,20 +38,67 @@ class UserSettingViewModel extends ChangeNotifier{
  }
 
 
+  //sets if light or dark
+ void setThemeToBool(Brightness currentTheme) {
+  logger.i("Called");
+  //sets for storage
+  if (currentTheme == Brightness.light && !dbSettings.userSettings["isDefault"]) {
+    isLightMode = true;
+    isDarkMode = false;
+    toggleTheme();
+    notifyListeners();
+    logger.i("Light mode!");
+  }
+  else if (currentTheme == Brightness.dark && !dbSettings.userSettings["isDefault"]){
+    isLightMode = false;
+    isDarkMode = true;
+    toggleTheme();
+    notifyListeners();
+    logger.i("Dark mode!");
+  }
+  else {
+    isLightMode = true;
+    isDarkMode = false;
+    toggleTheme();
+    notifyListeners();
+    logger.i("Light mode!");
+  }
+ }
+
+  //changes theme state
  void toggleTheme() {
   logger.i("Called theme change");
-  if (_themeData == lightMode) {
+  if (_themeData == lightMode && isLightMode) {
     themeData = darktMode;
     darktTheme = lightMode;
+    logger.i("Changed to darkmode");
   }
   else {
     themeData = lightMode;
     darktTheme = darktMode;
+    logger.i("Changed to lightmode");
   }
  }
 
-  //Language
-  String userLanguage = "En";
+  //loads from hive 
+ void loadSettings(String uid) {
+  dbSettings.loadData(uid);
+  userLanguage = dbSettings.userSettings["language"];
+  isLightMode = dbSettings.userSettings["lightmode"];
+  isDarkMode = dbSettings.userSettings["darkmode"]; 
+ }
+
+  //add to local hive
+  void addPreference(String uid) {
+    dbSettings.addUserSettings(userLanguage, isLightMode, isDarkMode, false);
+  }
+
+  //calls to put data to box
+  void updateDB(String uid) {
+    dbSettings.updateData(uid);
+  }
+  
+
   void changeLanguag(String currentOption) {
     userLanguage = currentOption;
     notifyListeners();

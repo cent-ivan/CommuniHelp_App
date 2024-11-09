@@ -83,6 +83,8 @@ void main() async{
   await Hive.openBox<Map<dynamic, dynamic>>('weatherbox');
   await Hive.openBox<List<dynamic>>('contactbox');
 
+  await Hive.openBox<Map<dynamic, dynamic>>('settingsbox');
+
   await Hive.openBox<bool>('director');
 
   await initializeDateFormatting('en_PH', null); // Initialize for Philippines locale

@@ -1,4 +1,5 @@
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -14,13 +15,18 @@ class UserSettingsView extends StatefulWidget {
 List<String> options =["En", "Fil", "Akl"]; //for radio list
 
 class _UserSettingsViewState extends State<UserSettingsView> {
-  //language current value
-  String currentOption = options[0];
+  
 
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
+  
     final viewModel = Provider.of<UserSettingViewModel>(context);
+    //language current value
+    String currentOption = viewModel.userLanguage;
+
     var languageClass = Language(currentOption);
 
     return Scaffold(
@@ -66,7 +72,9 @@ class _UserSettingsViewState extends State<UserSettingsView> {
               activeColor: Color(0xFF3D424A),
               value:  Theme.of(context).brightness == Brightness.light ? true : false , 
               onChanged: (value) {
-                viewModel.toggleTheme();      
+                viewModel.toggleTheme();     
+                viewModel.addPreference(curUser!.uid);
+                viewModel.updateDB(curUser!.uid); 
               }
             ),
 
@@ -99,10 +107,9 @@ class _UserSettingsViewState extends State<UserSettingsView> {
                       value: options[0], 
                       groupValue: currentOption, 
                       onChanged: (value) {
-                        setState(() {
-                          currentOption = value.toString();
-                        });
-                        viewModel.changeLanguag(currentOption);
+                        viewModel.changeLanguag(value.toString());
+                        viewModel.addPreference(curUser!.uid);
+                        viewModel.updateDB(curUser!.uid);
                       }
                     ),
 
@@ -129,10 +136,9 @@ class _UserSettingsViewState extends State<UserSettingsView> {
                       value: options[1], 
                       groupValue: currentOption, 
                       onChanged: (value) {
-                        setState(() {
-                          currentOption = value.toString();
-                        });
-                        viewModel.changeLanguag(currentOption);
+                        viewModel.changeLanguag(value.toString());
+                        viewModel.addPreference(curUser!.uid);
+                        viewModel.updateDB(curUser!.uid);
                       }
                     ),
 
@@ -159,10 +165,9 @@ class _UserSettingsViewState extends State<UserSettingsView> {
                       value: options[2], 
                       groupValue: currentOption, 
                       onChanged: (value) {
-                        setState(() {
-                          currentOption = value.toString();
-                        });
-                        viewModel.changeLanguag(currentOption);
+                        viewModel.changeLanguag(value.toString());
+                        viewModel.addPreference(curUser!.uid);
+                        viewModel.updateDB(curUser!.uid);
                       }
                     ),
 
@@ -177,6 +182,29 @@ class _UserSettingsViewState extends State<UserSettingsView> {
                 ),
               ],
             ),
+
+            SizedBox(height: 24.r,),
+
+            Row(
+              children: [
+                MaterialButton(
+                    height: 35.r,
+                    minWidth: 65.r,
+                    color: const Color(0xFFFEAE49),
+                    onPressed: () {
+                      viewModel.addPreference(curUser!.uid);
+                      viewModel.updateDB(curUser!.uid);
+                    },
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.outline,
+                        fontSize: 12.r
+                      ),
+                    ),
+                ),
+              ],
+            )
 
           ],
         ),

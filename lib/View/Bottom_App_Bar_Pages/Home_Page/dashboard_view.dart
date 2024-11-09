@@ -1,5 +1,7 @@
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/dashboard_components/announcement_section.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/dashboard_components/dashboard_buttons.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,10 +13,14 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
   
   @override
   Widget build(BuildContext context) {
-    
+     final settings = UserSettingViewModel();
+     settings.loadSettings(curUser!.uid);
+     settings.setThemeToBool(Theme.of(context).brightness);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,//if dark mode const Color(0xFF3D424A)
