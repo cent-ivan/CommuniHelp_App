@@ -1,20 +1,33 @@
 import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/natural_dis_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class NaturalInfoButtons extends StatelessWidget {
+class NaturalInfoButtons extends StatefulWidget {
   const NaturalInfoButtons({
     super.key,
   });
 
   @override
+  State<NaturalInfoButtons> createState() => _NaturalInfoButtonsState();
+}
+
+class _NaturalInfoButtonsState extends State<NaturalInfoButtons> {
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
+
+  @override
   Widget build(BuildContext context) {
     final viewModel =  Provider.of<NaturalDisasterViewModel>(context);
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage); //catches aklanon language to replace with filipino
     return Column(
       children: [
         Text(
-          "Types of Natural Disaster",
+          languageClass.systemLang["NaturalInfo"]["Types"],
           style: TextStyle(
             fontSize: 20.r,
             fontWeight: FontWeight.bold
@@ -33,7 +46,7 @@ class NaturalInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Typhoon", "En");
+            viewModel.getPath("Typhoon", settings.userLanguage);
             Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
@@ -52,7 +65,7 @@ class NaturalInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Typhoon",
+                  languageClass.systemLang["NaturalInfo"]["TyButton"],
                   style: TextStyle(
                     fontSize: 18.r,
                     fontWeight: FontWeight.bold
@@ -74,7 +87,7 @@ class NaturalInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Flood", "En");
+            viewModel.getPath("Flood", settings.userLanguage);
             Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
@@ -93,7 +106,7 @@ class NaturalInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Flood",
+                  languageClass.systemLang["NaturalInfo"][ "FloodButton"],
                   style: TextStyle(
                     fontSize: 18.r,
                     fontWeight: FontWeight.bold
@@ -115,7 +128,7 @@ class NaturalInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Landslide", "En");
+            viewModel.getPath("Landslide", settings.userLanguage);
             Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
@@ -134,9 +147,9 @@ class NaturalInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Landslide",
+                  languageClass.systemLang["NaturalInfo"]["LandButton"],
                   style: TextStyle(
-                    fontSize: 18.r,
+                    fontSize: 16.r,
                     fontWeight: FontWeight.bold
                   ),
                 )
@@ -156,7 +169,7 @@ class NaturalInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Earthquake", "En");
+            viewModel.getPath("Earthquake", settings.userLanguage);
             Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
@@ -175,7 +188,7 @@ class NaturalInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Earthquake",
+                  languageClass.systemLang["NaturalInfo"]["EarthButton"],
                   style: TextStyle(
                     fontSize: 18.r,
                     fontWeight: FontWeight.bold

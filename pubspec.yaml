@@ -76,7 +76,22 @@ flutter:
     #inforgrpahics assets
     - assets/images/infographics/
     - assets/images/infographics/button_images/
-    - assets/images/infographics/natural_infographics/
+    - assets/images/infographics/natural_infographics/typhoon/typhoon_En/
+    - assets/images/infographics/natural_infographics/typhoon/typhoon_Fil/
+    - assets/images/infographics/natural_infographics/flood/flood_En/
+    - assets/images/infographics/natural_infographics/flood/flood_Fil/
+    - assets/images/infographics/natural_infographics/landslide/landslide_En/
+    - assets/images/infographics/natural_infographics/landslide/landslide_Fil/
+    - assets/images/infographics/natural_infographics/earthquake/earthquake_En/
+    - assets/images/infographics/natural_infographics/earthquake/earthquake_Fil/
+    
+    - assets/images/infographics/manmade_infographics/burn/burn_En/
+    - assets/images/infographics/manmade_infographics/burn/burn_Fil/
+    - assets/images/infographics/manmade_infographics/pollution/pollution_En/
+    - assets/images/infographics/manmade_infographics/pollution/pollution_Fil/
+    - assets/images/infographics/manmade_infographics/structural/structural_En/
+    - assets/images/infographics/manmade_infographics/vehicular/vehicular_Fil/
+    
 
       # fonts:
   #   - family: Still searching for fonts

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
 
@@ -13,15 +14,14 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
+  
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
   
   @override
   Widget build(BuildContext context) {
-     final settings = UserSettingViewModel();
-     settings.loadSettings(curUser!.uid);
-     settings.setThemeToBool(Theme.of(context).brightness);
-
+    final themeSettings = UserSettingViewModel();
+    themeSettings.loadSettings(curUser!.uid);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,//if dark mode const Color(0xFF3D424A)
       body: SingleChildScrollView(
