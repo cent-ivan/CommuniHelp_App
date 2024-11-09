@@ -49,7 +49,7 @@ class _UserSettingsViewState extends State<UserSettingsView> {
             SizedBox(height: 8.r,),
 
             //Light and Dark Theme
-            Theme.of(context).brightness == Brightness.light? Text(
+            viewModel.isLightMode? Text(
               languageClass.systemLang["Settings"]["SwitchLightMode"],
               style: TextStyle(
                 fontSize: 16.r,
@@ -70,11 +70,14 @@ class _UserSettingsViewState extends State<UserSettingsView> {
             Switch(
               inactiveThumbColor: Colors.grey,
               activeColor: Color(0xFF3D424A),
-              value:  Theme.of(context).brightness == Brightness.light ? true : false , 
+              value:  viewModel.isLightMode ? true : false, 
               onChanged: (value) {
-                viewModel.toggleTheme();     
-                viewModel.addPreference(curUser!.uid);
-                viewModel.updateDB(curUser!.uid); 
+                setState(() {
+                  viewModel.toggleTheme();     
+                  viewModel.addPreference(curUser!.uid);
+                  viewModel.updateDB(curUser!.uid); 
+                });
+                
               }
             ),
 

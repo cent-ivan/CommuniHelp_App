@@ -26,7 +26,6 @@ class HiveDbSettings {
       Map<dynamic, dynamic> defaultSettings = {
         "language" : "En",
         "lightmode" : true,
-        "darkmode" : false,
         "isDefault" : true //one time use
       };
       _settings.put(uid, defaultSettings);
@@ -37,11 +36,10 @@ class HiveDbSettings {
     }
   }
 
-  void addUserSettings(String language, bool lightmode, bool darktmode, bool isDefault) {
+  void addUserSettings(String language, bool lightmode, bool isDefault) {
     userSettings = {
       "language" : language,
-      "lightmode" : lightmode,
-      "darkmode" :darktmode,
+      "isLightmode" : lightmode,
       "isDefault" : isDefault
     };
   }

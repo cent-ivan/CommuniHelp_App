@@ -1,5 +1,6 @@
 import 'package:communihelp_app/Databases/HiveServices/hive_db_settings.dart';
 import 'package:communihelp_app/ViewModel/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -9,73 +10,41 @@ class UserSettingViewModel extends ChangeNotifier{
   //access local HiveServices
   HiveDbSettings dbSettings = HiveDbSettings();
 
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
+
 
   //Language
   String userLanguage = "En"; //SYSTEM check for this
 
 
  //for theme
- ThemeData _themeData = lightMode;
- ThemeData _darktTheme = darktMode;
+ ThemeData themeData = lightMode;
+ ThemeData darktTheme = darktMode;
 
- bool isLightMode = false;
- bool isDarkMode = false;
+ bool isLightMode = true;
 
- 
-
- ThemeData get themeData => _themeData;
-
- set themeData(ThemeData themeData) {
-  _themeData = themeData;
-  notifyListeners();
- }
-
- ThemeData get darktTheme => _darktTheme;
-
- set darktTheme(ThemeData darktTheme) {
-  _darktTheme = darktTheme;
-  notifyListeners();
+ UserSettingViewModel() {
+  loadSettings(curUser!.uid);
  }
 
 
-  //sets if light or dark
- void setThemeToBool(Brightness currentTheme) {
-  logger.i("Called");
-  //sets for storage
-  if (currentTheme == Brightness.light && !dbSettings.userSettings["isDefault"]) {
-    isLightMode = true;
-    isDarkMode = false;
-    toggleTheme();
-    notifyListeners();
-    logger.i("Light mode!");
-  }
-  else if (currentTheme == Brightness.dark && !dbSettings.userSettings["isDefault"]){
-    isLightMode = false;
-    isDarkMode = true;
-    toggleTheme();
-    notifyListeners();
-    logger.i("Dark mode!");
-  }
-  else {
-    isLightMode = true;
-    isDarkMode = false;
-    toggleTheme();
-    notifyListeners();
-    logger.i("Light mode!");
-  }
- }
 
   //changes theme state
  void toggleTheme() {
-  logger.i("Called theme change");
-  if (_themeData == lightMode && isLightMode) {
-    themeData = darktMode;
-    darktTheme = lightMode;
+  if (isLightMode) {
+    themeData = lightMode;
+    darktTheme = darktMode;
+    
+    isLightMode = false;
+    notifyListeners();
     logger.i("Changed to darkmode");
   }
   else {
-    themeData = lightMode;
-    darktTheme = darktMode;
+    themeData = darktMode;
+    darktTheme = lightMode;
+    isLightMode = true;
+    notifyListeners();
     logger.i("Changed to lightmode");
   }
  }
@@ -83,14 +52,22 @@ class UserSettingViewModel extends ChangeNotifier{
   //loads from hive 
  void loadSettings(String uid) {
   dbSettings.loadData(uid);
-  userLanguage = dbSettings.userSettings["language"];
-  isLightMode = dbSettings.userSettings["lightmode"];
-  isDarkMode = dbSettings.userSettings["darkmode"]; 
+  userLanguage = dbSettings.userSettings['language']; //dbSettings.userSettings["language"];
+  isLightMode = dbSettings.userSettings['isLightmode'];//dbSettings.userSettings["lightmode"];
+  //sets the users preference
+  if (!isLightMode) {
+    themeData = lightMode;
+    darktTheme = darktMode;
+  }
+  else {
+    themeData = darktMode;
+    darktTheme = lightMode;
+  }
  }
 
   //add to local hive
   void addPreference(String uid) {
-    dbSettings.addUserSettings(userLanguage, isLightMode, isDarkMode, false);
+    dbSettings.addUserSettings(userLanguage, isLightMode, false);
   }
 
   //calls to put data to box
@@ -104,6 +81,8 @@ class UserSettingViewModel extends ChangeNotifier{
     notifyListeners();
   }
 }
+
+
 
 class Language {
   Map systemLang = {};
@@ -138,6 +117,15 @@ class Language {
           "Kit" : "My Kits",
           "ReportLabel" : "Send a report",
           "Report" : "Report" 
+        },
+        "NaturalInfo" : {
+          "NaturalTitle" : "Natural Disasters",
+          "Definition" : "Natural disasters, such as typhoons, earthquakes, floods, landslide, and many more, can cause widespread devastation and loss of life. These events are often unpredictable and can occur suddenly, leaving communities with little time to prepare.",
+          "Types" : "Types of Natural Disasters",
+          "TyButton" : "Typhoon",
+          "FloodButton" : "Flood",
+          "LandButton" : "Landslide",
+          "EarthButton" : "Earthquake"
         }
     };
   }
@@ -160,7 +148,16 @@ class Language {
           "Kit" : "Aking Kits",
           "ReportLabel" : "Magpadala ng ulat",
           "Report" : "Report" 
-        }
+        },
+      "NaturalInfo" : {
+        "NaturalTitle" : "Mga likas na sakuna",
+        "Definition" : "Ang mga likas na sakuna, tulad ng bagyo, lindol, baha, pagguho ng lupa, at marami pang iba, ay maaaring magdulot ng matinding pinsala at pagkawala ng buhay. Kadalasan, hindi tiyak kung kailan ito mangyayari at nagiging banta sa komunidad.",
+        "Types" : "Uri ng likas na sakuna",
+        "TyButton" : "Bagyo",
+        "FloodButton" : "Baha",
+        "LandButton" : "Pagguho ng lupa",
+        "EarthButton" : "Lindol"
+      }
     };
   }
 

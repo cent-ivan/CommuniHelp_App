@@ -90,6 +90,7 @@ void main() async{
   await initializeDateFormatting('en_PH', null); // Initialize for Philippines locale
   
   runApp(
+    
     MultiProvider(
       providers: [
         //View Model for Pages
