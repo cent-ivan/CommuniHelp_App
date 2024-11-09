@@ -1,48 +1,88 @@
+import 'package:communihelp_app/Databases/HiveServices/hive_db_settings.dart';
 import 'package:communihelp_app/ViewModel/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 class ResponderSettingViewModel extends ChangeNotifier{
   Logger logger = Logger();
 
+  //access local HiveServices
+  HiveDbSettings dbSettings = HiveDbSettings();
+
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
+
+
+  //Language
+  String userLanguage = "En"; //SYSTEM check for this
+
+
  //for theme
- ThemeData _themeData = lightMode;
- ThemeData _darktTheme = darktMode;
+ ThemeData themeData = lightMode;
+ ThemeData darktTheme = darktMode;
 
- ThemeData get themeData => _themeData;
+ bool isLightMode = true;
 
- set themeData(ThemeData themeData) {
-  _themeData = themeData;
-  notifyListeners();
- }
-
- ThemeData get darktTheme => _darktTheme;
-
- set darktTheme(ThemeData darktTheme) {
-  _darktTheme = darktTheme;
-  notifyListeners();
+ ResponderSettingViewModel() {
+  loadSettings(curUser!.uid);
  }
 
 
+
+  //changes theme state
  void toggleTheme() {
-  logger.i("Called theme change");
-  if (_themeData == lightMode) {
-    themeData = darktMode;
-    darktTheme = lightMode;
+  if (isLightMode) {
+    themeData = lightMode;
+    darktTheme = darktMode;
+    
+    isLightMode = false;
+    notifyListeners();
+    logger.i("Changed to darkmode");
   }
   else {
+    themeData = darktMode;
+    darktTheme = lightMode;
+    isLightMode = true;
+    notifyListeners();
+    logger.i("Changed to lightmode");
+  }
+ }
+
+  //loads from hive 
+ void loadSettings(String uid) {
+  dbSettings.loadData(uid);
+  userLanguage = dbSettings.userSettings['language']; //dbSettings.userSettings["language"];
+  isLightMode = dbSettings.userSettings['isLightmode'];//dbSettings.userSettings["lightmode"];
+  //sets the users preference
+  if (!isLightMode) {
     themeData = lightMode;
     darktTheme = darktMode;
   }
+  else {
+    themeData = darktMode;
+    darktTheme = lightMode;
+  }
  }
 
-  //Language
-  String userLanguage = "En";
+  //add to local hive
+  void addPreference(String uid) {
+    dbSettings.addUserSettings(userLanguage, isLightMode, false);
+  }
+
+  //calls to put data to box
+  void updateDB(String uid) {
+    dbSettings.updateData(uid);
+  }
+  
+
   void changeLanguag(String currentOption) {
     userLanguage = currentOption;
     notifyListeners();
   }
 }
+
+
 
 class Language {
   Map systemLang = {};
@@ -77,7 +117,7 @@ class Language {
           "Kit" : "My Kits",
           "ReportLabel" : "Send a report",
           "Report" : "Report" 
-        }
+        },
     };
   }
 
@@ -99,7 +139,7 @@ class Language {
           "Kit" : "Aking Kits",
           "ReportLabel" : "Magpadala ng ulat",
           "Report" : "Report" 
-        }
+        },
     };
   }
 
@@ -125,3 +165,4 @@ class Language {
     };
   }
 }
+

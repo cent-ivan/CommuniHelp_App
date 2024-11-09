@@ -133,6 +133,18 @@ class _ManmadeInfoPageViewState extends State<ManmadeInfoPageView> {
                 )
               );
             }).toList();
+      case "Fil":
+        result = viewModel.assetFilipinoPaths[viewModel.disasterPath]!.map((infoPath) {
+                return InteractiveViewer(
+                //for zoom
+                minScale: 0.5,
+                maxScale: 8,
+                child: Image(
+                  image: AssetImage(infoPath),
+                  fit: BoxFit.cover,
+                )
+              );
+            }).toList();
       default:
         throw 'Invalid shape type';
     }
@@ -149,13 +161,12 @@ class NaturalAppBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Widget build(BuildContext context) {
-    final viewModel =  Provider.of<ManMadeDisasterViewModel>(context);
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).colorScheme.primary,//Theme.of(context).colorScheme.primary,
       elevation: 1,
       title: Text(
-        viewModel.disasterPath!,
+        "Infographics",
         style: TextStyle(
           color: Theme.of(context).colorScheme.outline,
           fontSize: 20.r,

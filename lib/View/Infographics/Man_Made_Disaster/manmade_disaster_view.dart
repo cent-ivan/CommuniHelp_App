@@ -1,13 +1,27 @@
 import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/Manmade_Info_Components/manmade_infographic_buttons.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ManMadeDisasterView extends StatelessWidget {
+class ManMadeDisasterView extends StatefulWidget {
   const ManMadeDisasterView({super.key});
 
   @override
+  State<ManMadeDisasterView> createState() => _ManMadeDisasterViewState();
+}
+
+class _ManMadeDisasterViewState extends State<ManMadeDisasterView> {
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
+  
+
+  @override
   Widget build(BuildContext context) {
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage); //catches aklanon language to replace with filipino
     return Scaffold(
       appBar: const ManMadeAppBar(),
 
@@ -97,7 +111,7 @@ class ManMadeDisasterView extends StatelessWidget {
                                   
                       //Title
                       Text(
-                        "Man-made Disaster",
+                        languageClass.systemLang["ManmadeInfo"]["Title"],
                         style: TextStyle(
                           fontSize: 20.r,
                           fontWeight: FontWeight.bold
@@ -115,7 +129,7 @@ class ManMadeDisasterView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.r)
                         ),
                         child: Text(
-                          "A man-made disaster can strike with devastating consequences, often stemming from human error, negligence, or intentional harm.",
+                          languageClass.systemLang["ManmadeInfo"]["Definition"],
                           style: TextStyle(
                             fontSize: 16.r
                           ),
@@ -154,12 +168,16 @@ class ManMadeAppBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Widget build(BuildContext context) {
+    User? curUser = FirebaseAuth.instance.currentUser;
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage); //catches aklanon language to replace with filipino
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 1,
       title: Text(
-        "Man-made Disasters",
+        languageClass.systemLang["ManmadeInfo"]["Title"],
         style: TextStyle(
           color: Theme.of(context).colorScheme.outline,
           fontSize: 20.r,

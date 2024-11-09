@@ -1,21 +1,33 @@
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../ViewModel/Inforgraphics_Controller/manmade_dis_view_model.dart';
 
-class ManmadeInfoButtons extends StatelessWidget {
+class ManmadeInfoButtons extends StatefulWidget {
   const ManmadeInfoButtons({
     super.key,
   });
 
   @override
+  State<ManmadeInfoButtons> createState() => _ManmadeInfoButtonsState();
+}
+
+class _ManmadeInfoButtonsState extends State<ManmadeInfoButtons> {
+  User? curUser = FirebaseAuth.instance.currentUser;
+  
+  @override
   Widget build(BuildContext context) {
     final viewModel =  Provider.of<ManMadeDisasterViewModel>(context);
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage); //catches aklanon language to replace with filipino
     return Column(
       children: [
         Text(
-          "Kinds of Man-made Disasters",
+          languageClass.systemLang["ManmadeInfo"]["Types"],
           style: TextStyle(
             fontSize: 20.r,
             fontWeight: FontWeight.bold
@@ -34,7 +46,7 @@ class ManmadeInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Vehicular", "En");
+            viewModel.getPath("Vehicular", settings.userLanguage);
             Navigator.pushNamed(context, '/viewmanmadeinfopage');
           },
           child: Padding(
@@ -53,7 +65,7 @@ class ManmadeInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Vehicular Incident",
+                  languageClass.systemLang["ManmadeInfo"]["Accident"],
                   style: TextStyle(
                     fontSize: 18.r,
                     fontWeight: FontWeight.bold
@@ -75,7 +87,7 @@ class ManmadeInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Burn", "En");
+            viewModel.getPath("Burn", settings.userLanguage);
             Navigator.pushNamed(context, '/viewmanmadeinfopage');
           },
           child: Padding(
@@ -94,7 +106,7 @@ class ManmadeInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Fire related disaster",
+                  languageClass.systemLang["ManmadeInfo"]["Fire"],
                   style: TextStyle(
                     fontSize: 18.r,
                     fontWeight: FontWeight.bold
@@ -116,7 +128,7 @@ class ManmadeInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Structural", "En");
+            viewModel.getPath("Structural", settings.userLanguage);
             Navigator.pushNamed(context, '/viewmanmadeinfopage');
           },
           child: Padding(
@@ -135,9 +147,9 @@ class ManmadeInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Structural Failures",
+                  languageClass.systemLang["ManmadeInfo"]["Failure"],
                   style: TextStyle(
-                    fontSize: 18.r,
+                    fontSize: 16.r,
                     fontWeight: FontWeight.bold
                   ),
                 )
@@ -157,7 +169,7 @@ class ManmadeInfoButtons extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Pollution", "En");
+            viewModel.getPath("Pollution", settings.userLanguage);
             Navigator.pushNamed(context, '/viewmanmadeinfopage');
           },
           child: Padding(
@@ -176,7 +188,7 @@ class ManmadeInfoButtons extends StatelessWidget {
                 SizedBox(width: 40.r,),
         
                 Text(
-                  "Water Pollution",
+                  languageClass.systemLang["ManmadeInfo"]["Pollution"],
                   style: TextStyle(
                     fontSize: 18.r,
                     fontWeight: FontWeight.bold

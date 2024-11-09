@@ -126,7 +126,16 @@ class Language {
           "FloodButton" : "Flood",
           "LandButton" : "Landslide",
           "EarthButton" : "Earthquake"
-        }
+        },
+        "ManmadeInfo" : {
+        "Title" : "Man-made Disaster",
+        "Definition" : "A man-made disaster can strike with devastating consequences, often stemming from human error, negligence, or intentional harm.",
+        "Types" : "Kinds of Man-made disasters",
+        "Accident" : "Vehicular Incident",
+        "Fire" : "Fire related disaster",
+        "Failure" : "Structural Failures",
+        "Pollution" : "Water Pollution"
+      }
     };
   }
 
@@ -157,6 +166,15 @@ class Language {
         "FloodButton" : "Baha",
         "LandButton" : "Pagguho ng lupa",
         "EarthButton" : "Lindol"
+      },
+      "ManmadeInfo" : {
+        "Title" : "Mga sakunang likha ng tao",
+        "Definition" : "Ang isang sakunang likha ng tao ay maaaring magdulot ng matinding pinsala, na kadalasang nagmumula sa pagkakamali, kapabayaan, o sinadyang pananakit ng tao.",
+        "Types" : "Uri ng sakunang likha ng tao",
+        "Accident" : "Aksidente sa sasakyan",
+        "Fire" : "Sunog",
+        "Failure" : "Pagbagsak ng estruktura",
+        "Pollution" : "Polusyon sa tubig"
       }
     };
   }
