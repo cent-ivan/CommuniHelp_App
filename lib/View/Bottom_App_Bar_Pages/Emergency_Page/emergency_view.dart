@@ -1,5 +1,7 @@
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Emergency_Page/emergency_components/emergency_buttons.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -74,10 +76,16 @@ class EmergencyNumbers extends StatefulWidget {
 }
 
 class _EmergencyNumbersState extends State<EmergencyNumbers> {
+  //show current user
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
+    final settings = UserSettingViewModel();
+    settings.loadSettings(user.uid);
+    var languageClass = Language(settings.userLanguage); //catches aklanon language to replace with filipino
     return Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => SingleChildScrollView(
+      
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 20, 40, 20),
           child: SizedBox(
@@ -149,7 +157,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                   alignment: Alignment.topLeft,
                   margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                   child: Text(
-                    "List of Hostpitals",
+                    languageClass.systemLang["Emergency"]["host"],
                     style: TextStyle(
                       fontSize: 20.r,
                       fontWeight: FontWeight.bold,
@@ -174,7 +182,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                   alignment: Alignment.topLeft,
                   margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                   child: Text(
-                    "Number/s of Fire rescuer",
+                    languageClass.systemLang["Emergency"]["fire"],
                     style: TextStyle(
                       fontSize: 20.r,
                       fontWeight: FontWeight.bold,
@@ -196,7 +204,7 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
                   alignment: Alignment.topLeft,
                   margin: const EdgeInsets.fromLTRB(9, 25, 9, 10).r,
                   child: Text(
-                    "Number of Coastguard",
+                    languageClass.systemLang["Emergency"]["coast"],
                     style: TextStyle(
                       fontSize: 20.r,
                       fontWeight: FontWeight.bold,

@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Model/forum_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,8 +27,17 @@ class PostDialog {
     )
   );
 
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
+
+  final settings = UserSettingViewModel();
+  
+
   void addPost(BuildContext context) {
     final userData = Provider.of<GetUserData>(context, listen: false);
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage); //catches aklanon language to replace with filipino
+
     showDialog(
       barrierDismissible: false,
       context: context, 
@@ -35,8 +46,11 @@ class PostDialog {
           height: 500.r,
           child: SingleChildScrollView(
             child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.r),)
+              ),
               backgroundColor: Theme.of(context).colorScheme.surface,
-              title: Text("Magbahagi ng saloobin", style: TextStyle(fontWeight: FontWeight.bold),),
+              title: Text(languageClass.systemLang["Forum"]["DialogTitle"], style: TextStyle(fontWeight: FontWeight.bold),),
               contentPadding: EdgeInsets.symmetric(horizontal: 0),
               content: Form(
                 key: _formKey,
@@ -70,7 +84,7 @@ class PostDialog {
                               ),
                                     
                               Text(
-                                "${userData.name}, taga-${userData.barangay}"
+                                "${userData.name}, ${languageClass.systemLang["Forum"]["from"]}${userData.barangay}"
                               ),
                             ],
                           ),
@@ -83,7 +97,7 @@ class PostDialog {
                                 fontSize: 16.r
                               ),
                               decoration: InputDecoration(
-                                hintText: 'Enter post title', //Pamagat ng iyong post 
+                                hintText: languageClass.systemLang["Forum"]["FieldTitle"], //Pamagat ng iyong post 
                                 hintStyle: TextStyle(
                                   fontWeight: FontWeight.bold
                                 )
@@ -93,7 +107,7 @@ class PostDialog {
                               maxLines: 3,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Enter a title first";
+                                  return languageClass.systemLang["Forum"]["BlankTitle"];
                                 }
                                 return null;
                               },
@@ -109,7 +123,7 @@ class PostDialog {
                               controller: content,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                hintText: "What's on your mind?", //Ano ang iyong gustong ibahagi?
+                                hintText: languageClass.systemLang["Forum"]["Content"], //Ano ang iyong gustong ibahagi?
                                 hintStyle: TextStyle(
                                   fontStyle: FontStyle.italic
                                 )
@@ -118,7 +132,7 @@ class PostDialog {
                               maxLines: 10,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Post is blank"; //Blangko ang iyong post
+                                  return languageClass.systemLang["Forum"]["BlankContent"]; //Blangko ang iyong post
                                 }
                                 return null;
                               },

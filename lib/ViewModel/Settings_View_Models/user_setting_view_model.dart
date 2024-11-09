@@ -24,10 +24,6 @@ class UserSettingViewModel extends ChangeNotifier{
 
  bool isLightMode = true;
 
- UserSettingViewModel() {
-  loadSettings(curUser!.uid);
- }
-
 
 
   //changes theme state
@@ -135,7 +131,38 @@ class Language {
         "Fire" : "Fire related disaster",
         "Failure" : "Structural Failures",
         "Pollution" : "Water Pollution"
-      }
+      },
+        "Contact" : {
+          "Label" : "My Contact List",
+          "Search" : "Search"
+        },
+        "Forum" : {
+          "PostButton" : "Share a thought",
+          "Offline" : "Offline mode. Cannot Post and Like",
+          "DialogTitle" : "Share a thought",
+          "from" : "from ",
+          "FieldTitle" : "Enter post title",
+          "Content" : "What's on your mind?",
+          "BlankTitle" : "Enter a title first",
+          "BlankContent" : "Post is blank"
+        },
+        "Profile" : {
+          "ProfileLabel" : "My Profile",
+          "details" : "Personal Details",
+          "contactdet" : "Contact Details",
+          "fullname" : "Full Name",
+          "gender" : "Gender",
+          "birthday" : "Birthdate",
+          "edit": "Edit Profile",
+          "nonet": "No Internet. Cannot Edit",
+          "changeemail" : "Change email here",
+          "changepass" : "Change password here"
+        },
+        "Emergency" : {
+          "host" : "List of Hostpitals",
+          "fire" : "Number of Fire Rescuer",
+          "coast" : "Number of Coastguard"
+        }
     };
   }
 
@@ -150,10 +177,10 @@ class Language {
       "Home" : {
           "Announcement" : "Mga Anunsyo",
           "NaturalDis" : "Natural na Sakuna",
-          "ManmadeDis" : "Sakunang Gawa-tao",
+          "ManmadeDis" : "Sakunang Gawang-tao",
           "SearchEvac" : "Maghanap ng Evacuation Center",
           "News" : "Mga Balita",
-          "Weather" : "Anv Panahon",
+          "Weather" : "Ang Panahon",
           "Kit" : "Aking Kits",
           "ReportLabel" : "Magpadala ng ulat",
           "Report" : "Report" 
@@ -175,7 +202,39 @@ class Language {
         "Fire" : "Sunog",
         "Failure" : "Pagbagsak ng estruktura",
         "Pollution" : "Polusyon sa tubig"
-      }
+      },
+      "Contact" : {
+          "Label" : "Aking Kontaks",
+          "Search" : "Hanapin"
+        },
+      "Forum" : {
+          "PostButton" : "Magbahagi ng saloobin",
+          "Offline" : "Offline mode. Hindi maka-Post at Like",
+          "DialogTitle" : "Magbahagi ng saloobin",
+          "from" : "taga-",
+          "FieldTitle" : "Maglagay ng titulo",
+          "Content" : "Ano nasa isip mo?",
+          "BlankTitle" : "Maglagay ng titulo",
+          "BlankContent" : "Walang laman ang post"
+      },
+      "Profile" : {
+          "ProfileLabel" : "Aking profile",
+          "details" : "Personal na Impormasyon",
+          "contactdet" : "Mga detalye ng Contact",
+          "fullname" : "Buong Pangalan",
+          "gender" : "Kasarian",
+          "birthday" : "Kaarawan",
+          "edit": "Baguhin ang profile",
+          "nonet": "Walang Internet.",
+          "changeemail" : "Bagohin ang email",
+          "changepass" : "Bagohin ang password"
+        },
+      "Emergency" : {
+          "host" : "Listahan ng mga ostpital",
+          "fire" : "Numero ng Bombero",
+          "coast" : "Numero ng Coastguard"
+        }
+
     };
   }
 
@@ -197,58 +256,41 @@ class Language {
           "Kit" : "Akong Kits",
           "ReportLabel" : "Magpadaea it ulat",
           "Report" : "Report" 
+        },
+        "Contact" : {
+          "Label" : "Akong Kontaks",
+          "Search" : "Pangitaon"
+        },
+        "Forum" : {
+          "PostButton" : "Magbahagi ng saloobin",
+          "Offline" : "Offline mode. Hindi maka-Post at Like",
+          "DialogTitle" : "Magbahagi ng saloobin",
+          "from" : "taga-",
+          "FieldTitle" : "Magbutang it titulo",
+          "Content" : "Ano nasa isip mo?",
+          "BlankTitle" : "Magbutang it titulo",
+          "BlankContent" : "Uwa’t sulod ro post"
+      },
+      "Profile" : {
+          "ProfileLabel" : "Akong profile",
+          "details" : "Personal nga Impormasyon",
+          "contactdet" : "Mga detalye it Contact",
+          "fullname" : "Buo nga Pangalan",
+          "gender" : "Kasarian",
+          "birthday" : "Kaarawan",
+          "edit": "Baguhon ang profile",
+          "nonet": "Wa it Internet.",
+          "changeemail" : "Bag-ohon ang email",
+          "changepass" : "Bag-ohon ang password"
+        },
+        "Emergency" : {
+          "host" : "Listahan it mga ostpital",
+          "fire" : "Numero it Bombero",
+          "coast" : "Numero it Coastguard"
         }
     };
   }
 }
 
-// abstract class Language {
-//   void display();
-
-//   factory Language(String language) {
-//     if (language.toLowerCase() == "en") {
-//       return EnglishLang();
-//     }
-//     else if (language.toLowerCase() == "fil") {
-//       return FiliLang();
-//     }
-//     else {
-//       throw ArgumentError("Invalid language");
-//     }
-//   }
-// }
-
-// class EnglishLang implements Language {
-//   final Map translationEn1 = {
-//     "Settings" : {
-//       "DisplaySetting" : "Display setting",
-//       "SwitchLightMode" : "Switch to light mode",
-//       "SwitchDarkMode" : "Switch to dark mode",
-//       "Preffered": "Preferred Language"
-//     }
-//   };
-
-//   @override
-//   void display() {
-//     print("Im english");
-//   }
-  
-// }
-
-// class FiliLang implements Language{
-//   final Map translationEn1 = {
-//     "Settings" : {
-//       "DisplaySetting" : "",
-//       "SwitchLightMode" : "Lumipat sa light mode",
-//       "SwitchDarkMode" : "Lumipat sa  dark mode",
-//       "Preffered": "Piniling Wika"
-//     }
-//   };
-
-//   @override
-//   void display() {
-//     print("Im filipino");
-//   }
-// }
 
 

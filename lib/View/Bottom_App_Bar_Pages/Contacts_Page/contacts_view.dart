@@ -1,5 +1,6 @@
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +30,9 @@ class _ContactsViewState extends State<ContactsView> {
   
   @override
   Widget build(BuildContext context) {
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage); //catches aklanon language to replace with filipino
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -41,7 +45,7 @@ class _ContactsViewState extends State<ContactsView> {
               children: [
                 SizedBox(height: 36.r,),
                 Text(
-                  "My Contact List",
+                  languageClass.systemLang["Contact"]["Label"],
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.outline,
                     fontSize: 24.r,
@@ -65,7 +69,7 @@ class _ContactsViewState extends State<ContactsView> {
                   cursorColor: Theme.of(context).colorScheme.outline,
                   decoration: InputDecoration(
                     suffixIcon: Icon(Icons.search),
-                    hintText: "Search",
+                    hintText: languageClass.systemLang["Contact"]["Search"],
                     hintStyle: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                       fontStyle: FontStyle.italic
