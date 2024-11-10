@@ -455,39 +455,8 @@ class DrawerBase extends StatelessWidget {
                   )
                 ),
       
-                //Rate Us 
-                Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.reviews_sharp), 
-                        iconSize: 25,
-                        color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
-                      ),
-      
-                      const SizedBox( width: 15,),
-      
-                      TextButton(
-                        child: Text(
-                          "Rate Us",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                        ),
-                        onPressed: (){
-      
-                        },
-                      )
-                    ],
-                  )
-                ),
 
-
-                const SizedBox( height: 50,),
+                const SizedBox( height: 60,),
 
                 //Logout
                 Container(

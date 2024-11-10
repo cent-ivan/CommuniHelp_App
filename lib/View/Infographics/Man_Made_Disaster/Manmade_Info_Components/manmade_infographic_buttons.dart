@@ -21,7 +21,7 @@ class _ManmadeInfoButtonsState extends State<ManmadeInfoButtons> {
   @override
   Widget build(BuildContext context) {
     final viewModel =  Provider.of<ManMadeDisasterViewModel>(context);
-    final settings = UserSettingViewModel();
+    final settings = Provider.of<UserSettingViewModel>(context);
     settings.loadSettings(curUser!.uid);
     var languageClass = Language(settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage); //catches aklanon language to replace with filipino
     return Column(
@@ -46,7 +46,7 @@ class _ManmadeInfoButtonsState extends State<ManmadeInfoButtons> {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Vehicular", settings.userLanguage);
+            viewModel.getPath("Vehicular", settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage);
             Navigator.pushNamed(context, '/viewmanmadeinfopage');
           },
           child: Padding(
@@ -87,7 +87,7 @@ class _ManmadeInfoButtonsState extends State<ManmadeInfoButtons> {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Burn", settings.userLanguage);
+            viewModel.getPath("Burn",settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage);
             Navigator.pushNamed(context, '/viewmanmadeinfopage');
           },
           child: Padding(
@@ -128,7 +128,7 @@ class _ManmadeInfoButtonsState extends State<ManmadeInfoButtons> {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Structural", settings.userLanguage);
+            viewModel.getPath("Structural",settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage);
             Navigator.pushNamed(context, '/viewmanmadeinfopage');
           },
           child: Padding(
@@ -169,7 +169,7 @@ class _ManmadeInfoButtonsState extends State<ManmadeInfoButtons> {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Pollution", settings.userLanguage);
+            viewModel.getPath("Pollution", settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage);
             Navigator.pushNamed(context, '/viewmanmadeinfopage');
           },
           child: Padding(

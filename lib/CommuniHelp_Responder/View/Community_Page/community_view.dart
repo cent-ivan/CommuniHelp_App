@@ -90,7 +90,7 @@ class _ResponderCommunityViewState extends State<ResponderCommunityView> {
                   stream: viewModel.getStream(userData.municipality), 
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
+                      return Center(child: const CircularProgressIndicator());
                     }
 
                     if (!snapshot.hasData) {

@@ -46,7 +46,7 @@ class _NaturalInfoButtonsState extends State<NaturalInfoButtons> {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Typhoon", settings.userLanguage);
+            viewModel.getPath("Typhoon", settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage);
             Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
@@ -87,7 +87,7 @@ class _NaturalInfoButtonsState extends State<NaturalInfoButtons> {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Flood", settings.userLanguage);
+            viewModel.getPath("Flood", settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage);
             Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
@@ -128,7 +128,7 @@ class _NaturalInfoButtonsState extends State<NaturalInfoButtons> {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Landslide", settings.userLanguage);
+            viewModel.getPath("Landslide", settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage);
             Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(
@@ -169,7 +169,7 @@ class _NaturalInfoButtonsState extends State<NaturalInfoButtons> {
             side: BorderSide(color: Theme.of(context).colorScheme.outline)
           ),
           onPressed: () {
-            viewModel.getPath("Earthquake", settings.userLanguage);
+            viewModel.getPath("Earthquake", settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage);
             Navigator.pushNamed(context, '/viewinfopage');
           },
           child: Padding(

@@ -112,6 +112,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                               child: Container(
                                 width: 155.r,
                                 margin: const EdgeInsets.only(bottom: 8).r,
+                                padding: EdgeInsets.all(8).r,
                                 decoration: BoxDecoration(
                                   color: item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26,
                                   borderRadius: BorderRadius.all(const Radius.circular(5).r)
@@ -121,7 +122,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 14.r
+                                    fontSize: 12.r
                                   ),
                                 ),
                               ),

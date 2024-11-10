@@ -252,7 +252,7 @@ class Language {
           "ManmadeDis" : "Sakunang Gawa-tao",
           "SearchEvac" : "Magusoy ng Evacuation Center",
           "News" : "Mga Balita",
-          "Weather" : "Anv Panahon",
+          "Weather" : "Ang Panahon",
           "Kit" : "Akong Kits",
           "ReportLabel" : "Magpadaea it ulat",
           "Report" : "Report" 

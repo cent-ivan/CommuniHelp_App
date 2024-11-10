@@ -308,7 +308,7 @@ class DrawerBase extends StatelessWidget {
                 
                 //Home
                 Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
+                  margin: const EdgeInsets.only(bottom: 4), 
                   child: Row(
                     children: [
                       IconButton(
@@ -342,7 +342,7 @@ class DrawerBase extends StatelessWidget {
 
                 //Notifications
                 Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
+                  margin: const EdgeInsets.only(bottom: 4), 
                   child: Row(
                     children: [
                       IconButton(
@@ -374,7 +374,7 @@ class DrawerBase extends StatelessWidget {
 
                 //Privacy Policy
                 Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
+                  margin: const EdgeInsets.only(bottom: 4), 
                   child: Row(
                     children: [
                       IconButton(
@@ -437,39 +437,8 @@ class DrawerBase extends StatelessWidget {
                   )
                 ),
       
-                //Rate Us 
-                Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.reviews_sharp), 
-                        iconSize: 25,
-                        color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
-                      ),
-      
-                      const SizedBox( width: 15,),
-      
-                      TextButton(
-                        child: Text(
-                          "Rate Us",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                        ),
-                        onPressed: (){
-      
-                        },
-                      )
-                    ],
-                  )
-                ),
-
-
-                const SizedBox( height: 50,),
+          
+                const SizedBox( height: 65,),
 
                 //Logout
                 Container(

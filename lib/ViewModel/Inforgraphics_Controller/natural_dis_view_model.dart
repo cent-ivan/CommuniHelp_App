@@ -84,7 +84,7 @@ class NaturalDisasterViewModel extends ChangeNotifier{
         }
       }
     }
-    else if (language.contains("Fil")) {
+    else if (language.contains("Fil") || language.contains("Akl") ) {
       for (String key in assetFilipinoPaths.keys) {
         if (disaster == key) {
           disasterPath = key;
