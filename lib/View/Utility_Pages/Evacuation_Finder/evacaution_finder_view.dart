@@ -1,9 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/Model/evacuation_marker_model.dart';
+import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/direction_repo.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
+import 'package:communihelp_app/auth_director.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
@@ -16,18 +22,25 @@ class EvacautionFinderView extends StatefulWidget {
 
 class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   Logger logger = Logger(); //for debug messages
+  final dialog = GlobalDialogUtil();
+  final director = Director();
   
-  //sets the initial focus of the camera when the map is created
-  static const _initialCameraPosition = CameraPosition(
-    target: LatLng(11.904964, 122.000402), //TODO: change this to municipal LatLng
-    zoom: 17 //lower the zoom out it gets
-  );
-
-  final LatLng evacPosition = LatLng(11.906098, 122.00043);
 
   final vModel = EvacuationFinderViewModel();
+  final userData = GetUserData();
 
   late GoogleMapController googleMapController;
+
+  //gets teh current location
+  LocationData? currentLocation;
+
+  @override
+  void initState() {
+    vModel.setCustomMarker();
+    getCurrentLocation();
+    loadPins();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -35,54 +48,64 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
     super.dispose();
   }
 
+  void loadPins() {
+    getMarkers(userData.municipality);
+    
+  }
+
+  String? initialValue;
+  String? targetEvac;
+  
+  Set<Marker> evacPins = {}; //store from firestore to set
+  //Temp store data of evac positions
+  Map<String, dynamic> evacData = {};
 
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<EvacuationFinderViewModel>(context);
+    
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: const MapAppBar(),
 
-      body: Stack(
+      body: 
+      currentLocation == null ?
+      Center(child: CircularProgressIndicator(color: Color(0xA6FEAE49),),) :
+      Stack(
         children: [
-          
           //Map
           GoogleMap(
             mapType: MapType.hybrid,
             zoomControlsEnabled: false,
-            initialCameraPosition: _initialCameraPosition, //set initial position when opened
+            initialCameraPosition: CameraPosition(target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!), zoom: 12.5), //CameraPosition(target: LatLng(viewModel.currentLocation!.latitude!, viewModel.currentLocation!.longitude!), zoom: 14.5), //set initial position when opened
             onMapCreated: (controller) => googleMapController = controller, //assign the controller
             markers: {
-               viewModel.origin ?? Marker( markerId: const MarkerId('origin')), //applies temporary value,
+              viewModel.origin ?? Marker( markerId: const MarkerId('origin')), //applies temporary value,
               viewModel.destination ??  Marker( markerId: const MarkerId('destination')),
-      
-              //sample evac center
+
+              //current positioni pin
               Marker(
-                markerId: const MarkerId('evac_center'),
-                infoWindow: InfoWindow(title: 'Unidos Evac location'), //display text over the marker
-                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-                position: evacPosition,
-                onTap: () => googleMapController.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                      target: evacPosition,
-                      zoom: 19.5,
-                      tilt: 40.0
-                    )
-                  )
-                )
-      
+                markerId: MarkerId('user_position'),
+                position: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
+                infoWindow: InfoWindow(title: "You"),
               )
-            },
+
+            }.union(evacPins),
+
             onLongPress: (pos) {
               addMarker(pos, viewModel);
             },
+
+            //lines
             polylines: {
+              //draws polyline
               if (viewModel.direct != null)
               Polyline(
                 polylineId: PolylineId('sample_polyline'),
-                color: Colors.amber,
-                width: 5,
+                startCap: Cap.roundCap,
+                endCap: Cap.roundCap,
+                color: Color(0xA6FEAE49),
+                width: 6,
                 points: viewModel.direct!.polylinePoints.map(
                   (e) => LatLng(e.latitude, e.longitude)).toList(),
                 
@@ -91,60 +114,91 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           ),
 
           Positioned(
-            bottom: 20.r,
+            bottom: 10.r,
             left: 10.r,
             child: Container(
-              padding: EdgeInsets.all(4).r,
+              padding: EdgeInsets.symmetric(vertical: 5.r, horizontal: 4.r),
               decoration: BoxDecoration(
-                color: Color(0xE657BEE6),
-                borderRadius: BorderRadius.circular(6).r
+                color: Color(0x73F2F2F2), //button
+                borderRadius: BorderRadius.circular(5).r
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     "Evacuation Center List",
                     style: TextStyle(
-                        fontSize: 14.r,
+                        fontSize: 12.r,
                         fontWeight: FontWeight.bold,
                         color: Colors.black
                     ),
                   ),
 
-                  DropdownButton(
-                    value: "NABAS_hds",
-                    dropdownColor: Color(0xFFEDEDED),
-                    underline: Container(
-                      height: 1,
-                      color: Colors.black,
-                    ),
-                    iconEnabledColor: Colors.black,
-                    onChanged: (newVal) {
 
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        value: 'NABAS_unidos',
-                        child: Text(
-                          "Unidos Multi-Purpose Pavement",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12.r
-                          ),
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection('locations_evac').doc(userData.municipality.toUpperCase()).snapshots(), 
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(child: Text("some error occured ${snapshot.error}"),);
+                      }
+
+                      List<DropdownMenuItem> evacPlace = [];
+                      if (!snapshot.hasData) {
+                        return const CircularProgressIndicator.adaptive();
+                      }
+                      if (snapshot.hasData && snapshot.data != null && snapshot.data!.exists) {
+                        // Get the document data
+                        Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                        
+                        for (String key in data.keys) {
+                          evacPlace.add(
+                            DropdownMenuItem(
+                              value: key,
+                              child: Text(
+                                  data[key]["name"],
+                                  style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.r
+                                ),
+                              ),
+                            )
+                          );
+                        }
+                      }
+
+                      return DropdownButton(
+                        value: initialValue,
+                        dropdownColor: Color(0xFFEDEDED),
+                        underline: Container(
+                          height: 1,
+                          color: Colors.black,
                         ),
-                      ),
-                      DropdownMenuItem(
-                        value: 'NABAS_Evac',
-                        child: Text(
-                          "Nabas Multi-Purpose Pavement",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12.r
-                          ),
-                        ),
-                      ),
-                    ], 
-                  )
+                        iconEnabledColor: Colors.black,
+                        onChanged: (newVal) {
+                          setState(() {
+                            initialValue= newVal;
+                            targetEvac = newVal;
+                          });
+                          googleMapController.animateCamera(
+                            CameraUpdate.newCameraPosition(
+                              CameraPosition(
+                                target: getEvacPosition(newVal),
+                                zoom: 15.5,
+                                tilt: 50.0
+                              )
+                            )
+                          );
+                        },
+                        onTap: () {
+                          getMarkers(userData.municipality);
+                        },
+                        items: evacPlace,
+                      );
+                    }
+                  ),
+
+                  
+                  
                 ],
               ),
             ),
@@ -160,7 +214,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
               padding: EdgeInsets.symmetric(vertical: 8.r, horizontal: 12.r),
               decoration: BoxDecoration(
                 color: Color(0xFFADADAD),
-                borderRadius: BorderRadius.circular(4).r,
+                borderRadius: BorderRadius.circular(3.5).r,
                 gradient: LinearGradient(
                   colors: [const Color(0xFFFEAE49), const Color(0xCCFEC57C), Color(0xFFEEEDAD), ],
                   begin: Alignment.topCenter,
@@ -169,7 +223,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                 ),
               ),
               child: Text(
-                "DISTANCE: ${viewModel.direct!.totalDistance}, ${viewModel.direct!.totalDuration}",
+                "DISTANCE: ${viewModel.direct!.totalDistance}",
                 style: TextStyle(
                   fontSize: 13.r,
                   fontWeight: FontWeight.bold,
@@ -178,15 +232,15 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
               ),
             ),
           ),
-      
-      
+
+          //Features dial
           Positioned(
-            bottom: 85,
-            right: 15,
+            bottom: 85.r,
+            right: 15.r,
             child: SpeedDial(
               elevation : 0,
               backgroundColor: Color(0xFF57BEE6),
-              overlayColor: Colors.black,
+              overlayColor: Colors.black26,
               animatedIcon: AnimatedIcons.list_view,
               children: [
                 SpeedDialChild(
@@ -199,22 +253,19 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                 SpeedDialChild(
                   labelBackgroundColor: Color(0xFFFEAE49),
                   label: "Path to evacuate",
-                  onTap: () async {
-                    if (viewModel.origin != null && viewModel.destination == null) {
-                      final directions = await DirectionRepo().getDirection(viewModel.origin!.position, evacPosition);
+                  //for direction
+                  onTap: () async { // origin to target
+
+                    if (targetEvac != null) {
+                      final directions  = await DirectionRepo().getDirection(LatLng(currentLocation!.latitude!, currentLocation!.longitude!), getEvacPosition(targetEvac!));
                       setState(() {
                         viewModel.direct = directions;
                       });
                     }
                     else {
-                      setState(() {
-                        viewModel.destination = null;
-                      });
-                      final directions = await DirectionRepo().getDirection(viewModel.origin!.position, evacPosition);
-                      setState(() {
-                        viewModel.direct = directions;
-                      });
+                      dialog.noLocationDialog(context);
                     }
+                    
                   }
                 ),
       
@@ -234,13 +285,89 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           onPressed: () => googleMapController.animateCamera(
             viewModel.direct != null ? 
             CameraUpdate.newLatLngBounds(viewModel.direct!.bounds, 100.0) :
-            CameraUpdate.newCameraPosition(_initialCameraPosition) //move to initial position,
+            CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!), zoom: 12.5, tilt: 20.0),) //move to initial position,
           ),
-          child: Icon(Icons.center_focus_strong),
+          child: viewModel.direct == null? Icon(Icons.pin_drop)  : Icon(Icons.center_focus_strong),
         ),
       ),
 
     );
+  }
+
+  
+
+  void getCurrentLocation() async {
+    Location location = Location();
+    try {
+      await location.getLocation().then((location) {
+      if (mounted) {
+          setState(() {
+          currentLocation = location;
+        });
+      }
+      });
+
+      //listens to movement of user
+      location.onLocationChanged.listen(
+        (newLoc) {
+          
+          if (mounted) {
+            setState(() {
+              //assigns nwe location
+              currentLocation = newLoc;
+            });
+          }
+        }
+      );
+    } catch (e) {
+      logger.e("Error: ${e.toString()}");
+    }
+    
+
+    logger.i("Added current location: $currentLocation");
+  }
+
+  //gets the position of
+  LatLng getEvacPosition(String id) {
+    LatLng postion;
+    if (evacData.containsKey(id) && evacData.isNotEmpty) {
+      postion = evacData[id];
+    }
+    else {
+      postion = LatLng(currentLocation!.latitude!, currentLocation!.longitude!);
+    }
+    return postion;
+  }
+
+  //returns epins
+  Future getMarkers(String municipality) async {
+   
+    try {
+      DocumentSnapshot doc = await FirebaseFirestore.instance.collection("locations_evac").doc(municipality.toUpperCase()).get();
+      if (doc.exists) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        for (String key in data.keys) {
+          EvacuationMarkerModel markerData =  EvacuationMarkerModel.fromJson(data[key]);
+          logger.i(key);
+          //Store at temp map
+          evacData[key] = markerData.position;
+
+          //adds it to the list of pins
+          evacPins.add(
+            Marker(
+              markerId: MarkerId(key),
+              infoWindow: InfoWindow(title: markerData.name),
+              position: markerData.position!,
+              icon: vModel.evacIcon,
+            )
+          );
+        }
+
+      }
+    }
+    catch (error) {
+      logger.e("Error: ${error.toString()}");
+    }
   }
 
   //adds pin 
@@ -252,7 +379,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
         viewModel.direct = null; //clears the polyline if one pin
         viewModel.origin = Marker(
           markerId: const MarkerId('origin'),
-          infoWindow: InfoWindow(title: 'Your origin ${pos.toString()}'), //display text over the marker
+          infoWindow: InfoWindow(title: 'Origin ${pos.toString()}'), //display text over the marker
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
           position: pos,
           onTap: () => googleMapController.animateCamera(
@@ -275,7 +402,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
       setState(() {
         viewModel.destination = Marker(
           markerId: const MarkerId('destination'),
-          infoWindow: InfoWindow(title: 'Your destination ${pos.toString()}'), //display text over the marker
+          infoWindow: InfoWindow(title: 'Destination ${pos.toString()}'), //display text over the marker
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
           position: pos,
           onTap: () => googleMapController.animateCamera(
@@ -299,7 +426,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   }
 }
 
-
+  
 
 //APP BAR-------------------------------------------------------
 class MapAppBar extends StatelessWidget implements PreferredSizeWidget{
@@ -314,7 +441,7 @@ class MapAppBar extends StatelessWidget implements PreferredSizeWidget{
       backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 1,
       title: Text(
-          "Maps",
+          "Evacuation Map",
           style: TextStyle(
             color: Theme.of(context).colorScheme.outline,
             fontSize: 25,
