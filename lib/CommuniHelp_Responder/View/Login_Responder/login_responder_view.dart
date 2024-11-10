@@ -56,7 +56,7 @@ class _LoginResponderViewState extends State<LoginResponderView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 520.r,
+                      width: 230.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),
@@ -104,7 +104,7 @@ class _LoginResponderViewState extends State<LoginResponderView> {
                   ],
                 ),
                 
-                const SizedBox(height: 20,),
+                SizedBox(height: 30.r,),
         
                 //Login box
                 Container(

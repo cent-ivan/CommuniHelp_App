@@ -58,7 +58,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 280.r,
+                      width: 240.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),
@@ -642,6 +642,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                                   "Some input fields are still missing",
                                                   style: TextStyle(
                                                   fontSize: 16,
+                                                  color: Color(0xFF3D424A)
                                                 ),
                                               ),
                                               ),
@@ -679,7 +680,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                       Navigator.pop(context);
                                     }, 
                                     child: Text(
-                                      "Member na ako",
+                                      "Login Page",
                                       style: TextStyle(
                                         fontSize: 12.r,
                                         fontWeight: FontWeight.bold,
