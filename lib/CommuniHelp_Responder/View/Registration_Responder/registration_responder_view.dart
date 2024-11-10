@@ -18,7 +18,7 @@ class RegistrationResponderView extends StatefulWidget {
 List<String> options =["Male", "Female"]; //for radio list
 class _RegistrationResponderViewState extends State<RegistrationResponderView> {
   //DefaultBox height
-  double _whiteContainerHeight = 750.r + 40.r;
+  double _whiteContainerHeight = 680.r + 40.r;
 
   //password values
   bool _isObscure1 =  true;
@@ -57,7 +57,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 240.r,
+                      width: 210.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),
@@ -65,7 +65,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
 
                     //Logo and title
                     Positioned(
-                      top: 120.r,
+                      top: 150.r,
                       child: Text(
                         "Register Responder",
                         style: TextStyle(

@@ -38,7 +38,7 @@ class _LoginResponderViewState extends State<LoginResponderView> {
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: Container(
-          width: 500.r,
+          width: 490.r,
           height: 755.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -56,7 +56,7 @@ class _LoginResponderViewState extends State<LoginResponderView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 230.r,
+                      width: 200.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),
@@ -70,7 +70,7 @@ class _LoginResponderViewState extends State<LoginResponderView> {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 30.r,
+                          fontSize: 26.r,
                           letterSpacing: 2.r,
                           shadows: [
                             Shadow(
@@ -90,7 +90,7 @@ class _LoginResponderViewState extends State<LoginResponderView> {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
-                          fontSize: 14.r,
+                          fontSize: 12.r,
                           shadows: [
                             Shadow(
                               color: Colors.white,

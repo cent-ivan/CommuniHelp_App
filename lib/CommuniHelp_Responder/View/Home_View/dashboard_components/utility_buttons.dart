@@ -1,6 +1,8 @@
 //Utility Buttons
+import 'package:communihelp_app/ViewModel/News_View_Model/news_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 //import 'package:provider/provider.dart';
 
 
@@ -16,6 +18,7 @@ class ResponderUtilityButtons extends StatelessWidget {
   
   Widget build(BuildContext context) {
     //final getService = Provider.of<GetUserData>(context);
+    final newsViewModel = Provider.of<NewsViewModel>(context);
 
     return Container(
       padding: EdgeInsets.all(10).r,
@@ -106,6 +109,7 @@ class ResponderUtilityButtons extends StatelessWidget {
               //News Button
               MaterialButton(
                 onPressed: () {
+                  newsViewModel.callInit();
                   Navigator.pushNamed(context,'/newsfeed');
                 },
                 height: 80.r,

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Community_Page/post_dialog.dart';
+import 'package:communihelp_app/CommuniHelp_Responder/View/Community_Page/post_dialog.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -20,7 +20,7 @@ class ResponderCommunityView extends StatefulWidget {
 
 class _ResponderCommunityViewState extends State<ResponderCommunityView> {
 
-  final dialog = PostDialog();
+  final dialog = RespPostDialog();
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
 

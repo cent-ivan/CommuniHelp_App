@@ -23,6 +23,42 @@ class GlobalDialogUtil{
     Navigator.pop(context);
   }
 
+  void errorDialog(BuildContext context , String message) {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return SimpleDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r))
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          contentPadding: EdgeInsets.symmetric(vertical: 15.r, horizontal: 20.r ),
+          children: [
+            Text(
+              "Oops...",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.outline,
+                fontWeight: FontWeight.bold,
+                fontSize: 16.r
+              ),
+            ),
+            
+            SizedBox(height: 16.r,),
+
+            Text(
+              message,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.outline,
+
+                fontSize: 12.r
+              ),
+            )
+          ],
+        );
+      }
+    );
+  }
+
   //dialog for catched errors
   void unknownErrorDialog(BuildContext context , String message){
     showDialog(context: context, 

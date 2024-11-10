@@ -37,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: Container(
-          width: 495.r,
+          width: 485.r,
           height: 755.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -47,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
           ),
         
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(3, 30, 3, 8).r,
+            padding: const EdgeInsets.fromLTRB(0, 30, 0, 8).r,
             child: Column(
               children: [
                 //Logo and title 
@@ -69,7 +69,7 @@ class _LoginViewState extends State<LoginView> {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 30.r,
+                          fontSize: 28.r,
                           letterSpacing: 2.r,
                           shadows: [
                             Shadow(
@@ -85,11 +85,13 @@ class _LoginViewState extends State<LoginView> {
                     Positioned(
                       top: 170.r,
                       child: Text(
-                        "Disaster Preparedness Asssistance and Utility App",
+                        """Disaster Preparedness Asssistance 
+and Utility App""",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
-                          fontSize: 10.r,
+                          fontSize: 14.r,
                           shadows: [
                             Shadow(
                               color: Colors.white,

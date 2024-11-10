@@ -19,7 +19,7 @@ List<String> options =["Male", "Female"]; //for radio list
 class _RegistrationViewState extends State<RegistrationView> {
 
   //DefaultBox height
-  double _whiteContainerHeight = 750.r + 40.r;
+  double _whiteContainerHeight = 690.r + 40.r;
 
   //password values
   bool _isObscure1 =  true;
@@ -58,7 +58,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 240.r,
+                      width: 210.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),

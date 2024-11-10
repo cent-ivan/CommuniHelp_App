@@ -34,7 +34,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
               margin: const EdgeInsets.fromLTRB(9, 3, 0, 0).r,
               child: TextButton(
                 onPressed: () {
-                  viewModel.loadAnnouncement();
+                  
                 },
                 child: Text(
                   "Announcement", 
@@ -50,7 +50,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  viewModel.loadAnnouncement();
+                  
                 });   
                 }, 
               icon: Icon(

@@ -34,7 +34,7 @@ class ContactsViewModel extends ChangeNotifier{
   //adds to list of contacts
   void addToContact() {
     //pass to db
-    dbContact.addToContact({"Name" : editNameController.text , "Contact" : editNumberController.text});
+    dbContact.addToContact({"Name" : editNameController.text.isEmpty ? "Unkown" : editNameController.text , "Contact" : editNumberController.text});
 
     //sorts alphabetically
     dbContact.contacts.sort((a, b) {

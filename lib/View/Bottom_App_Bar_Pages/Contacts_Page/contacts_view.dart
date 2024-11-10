@@ -439,6 +439,8 @@ class _ContactFloatingActionButtonState extends State<ContactFloatingActionButto
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
 
+  final dialog = GlobalDialogUtil();
+
   @override
   Widget build(BuildContext context) {
     return SizedBox.fromSize(
@@ -524,8 +526,14 @@ class _ContactFloatingActionButtonState extends State<ContactFloatingActionButto
                       color: Color(0xFFFEAE49),
                       disabledColor: Colors.grey,
                       onPressed: ()  {
-                        viewModel.addToContact();
-                        viewModel.loadDB(curUser!.uid);
+                        if (viewModel.editNumberController.text.isEmpty) {
+                          dialog.errorDialog(context, "Enter a number");
+                        } 
+                        else {
+                          viewModel.addToContact();
+                          viewModel.loadDB(curUser!.uid);
+                        }
+                        
                         
                         Navigator.pop(context);
                       },

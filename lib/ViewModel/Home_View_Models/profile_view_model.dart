@@ -4,6 +4,7 @@ import 'package:communihelp_app/Databases/FirebaseServices/FireStorageServices/p
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
+import 'package:communihelp_app/View/View_Components/login_dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class ProfileViewModel extends ChangeNotifier{
 
   Logger logger = Logger(); //for debug message
   final _dialog = GlobalDialogUtil(); //dialgs 
+  final dialog = LoginDialogs();
   
   //lazy initializer
   ProfileStorage? _profileStorage;
@@ -107,7 +109,7 @@ class ProfileViewModel extends ChangeNotifier{
     }
     catch (e) {
       if (context.mounted) {
-        _dialog.unknownErrorDialog(context, "Image Error: ${e.toString()}");
+        _dialog.errorDialog(context, "No Image pick!");
       }
       
     }
@@ -136,7 +138,7 @@ class ProfileViewModel extends ChangeNotifier{
     }
     catch (e) {
       if (context.mounted) {
-        _dialog.unknownErrorDialog(context, "Image Error: ${e.toString()}");
+        _dialog.errorDialog(context, "No Image pick!");
       }
       
     }
@@ -194,7 +196,9 @@ class ProfileViewModel extends ChangeNotifier{
 
   //change email
   Future updateEmail(String id, String email, String password, String newEmail, BuildContext context) async {
-    await firestoreAdd.updateAuthEmail(id, email, password, newEmail, context);
+    
+      await firestoreAdd.updateAuthEmail(id, email, password, newEmail, context);
+    
   }
 
   //change password

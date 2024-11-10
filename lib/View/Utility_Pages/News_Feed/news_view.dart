@@ -61,7 +61,7 @@ class _NewsViewState extends State<NewsView> with SingleTickerProviderStateMixin
             bottom: TabBar(
               controller: tabController,
               labelColor: Theme.of(context).colorScheme.outline,
-          
+              indicatorColor: Color(0xFFFEAE49),
               tabs: [
                 Tab(
                   text: "Local",

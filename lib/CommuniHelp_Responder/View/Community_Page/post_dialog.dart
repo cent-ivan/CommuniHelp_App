@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Model/forum_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../Databases/FirebaseServices/FirestoreServices/get_forum.dart';
 import '../../../Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 
-class PostDialog {
+class RespPostDialog {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
@@ -15,6 +17,14 @@ class PostDialog {
   final TextEditingController content = TextEditingController();
 
   final firestoreForum = GetForum();
+
+  static final  customCache = CacheManager(
+    Config(
+      "customCacheKey",
+      stalePeriod: Duration(days: 30)
+    )
+  );
+
 
   void addPost(BuildContext context) {
     final userData = Provider.of<GetUserData>(context, listen: false);
@@ -47,10 +57,17 @@ class PostDialog {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
-                                  radius: 20.r,
-                                  backgroundColor: Colors.black,
-                                ),
+                                child: CachedNetworkImage(
+                                    cacheManager: customCache,
+                                    key: UniqueKey(),
+                                    imageUrl: userData.userProfURL,
+                                    progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                    imageBuilder: (context, imageProvider) => CircleAvatar(
+                                      backgroundImage: imageProvider,
+                                      radius: 20.r,
+                                  )
+                                ) 
                               ),
                                     
                               Text(

@@ -21,6 +21,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
 
   bool _isObscure =  true;
 
+
   //show current user
   final user = FirebaseAuth.instance.currentUser!;
 
@@ -141,7 +142,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                             _isObscure = ! _isObscure;
                           });
                         },
-                        icon: _isObscure ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off) ,
+                        icon: _isObscure ? Icon(Icons.visibility, color: Theme.of(context).colorScheme.outline,) : Icon(Icons.visibility_off, color: Theme.of(context).colorScheme.outline,) ,
                       ) 
                     ),
                     validator: (value) {
@@ -231,7 +232,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                               newEmailController.clear();
                             });
 
-                            Navigator.pop(context);
+                       
                           }
                         },
                         child: Text(

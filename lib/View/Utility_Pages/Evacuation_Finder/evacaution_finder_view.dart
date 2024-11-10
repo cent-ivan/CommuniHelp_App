@@ -601,7 +601,14 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                           });
 
                           Navigator.pop(context);
-                          deleteEvac(viewModel);
+                          if (initialValue == newVal) {
+                            initialValue = null;
+                            deleteEvac(viewModel);
+                          }
+                          else {
+                            deleteEvac(viewModel);
+                          }
+                          
                           
                         },
                         items: evacPlace,
