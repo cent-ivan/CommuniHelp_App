@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:communihelp_app/View/base_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
@@ -19,6 +20,17 @@ class HomeBase extends StatefulWidget {
 }
 
 class _HomeBaseState extends State<HomeBase> {
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then(
+      (isAllowed) {
+        if (!isAllowed) {
+          AwesomeNotifications().requestPermissionToSendNotifications();
+        }
+      }
+    );
+    super.initState();
+  }
 
   final PageStorageBucket bucket = PageStorageBucket();
 
@@ -269,7 +281,7 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget{
       actions: [
         IconButton(
           onPressed: () {
-
+            Navigator.pushNamed(context, '/notifpage');
           }, 
           icon: const Icon(Icons.notifications),
           iconSize: 30.r,

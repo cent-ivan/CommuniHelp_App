@@ -188,26 +188,6 @@ class _UserSettingsViewState extends State<UserSettingsView> {
 
             SizedBox(height: 24.r,),
 
-            Row(
-              children: [
-                MaterialButton(
-                    height: 35.r,
-                    minWidth: 65.r,
-                    color: const Color(0xFFFEAE49),
-                    onPressed: () {
-                      viewModel.addPreference(curUser!.uid);
-                      viewModel.updateDB(curUser!.uid);
-                    },
-                    child: Text(
-                      "Save",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.outline,
-                        fontSize: 12.r
-                      ),
-                    ),
-                ),
-              ],
-            )
 
           ],
         ),
