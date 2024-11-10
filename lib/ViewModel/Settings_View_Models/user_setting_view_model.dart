@@ -49,7 +49,7 @@ class UserSettingViewModel extends ChangeNotifier{
  void loadSettings(String uid) {
   dbSettings.loadData(uid);
   userLanguage = dbSettings.userSettings['language']; //dbSettings.userSettings["language"];
-  isLightMode = dbSettings.userSettings['isLightmode'];//dbSettings.userSettings["lightmode"];
+  isLightMode = dbSettings.userSettings["isLightmode"];//dbSettings.userSettings["lightmode"];
   //sets the users preference
   if (!isLightMode) {
     themeData = lightMode;

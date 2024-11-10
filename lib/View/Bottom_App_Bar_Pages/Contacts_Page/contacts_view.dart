@@ -322,7 +322,11 @@ class _ContactsViewState extends State<ContactsView> {
                           //DELETE a contact
                           isEditMode ? IconButton(
                             onPressed: () {
-                              viewModel.deleteContact(index, curUser!.uid);
+                              setState(() {
+                                viewModel.deleteContact(index, curUser!.uid);
+                              });
+                              
+
                               Navigator.pop(context);
                             }, 
                             icon: Icon(Icons.delete, color: Colors.redAccent,)

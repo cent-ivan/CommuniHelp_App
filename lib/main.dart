@@ -2,6 +2,8 @@ import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_c
 import 'package:communihelp_app/CommuniHelp_Responder/View/responder_setting.dart';
 import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/search_view.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/about_app_view.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/share_app_view.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
@@ -187,6 +189,8 @@ class MainApp extends StatelessWidget {
           '/settings': (context) => const UserSettingsView(), 
           '/respondersettings': (context) => const ResponderSettingsView(), 
           '/searchcontact' : (context) => const SearchView(),
+          '/aboutapp' : (context) => const AboutAppView(),
+          '/shareapp' : (context) => const ShareAppView(),
           
 
           //Responder routes

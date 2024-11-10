@@ -32,7 +32,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   final vModel = EvacuationFinderViewModel();
   final userData = GetUserData();
 
-  late GoogleMapController googleMapController;
+  GoogleMapController? googleMapController;
 
   //gets teh current location
   LocationData? currentLocation;
@@ -47,7 +47,9 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
 
   @override
   void dispose() {
-    googleMapController.dispose();
+    if (googleMapController != null) {
+      googleMapController?.dispose();
+    }
     super.dispose();
   }
 
@@ -243,7 +245,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                             initialValue= newVal;
                             targetEvac = newVal;
                           });
-                          googleMapController.animateCamera(
+                          googleMapController?.animateCamera(
                             CameraUpdate.newCameraPosition(
                               CameraPosition(
                                 target: getEvacPosition(newVal),
@@ -343,7 +345,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           elevation: 0,
           backgroundColor: Color(0xFF57BEE6),
           foregroundColor: Colors.black,
-          onPressed: () => googleMapController.animateCamera(
+          onPressed: () => googleMapController?.animateCamera(
             viewModel.direct != null ? 
             CameraUpdate.newLatLngBounds(viewModel.direct!.bounds, 100.0) :
             CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!), zoom: 12.5, tilt: 20.0),) //move to initial position,
@@ -369,7 +371,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           infoWindow: InfoWindow(title: 'Origin ${pos.toString()}'), //display text over the marker
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
           position: pos,
-          onTap: () => googleMapController.animateCamera(
+          onTap: () => googleMapController?.animateCamera(
             CameraUpdate.newCameraPosition(
               CameraPosition(
                 target: pos,
@@ -392,7 +394,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           infoWindow: InfoWindow(title: 'Destination ${pos.toString()}'), //display text over the marker
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
           position: pos,
-          onTap: () => googleMapController.animateCamera(
+          onTap: () => googleMapController?.animateCamera(
             CameraUpdate.newCameraPosition(
               CameraPosition(
                 target: pos,
@@ -500,7 +502,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
           position: pos,
           onTap: () {
-            googleMapController.animateCamera(
+            googleMapController?.animateCamera(
               CameraUpdate.newCameraPosition(
                 CameraPosition(
                   target: pos,

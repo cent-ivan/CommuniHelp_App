@@ -6,9 +6,9 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
-        android:label="communihelp_app"
+        android:label="CommuniHelp"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         
         
         <meta-data android:name="com.google.android.geo.API_KEY"

@@ -37,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: Container(
-          width: 500.r,
+          width: 495.r,
           height: 755.r,
           decoration: const BoxDecoration(
             image: DecorationImage(

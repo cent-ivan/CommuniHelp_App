@@ -381,7 +381,7 @@ class DrawerBase extends StatelessWidget {
                   )
                 ),
 
-                //Share App
+                //about App
                 Container( 
                   margin: const EdgeInsets.only(bottom: 2), 
                   child: Row(
@@ -390,7 +390,9 @@ class DrawerBase extends StatelessWidget {
                         icon: const Icon(Icons.info_rounded), 
                         iconSize: 25,
                         color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/aboutapp');
+                        },
                       ),
                       
                       const SizedBox( width: 15,),
@@ -405,7 +407,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: (){
-      
+                          Navigator.pushNamed(context, '/aboutapp');
                         },
                       )
                     ],
@@ -422,7 +424,9 @@ class DrawerBase extends StatelessWidget {
                         icon: const Icon(Icons.share), 
                         iconSize: 25,
                         color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/shareapp');
+                        },
                       ),
                       
                       const SizedBox( width: 15,),
@@ -437,7 +441,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: (){
-      
+                          Navigator.pushNamed(context, '/shareapp');
                         },
                       )
                     ],
