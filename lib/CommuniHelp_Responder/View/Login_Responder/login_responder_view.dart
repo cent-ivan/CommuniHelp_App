@@ -308,7 +308,7 @@ class _LoginResponderViewState extends State<LoginResponderView> {
 
                       TextButton(
                         onPressed: () {
-                  
+                          Navigator.pushNamed(context, '/forgotpassword');
                         }, 
                         child: Text(
                           "Forgot Password",

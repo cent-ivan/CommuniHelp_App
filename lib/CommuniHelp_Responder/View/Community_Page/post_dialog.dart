@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Model/forum_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,8 +27,15 @@ class RespPostDialog {
     )
   );
 
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
+
 
   void addPost(BuildContext context) {
+    final responderSettings = ResponderSettingViewModel();
+    responderSettings.loadSettings(curUser!.uid);
+    var languageClass = ResLanguage(responderSettings.userLanguage);
+    
     final userData = Provider.of<GetUserData>(context, listen: false);
     showDialog(
       barrierDismissible: false,
@@ -37,7 +46,7 @@ class RespPostDialog {
           child: SingleChildScrollView(
             child: AlertDialog(
               backgroundColor: Theme.of(context).colorScheme.surface,
-              title: Text("Magbahagi ng saloobin", style: TextStyle(fontWeight: FontWeight.bold),),
+              title: Text(languageClass.systemLang["Forum"]["DialogTitle"], style: TextStyle(fontWeight: FontWeight.bold),),
               contentPadding: EdgeInsets.symmetric(horizontal: 0),
               content: Form(
                 key: _formKey,
@@ -71,7 +80,7 @@ class RespPostDialog {
                               ),
                                     
                               Text(
-                                "${userData.name}, taga-${userData.barangay}"
+                                "${userData.name}, ${languageClass.systemLang["Forum"]["from"]}${userData.barangay}"
                               ),
                             ],
                           ),
@@ -84,7 +93,7 @@ class RespPostDialog {
                                 fontSize: 16.r
                               ),
                               decoration: InputDecoration(
-                                hintText: 'Pamagat ng iyong post ',
+                                hintText: languageClass.systemLang["Forum"]["FieldTitle"],
                                 hintStyle: TextStyle(
                                   fontWeight: FontWeight.bold
                                 )
@@ -94,7 +103,7 @@ class RespPostDialog {
                               maxLines: 3,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Maglagay ng pamagat";
+                                  return languageClass.systemLang["Forum"]["BlankTitle"];
                                 }
                                 return null;
                               },
@@ -110,7 +119,7 @@ class RespPostDialog {
                               controller: content,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                hintText: 'Ano ang iyong gustong ibahagi?',
+                                hintText: languageClass.systemLang["Forum"]["Content"],
                                 hintStyle: TextStyle(
                                   fontStyle: FontStyle.italic
                                 )
@@ -119,7 +128,7 @@ class RespPostDialog {
                               maxLines: 10,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Blangko ang iyong post";
+                                  return languageClass.systemLang["Forum"]["BlankContent"];
                                 }
                                 return null;
                               },
@@ -136,7 +145,7 @@ class RespPostDialog {
               actions: [
                 TextButton(
                   child: Text(
-                    'I-post',
+                    'Post',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                       fontSize: 16.r

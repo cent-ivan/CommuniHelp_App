@@ -49,7 +49,7 @@ class ResponderSettingViewModel extends ChangeNotifier{
  void loadSettings(String uid) {
   dbSettings.loadData(uid);
   userLanguage = dbSettings.responderSettings['language']; //dbSettings.responderSettings["language"];
-  isLightMode = dbSettings.responderSettings['isLightmode'];//dbSettings.responderSettings["lightmode"];
+  isLightMode = false;//dbSettings.responderSettings["lightmode"];
   //sets the users preference
   if (!isLightMode) {
     themeData = lightMode;
@@ -111,8 +111,8 @@ class ResLanguage {
           "News" : "View News",
           "Weather" : "View Weather",
           "Kit" : "My Kits",
-          "ReportLabel" : "Send a report",
-          "Report" : "Report" 
+          "ReportLabel" : "See Reports",
+          "Report" : "Reports" 
         },
         "NaturalInfo" : {
           "NaturalTitle" : "Natural Disasters",
@@ -182,8 +182,8 @@ class ResLanguage {
           "News" : "Mga Balita",
           "Weather" : "Ang Panahon",
           "Kit" : "Aking Kits",
-          "ReportLabel" : "Magpadala ng ulat",
-          "Report" : "Report" 
+          "ReportLabel" : "Tingnan ang mga ulat",
+          "Report" : "Magulat" 
         },
       "NaturalInfo" : {
         "NaturalTitle" : "Mga likas na sakuna",
@@ -254,8 +254,8 @@ class ResLanguage {
           "News" : "Mga Balita",
           "Weather" : "Anv Panahon",
           "Kit" : "Akong Kits",
-          "ReportLabel" : "Magpadaea it ulat",
-          "Report" : "Report" 
+          "ReportLabel" : "Mantawon ang mga ulat",
+          "Report" : "Maglat" 
         },
         "Contact" : {
           "Label" : "Akong Kontaks",

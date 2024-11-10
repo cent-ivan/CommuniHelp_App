@@ -297,7 +297,7 @@ and Utility App""",
 
                       TextButton(
                         onPressed: () {
-                  
+                          Navigator.pushNamed(context, '/forgotpassword');
                         }, 
                         child: Text(
                           "Forgot Password",

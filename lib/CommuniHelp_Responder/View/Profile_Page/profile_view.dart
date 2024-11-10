@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,8 +33,15 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
     )
   );
 
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
+    final responderSettings = ResponderSettingViewModel();
+    responderSettings.loadSettings(curUser!.uid);
+    var languageClass = ResLanguage(responderSettings.userLanguage);
+    
     final viewModel= Provider.of<ProfileViewModel>(context);
     return PopScope(
       canPop: false,
@@ -52,7 +61,7 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
               children: [
                 Center(
                   child: Text(
-                    "My Profile",
+                    languageClass.systemLang["Profile"]["ProfileLabel"],
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                       fontSize: 24.r,
@@ -105,7 +114,7 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Personal Details",
+                                languageClass.systemLang["Profile"]["details"],
                                 style: TextStyle(
                                   color: const Color(0xFFFEAE49),
                                   fontSize: 20.r,
@@ -118,7 +127,7 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
                               //Details---
                               //FullName
                               Text(
-                                "Full Name",
+                                languageClass.systemLang["Profile"]["fullname"],
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.outline,
                                   fontSize: 14.r,
@@ -143,7 +152,7 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
                         
                               //Birthdate
                               Text(
-                                "Birthdate",
+                                languageClass.systemLang["Profile"]["birthday"],
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.outline,
                                   fontSize: 14.r,
@@ -169,7 +178,7 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
                         
                               //Gender
                               Text(
-                                "Gender",
+                                languageClass.systemLang["Profile"]["gender"],
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.outline,
                                   fontSize: 14.r,
@@ -274,7 +283,7 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
                           children: [
                             //Contact Number
                             Text(
-                              "Contact Details",
+                              languageClass.systemLang["Profile"]["contactdet"],
                               style: TextStyle(
                                 color: const Color(0xFFFEAE49),
                                 fontSize: 20.r,
@@ -349,7 +358,7 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
                               color: const Color(0xFFFEC57C),
                               child: Center(
                                 child: Text(
-                                  "Edit Profile",
+                                  languageClass.systemLang["Profile"]["edit"],
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.outline,
                                     fontSize: 14.r,

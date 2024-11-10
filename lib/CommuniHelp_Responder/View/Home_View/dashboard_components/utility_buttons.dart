@@ -1,5 +1,7 @@
 //Utility Buttons
 import 'package:communihelp_app/ViewModel/News_View_Model/news_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -7,17 +9,26 @@ import 'package:provider/provider.dart';
 
 
 
-class ResponderUtilityButtons extends StatelessWidget {
+class ResponderUtilityButtons extends StatefulWidget {
   const ResponderUtilityButtons({
     super.key,
   });
 
-  
-
   @override
+  State<ResponderUtilityButtons> createState() => _ResponderUtilityButtonsState();
+}
+
+class _ResponderUtilityButtonsState extends State<ResponderUtilityButtons> {
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
   
+  @override
   Widget build(BuildContext context) {
     //final getService = Provider.of<GetUserData>(context);
+    final responderSettings = ResponderSettingViewModel();
+    responderSettings.loadSettings(curUser!.uid);
+    var languageClass = ResLanguage(responderSettings.userLanguage);
+    
     final newsViewModel = Provider.of<NewsViewModel>(context);
 
     return Container(
@@ -60,7 +71,7 @@ class ResponderUtilityButtons extends StatelessWidget {
               
                     Center(
                       child: Text(
-                      "Track User and Evacuation Center Map",
+                      languageClass.systemLang["Home"]["SearchEvac"],
                           style: TextStyle(
                           fontSize: 12.r,
                           fontWeight: FontWeight.bold,
@@ -128,7 +139,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                     ),
               
                     Text(
-                    "View News Reports",
+                    languageClass.systemLang["Home"]["News"],
                         style: TextStyle(
                         fontSize: 12.r,
                         fontWeight: FontWeight.bold,
@@ -160,7 +171,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                     ),
               
                     Text(
-                    "View Weather",
+                    languageClass.systemLang["Home"]["Weather"],
                         style: TextStyle(
                         fontSize: 12.r,
                         fontWeight: FontWeight.bold,
@@ -190,7 +201,7 @@ class ResponderUtilityButtons extends StatelessWidget {
       
                 Center(
                   child: Text(
-                    "View Reports",
+                    languageClass.systemLang["Home"]["ReportLabel"],
                         style: TextStyle(
                         fontSize: 16.r,
                         fontWeight: FontWeight.bold,
@@ -220,7 +231,7 @@ class ResponderUtilityButtons extends StatelessWidget {
                       ),
                 
                       Text(
-                      "Report",
+                      languageClass.systemLang["Home"]["Report"],
                           style: TextStyle(
                           fontSize: 11.r,
                           fontWeight: FontWeight.bold,
