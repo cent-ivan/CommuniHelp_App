@@ -84,6 +84,7 @@ void main() async{
   await Hive.openBox<List<dynamic>>('contactbox');
 
   await Hive.openBox<Map<dynamic, dynamic>>('settingsbox');
+  await Hive.openBox<Map<dynamic, dynamic>>('ressettingsbox');
 
   await Hive.openBox<bool>('director');
 
@@ -180,7 +181,7 @@ class MainApp extends StatelessWidget {
           '/changeemail': (context) => const ChangeEmail(),
           '/changepass': (context) => const ChangePassword(),
           '/settings': (context) => const UserSettingsView(), 
-          '/respondersettings': (context) => const ResponderSetting(), 
+          '/respondersettings': (context) => const ResponderSettingsView(), 
           '/searchcontact' : (context) => const SearchView(),
           
 
@@ -196,8 +197,8 @@ class MainApp extends StatelessWidget {
           '/viewinfopage': (context) => const InfoPageView(),
           '/viewmanmadeinfopage': (context) => const ManmadeInfoPageView()
         },
-        theme: !director.isResponder ? Provider.of<UserSettingViewModel>(context).themeData : Provider.of<ResponderSettingViewModel>(context).themeData,
-        darkTheme: !director.isResponder ? Provider.of<UserSettingViewModel>(context).darktTheme : Provider.of<ResponderSettingViewModel>(context).darktTheme,
+        theme: ! director.isResponder ? Provider.of<UserSettingViewModel>(context).themeData : Provider.of<ResponderSettingViewModel>(context).themeData,
+        darkTheme: ! director.isResponder ? Provider.of<UserSettingViewModel>(context).darktTheme : Provider.of<ResponderSettingViewModel>(context).darktTheme,
       ),
     );
   }

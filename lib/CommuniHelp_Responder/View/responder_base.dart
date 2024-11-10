@@ -398,7 +398,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/settings');
+                          Navigator.pushNamed(context, '/respondersettings');
                         },
                       )
                     ],

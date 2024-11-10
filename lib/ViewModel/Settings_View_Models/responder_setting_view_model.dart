@@ -1,4 +1,4 @@
-import 'package:communihelp_app/Databases/HiveServices/hive_db_settings.dart';
+import 'package:communihelp_app/Databases/HiveServices/hive_db_res_setting.dart';
 import 'package:communihelp_app/ViewModel/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ class ResponderSettingViewModel extends ChangeNotifier{
   Logger logger = Logger();
 
   //access local HiveServices
-  HiveDbSettings dbSettings = HiveDbSettings();
+  HiveDbResSetting dbSettings = HiveDbResSetting();
 
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
@@ -23,10 +23,6 @@ class ResponderSettingViewModel extends ChangeNotifier{
  ThemeData darktTheme = darktMode;
 
  bool isLightMode = true;
-
- ResponderSettingViewModel() {
-  loadSettings(curUser!.uid);
- }
 
 
 
@@ -52,8 +48,8 @@ class ResponderSettingViewModel extends ChangeNotifier{
   //loads from hive 
  void loadSettings(String uid) {
   dbSettings.loadData(uid);
-  userLanguage = dbSettings.userSettings['language']; //dbSettings.userSettings["language"];
-  isLightMode = dbSettings.userSettings['isLightmode'];//dbSettings.userSettings["lightmode"];
+  userLanguage = dbSettings.responderSettings['language']; //dbSettings.responderSettings["language"];
+  isLightMode = dbSettings.responderSettings['isLightmode'];//dbSettings.responderSettings["lightmode"];
   //sets the users preference
   if (!isLightMode) {
     themeData = lightMode;
@@ -67,7 +63,7 @@ class ResponderSettingViewModel extends ChangeNotifier{
 
   //add to local hive
   void addPreference(String uid) {
-    dbSettings.addUserSettings(userLanguage, isLightMode, false);
+    dbSettings.addResponderSettings(userLanguage, isLightMode, false);
   }
 
   //calls to put data to box
@@ -84,10 +80,10 @@ class ResponderSettingViewModel extends ChangeNotifier{
 
 
 
-class Language {
+class ResLanguage {
   Map systemLang = {};
 
-  Language(String userLanguage) {
+  ResLanguage(String userLanguage) {
     if (userLanguage.toLowerCase() == "en") {
       systemLang = getEnglish();
     }
@@ -118,6 +114,55 @@ class Language {
           "ReportLabel" : "Send a report",
           "Report" : "Report" 
         },
+        "NaturalInfo" : {
+          "NaturalTitle" : "Natural Disasters",
+          "Definition" : "Natural disasters, such as typhoons, earthquakes, floods, landslide, and many more, can cause widespread devastation and loss of life. These events are often unpredictable and can occur suddenly, leaving communities with little time to prepare.",
+          "Types" : "Types of Natural Disasters",
+          "TyButton" : "Typhoon",
+          "FloodButton" : "Flood",
+          "LandButton" : "Landslide",
+          "EarthButton" : "Earthquake"
+        },
+        "ManmadeInfo" : {
+        "Title" : "Man-made Disaster",
+        "Definition" : "A man-made disaster can strike with devastating consequences, often stemming from human error, negligence, or intentional harm.",
+        "Types" : "Kinds of Man-made disasters",
+        "Accident" : "Vehicular Incident",
+        "Fire" : "Fire related disaster",
+        "Failure" : "Structural Failures",
+        "Pollution" : "Water Pollution"
+      },
+        "Contact" : {
+          "Label" : "My Contact List",
+          "Search" : "Search"
+        },
+        "Forum" : {
+          "PostButton" : "Share a thought",
+          "Offline" : "Offline mode. Cannot Post and Like",
+          "DialogTitle" : "Share a thought",
+          "from" : "from ",
+          "FieldTitle" : "Enter post title",
+          "Content" : "What's on your mind?",
+          "BlankTitle" : "Enter a title first",
+          "BlankContent" : "Post is blank"
+        },
+        "Profile" : {
+          "ProfileLabel" : "My Profile",
+          "details" : "Personal Details",
+          "contactdet" : "Contact Details",
+          "fullname" : "Full Name",
+          "gender" : "Gender",
+          "birthday" : "Birthdate",
+          "edit": "Edit Profile",
+          "nonet": "No Internet. Cannot Edit",
+          "changeemail" : "Change email here",
+          "changepass" : "Change password here"
+        },
+        "Emergency" : {
+          "host" : "List of Hostpitals",
+          "fire" : "Number of Fire Rescuer",
+          "coast" : "Number of Coastguard"
+        }
     };
   }
 
@@ -132,14 +177,64 @@ class Language {
       "Home" : {
           "Announcement" : "Mga Anunsyo",
           "NaturalDis" : "Natural na Sakuna",
-          "ManmadeDis" : "Sakunang Gawa-tao",
+          "ManmadeDis" : "Sakunang Gawang-tao",
           "SearchEvac" : "Maghanap ng Evacuation Center",
           "News" : "Mga Balita",
-          "Weather" : "Anv Panahon",
+          "Weather" : "Ang Panahon",
           "Kit" : "Aking Kits",
           "ReportLabel" : "Magpadala ng ulat",
           "Report" : "Report" 
         },
+      "NaturalInfo" : {
+        "NaturalTitle" : "Mga likas na sakuna",
+        "Definition" : "Ang mga likas na sakuna, tulad ng bagyo, lindol, baha, pagguho ng lupa, at marami pang iba, ay maaaring magdulot ng matinding pinsala at pagkawala ng buhay. Kadalasan, hindi tiyak kung kailan ito mangyayari at nagiging banta sa komunidad.",
+        "Types" : "Uri ng likas na sakuna",
+        "TyButton" : "Bagyo",
+        "FloodButton" : "Baha",
+        "LandButton" : "Pagguho ng lupa",
+        "EarthButton" : "Lindol"
+      },
+      "ManmadeInfo" : {
+        "Title" : "Mga sakunang likha ng tao",
+        "Definition" : "Ang isang sakunang likha ng tao ay maaaring magdulot ng matinding pinsala, na kadalasang nagmumula sa pagkakamali, kapabayaan, o sinadyang pananakit ng tao.",
+        "Types" : "Uri ng sakunang likha ng tao",
+        "Accident" : "Aksidente sa sasakyan",
+        "Fire" : "Sunog",
+        "Failure" : "Pagbagsak ng estruktura",
+        "Pollution" : "Polusyon sa tubig"
+      },
+      "Contact" : {
+          "Label" : "Aking Kontaks",
+          "Search" : "Hanapin"
+        },
+      "Forum" : {
+          "PostButton" : "Magbahagi ng saloobin",
+          "Offline" : "Offline mode. Hindi maka-Post at Like",
+          "DialogTitle" : "Magbahagi ng saloobin",
+          "from" : "taga-",
+          "FieldTitle" : "Maglagay ng titulo",
+          "Content" : "Ano nasa isip mo?",
+          "BlankTitle" : "Maglagay ng titulo",
+          "BlankContent" : "Walang laman ang post"
+      },
+      "Profile" : {
+          "ProfileLabel" : "Aking profile",
+          "details" : "Personal na Impormasyon",
+          "contactdet" : "Mga detalye ng Contact",
+          "fullname" : "Buong Pangalan",
+          "gender" : "Kasarian",
+          "birthday" : "Kaarawan",
+          "edit": "Baguhin ang profile",
+          "nonet": "Walang Internet.",
+          "changeemail" : "Bagohin ang email",
+          "changepass" : "Bagohin ang password"
+        },
+      "Emergency" : {
+          "host" : "Listahan ng mga ostpital",
+          "fire" : "Numero ng Bombero",
+          "coast" : "Numero ng Coastguard"
+        }
+
     };
   }
 
@@ -161,8 +256,41 @@ class Language {
           "Kit" : "Akong Kits",
           "ReportLabel" : "Magpadaea it ulat",
           "Report" : "Report" 
+        },
+        "Contact" : {
+          "Label" : "Akong Kontaks",
+          "Search" : "Pangitaon"
+        },
+        "Forum" : {
+          "PostButton" : "Magbahagi ng saloobin",
+          "Offline" : "Offline mode. Hindi maka-Post at Like",
+          "DialogTitle" : "Magbahagi ng saloobin",
+          "from" : "taga-",
+          "FieldTitle" : "Magbutang it titulo",
+          "Content" : "Ano nasa isip mo?",
+          "BlankTitle" : "Magbutang it titulo",
+          "BlankContent" : "Uwa’t sulod ro post"
+      },
+      "Profile" : {
+          "ProfileLabel" : "Akong profile",
+          "details" : "Personal nga Impormasyon",
+          "contactdet" : "Mga detalye it Contact",
+          "fullname" : "Buo nga Pangalan",
+          "gender" : "Kasarian",
+          "birthday" : "Kaarawan",
+          "edit": "Baguhon ang profile",
+          "nonet": "Wa it Internet.",
+          "changeemail" : "Bag-ohon ang email",
+          "changepass" : "Bag-ohon ang password"
+        },
+        "Emergency" : {
+          "host" : "Listahan it mga ostpital",
+          "fire" : "Numero it Bombero",
+          "coast" : "Numero it Coastguard"
         }
     };
   }
 }
+
+
 

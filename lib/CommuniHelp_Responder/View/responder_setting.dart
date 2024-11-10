@@ -1,24 +1,33 @@
 import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class ResponderSetting extends StatefulWidget {
-  const ResponderSetting({super.key});
+
+class ResponderSettingsView extends StatefulWidget {
+  const ResponderSettingsView({super.key});
 
   @override
-  State<ResponderSetting> createState() => _ResponderSettingState();
+  State<ResponderSettingsView> createState() => _ResponderSettingsViewState();
 }
+
 List<String> options =["En", "Fil", "Akl"]; //for radio list
 
-class _ResponderSettingState extends State<ResponderSetting> {
-  //language current value
-  String currentOption = options[0];
+class _ResponderSettingsViewState extends State<ResponderSettingsView> {
+  
+
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
+  
     final viewModel = Provider.of<ResponderSettingViewModel>(context);
-    var languageClass = Language(currentOption);
+    //language current value
+    String currentOption = viewModel.userLanguage;
+
+    var languageClass = ResLanguage(currentOption);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -40,7 +49,7 @@ class _ResponderSettingState extends State<ResponderSetting> {
             SizedBox(height: 8.r,),
 
             //Light and Dark Theme
-            Theme.of(context).brightness == Brightness.light? Text(
+            viewModel.isLightMode? Text(
               languageClass.systemLang["Settings"]["SwitchLightMode"],
               style: TextStyle(
                 fontSize: 16.r,
@@ -61,9 +70,14 @@ class _ResponderSettingState extends State<ResponderSetting> {
             Switch(
               inactiveThumbColor: Colors.grey,
               activeColor: Color(0xFF3D424A),
-              value:  Theme.of(context).brightness == Brightness.light ? true : false , 
+              value:  viewModel.isLightMode ? true : false, 
               onChanged: (value) {
-                viewModel.toggleTheme();      
+                setState(() {
+                  viewModel.toggleTheme();     
+                  viewModel.addPreference(curUser!.uid);
+                  viewModel.updateDB(curUser!.uid); 
+                });
+                
               }
             ),
 
@@ -96,10 +110,9 @@ class _ResponderSettingState extends State<ResponderSetting> {
                       value: options[0], 
                       groupValue: currentOption, 
                       onChanged: (value) {
-                        setState(() {
-                          currentOption = value.toString();
-                        });
-                        viewModel.changeLanguag(currentOption);
+                        viewModel.changeLanguag(value.toString());
+                        viewModel.addPreference(curUser!.uid);
+                        viewModel.updateDB(curUser!.uid);
                       }
                     ),
 
@@ -126,10 +139,9 @@ class _ResponderSettingState extends State<ResponderSetting> {
                       value: options[1], 
                       groupValue: currentOption, 
                       onChanged: (value) {
-                        setState(() {
-                          currentOption = value.toString();
-                        });
-                        viewModel.changeLanguag(currentOption);
+                        viewModel.changeLanguag(value.toString());
+                        viewModel.addPreference(curUser!.uid);
+                        viewModel.updateDB(curUser!.uid);
                       }
                     ),
 
@@ -156,10 +168,9 @@ class _ResponderSettingState extends State<ResponderSetting> {
                       value: options[2], 
                       groupValue: currentOption, 
                       onChanged: (value) {
-                        setState(() {
-                          currentOption = value.toString();
-                        });
-                        viewModel.changeLanguag(currentOption);
+                        viewModel.changeLanguag(value.toString());
+                        viewModel.addPreference(curUser!.uid);
+                        viewModel.updateDB(curUser!.uid);
                       }
                     ),
 
@@ -174,6 +185,29 @@ class _ResponderSettingState extends State<ResponderSetting> {
                 ),
               ],
             ),
+
+            SizedBox(height: 24.r,),
+
+            Row(
+              children: [
+                MaterialButton(
+                    height: 35.r,
+                    minWidth: 65.r,
+                    color: const Color(0xFFFEAE49),
+                    onPressed: () {
+                      viewModel.addPreference(curUser!.uid);
+                      viewModel.updateDB(curUser!.uid);
+                    },
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.outline,
+                        fontSize: 12.r
+                      ),
+                    ),
+                ),
+              ],
+            )
 
           ],
         ),
