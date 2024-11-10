@@ -23,7 +23,10 @@ class EvacautionFinderView extends StatefulWidget {
 class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   Logger logger = Logger(); //for debug messages
   final dialog = GlobalDialogUtil();
-  final director = Director();
+
+  //form global key
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController title = TextEditingController(); //for adding 
   
 
   final vModel = EvacuationFinderViewModel();
@@ -54,15 +57,16 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   }
 
   String? initialValue;
+  String? deleteValue;
   String? targetEvac;
   
   Set<Marker> evacPins = {}; //store from firestore to set
-  //Temp store data of evac positions
-  Map<String, dynamic> evacData = {};
+  Map<String, dynamic> evacData = {}; //Temp store data of evac positions
 
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<EvacuationFinderViewModel>(context);
+    final director = Provider.of<Director>(context);
     
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -82,6 +86,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             markers: {
               viewModel.origin ?? Marker( markerId: const MarkerId('origin')), //applies temporary value,
               viewModel.destination ??  Marker( markerId: const MarkerId('destination')),
+              viewModel.placedPin ?? Marker( markerId: const MarkerId('temp_marker')),
 
               //current positioni pin
               Marker(
@@ -93,7 +98,10 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             }.union(evacPins),
 
             onLongPress: (pos) {
-              addMarker(pos, viewModel);
+              !viewModel.pinMode ? addMarker(pos, viewModel) : null;
+            },
+            onTap: (pos) {
+              viewModel.pinMode ? addEvac(pos, viewModel) : null;
             },
 
             //lines
@@ -113,6 +121,62 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             },
           ),
 
+          if (viewModel.direct != null) 
+          //shows text info about distance and duration
+          Positioned(
+            top: 20.r,
+            right: 10.r,
+            child: Container(
+              height: 35.r,
+              padding: EdgeInsets.symmetric(vertical: 8.r, horizontal: 12.r),
+              decoration: BoxDecoration(
+                color: Color(0xFFADADAD),
+                borderRadius: BorderRadius.circular(3.5).r,
+                gradient: LinearGradient(
+                  colors: [const Color(0xFFFEAE49), const Color(0xCCFEC57C), Color(0xFFEEEDAD), ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  tileMode: TileMode.decal
+                ),
+              ),
+              child: Text(
+                "DISTANCE: ${viewModel.direct!.totalDistance}",
+                style: TextStyle(
+                  fontSize: 13.r,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black
+                ),
+              ),
+            ),
+          ),
+
+
+          if (viewModel.pinMode)
+          //exit pin mode
+          Positioned(
+            bottom: 15.r,
+            left: 15.r,
+            child: MaterialButton(
+              color: Color(0xFFFEA332),
+              onPressed: () {
+                setState(() {
+                  viewModel.pinMode = false;
+                });
+                
+              },
+              child: Text(
+                "Exit Pin Mode",
+                style: TextStyle(
+                  fontSize: 12.r,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            )
+          ),
+
+          if (!viewModel.pinMode)
+          //DROPDWON
           Positioned(
             bottom: 10.r,
             left: 10.r,
@@ -134,7 +198,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                     ),
                   ),
 
-
+                  //get from firestore
                   StreamBuilder(
                     stream: FirebaseFirestore.instance.collection('locations_evac').doc(userData.municipality.toUpperCase()).snapshots(), 
                     builder: (context, snapshot) {
@@ -204,35 +268,8 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             ),
           ),
       
-          if (viewModel.direct != null) 
-          //shows text info about distance and duration
-          Positioned(
-            top: 20.r,
-            right: 10.r,
-            child: Container(
-              height: 35.r,
-              padding: EdgeInsets.symmetric(vertical: 8.r, horizontal: 12.r),
-              decoration: BoxDecoration(
-                color: Color(0xFFADADAD),
-                borderRadius: BorderRadius.circular(3.5).r,
-                gradient: LinearGradient(
-                  colors: [const Color(0xFFFEAE49), const Color(0xCCFEC57C), Color(0xFFEEEDAD), ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  tileMode: TileMode.decal
-                ),
-              ),
-              child: Text(
-                "DISTANCE: ${viewModel.direct!.totalDistance}",
-                style: TextStyle(
-                  fontSize: 13.r,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black
-                ),
-              ),
-            ),
-          ),
-
+          
+          if (!viewModel.pinMode)
           //Features dial
           Positioned(
             bottom: 85.r,
@@ -251,7 +288,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                   }
                 ),
                 SpeedDialChild(
-                  labelBackgroundColor: Color(0xFFFEAE49),
+                  labelBackgroundColor: Color(0xFFFEA339),
                   label: "Path to evacuate",
                   //for direction
                   onTap: () async { // origin to target
@@ -268,10 +305,34 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                     
                   }
                 ),
+                
+                //delete pin
+                if(director.isResponder)
+                SpeedDialChild(
+                  labelBackgroundColor: Colors.redAccent,
+                  label: "DELETE a Pin",
+                  onTap: () {
+                    deleteEvac(viewModel);
+                  }
+                ),
+
+                //create pin
+                if(director.isResponder)
+                SpeedDialChild(
+                  labelBackgroundColor: Colors.greenAccent,
+                  label: "NEW Evacuation Pin",
+                  onTap: () {
+                    viewModel.pinMode = true;
+                    viewModel.origin = null;
+                    viewModel.destination = null;
+                    viewModel.direct = null;
+                  }
+                ),
       
               ],
             ),
           )
+
         ],
       ),
 
@@ -295,7 +356,63 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   }
 
   
+  //METHODS--------------------------------------------------------
+  //adds pin 
+  void addMarker(LatLng pos, EvacuationFinderViewModel viewModel) async {
+    //add maker of ORIGIN, if origin is not set OR both origin and destination are set
+    if (viewModel.origin == null || (viewModel.origin != null && viewModel.destination != null) ) {
+      //assign variable at _origin
+      setState(() {
+        viewModel.direct = null; //clears the polyline if one pin
+        viewModel.origin = Marker(
+          markerId: const MarkerId('origin'),
+          infoWindow: InfoWindow(title: 'Origin ${pos.toString()}'), //display text over the marker
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+          position: pos,
+          onTap: () => googleMapController.animateCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: pos,
+                zoom: 17.5,
+                tilt: 50.0
+              )
+            )
+          )
+        );
 
+        viewModel.destination = null;
+        
+      });
+    }
+    else {
+      //add marker for destination
+      setState(() {
+        viewModel.destination = Marker(
+          markerId: const MarkerId('destination'),
+          infoWindow: InfoWindow(title: 'Destination ${pos.toString()}'), //display text over the marker
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+          position: pos,
+          onTap: () => googleMapController.animateCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: pos,
+                zoom: 17.5,
+                tilt: 50.0
+              )
+            )
+          )
+        );
+      });
+
+      final directions = await DirectionRepo().getDirection(viewModel.origin!.position, viewModel.destination!.position);
+      setState(() {
+        viewModel.direct = directions;
+      });
+      
+    }
+  }
+
+  //gets the user current location
   void getCurrentLocation() async {
     Location location = Location();
     try {
@@ -370,60 +487,250 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
     }
   }
 
-  //adds pin 
-  void addMarker(LatLng pos, EvacuationFinderViewModel viewModel) async {
+  //RESPONDER PIN Mode
+  void addEvac(LatLng pos, EvacuationFinderViewModel viewModel) async {
     //add maker of ORIGIN, if origin is not set OR both origin and destination are set
-    if (viewModel.origin == null || (viewModel.origin != null && viewModel.destination != null) ) {
+    if (viewModel.pinMode) {
       //assign variable at _origin
+      viewModel.placedPin = null;
       setState(() {
-        viewModel.direct = null; //clears the polyline if one pin
-        viewModel.origin = Marker(
-          markerId: const MarkerId('origin'),
-          infoWindow: InfoWindow(title: 'Origin ${pos.toString()}'), //display text over the marker
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        viewModel.placedPin = Marker(
+          markerId: const MarkerId('temp_marker'),
+          infoWindow: InfoWindow(title: 'Pinned Evacuation Area'), //display text over the marker
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
           position: pos,
-          onTap: () => googleMapController.animateCamera(
-            CameraUpdate.newCameraPosition(
-              CameraPosition(
-                target: pos,
-                zoom: 17.5,
-                tilt: 50.0
+          onTap: () {
+            googleMapController.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: pos,
+                  zoom: 14.5,
+                )
               )
-            )
-          )
-        );
+            );
 
-        viewModel.destination = null;
-        
+            showPrompt(viewModel ,context, userData.municipality, pos);
+          }
+        );
+       
       });
     }
-    else {
-      //add marker for destination
-      setState(() {
-        viewModel.destination = Marker(
-          markerId: const MarkerId('destination'),
-          infoWindow: InfoWindow(title: 'Destination ${pos.toString()}'), //display text over the marker
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-          position: pos,
-          onTap: () => googleMapController.animateCamera(
-            CameraUpdate.newCameraPosition(
-              CameraPosition(
-                target: pos,
-                zoom: 17.5,
-                tilt: 50.0
-              )
-            )
-          )
-        );
-      });
-
-      final directions = await DirectionRepo().getDirection(viewModel.origin!.position, viewModel.destination!.position);
-      setState(() {
-        viewModel.direct = directions;
-      });
-      
-    }
+    
   }
+
+  void deleteEvac(EvacuationFinderViewModel viewModel) {
+    showDialog(
+      barrierDismissible: false,
+      context: context, 
+      builder: (context) {
+        return SimpleDialog(
+          backgroundColor: const Color(0xF2FCFCFC),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5.r),)
+          ),
+          contentPadding: EdgeInsets.all(16).r,
+          children: [
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Delete a pin",
+                    style: TextStyle(
+                      color:  Color(0xFF3D424A),
+                      fontSize: 16.r,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }, 
+                    icon: Icon(Icons.exit_to_app, color: Color(0xFF3D424A),),
+                  )
+                  
+                ],
+            ),
+
+            SizedBox(
+              child: 
+                //get from firestore
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection('locations_evac').doc(userData.municipality.toUpperCase()).snapshots(), 
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(child: Text("some error occured ${snapshot.error}"),);
+                      }
+
+                      List<DropdownMenuItem> evacPlace = [];
+                      if (!snapshot.hasData) {
+                        return const CircularProgressIndicator.adaptive();
+                      }
+                      if (snapshot.hasData && snapshot.data != null && snapshot.data!.exists) {
+                        // Get the document data
+                        Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                        
+                        for (String key in data.keys) {
+                          evacPlace.add(
+                            DropdownMenuItem(
+                              value: key,
+                              child: Text(
+                                  data[key]["name"],
+                                  style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.r
+                                ),
+                              ),
+                            )
+                          );
+                        }
+                      }
+
+                      return DropdownButton(
+                        value: deleteValue,
+                        dropdownColor: Color(0xFFEDEDED),
+                        underline: Container(
+                          height: 1,
+                          color: Colors.black,
+                        ),
+                        iconEnabledColor: Colors.black,
+                        onChanged: (newVal) {
+                          setState(() {
+                            deleteValue= newVal;
+                          });
+
+                          Navigator.pop(context);
+                          deleteEvac(viewModel);
+                          
+                        },
+                        items: evacPlace,
+                      );
+                    }
+                  ),
+
+            ),
+
+            MaterialButton(
+              color: Colors.redAccent,
+              onPressed: () {
+                //sends pos to firestore
+                viewModel.deleteEvacPin(deleteValue!, userData.municipality);
+                getMarkers( userData.municipality);
+                if (mounted) {
+                  setState(() {});
+                }
+                Navigator.pop(context);
+              },
+              child: Text("DELETE", style: TextStyle(color: Color(0xFF3D424A), fontWeight: FontWeight.bold),),
+            ),
+          ],
+        );
+      }
+    );
+  }
+
+  void showPrompt(EvacuationFinderViewModel viewModel ,BuildContext context, String municipality, LatLng pos) {
+    showDialog(
+      barrierDismissible: false,
+      context: context, 
+      builder: (context) {
+        return Form(
+          key: _formKey,
+          child: SimpleDialog(
+            backgroundColor: const Color(0xF2FCFCFC),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.r),)
+            ),
+            contentPadding: EdgeInsets.all(16).r,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(Icons.location_on, color: Color(0xFF3D424A),),
+                  Text(
+                    "Enter evacuation details",
+                    style: TextStyle(
+                      color:  Color(0xFF3D424A),
+                      fontSize: 16.r,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ],
+              ),
+          
+              SizedBox(height: 12.r),
+          
+              SizedBox(
+                width: 200.r,
+                child: TextFormField(
+                controller: title,
+                style: TextStyle(
+                  fontSize: 12.r,
+                  color: Color(0xFF3D424A)
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Enter name',
+                  hintStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF3D424A)
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4).r,
+                    borderSide: BorderSide(width: 1.r, color:Color(0xFF3D424A))
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8).r,
+                    borderSide: BorderSide(width: 2.r, color: Color(0xFF3D424A))
+                  )
+                ),
+                
+                keyboardType: TextInputType.multiline,
+                minLines: 1,
+                maxLines: 3,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter a name";
+                  }
+                  return null;
+                  },
+                ),
+              ),
+
+              SizedBox(height: 16,),
+              Row(
+                children: [
+                  MaterialButton(
+                    onPressed: () {
+                      //sends pos to firestore
+                      if (_formKey.currentState!.validate()) {
+                        viewModel.addEvacFirebase(municipality, title.text ,pos);
+                        viewModel.placedPin = null;
+                        viewModel.pinMode = false;
+                        getMarkers(userData.municipality);
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Text("PIN", style: TextStyle(color: Color(0xFF3D424A), fontWeight: FontWeight.bold),),
+                  ),
+
+                  MaterialButton(
+                    onPressed: () {
+                      //exits dialog
+                      Navigator.pop(context);
+                    },
+                    child: Text("Cancel", style: TextStyle(color: Color(0xFF3D424A), fontWeight: FontWeight.bold),),
+                  ),
+                ],
+              )
+
+            ],
+          ),
+        );
+      }
+    );
+  }
+  
+
+  
 }
 
   
