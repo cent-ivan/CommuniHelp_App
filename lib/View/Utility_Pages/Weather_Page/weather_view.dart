@@ -74,6 +74,7 @@ class _WeatherViewState extends State<WeatherView> {
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
+          color: Color(0xFFADADAD),
           image: DecorationImage(
             image: AssetImage('assets/images/background/weather_back.png'),
             fit: BoxFit.cover
@@ -89,7 +90,7 @@ class _WeatherViewState extends State<WeatherView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DropdownButton<String>(
-                    dropdownColor: Theme.of(context).colorScheme.secondary,
+                    dropdownColor: Colors.black,
                     iconDisabledColor: Colors.grey,
                     hint: Text('Select Municipality'),
                     value: selectedMunicipality,
@@ -112,7 +113,7 @@ class _WeatherViewState extends State<WeatherView> {
                     items: municipalitiesAklan.map((String municipality) {
                       return DropdownMenuItem<String>(
                         value: municipality,
-                        child: Text(municipality, style: TextStyle(color: network.isOnline.value ? Theme.of(context).colorScheme.outline: Colors.grey ) ,),
+                        child: Text(municipality, style: TextStyle(color: network.isOnline.value ? Colors.black: Colors.grey ) ,),
                       );
                     }).toList(),
                   ),

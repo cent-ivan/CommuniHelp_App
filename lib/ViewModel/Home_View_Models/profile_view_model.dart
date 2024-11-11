@@ -251,7 +251,7 @@ class ProfileViewModel extends ChangeNotifier{
 
         await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
       } on FirebaseException {
-        File defaultImage = await assetToFile('asset/images/user.png', 'profile.jpg');
+        File defaultImage = await assetToFile('assets/images/user.png', 'profile.jpg');
         await profileStorage.uploadProfile(defaultImage, id, nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
       }
     }

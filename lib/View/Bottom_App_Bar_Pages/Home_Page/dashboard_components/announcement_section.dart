@@ -286,7 +286,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                               child: Container(
                                 width: 90.r,
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4).r,
-                                margin: const EdgeInsets.only(bottom: 12).r, //item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26
+                                margin: const EdgeInsets.only(bottom: 16).r, //item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26
                                 decoration: BoxDecoration(
                                   color: levelColor(item.level!, item.municipality!),
                                   borderRadius: BorderRadius.all(const Radius.circular(2).r),
