@@ -40,7 +40,14 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
               margin: const EdgeInsets.fromLTRB(9, 3, 0, 0).r,
               child: TextButton(
                 onPressed: () {
-                  
+                  if (viewModel.dbAnnouncement.announcements.isEmpty) {
+                    viewModel.loadAnnouncement();
+                  }
+                  else {
+                    setState(() {
+                      
+                    });
+                  }
                 },
                 child: Text(
                   languageClass.systemLang["Home"]["Announcement"], 
@@ -55,9 +62,15 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
 
             IconButton(
               onPressed: () {
-                setState(() {
-                  
-                });   
+                //checks the list is empty to avoid notificaiton spam
+                if (viewModel.dbAnnouncement.announcements.isEmpty) {
+                    viewModel.loadAnnouncement();
+                  }
+                  else {
+                    setState(() {
+                      
+                    });
+                  }
                 }, 
               icon: Icon(
                 Icons.refresh,

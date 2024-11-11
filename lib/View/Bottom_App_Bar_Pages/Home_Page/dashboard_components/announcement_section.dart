@@ -1,5 +1,5 @@
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
-import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
@@ -25,9 +25,9 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
 
   @override
   Widget build(BuildContext context) {
-    final userSetting = Provider.of<UserSettingViewModel>(context);
+    final userSetting = Provider.of<ResponderSettingViewModel>(context);
     userSetting.loadSettings(curUser!.uid);
-    var languageClass = Language(userSetting.userLanguage);
+    var languageClass = ResLanguage(userSetting.userLanguage);
     return Consumer<AnnouncementViewModel>(builder: (context, viewModel, child) => Column(
       children: [
     
@@ -40,7 +40,14 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
               margin: const EdgeInsets.fromLTRB(9, 3, 0, 0).r,
               child: TextButton(
                 onPressed: () {
-                  viewModel.loadAnnouncement();
+                  if (viewModel.dbAnnouncement.announcements.isEmpty) {
+                    viewModel.loadAnnouncement();
+                  }
+                  else {
+                    setState(() {
+                      
+                    });
+                  }
                 },
                 child: Text(
                   languageClass.systemLang["Home"]["Announcement"], 
@@ -56,7 +63,15 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  viewModel.loadAnnouncement();
+                  if (viewModel.dbAnnouncement.announcements.isEmpty) {
+                    viewModel.loadAnnouncement();
+                  }
+                  else {
+                    setState(() {
+                      
+                    });
+                  }
+                  
                 });   
                 }, 
               icon: Icon(

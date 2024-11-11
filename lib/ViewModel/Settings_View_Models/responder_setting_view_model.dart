@@ -48,8 +48,8 @@ class ResponderSettingViewModel extends ChangeNotifier{
   //loads from hive 
  void loadSettings(String uid) {
   dbSettings.loadData(uid);
-  userLanguage = dbSettings.responderSettings['language']; //dbSettings.responderSettings["language"];
-  isLightMode = false;//dbSettings.responderSettings["lightmode"];
+  userLanguage = dbSettings.responderSettings['language']; //gets preffered language in local storage
+  isLightMode = dbSettings.responderSettings['isLightmode'] ?? false; //if data is null auto null
   //sets the users preference
   if (!isLightMode) {
     themeData = lightMode;
@@ -64,11 +64,13 @@ class ResponderSettingViewModel extends ChangeNotifier{
   //add to local hive
   void addPreference(String uid) {
     dbSettings.addResponderSettings(userLanguage, isLightMode, false);
+    notifyListeners();
   }
 
   //calls to put data to box
   void updateDB(String uid) {
     dbSettings.updateData(uid);
+    notifyListeners();
   }
   
 
@@ -105,9 +107,8 @@ class ResLanguage {
         },
         "Home" : {
           "Announcement" : "Announcements",
-          "NaturalDis" : "Natural Disasters",
-          "ManmadeDis" : "Man-made Disasters",
-          "SearchEvac" : "Search for Evacuation Center",
+          "PostAnnounce" : "Announcement",
+          "SearchEvac" : "Mark Evacuation Centers",
           "News" : "View News",
           "Weather" : "View Weather",
           "Kit" : "My Kits",
@@ -176,9 +177,8 @@ class ResLanguage {
       },
       "Home" : {
           "Announcement" : "Mga Anunsyo",
-          "NaturalDis" : "Natural na Sakuna",
-          "ManmadeDis" : "Sakunang Gawang-tao",
-          "SearchEvac" : "Maghanap ng Evacuation Center",
+          "PostAnnounce" : "Maganunsyo",
+          "SearchEvac" : "Magmarka ng mga Evacuation Center",
           "News" : "Mga Balita",
           "Weather" : "Ang Panahon",
           "Kit" : "Aking Kits",
@@ -248,11 +248,10 @@ class ResLanguage {
       },
       "Home" : {
           "Announcement" : "Mga Anunsyo",
-          "NaturalDis" : "Natural na Sakuna",
-          "ManmadeDis" : "Sakunang Gawa-tao",
-          "SearchEvac" : "Magusoy ng Evacuation Center",
+          "PostAnnounce" : "Maganunsyo",
+          "SearchEvac" : "Magmarka it mga Evacuation Center",
           "News" : "Mga Balita",
-          "Weather" : "Anv Panahon",
+          "Weather" : "Ang Panahon",
           "Kit" : "Akong Kits",
           "ReportLabel" : "Mantawon ang mga ulat",
           "Report" : "Maglat" 
@@ -277,7 +276,7 @@ class ResLanguage {
           "contactdet" : "Mga detalye it Contact",
           "fullname" : "Buo nga Pangalan",
           "gender" : "Kasarian",
-          "birthday" : "Kaarawan",
+          "birthday" : "Kaadlawan",
           "edit": "Baguhon ang profile",
           "nonet": "Wa it Internet.",
           "changeemail" : "Bag-ohon ang email",

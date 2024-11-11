@@ -138,6 +138,8 @@ class MainApp extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    final userSettings = context.watch<UserSettingViewModel>();
+    final responderSettings = context.watch<ResponderSettingViewModel>();
     final director =  Provider.of<Director>(context);
     return  ScreenUtilInit(
       
@@ -207,8 +209,8 @@ class MainApp extends StatelessWidget {
           '/viewinfopage': (context) => const InfoPageView(),
           '/viewmanmadeinfopage': (context) => const ManmadeInfoPageView()
         },
-        theme: ! director.isResponder ? Provider.of<UserSettingViewModel>(context).themeData : Provider.of<ResponderSettingViewModel>(context).themeData,
-        darkTheme: ! director.isResponder ? Provider.of<UserSettingViewModel>(context).darktTheme : Provider.of<ResponderSettingViewModel>(context).darktTheme,
+        theme: ! director.isResponder ? userSettings.themeData : responderSettings.themeData,
+        darkTheme: ! director.isResponder ? userSettings.darktTheme : responderSettings.darktTheme,
       ),
     );
   }

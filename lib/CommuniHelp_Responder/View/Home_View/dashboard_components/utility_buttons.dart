@@ -28,7 +28,7 @@ class _ResponderUtilityButtonsState extends State<ResponderUtilityButtons> {
     final responderSettings = ResponderSettingViewModel();
     responderSettings.loadSettings(curUser!.uid);
     var languageClass = ResLanguage(responderSettings.userLanguage);
-    
+
     final newsViewModel = Provider.of<NewsViewModel>(context);
 
     return Container(
@@ -106,7 +106,7 @@ class _ResponderUtilityButtonsState extends State<ResponderUtilityButtons> {
                     ),
               
                     Text(
-                    "Post Announcement",
+                    languageClass.systemLang["Home"]["PostAnnounce"],
                         style: TextStyle(
                         fontSize: 11.r,
                         fontWeight: FontWeight.bold,

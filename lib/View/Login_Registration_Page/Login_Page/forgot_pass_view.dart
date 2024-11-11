@@ -13,7 +13,7 @@ class _ForgotPassViewState extends State<ForgotPassView> {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
-  AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
 
   final oldEmailController = TextEditingController();
 
