@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/automate.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
@@ -32,12 +33,15 @@ class _ProfileViewState extends State<ProfileView> {
       stalePeriod: Duration(days: 30)
     )
   );
-
+  Automate aut = Automate();
   @override
   Widget build(BuildContext context) {
     final viewModel= Provider.of<ProfileViewModel>(context);
     //show current user
     User? curUser = FirebaseAuth.instance.currentUser;
+
+  
+
 
     final settings = UserSettingViewModel();
     settings.loadSettings(curUser!.uid);
@@ -360,6 +364,7 @@ class _ProfileViewState extends State<ProfileView> {
                             //edit button
                             MaterialButton(
                               onPressed: network.isOnline.value ? (){
+                                //aut.uploadImages();
                                 viewModel.loadData(context);
                                 Navigator.pushNamed(context, '/editprofile');
                               } : null,

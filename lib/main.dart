@@ -144,7 +144,7 @@ class MainApp extends StatelessWidget {
     return  ScreenUtilInit(
       
       builder: (context, child) => GetMaterialApp(
-
+        debugShowCheckedModeBanner: false,
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {

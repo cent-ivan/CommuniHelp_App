@@ -37,8 +37,7 @@ class ProfileStorage {
 
   
   Future uploadProfile(File image, String id, String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type) async {
-    //final appDocDir = await getApplicationDocumentsDirectory(); //sample dela fterwards
-    //logger.i("called: $appDocDir");
+  
     String imagePath = "user/profile/${id}_profile.jpg"; //generate unqique reference
 
     final profileRef = storageRef.child(imagePath); //create reference in the storage
@@ -78,7 +77,13 @@ class ProfileStorage {
       )
     );
 
-    updateProfileForum(municipality, url);
+    if (userData.posts!.isEmpty) {
+      updateProfileForum(municipality, url);
+    }
+    else {
+      updateProfileForum(municipality, url);
+    }
+    
   }
 
   Future updateProfileForum(String municipality, String url) async {

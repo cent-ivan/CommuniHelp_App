@@ -137,7 +137,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12.r
+                                    fontSize: 12.r,
                                   ),
                                 ),
                               ),

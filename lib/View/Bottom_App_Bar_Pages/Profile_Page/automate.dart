@@ -49,19 +49,28 @@ class Automate {
     });
   }
 
-  Future addURL(String url, String municipality,) async {
+  List allHost = [
+    "MISSION_HOSPITAL.jpg",
+    "MMG.png",
+    "PANAY_HEALTH_CARE.png",
+    "ST._GABRIEL_HOSPITAL.jpg",
+    "ST._JUDE_HOSPITAL.jpg",
+    "DR._RAFAEL_S._TUMBOKON_MEMORIAL_HOSPITAL.jpg"
+  ];
+
+  Future addURL(String url, String municipality, String hostpi) async {
       //updates user details to Firestore Database
-      // List splitString = hostpi.split('');
+      List splitString = hostpi.split('');
           
-      // int len = splitString.length;
-      // splitString[len - 4] = "";
-      // splitString[len - 3] = "";
-      // splitString[len - 2] = "";
-      // splitString[len - 1] = "";
+      int len = splitString.length;
+      splitString[len - 4] = "";
+      splitString[len - 3] = "";
+      splitString[len - 2] = "";
+      splitString[len - 1] = "";
     
-      // String name = splitString.join("");
+      String name = splitString.join("");
       Future.delayed(Duration(milliseconds: 500));
-      await _db.collection("hotlines").doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()} LDRRMO").doc("Url").set({"urlPic" : [url]})
+      await _db.collection("hotlines").doc(municipality.toUpperCase()).collection(name).doc("Url").set({"urlPic" : [url]})
         .whenComplete( ()=> "Good")
         
         // ignore: body_might_complete_normally_catch_error
@@ -76,32 +85,31 @@ class Automate {
     
 
   Future uploadImages() async {
+    
 
-    for (String muni in cities) {
-        // Load the asset as byte data
-        //Uint8List imageData = await loadAsset("assets/images/mdrrmo/${muni.toUpperCase()}.jpg");
-        
+    // for (String muni in cities) {
+    //   for (String hostKey in hospitalImages.keys) {
+    //     // Load the asset as byte data
+    //     //Uint8List imageData = await loadAsset("assets/images/hostpi/$hostpi");
 
-        try {
-          String imagePath = "hotlines/${muni.toUpperCase()}/ldrrmo/${muni.toUpperCase()}.jpg";
+    //     try {
+    //       String imagePath = "hotlines/${hostKey.toUpperCase()}/hostpitals/${hospitalImages[hostKey]}"; //friestorage
 
-          final imageRef = storageRef.child(imagePath); //create reference in the storage
+    //       final imageRef = storageRef.child(imagePath); //create reference in the storage
 
-          String url = await imageRef.getDownloadURL();
-          addURL(url, muni);
-          //await imageRef.putData(imageData);
+    //       String url = await imageRef.getDownloadURL();
+    //       addURL(url, hostKey, hospitalImages[hostKey]!);
+    //       //await imageRef.putData(imageData);
           
-        }
-        on FirebaseException catch (e) {
-          logger.e("Firebase Error: ${e.toString()}");
-        }
-        catch (e) {
-          logger.e("Error: ${e.toString()}");
-        }
-    
-    
-
-    }
+    //     }
+    //     on FirebaseException catch (e) {
+    //       logger.e("Firebase Error: ${e.toString()}");
+    //     }
+    //     catch (e) {
+    //       logger.e("Error: ${e.toString()}");
+    //     }
+    //   }
+    // }
     
   }
 }

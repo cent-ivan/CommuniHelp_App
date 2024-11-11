@@ -26,7 +26,7 @@ class HiveDbSettings {
       //IF NULL
       Map<dynamic, dynamic> defaultSettings = {
         "language" : "En",
-        "isLightmode" : true,
+        "isLightmode" : false,
         "isDefault" : true //one time use
       };
       _settings.put(uid, defaultSettings);

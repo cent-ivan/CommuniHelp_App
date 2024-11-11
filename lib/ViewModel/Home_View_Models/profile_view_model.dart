@@ -208,11 +208,30 @@ class ProfileViewModel extends ChangeNotifier{
 
 
   //Firebase Storage methods------------------------------------------------------------
+  //converts unt8 to File type
   Future<File> uint8ListToFile(Uint8List data, String filename) async {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = "${directory.path}/$filename";
     File file = File(path);
     return await file.writeAsBytes(data);
+  }
+
+  Future<File> assetToFile(String assetPath, String fileName) async {
+    final byteData = await rootBundle.load(assetPath);
+
+    // Convert ByteData to Uint8List
+    final Uint8List bytes = byteData.buffer.asUint8List();
+
+    // Get a temporary directory to save the file
+    final tempDir = await getTemporaryDirectory();
+
+    // Create a file in the temp directory with the specified fileName
+    final file = File('${tempDir.path}/$fileName');
+
+    // Write the bytes to the file
+    await file.writeAsBytes(bytes);
+
+    return file;
   }
 
 
@@ -221,8 +240,8 @@ class ProfileViewModel extends ChangeNotifier{
     final storageRef = FirebaseStorage.instance.ref();
     
     if (profileImage == null) {
-      final ref = storageRef.child("user/profile/${id}_profile.jpg"); //change
-
+      final ref = storageRef.child("user/profile/${id}_profile.jpg"); 
+      
       try {
         const oneMegabyte = 1024 * 1024;
         final Uint8List? data = await ref.getData(oneMegabyte);
@@ -232,7 +251,8 @@ class ProfileViewModel extends ChangeNotifier{
 
         await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
       } on FirebaseException catch (e) {
-        logger.e("Error: ${e.toString()}");
+        File defaultImage = await assetToFile('asset/images/user.png', 'profile.jpg');
+        await profileStorage.uploadProfile(defaultImage, id, nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
       }
     }
     else {
