@@ -351,8 +351,8 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
         child: FloatingActionButton(
           heroTag: 'mapFocusHero',
           elevation: 0,
-          backgroundColor: Color(0xFF57BEE6),
-          foregroundColor: Colors.black,
+          backgroundColor: Color(0xFF2BADDF),
+          foregroundColor: Color(0xFFCC0000),
           onPressed: () => googleMapController?.animateCamera(
             viewModel.direct != null ? 
             CameraUpdate.newLatLngBounds(viewModel.direct!.bounds, 100.0) :

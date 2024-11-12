@@ -44,13 +44,13 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                   if (viewModel.dbAnnouncement.announcements.isEmpty) {
                     setState(() {
                       viewModel.loadAnnouncement();
-                      print(viewModel.dbAnnouncement.announcements);
+                      
                     });
                     
                   }
                   else {
                     setState(() {
-                      print(viewModel.dbAnnouncement.announcements);
+        
                     });
                   }
                 },
@@ -144,6 +144,8 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.r,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2, 
                                 ),
                               ),
                             ),
@@ -192,7 +194,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                   color: item.isUrgent! ? Theme.of(context).colorScheme.outline:Color(0xFF3D424A)
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 3, 
+                                maxLines: 2, 
                               ),
                             ),
 

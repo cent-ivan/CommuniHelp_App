@@ -136,6 +136,8 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14.r
                                   ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2, 
                                 ),
                               ),
                             ),
@@ -184,7 +186,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
                                   color: item.isUrgent! ? Theme.of(context).colorScheme.outline:Color(0xFF3D424A)
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 3, 
+                                maxLines: 2, 
                               ),
                             ),
 
