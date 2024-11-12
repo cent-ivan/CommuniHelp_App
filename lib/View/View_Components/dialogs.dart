@@ -22,6 +22,46 @@ class GlobalDialogUtil{
   void removeDialog(context) {
     Navigator.pop(context);
   }
+  
+  //loading screen
+  void loadingProfile(BuildContext context) {
+    showDialog(
+      barrierColor: Color(0xCCE6E5DE),
+      barrierDismissible: false,
+      context: context, 
+      builder: (context) {
+        return Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(
+                image: AssetImage('assets/images/logo/communiHelpLogo.png'),
+                height: 560.r,
+                width: 60.r,
+              ),
+
+              CircularProgressIndicator(
+                strokeWidth: 6,
+                color: Color(0xFFFEAE49),
+              ),
+
+              Text(
+                "Loading...",
+                style: TextStyle(
+                  color: Color(0xFF01579B),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+
+              SizedBox(height: 200.r,)
+            ],
+          ),
+        );
+      }
+    );
+  }
 
   void successDialog(BuildContext context , String message) {
     showDialog(

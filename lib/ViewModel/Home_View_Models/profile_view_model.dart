@@ -59,6 +59,7 @@ class ProfileViewModel extends ChangeNotifier{
   File? profileImage; //Picked image
 
 
+
   //inserts user data to textcontrollers
   void loadData(BuildContext context) {
     final getService = Provider.of<GetUserData>(context,listen: false);
@@ -235,10 +236,11 @@ class ProfileViewModel extends ChangeNotifier{
   }
 
 
-  Future updateUserData(String id, String email, String type) async {
+  Future updateUserData( BuildContext context,String id, String email, String type) async {
     //Firebase Storage
     final storageRef = FirebaseStorage.instance.ref();
     
+    _dialog.loadingProfile(context);
     if (profileImage == null) {
       final ref = storageRef.child("user/profile/${id}_profile.jpg"); 
       
@@ -247,16 +249,23 @@ class ProfileViewModel extends ChangeNotifier{
         final Uint8List? data = await ref.getData(oneMegabyte);
         //Data in Uint8List
         profileImage = await uint8ListToFile(data!, "profile.jpg");
-
-
-        await profileStorage.uploadProfile( userData.municipality ,profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+        if (context.mounted) {
+          await profileStorage.uploadProfile( context,userData.municipality ,profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+        }
+        
       } on FirebaseException {
         File defaultImage = await assetToFile('assets/images/user.png', 'profile.jpg');
-        await profileStorage.uploadProfile(userData.municipality ,defaultImage, id, nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+        if (context.mounted) {
+          await profileStorage.uploadProfile(context ,userData.municipality ,defaultImage, id, nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+        }
+        
       }
     }
     else {
-      await profileStorage.uploadProfile(userData.municipality, profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+      if (context.mounted) {
+        await profileStorage.uploadProfile(context,userData.municipality, profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+      }
+      
     } 
   }
 

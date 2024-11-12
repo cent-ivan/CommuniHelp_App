@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/user_model.dart';
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:communihelp_app/View/View_Components/login_dialogs.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -16,7 +16,7 @@ class FireStoreAddService {
 
   //userData
   final userData = GetUserData();
-  final getAnnouncement = GetAnnouncement();
+  final getAnnouncement = AnnouncementViewModel();
 
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
@@ -38,18 +38,23 @@ class FireStoreAddService {
   }
 
   Future updateUserDetails(UserModel user) async {
-    //updates user details to Firestore Database
-    await _db.collection("users").doc(curUser!.uid).update(user.toJson())
-      .whenComplete( ()=> "Good")
-      
-      // ignore: body_might_complete_normally_catch_error
-      .catchError((error){ 
-          logger.e("Error Occured : ${error.toString()}");
-        }
-      );
-    logger.i("Done Updating");
-    userData.getUser();
-    getAnnouncement.listenToAnnouncements(user.municipality!);
+    try {
+      //updates user details to Firestore Database
+      await _db.collection("users").doc(curUser!.uid).update(user.toJson())
+        .whenComplete( ()=> "Good")
+        
+        // ignore: body_might_complete_normally_catch_error
+        .catchError((error){ 
+            logger.e("Error Occured : ${error.toString()}");
+          }
+        );
+      logger.i("Done Updating");
+      userData.getUser();
+      getAnnouncement.dbAnnouncement.listenToAnnouncements(user.municipality!);
+      } catch (e) {
+        logger.e("Done Updating");
+      }
+    
   }
 
 

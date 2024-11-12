@@ -44,12 +44,13 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                   if (viewModel.dbAnnouncement.announcements.isEmpty) {
                     setState(() {
                       viewModel.loadAnnouncement();
+                      print(viewModel.dbAnnouncement.announcements);
                     });
                     
                   }
                   else {
                     setState(() {
-                      
+                      print(viewModel.dbAnnouncement.announcements);
                     });
                   }
                 },

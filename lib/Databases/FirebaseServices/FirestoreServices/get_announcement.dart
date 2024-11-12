@@ -20,7 +20,6 @@ class GetAnnouncement extends ChangeNotifier{
 
   
   Future listenToAnnouncements(String municipality) async{
-    announcements.clear();
     await Future.delayed(Duration(seconds: 3));
     
     CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance
