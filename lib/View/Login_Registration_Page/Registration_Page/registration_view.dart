@@ -41,7 +41,7 @@ class _RegistrationViewState extends State<RegistrationView> {
       body: SingleChildScrollView(
         child: Container(
           width: 500.r,
-          height: 1110.r,
+          height: 1130.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/background/Register.jpg'),
@@ -602,6 +602,18 @@ class _RegistrationViewState extends State<RegistrationView> {
                                           "user",
                                           []
                                         );
+
+                                        //resets input field
+                                        viewModel.nameController.clear(); 
+                                        viewModel.bdayController.clear(); 
+                                        currentOption = options[0]; 
+                                        viewModel.barangayValue = null; 
+                                        viewModel.municipalityValue =null;
+                                        viewModel.emailController.clear(); 
+                                        viewModel.contactController.clear();  
+                                        viewModel.passwordController.clear();  
+                                        viewModel.confirmPasswordController.clear(); 
+
                                         
                                         Navigator.pop(context);
                                       }
@@ -657,7 +669,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                               
                                       else {
                                         setState(() {
-                                          _whiteContainerHeight = 830.r;
+                                          _whiteContainerHeight = 870.r;
                                         });
                                       }
                                     },

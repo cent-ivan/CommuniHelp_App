@@ -7,7 +7,7 @@ class AnnouncementModel {
   String? content;
   DateTime? expiresAt;
 
-
+  //Business logic will set when the announcement expires
   AnnouncementModel(
     {
     this.expiresAt,
@@ -19,6 +19,7 @@ class AnnouncementModel {
     required this.content
   });
 
+  //to easily make json formats.
   toJson() {
     return {
       "Urgent" : isUrgent,

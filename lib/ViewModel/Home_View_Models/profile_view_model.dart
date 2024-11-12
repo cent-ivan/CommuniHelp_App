@@ -33,7 +33,7 @@ class ProfileViewModel extends ChangeNotifier{
   ProfileStorage? _profileStorage;
   ProfileStorage get profileStorage => _profileStorage ??= ProfileStorage();
 
-  
+  GetUserData userData = GetUserData();
   //show current user
   final user = FirebaseAuth.instance.currentUser!;
 
@@ -249,14 +249,14 @@ class ProfileViewModel extends ChangeNotifier{
         profileImage = await uint8ListToFile(data!, "profile.jpg");
 
 
-        await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+        await profileStorage.uploadProfile( userData.municipality ,profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
       } on FirebaseException {
         File defaultImage = await assetToFile('assets/images/user.png', 'profile.jpg');
-        await profileStorage.uploadProfile(defaultImage, id, nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+        await profileStorage.uploadProfile(userData.municipality ,defaultImage, id, nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
       }
     }
     else {
-      await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+      await profileStorage.uploadProfile(userData.municipality, profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
     } 
   }
 

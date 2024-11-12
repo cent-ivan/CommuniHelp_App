@@ -1,5 +1,6 @@
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
-import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
@@ -22,12 +23,12 @@ class AnnouncementSection extends StatefulWidget {
 class _AnnouncementSectionState extends State<AnnouncementSection> {
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
-
+  final userData = GetUserData();
   @override
   Widget build(BuildContext context) {
-    final userSetting = Provider.of<ResponderSettingViewModel>(context);
+    final userSetting = Provider.of<UserSettingViewModel>(context);
     userSetting.loadSettings(curUser!.uid);
-    var languageClass = ResLanguage(userSetting.userLanguage);
+    var languageClass = Language(userSetting.userLanguage);
     return Consumer<AnnouncementViewModel>(builder: (context, viewModel, child) => Column(
       children: [
     
@@ -41,7 +42,10 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
               child: TextButton(
                 onPressed: () {
                   if (viewModel.dbAnnouncement.announcements.isEmpty) {
-                    viewModel.loadAnnouncement();
+                    setState(() {
+                      viewModel.loadAnnouncement();
+                    });
+                    
                   }
                   else {
                     setState(() {
@@ -68,7 +72,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                   }
                   else {
                     setState(() {
-                      
+                      print("Merong data daw");
                     });
                   }
                   

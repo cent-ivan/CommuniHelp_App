@@ -48,7 +48,7 @@ class ReportViewModel extends ChangeNotifier {
     }
     catch (e) {
       if (context.mounted) {
-        _dialog.unknownErrorDialog(context, "Image Error: ${e.toString()}");
+        _dialog.errorDialog(context, "No image picked");
       }
       
     }
@@ -77,7 +77,7 @@ class ReportViewModel extends ChangeNotifier {
     }
     catch (e) {
       if (context.mounted) {
-        _dialog.unknownErrorDialog(context, "Image Error: ${e.toString()}");
+        _dialog.errorDialog(context, "No image picked");
       }
       
     }

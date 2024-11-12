@@ -90,7 +90,7 @@ class _WeatherViewState extends State<WeatherView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DropdownButton<String>(
-                    dropdownColor: Colors.black,
+                    dropdownColor: Colors.white,
                     iconDisabledColor: Colors.grey,
                     hint: Text('Select Municipality'),
                     value: selectedMunicipality,
@@ -544,6 +544,8 @@ class _WeatherViewState extends State<WeatherView> {
       //else get from Hive
       dbWeather.loadData();
     }
+
+    
     
   }
 }

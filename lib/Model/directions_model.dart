@@ -15,11 +15,11 @@ class DirectionsModel {
   });
 
   factory DirectionsModel.fromMap(Map<String, dynamic> map) {
-    //get route info
+    //get route info from json
     final data = Map<String, dynamic>.from(map['routes'][0]);
 
-    //get bounds
-    final northeast = data["bounds"]["northeast"];
+    //get route bounds
+    final northeast = data["bounds"]["northeast"]; //area that the map is zoomed in on
     final southwest = data["bounds"]["southwest"];
     final bounds = LatLngBounds(
       southwest: LatLng(southwest['lat'], southwest['lng']), 
@@ -34,10 +34,11 @@ class DirectionsModel {
       distance = leg['distance']['text'];
       duration = leg['duration']['text'];
     }
-
+    
+    //returns object
     return DirectionsModel(
       bounds: bounds, 
-      polylinePoints: PolylinePoints().decodePolyline(data['overview_polyline']['points']), 
+      polylinePoints: PolylinePoints().decodePolyline(data['overview_polyline']['points']),
       totalDistance: distance, 
       totalDuration: duration
     );

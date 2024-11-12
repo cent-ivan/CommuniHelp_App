@@ -85,18 +85,18 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
       Center(child: CircularProgressIndicator(color: Color(0xA6FEAE49),),) :
       Stack(
         children: [
-          //Map
+          //MAP DISPLAY
           GoogleMap(
             mapType: MapType.hybrid,
             zoomControlsEnabled: false,
             initialCameraPosition: CameraPosition(target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!), zoom: 12.5), //CameraPosition(target: LatLng(viewModel.currentLocation!.latitude!, viewModel.currentLocation!.longitude!), zoom: 14.5), //set initial position when opened
             onMapCreated: (controller) => googleMapController = controller, //assign the controller
             markers: {
-              viewModel.origin ?? Marker( markerId: const MarkerId('origin')), //applies temporary value,
+              viewModel.origin ?? Marker( markerId: const MarkerId('origin')), //applies temporary value, reserve
               viewModel.destination ??  Marker( markerId: const MarkerId('destination')),
               viewModel.placedPin ?? Marker( markerId: const MarkerId('temp_marker')),
 
-              //current positioni pin
+              //current position pin
               Marker(
                 markerId: MarkerId('user_position'),
                 position: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
@@ -114,7 +114,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
 
             //lines
             polylines: {
-              //draws polyline
+              //draws polyline or route
               if (viewModel.direct != null)
               Polyline(
                 polylineId: PolylineId('route_polyline'),

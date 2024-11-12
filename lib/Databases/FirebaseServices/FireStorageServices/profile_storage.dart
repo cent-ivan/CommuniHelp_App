@@ -36,7 +36,7 @@ class ProfileStorage {
   final storageRef = FirebaseStorage.instance.ref();
 
   
-  Future uploadProfile(File image, String id, String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type) async {
+  Future uploadProfile(String oldMuni,File image, String id, String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type) async {
   
     String imagePath = "user/profile/${id}_profile.jpg"; //generate unqique reference
 
@@ -54,13 +54,13 @@ class ProfileStorage {
     logger.d("After URL: $url");
 
     logger.i("ID: $id");
-    addUser(url, id, name, birthdate, gender, barangay, municipality, email, mobileNumber, type);
+    addUser(oldMuni, url, id, name, birthdate, gender, barangay, municipality, email, mobileNumber, type);
     
   }
 
 
 
-  Future addUser(String url, String uid, String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type) async {
+  Future addUser(String oldMuni, String url, String uid, String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type) async {
     firestoreService.updateUserDetails(UserModel(
       uid: uid,
     

@@ -521,10 +521,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                                       emergencyViewModel.reloadLists();
     
                                       viewModel.updateUserData(user.uid, user.email!, userData.type);
-
+                                      getAnnouncement.clear();
 
                                     });
-
+                        
                                     Navigator.pop(context);
                                     
                                 }

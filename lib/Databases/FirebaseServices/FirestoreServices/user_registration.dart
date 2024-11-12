@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/user_model.dart';
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
@@ -15,6 +16,7 @@ class FireStoreAddService {
 
   //userData
   final userData = GetUserData();
+  final getAnnouncement = GetAnnouncement();
 
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
@@ -47,6 +49,7 @@ class FireStoreAddService {
       );
     logger.i("Done Updating");
     userData.getUser();
+    getAnnouncement.listenToAnnouncements(user.municipality!);
   }
 
 

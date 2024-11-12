@@ -41,8 +41,6 @@ class _ProfileViewState extends State<ProfileView> {
     User? curUser = FirebaseAuth.instance.currentUser;
 
   
-
-
     final settings = UserSettingViewModel();
     settings.loadSettings(curUser!.uid);
     var languageClass = Language(settings.userLanguage); //catches aklanon language to replace with filipino

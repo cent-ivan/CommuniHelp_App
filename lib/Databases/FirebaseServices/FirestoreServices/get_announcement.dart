@@ -13,9 +13,16 @@ class GetAnnouncement extends ChangeNotifier{
 
   List<AnnouncementModel> announcements = []; //list of announcements
 
+  //for refresh
+  void clear() {
+    announcements.clear();
+  }
+
   
   Future listenToAnnouncements(String municipality) async{
+    announcements.clear();
     await Future.delayed(Duration(seconds: 3));
+    
     CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance
         .collection("announcements")
         .doc(municipality.toUpperCase())
@@ -26,6 +33,7 @@ class GetAnnouncement extends ChangeNotifier{
     collection.snapshots().listen((qrySnapshot) {
       if (announcements.isNotEmpty) {
         announcements.clear();
+        notifyListeners();
       }
       
       // Process each document in the snapshot
@@ -91,7 +99,7 @@ class GetAnnouncement extends ChangeNotifier{
   }
 
 
-  //add announcement to Firestore
+  //add announcement to Firestore              the AnnouncementModel are passed
   Future addAnnouncement(String municipality, AnnouncementModel announcement) async {
     await _db.collection("announcements").doc(municipality.toUpperCase()).set({"Municipality" : municipality})
     .whenComplete( ()=> "Good")
@@ -101,7 +109,7 @@ class GetAnnouncement extends ChangeNotifier{
         logger.e("Error Occured : ${error.toString()}");
       }
     );
-
+    //Firestore Databases are NoSQL meaning there schema is 
     await _db.collection("announcements").doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_announcement").doc().set(announcement.toJson())
     .whenComplete( ()=> "Good")
       
