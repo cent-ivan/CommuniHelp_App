@@ -4,6 +4,7 @@ import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/search_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/about_app_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/share_app_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/manmade_disaster_view.dart';
 import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/forgot_pass_view.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
@@ -20,8 +21,6 @@ import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.da
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/announcement_make.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_email.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_password.dart';
-import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/Manmade_Info_Components/View_Page/manmade_info_page_view.dart';
-import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
 import 'package:communihelp_app/View/base_controller.dart';
 import 'package:communihelp_app/View/settings_view.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
@@ -39,7 +38,6 @@ import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/login_vi
 import 'package:communihelp_app/View/Login_Registration_Page/Registration_Page/registration_view.dart';
 import 'package:communihelp_app/View/Utility_Pages/Emergency_Kit/emergency_kit_view.dart';
 import 'package:communihelp_app/View/Utility_Pages/Evacuation_Finder/evacaution_finder_view.dart';
-import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/manmade_disaster_view.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/natural_disaster_view.dart';
 import 'package:communihelp_app/View/Utility_Pages/News_Feed/news_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
@@ -179,7 +177,7 @@ class MainApp extends StatelessWidget {
           '/profile' : (context) => const ProfileView(),
           '/emergency': (context) => const EmergencyView(),
           '/naturalinfo': (context) => const NaturalDisasterView(),
-          '/manmadeinfo': (context) => const ManMadeDisasterView(),
+          '/manmadeinfo': (context) => const ManmadeDisasterView(),
           '/newsfeed': (context) => const NewsView(),
           '/emergencykit': (context) => const EmergencyKitView(),
           '/weatherupdate': (context) => const WeatherView(),
@@ -205,9 +203,7 @@ class MainApp extends StatelessWidget {
           '/manageannouncement': (context) => const ManageAnnouncement(),
           '/viewreport': (context) => const SeeReportView(),
 
-          //Infograhics routes
-          '/viewinfopage': (context) => const InfoPageView(),
-          '/viewmanmadeinfopage': (context) => const ManmadeInfoPageView()
+
         },
         theme: ! director.isResponder ? userSettings.themeData : responderSettings.themeData,
         darkTheme: ! director.isResponder ? userSettings.darktTheme : responderSettings.darktTheme,
