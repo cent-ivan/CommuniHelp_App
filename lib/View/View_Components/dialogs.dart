@@ -22,6 +22,116 @@ class GlobalDialogUtil{
   void removeDialog(context) {
     Navigator.pop(context);
   }
+  
+  //loading screen
+  void loadingProfile(BuildContext context) {
+    showDialog(
+      barrierColor: Color(0xCCE6E5DE),
+      barrierDismissible: false,
+      context: context, 
+      builder: (context) {
+        return Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              CircularProgressIndicator(
+                strokeWidth: 6,
+                color: Color(0xFFFEAE49),
+              ),
+
+              Container(
+                margin: EdgeInsets.only(bottom: 250.r),
+                child: Text(
+                  "Loading...",
+                  style: TextStyle(
+                    color: Color(0xFF01579B),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+
+
+            ],
+          ),
+        );
+      }
+    );
+  }
+
+  void successDialog(BuildContext context , String message) {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return SimpleDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r))
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          contentPadding: EdgeInsets.symmetric(vertical: 15.r, horizontal: 20.r ),
+          children: [
+            Text(
+              "Successful Transaction",
+              style: TextStyle(
+                color: Colors.greenAccent,
+                fontWeight: FontWeight.bold,
+                fontSize: 16.r
+              ),
+            ),
+            
+            SizedBox(height: 16.r,),
+
+            Text(
+              message,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.outline,
+
+                fontSize: 12.r
+              ),
+            )
+          ],
+        );
+      }
+    );
+  }
+
+  void errorDialog(BuildContext context , String message) {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return SimpleDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r))
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          contentPadding: EdgeInsets.symmetric(vertical: 15.r, horizontal: 20.r ),
+          children: [
+            Text(
+              "Oops...",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.outline,
+                fontWeight: FontWeight.bold,
+                fontSize: 16.r
+              ),
+            ),
+            
+            SizedBox(height: 16.r,),
+
+            Text(
+              message,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.outline,
+
+                fontSize: 12.r
+              ),
+            )
+          ],
+        );
+      }
+    );
+  }
 
   //dialog for catched errors
   void unknownErrorDialog(BuildContext context , String message){

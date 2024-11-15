@@ -142,7 +142,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             _isObscure1 = ! _isObscure1;
                           });
                         },
-                        icon: _isObscure1 ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off) ,
+                        icon: _isObscure1 ? Icon(Icons.visibility, color: Theme.of(context).colorScheme.outline) :  Icon(Icons.visibility_off, color: Theme.of(context).colorScheme.outline,) ,
                       )
                     ),
                     validator: (value) {
@@ -240,7 +240,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                               newPassController.clear();
                             });
 
-                            Navigator.pop(context);
                           }
                         },
                         child: Text(

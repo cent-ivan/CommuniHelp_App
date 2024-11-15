@@ -110,4 +110,18 @@ class AuthService {
     }
     await FirebaseAuth.instance.signOut();
   }
+
+  // Method to send password reset email
+  Future<void> sendPasswordResetEmail(BuildContext context , String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      if (context.mounted) {
+        _globalUtil.successDialog(context, "Reset link sent!");
+      }
+    } catch (e) {
+      if (context.mounted) {
+      _globalUtil.errorDialog(context, "Something went wrong");
+      }
+    }
+  }
 }

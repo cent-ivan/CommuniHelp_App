@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:communihelp_app/View/base_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
@@ -20,23 +19,13 @@ class HomeBase extends StatefulWidget {
 }
 
 class _HomeBaseState extends State<HomeBase> {
-  @override
-  void initState() {
-    AwesomeNotifications().isNotificationAllowed().then(
-      (isAllowed) {
-        if (!isAllowed) {
-          AwesomeNotifications().requestPermissionToSendNotifications();
-        }
-      }
-    );
-    super.initState();
-  }
+ 
 
   final PageStorageBucket bucket = PageStorageBucket();
 
   GetUserData getData = GetUserData();
-  final announcementViewModel = AnnouncementViewModel(); //calls announcement
 
+  final announcementViewModel = AnnouncementViewModel(); //calls announcement
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
@@ -277,17 +266,7 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget{
       ),
 
 
-      //notifications
-      actions: [
-        IconButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/notifpage');
-          }, 
-          icon: const Icon(Icons.notifications),
-          iconSize: 30.r,
-          color: Theme.of(context).colorScheme.outline,
-        ),
-      ],
+    
     );
   }
   
@@ -370,39 +349,7 @@ class DrawerBase extends StatelessWidget {
                 ),
       
 
-                //Notifications
-                Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.notification_important), 
-                        iconSize: 25,
-                        color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
-                      ),
-                      
-                      const SizedBox( width: 15,),
-      
-                      TextButton(
-                        child: Text(
-                          "Notifications",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                        ),
-                        onPressed: (){
-      
-                        },
-                      )
-                    ],
-                  )
-                ),
-      
-
-                //Privacy Policy
+                //Setting
                 Container( 
                   margin: const EdgeInsets.only(bottom: 2), 
                   child: Row(
@@ -435,6 +382,39 @@ class DrawerBase extends StatelessWidget {
                   )
                 ),
 
+                //about App
+                Container( 
+                  margin: const EdgeInsets.only(bottom: 2), 
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.info_rounded), 
+                        iconSize: 25,
+                        color: Theme.of(context).colorScheme.outline,
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/aboutapp');
+                        },
+                      ),
+                      
+                      const SizedBox( width: 15,),
+      
+                      TextButton(
+                        child: Text(
+                          "About App",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                        onPressed: (){
+                          Navigator.pushNamed(context, '/aboutapp');
+                        },
+                      )
+                    ],
+                  )
+                ),
+
 
                 //Share App
                 Container( 
@@ -445,7 +425,9 @@ class DrawerBase extends StatelessWidget {
                         icon: const Icon(Icons.share), 
                         iconSize: 25,
                         color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/shareapp');
+                        },
                       ),
                       
                       const SizedBox( width: 15,),
@@ -460,7 +442,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: (){
-      
+                          Navigator.pushNamed(context, '/shareapp');
                         },
                       )
                     ],
@@ -527,12 +509,12 @@ class DrawerBase extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Theme.of(context).colorScheme.surface,
-          title: Text("Lumabas sa App?", style: TextStyle(fontWeight: FontWeight.bold),),
+          title: Text("Exit the App?", style: TextStyle(fontWeight: FontWeight.bold),),
           contentPadding: EdgeInsets.symmetric(horizontal: 0),
           actions: [
             TextButton(
                   child: Text(
-                    'Oo',
+                    'Yes',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                       fontSize: 16.r
@@ -545,7 +527,7 @@ class DrawerBase extends StatelessWidget {
 
                 TextButton(
                   child: Text(
-                    'Hindi',
+                    'No',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                       fontSize: 16.r

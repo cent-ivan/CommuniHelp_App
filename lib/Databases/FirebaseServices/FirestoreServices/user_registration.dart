@@ -3,6 +3,7 @@ import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get
 import 'package:communihelp_app/Model/user_model.dart';
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:communihelp_app/View/View_Components/login_dialogs.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -15,6 +16,7 @@ class FireStoreAddService {
 
   //userData
   final userData = GetUserData();
+  final getAnnouncement = AnnouncementViewModel();
 
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
@@ -36,17 +38,23 @@ class FireStoreAddService {
   }
 
   Future updateUserDetails(UserModel user) async {
-    //updates user details to Firestore Database
-    await _db.collection("users").doc(curUser!.uid).update(user.toJson())
-      .whenComplete( ()=> "Good")
-      
-      // ignore: body_might_complete_normally_catch_error
-      .catchError((error){ 
-          logger.e("Error Occured : ${error.toString()}");
-        }
-      );
-    logger.i("Done Updating");
-    userData.getUser();
+    try {
+      //updates user details to Firestore Database
+      await _db.collection("users").doc(curUser!.uid).update(user.toJson())
+        .whenComplete( ()=> "Good")
+        
+        // ignore: body_might_complete_normally_catch_error
+        .catchError((error){ 
+            logger.e("Error Occured : ${error.toString()}");
+          }
+        );
+      logger.i("Done Updating");
+      userData.getUser();
+      getAnnouncement.dbAnnouncement.listenToAnnouncements(user.municipality!);
+      } catch (e) {
+        logger.e("Done Updating");
+      }
+    
   }
 
 

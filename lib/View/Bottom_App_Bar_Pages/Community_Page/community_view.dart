@@ -93,10 +93,10 @@ class _CommunityViewState extends State<CommunityView> {
 
               SizedBox(height: 10.r,),
 
-              //Put here the StreamBuilder
+              //StreamBuilder
               Expanded(
                 child: StreamBuilder(
-                  stream: viewModel.getStream(userData.municipality), 
+                  stream: viewModel.getStream(userData.municipality), //get posts by municipality
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
@@ -104,10 +104,11 @@ class _CommunityViewState extends State<CommunityView> {
 
                     if (!snapshot.hasData) {
                       return Center(
-                        child: Text("Walang laman. Umpisahan"),
+                        child: Text("No Data"),
                       );
                     }
-                
+
+                    //produce a list of widgets
                     return ListView(
                       children: snapshot.data!.docs.map<Widget>((DocumentSnapshot document) {
                       Map<String, dynamic> data = document.data()! as Map<String, dynamic>;

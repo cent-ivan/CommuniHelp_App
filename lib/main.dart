@@ -1,9 +1,10 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/manage_announcement.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/responder_setting.dart';
 import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/search_view.dart';
-import 'package:communihelp_app/View/notification_page.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/about_app_view.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/share_app_view.dart';
+import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/forgot_pass_view.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
@@ -62,6 +63,7 @@ import 'ViewModel/Connection_Controller/dependency_injection.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
+
 void main() async{
   await dotenv.load(fileName: "lib/.env"); //initialize env
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,14 +75,8 @@ void main() async{
     DeviceOrientation.portraitDown
   ]);
 
-  //awesome notificatioin
-  AwesomeNotifications().initialize( 
-    null,
-    [
-      NotificationChannel(channelKey: 'sample_channel', channelName: 'basic_notif', channelDescription: 'Sample Notification only')
-    ],
-    debug: true
-  );
+  
+  
 
   //Hive local db
   await Hive.initFlutter();
@@ -134,17 +130,21 @@ void main() async{
   DependencyInjection.init();
 }
 
+
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   
   @override
   Widget build(BuildContext context) {
+    final userSettings = context.watch<UserSettingViewModel>();
+    final responderSettings = context.watch<ResponderSettingViewModel>();
     final director =  Provider.of<Director>(context);
     return  ScreenUtilInit(
       
       builder: (context, child) => GetMaterialApp(
-
+        debugShowCheckedModeBanner: false,
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
@@ -192,7 +192,9 @@ class MainApp extends StatelessWidget {
           '/settings': (context) => const UserSettingsView(), 
           '/respondersettings': (context) => const ResponderSettingsView(), 
           '/searchcontact' : (context) => const SearchView(),
-          '/notifpage': (context) => const NotificationPage(),
+          '/aboutapp' : (context) => const AboutAppView(),
+          '/shareapp' : (context) => const ShareAppView(),
+          '/forgotpassword' : (context) => const ForgotPassView(),
           
 
           //Responder routes
@@ -207,8 +209,8 @@ class MainApp extends StatelessWidget {
           '/viewinfopage': (context) => const InfoPageView(),
           '/viewmanmadeinfopage': (context) => const ManmadeInfoPageView()
         },
-        theme: ! director.isResponder ? Provider.of<UserSettingViewModel>(context).themeData : Provider.of<ResponderSettingViewModel>(context).themeData,
-        darkTheme: ! director.isResponder ? Provider.of<UserSettingViewModel>(context).darktTheme : Provider.of<ResponderSettingViewModel>(context).darktTheme,
+        theme: ! director.isResponder ? userSettings.themeData : responderSettings.themeData,
+        darkTheme: ! director.isResponder ? userSettings.darktTheme : responderSettings.darktTheme,
       ),
     );
   }

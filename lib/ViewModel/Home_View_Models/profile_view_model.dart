@@ -4,6 +4,7 @@ import 'package:communihelp_app/Databases/FirebaseServices/FireStorageServices/p
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/user_registration.dart';
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
+import 'package:communihelp_app/View/View_Components/login_dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -26,12 +27,13 @@ class ProfileViewModel extends ChangeNotifier{
 
   Logger logger = Logger(); //for debug message
   final _dialog = GlobalDialogUtil(); //dialgs 
+  final dialog = LoginDialogs();
   
   //lazy initializer
   ProfileStorage? _profileStorage;
   ProfileStorage get profileStorage => _profileStorage ??= ProfileStorage();
 
-  
+  GetUserData userData = GetUserData();
   //show current user
   final user = FirebaseAuth.instance.currentUser!;
 
@@ -55,6 +57,7 @@ class ProfileViewModel extends ChangeNotifier{
 
   File? image; //edited image
   File? profileImage; //Picked image
+
 
 
   //inserts user data to textcontrollers
@@ -107,7 +110,7 @@ class ProfileViewModel extends ChangeNotifier{
     }
     catch (e) {
       if (context.mounted) {
-        _dialog.unknownErrorDialog(context, "Image Error: ${e.toString()}");
+        _dialog.errorDialog(context, "No Image pick!");
       }
       
     }
@@ -136,7 +139,7 @@ class ProfileViewModel extends ChangeNotifier{
     }
     catch (e) {
       if (context.mounted) {
-        _dialog.unknownErrorDialog(context, "Image Error: ${e.toString()}");
+        _dialog.errorDialog(context, "No Image pick!");
       }
       
     }
@@ -194,7 +197,9 @@ class ProfileViewModel extends ChangeNotifier{
 
   //change email
   Future updateEmail(String id, String email, String password, String newEmail, BuildContext context) async {
-    await firestoreAdd.updateAuthEmail(id, email, password, newEmail, context);
+    
+      await firestoreAdd.updateAuthEmail(id, email, password, newEmail, context);
+    
   }
 
   //change password
@@ -204,6 +209,7 @@ class ProfileViewModel extends ChangeNotifier{
 
 
   //Firebase Storage methods------------------------------------------------------------
+  //converts unt8 to File type
   Future<File> uint8ListToFile(Uint8List data, String filename) async {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = "${directory.path}/$filename";
@@ -211,28 +217,55 @@ class ProfileViewModel extends ChangeNotifier{
     return await file.writeAsBytes(data);
   }
 
+  Future<File> assetToFile(String assetPath, String fileName) async {
+    final byteData = await rootBundle.load(assetPath);
 
-  Future updateUserData(String id, String email, String type) async {
+    // Convert ByteData to Uint8List
+    final Uint8List bytes = byteData.buffer.asUint8List();
+
+    // Get a temporary directory to save the file
+    final tempDir = await getTemporaryDirectory();
+
+    // Create a file in the temp directory with the specified fileName
+    final file = File('${tempDir.path}/$fileName');
+
+    // Write the bytes to the file
+    await file.writeAsBytes(bytes);
+
+    return file;
+  }
+
+
+  Future updateUserData( BuildContext context,String id, String email, String type) async {
     //Firebase Storage
     final storageRef = FirebaseStorage.instance.ref();
     
+    _dialog.loadingProfile(context);
     if (profileImage == null) {
-      final ref = storageRef.child("user/profile/${id}_profile.jpg"); //change
-
+      final ref = storageRef.child("user/profile/${id}_profile.jpg"); 
+      
       try {
         const oneMegabyte = 1024 * 1024;
         final Uint8List? data = await ref.getData(oneMegabyte);
         //Data in Uint8List
         profileImage = await uint8ListToFile(data!, "profile.jpg");
-
-
-        await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
-      } on FirebaseException catch (e) {
-        logger.e("Error: ${e.toString()}");
+        if (context.mounted) {
+          await profileStorage.uploadProfile( context,userData.municipality ,profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+        }
+        
+      } on FirebaseException {
+        File defaultImage = await assetToFile('assets/images/user.png', 'profile.jpg');
+        if (context.mounted) {
+          await profileStorage.uploadProfile(context ,userData.municipality ,defaultImage, id, nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+        }
+        
       }
     }
     else {
-      await profileStorage.uploadProfile(profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+      if (context.mounted) {
+        await profileStorage.uploadProfile(context,userData.municipality, profileImage!, id , nameController.text, birthdateController.text, currentOption, barangayValue!, municipalityValue!, email, contactController.text, type);
+      }
+      
     } 
   }
 

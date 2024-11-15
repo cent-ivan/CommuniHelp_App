@@ -59,9 +59,9 @@ class _InfoPageViewState extends State<InfoPageView> {
                           },
                           child: CircleAvatar(
                             radius: 7.r,
-                            backgroundColor: _currentPage == index? Color(0xFF57E2E6) : Colors.transparent,
+                            backgroundColor: _currentPage == index? Color(0xFFFEAE49) : Colors.transparent,
                             child: CircleAvatar(
-                              radius: 6.r,
+                              radius: 5.r,
                               backgroundColor: _currentPage == index? Color(0xFF57BEE6) : Color(0x80F8F8F8),
                             ),
                           ),
@@ -95,10 +95,10 @@ class _InfoPageViewState extends State<InfoPageView> {
                             );
                           },
                           child: CircleAvatar(
-                            radius: 7.r,
-                            backgroundColor: _currentPage == index? Color(0xFF57E2E6) : Colors.transparent,
+                            radius: 6.5.r,
+                            backgroundColor: _currentPage == index? Color(0xFFFEAE49) : Colors.transparent,
                             child: CircleAvatar(
-                              radius: 6.r,
+                              radius: 5.r,
                               backgroundColor: _currentPage == index? Color(0xFF57BEE6) : Color(0x80F8F8F8),
                             ),
                           ),

@@ -1,3 +1,4 @@
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +23,7 @@ class AnnouncementSection extends StatefulWidget {
 class _AnnouncementSectionState extends State<AnnouncementSection> {
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
-
+  final userData = GetUserData();
   @override
   Widget build(BuildContext context) {
     final userSetting = Provider.of<UserSettingViewModel>(context);
@@ -40,7 +41,19 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
               margin: const EdgeInsets.fromLTRB(9, 3, 0, 0).r,
               child: TextButton(
                 onPressed: () {
-                  viewModel.loadAnnouncement();
+                  if (viewModel.dbAnnouncement.announcements.isEmpty) {
+                    viewModel.loadAnnouncement();
+                    setState(() {
+                      
+                      
+                    });
+                    
+                  }
+                  else {
+                    setState(() {
+        
+                    });
+                  }
                 },
                 child: Text(
                   languageClass.systemLang["Home"]["Announcement"], 
@@ -56,7 +69,15 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  viewModel.loadAnnouncement();
+                  if (viewModel.dbAnnouncement.announcements.isEmpty) {
+                    viewModel.loadAnnouncement();
+                  }
+                  else {
+                    setState(() {
+                   
+                    });
+                  }
+                  
                 });   
                 }, 
               icon: Icon(
@@ -122,8 +143,10 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12.r
+                                    fontSize: 12.r,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2, 
                                 ),
                               ),
                             ),
@@ -172,7 +195,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                   color: item.isUrgent! ? Theme.of(context).colorScheme.outline:Color(0xFF3D424A)
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 3, 
+                                maxLines: 2, 
                               ),
                             ),
 
@@ -271,7 +294,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                               child: Container(
                                 width: 90.r,
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4).r,
-                                margin: const EdgeInsets.only(bottom: 12).r, //item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26
+                                margin: const EdgeInsets.only(bottom: 16).r, //item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26
                                 decoration: BoxDecoration(
                                   color: levelColor(item.level!, item.municipality!),
                                   borderRadius: BorderRadius.all(const Radius.circular(2).r),

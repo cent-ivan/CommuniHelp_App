@@ -26,8 +26,9 @@ class _ResponderSettingsViewState extends State<ResponderSettingsView> {
     final viewModel = Provider.of<ResponderSettingViewModel>(context);
     //language current value
     String currentOption = viewModel.userLanguage;
-
+  
     var languageClass = ResLanguage(currentOption);
+    viewModel.loadSettings(curUser!.uid);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,

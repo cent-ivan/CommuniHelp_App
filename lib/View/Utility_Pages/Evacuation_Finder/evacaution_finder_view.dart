@@ -32,14 +32,18 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   final vModel = EvacuationFinderViewModel();
   final userData = GetUserData();
 
-  late GoogleMapController googleMapController;
+  GoogleMapController? googleMapController;
 
   //gets teh current location
   LocationData? currentLocation;
 
+  Set<Marker> evacPins = {}; //store from firestore to set
+  Map<String, dynamic> evacData = {}; //Temp store data of evac positions
+
   @override
   void initState() {
     vModel.setCustomMarker();
+    vModel.userCustomMarker(userData);
     getCurrentLocation();
     loadPins();
     super.initState();
@@ -47,12 +51,18 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
 
   @override
   void dispose() {
-    googleMapController.dispose();
+    if (googleMapController != null) {
+      googleMapController?.dispose();
+    }
     super.dispose();
   }
 
   void loadPins() {
-    getMarkers(userData.municipality);
+    setState(() {
+      evacPins.clear();
+      getMarkers(userData.municipality);
+    });
+    
     
   }
 
@@ -60,8 +70,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   String? deleteValue;
   String? targetEvac;
   
-  Set<Marker> evacPins = {}; //store from firestore to set
-  Map<String, dynamic> evacData = {}; //Temp store data of evac positions
+  
 
   @override
   Widget build(BuildContext context) {
@@ -77,25 +86,28 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
       Center(child: CircularProgressIndicator(color: Color(0xA6FEAE49),),) :
       Stack(
         children: [
-          //Map
+          //MAP DISPLAY
           GoogleMap(
             mapType: MapType.hybrid,
             zoomControlsEnabled: false,
             initialCameraPosition: CameraPosition(target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!), zoom: 12.5), //CameraPosition(target: LatLng(viewModel.currentLocation!.latitude!, viewModel.currentLocation!.longitude!), zoom: 14.5), //set initial position when opened
             onMapCreated: (controller) => googleMapController = controller, //assign the controller
             markers: {
-              viewModel.origin ?? Marker( markerId: const MarkerId('origin')), //applies temporary value,
+              viewModel.origin ?? Marker( markerId: const MarkerId('origin')), //applies temporary value, reserve
               viewModel.destination ??  Marker( markerId: const MarkerId('destination')),
               viewModel.placedPin ?? Marker( markerId: const MarkerId('temp_marker')),
 
-              //current positioni pin
+              //current position pin
               Marker(
                 markerId: MarkerId('user_position'),
                 position: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
                 infoWindow: InfoWindow(title: "You"),
-              )
+                icon: vModel.userMarker,
+                flat: true
+              ),
 
-            }.union(evacPins),
+
+            }.union(evacPins), //ADD ALL OF THE MARKERS IN THE DATABASE
 
             onLongPress: (pos) {
               !viewModel.pinMode ? addMarker(pos, viewModel) : null;
@@ -106,10 +118,10 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
 
             //lines
             polylines: {
-              //draws polyline
+              //draws polyline or route
               if (viewModel.direct != null)
               Polyline(
-                polylineId: PolylineId('sample_polyline'),
+                polylineId: PolylineId('route_polyline'),
                 startCap: Cap.roundCap,
                 endCap: Cap.roundCap,
                 color: Color(0xA6FEAE49),
@@ -122,7 +134,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           ),
 
           if (viewModel.direct != null) 
-          //shows text info about distance and duration
+          //shows text info about distance and duration when showing a navigation polyline
           Positioned(
             top: 20.r,
             right: 10.r,
@@ -161,6 +173,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
               onPressed: () {
                 setState(() {
                   viewModel.pinMode = false;
+                  viewModel.placedPin = null;
                 });
                 
               },
@@ -243,7 +256,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                             initialValue= newVal;
                             targetEvac = newVal;
                           });
-                          googleMapController.animateCamera(
+                          googleMapController?.animateCamera(
                             CameraUpdate.newCameraPosition(
                               CameraPosition(
                                 target: getEvacPosition(newVal),
@@ -312,6 +325,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                   labelBackgroundColor: Colors.redAccent,
                   label: "DELETE a Pin",
                   onTap: () {
+                    initialValue = null;
                     deleteEvac(viewModel);
                   }
                 ),
@@ -341,12 +355,12 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
         child: FloatingActionButton(
           heroTag: 'mapFocusHero',
           elevation: 0,
-          backgroundColor: Color(0xFF57BEE6),
-          foregroundColor: Colors.black,
-          onPressed: () => googleMapController.animateCamera(
+          backgroundColor: Color(0xFF2BADDF),
+          foregroundColor: Color(0xFFCC0000),
+          onPressed: () => googleMapController?.animateCamera(
             viewModel.direct != null ? 
             CameraUpdate.newLatLngBounds(viewModel.direct!.bounds, 100.0) :
-            CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!), zoom: 12.5, tilt: 20.0),) //move to initial position,
+            CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!), zoom: 12.5, tilt: 30.0),) //move to initial position,
           ),
           child: viewModel.direct == null? Icon(Icons.pin_drop)  : Icon(Icons.center_focus_strong),
         ),
@@ -357,7 +371,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
 
   
   //METHODS--------------------------------------------------------
-  //adds pin 
+  //adds blue and gree pin in the map
   void addMarker(LatLng pos, EvacuationFinderViewModel viewModel) async {
     //add maker of ORIGIN, if origin is not set OR both origin and destination are set
     if (viewModel.origin == null || (viewModel.origin != null && viewModel.destination != null) ) {
@@ -369,7 +383,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           infoWindow: InfoWindow(title: 'Origin ${pos.toString()}'), //display text over the marker
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
           position: pos,
-          onTap: () => googleMapController.animateCamera(
+          onTap: () => googleMapController?.animateCamera(
             CameraUpdate.newCameraPosition(
               CameraPosition(
                 target: pos,
@@ -392,7 +406,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           infoWindow: InfoWindow(title: 'Destination ${pos.toString()}'), //display text over the marker
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
           position: pos,
-          onTap: () => googleMapController.animateCamera(
+          onTap: () => googleMapController?.animateCamera(
             CameraUpdate.newCameraPosition(
               CameraPosition(
                 target: pos,
@@ -444,7 +458,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
     logger.i("Added current location: $currentLocation");
   }
 
-  //gets the position of
+  //gets the position of the evacuation when changed in the 
   LatLng getEvacPosition(String id) {
     LatLng postion;
     if (evacData.containsKey(id) && evacData.isNotEmpty) {
@@ -456,10 +470,11 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
     return postion;
   }
 
-  //returns epins
+  //loads all the evac pins in the firestore
   Future getMarkers(String municipality) async {
    
     try {
+      //This line will retrieve the markers position
       DocumentSnapshot doc = await FirebaseFirestore.instance.collection("locations_evac").doc(municipality.toUpperCase()).get();
       if (doc.exists) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -500,11 +515,11 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
           position: pos,
           onTap: () {
-            googleMapController.animateCamera(
+            googleMapController?.animateCamera(
               CameraUpdate.newCameraPosition(
                 CameraPosition(
                   target: pos,
-                  zoom: 14.5,
+                  zoom: 13.5,
                 )
               )
             );
@@ -541,8 +556,12 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                       fontWeight: FontWeight.bold
                     ),
                   ),
+                  //exit
                   IconButton(
                     onPressed: () {
+                      setState(() {
+                        
+                      });
                       Navigator.pop(context);
                     }, 
                     icon: Icon(Icons.exit_to_app, color: Color(0xFF3D424A),),
@@ -553,7 +572,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
 
             SizedBox(
               child: 
-                //get from firestore
+                //get from firestore DROPDWON for delete
                   StreamBuilder(
                     stream: FirebaseFirestore.instance.collection('locations_evac').doc(userData.municipality.toUpperCase()).snapshots(), 
                     builder: (context, snapshot) {
@@ -595,12 +614,12 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                         iconEnabledColor: Colors.black,
                         onChanged: (newVal) {
                           setState(() {
+                            evacData.remove(newVal);
                             deleteValue= newVal;
                           });
 
                           Navigator.pop(context);
-                          deleteEvac(viewModel);
-                          
+                          deleteEvac(viewModel); //returns to dialog to refresh  
                         },
                         items: evacPlace,
                       );
@@ -609,15 +628,18 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
 
             ),
 
+            //delete button
             MaterialButton(
               color: Colors.redAccent,
               onPressed: () {
                 //sends pos to firestore
                 viewModel.deleteEvacPin(deleteValue!, userData.municipality);
-                getMarkers( userData.municipality);
-                if (mounted) {
-                  setState(() {});
-                }
+                deleteValue = null;
+                setState(() {
+                  loadPins();
+                  viewModel.destination = null;
+                });    
+                
                 Navigator.pop(context);
               },
               child: Text("DELETE", style: TextStyle(color: Color(0xFF3D424A), fontWeight: FontWeight.bold),),
@@ -628,6 +650,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
     );
   }
 
+  //Prompt for adding evacution markers
   void showPrompt(EvacuationFinderViewModel viewModel ,BuildContext context, String municipality, LatLng pos) {
     showDialog(
       barrierDismissible: false,
@@ -705,7 +728,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                         viewModel.addEvacFirebase(municipality, title.text ,pos);
                         viewModel.placedPin = null;
                         viewModel.pinMode = false;
-                        getMarkers(userData.municipality);
+                        loadPins();
                         Navigator.pop(context);
                       }
                     },

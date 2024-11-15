@@ -18,7 +18,7 @@ class RegistrationResponderView extends StatefulWidget {
 List<String> options =["Male", "Female"]; //for radio list
 class _RegistrationResponderViewState extends State<RegistrationResponderView> {
   //DefaultBox height
-  double _whiteContainerHeight = 750.r + 40.r;
+  double _whiteContainerHeight = 690.r + 40.r;
 
   //password values
   bool _isObscure1 =  true;
@@ -40,7 +40,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
       body: SingleChildScrollView(
         child: Container(
           width: 500.r,
-          height: 1110.r,
+          height: 1130.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/background/Register.jpg'),
@@ -57,7 +57,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 240.r,
+                      width: 210.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),
@@ -65,7 +65,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
 
                     //Logo and title
                     Positioned(
-                      top: 120.r,
+                      top: 150.r,
                       child: Text(
                         "Register Responder",
                         style: TextStyle(
@@ -585,7 +585,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
                                         //validated the text field and adds to the firebase, pass to register view model
                                         _formKey.currentState!.save();
                                         setState(() {
-                                          _whiteContainerHeight = 750.r + 60.r;
+                                          _whiteContainerHeight = 780.r + 60.r;
                                         });
                                         firebaseViewModel.addUser(
                                           context, 
@@ -650,13 +650,13 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
                                         );
 
                                         setState(() {
-                                          _whiteContainerHeight = 750.r + 60.r;
+                                          _whiteContainerHeight = 780.r + 60.r;
                                         });
                                       }
                               
                                       else {
                                         setState(() {
-                                          _whiteContainerHeight = 830.r;
+                                          _whiteContainerHeight = 850.r;
                                         });
                                       }
                                     },

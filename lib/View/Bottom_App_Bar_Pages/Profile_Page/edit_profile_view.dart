@@ -520,12 +520,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                                       userData.reloadData();
                                       emergencyViewModel.reloadLists();
     
-                                      viewModel.updateUserData(user.uid, user.email!, userData.type);
-
+                                      viewModel.updateUserData(context, user.uid, user.email!, userData.type);
+                                      getAnnouncement.clear();
 
                                     });
-
-                                    Navigator.pop(context);
+                        
+                                    //Navigator.pop(context);
                                     
                                 }
                                 else if (viewModel.barangayValue == null || viewModel.municipalityValue ==  null) {

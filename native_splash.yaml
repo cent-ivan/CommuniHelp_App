@@ -1,0 +1,6 @@
+flutter_native_splash:
+  android: true
+  
+  color: '#E0E0E0'
+  image: "assets/images/logo/communiHelpLogo.png"
+  branding: "assets/images/logo/label.png"

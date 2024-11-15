@@ -33,14 +33,18 @@ class _ManageAnnouncementState extends State<ManageAnnouncement> {
 
             if (!snapshot.hasData) {
               return Center(
-                child: Text("Walang laman. Umpisahan"),
+                child: Text("No Announcements"),
               );
             }
 
             return ListView(
               children: snapshot.data!.docs.map<Widget>((DocumentSnapshot document) {
                 Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                return GestureDetector(
+                return data.isEmpty ?
+                Center(
+                  child: Text("No Announcements"),
+                ) :
+                GestureDetector(
                   onTap: () {
                     showAnnouncement(data);
                   },

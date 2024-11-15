@@ -30,7 +30,11 @@ dependencies:
   flutter_cache_manager: ^3.4.1
   http: ^1.2.2
   flutter_dotenv: ^5.2.1 #storing api keys
-  awesome_notifications: ^0.10.0
+  flutter_local_notifications: ^18.0.0
+  flutter_native_splash: ^2.4.2
+
+  #icon
+  
 
   #Firebase and firestore
   firebase_auth: ^5.1.4
@@ -58,9 +62,18 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_launcher_icons: ^0.14.1
 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  image_path: 'assets/images/logo/logo_communihelp.jpg'
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/logo/logo_communihelp.jpg"
+
   #Hive
   hive_generator: ^2.0.1
   build_runner: ^2.4.13
+
+
+
 
 flutter:
   uses-material-design: true
@@ -75,6 +88,8 @@ flutter:
     - assets/images/background/
     - assets/images/
     - assets/images/weather/
+
+    
 
     #inforgrpahics assets
     - assets/images/infographics/
@@ -102,3 +117,4 @@ flutter:
   #   - family: Still searching for fonts
   #     fonts:
   #     - asset: fonts/Porsche-Regular.ttf //example font
+    

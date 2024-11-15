@@ -49,7 +49,7 @@ class UserSettingViewModel extends ChangeNotifier{
  void loadSettings(String uid) {
   dbSettings.loadData(uid);
   userLanguage = dbSettings.userSettings['language']; //dbSettings.userSettings["language"];
-  isLightMode = dbSettings.userSettings['isLightmode'];//dbSettings.userSettings["lightmode"];
+  isLightMode = dbSettings.userSettings['isLightmode'] ?? false; //if data is null auto null
   //sets the users preference
   if (!isLightMode) {
     themeData = lightMode;
@@ -105,6 +105,7 @@ class Language {
         },
         "Home" : {
           "Announcement" : "Announcements",
+          "PostAnnounce" : "Announcement",
           "NaturalDis" : "Natural Disasters",
           "ManmadeDis" : "Man-made Disasters",
           "SearchEvac" : "Search for Evacuation Center",
@@ -176,6 +177,7 @@ class Language {
       },
       "Home" : {
           "Announcement" : "Mga Anunsyo",
+          "PostAnnounce" : "Maganunsyo",
           "NaturalDis" : "Natural na Sakuna",
           "ManmadeDis" : "Sakunang Gawang-tao",
           "SearchEvac" : "Maghanap ng Evacuation Center",
@@ -248,6 +250,7 @@ class Language {
       },
       "Home" : {
           "Announcement" : "Mga Anunsyo",
+          "PostAnnounce" : "Maganunsyo",
           "NaturalDis" : "Natural na Sakuna",
           "ManmadeDis" : "Sakunang Gawa-tao",
           "SearchEvac" : "Magusoy ng Evacuation Center",
@@ -277,7 +280,7 @@ class Language {
           "contactdet" : "Mga detalye it Contact",
           "fullname" : "Buo nga Pangalan",
           "gender" : "Kasarian",
-          "birthday" : "Kaarawan",
+          "birthday" : "Kaadlawan",
           "edit": "Baguhon ang profile",
           "nonet": "Wa it Internet.",
           "changeemail" : "Bag-ohon ang email",

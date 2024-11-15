@@ -1,3 +1,4 @@
+import 'package:communihelp_app/CommuniHelp_Responder/ViewModel/auth_responder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
@@ -30,6 +31,9 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  //access view model
+  final AuthResponder _authResponder = AuthResponder();
+
   @override
   Widget build(BuildContext context) {
     final director =  Provider.of<Director>(context);
@@ -37,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: Container(
-          width: 500.r,
+          width: 485.r,
           height: 755.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -47,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
           ),
         
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(3, 30, 3, 8).r,
+            padding: const EdgeInsets.fromLTRB(0, 30, 0, 8).r,
             child: Column(
               children: [
                 //Logo and title 
@@ -69,7 +73,7 @@ class _LoginViewState extends State<LoginView> {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 30.r,
+                          fontSize: 28.r,
                           letterSpacing: 2.r,
                           shadows: [
                             Shadow(
@@ -85,11 +89,13 @@ class _LoginViewState extends State<LoginView> {
                     Positioned(
                       top: 170.r,
                       child: Text(
-                        "Disaster Preparedness Asssistance and Utility App",
+                        """Disaster Preparedness Asssistance 
+and Utility App""",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
-                          fontSize: 10.r,
+                          fontSize: 14.r,
                           shadows: [
                             Shadow(
                               color: Colors.white,
@@ -229,25 +235,26 @@ class _LoginViewState extends State<LoginView> {
                                     height: 50.r,
                                     minWidth: 100.r,
                                     onPressed: () {
-                                      if (_formKey.currentState!.validate()){
-                                        //check if user is a responder
-                                        if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {
-                                          director.changeDirection();
-                                          //Navigator.pushNamed(context, '/responderlogin');
-                                        }
-                                        else {
-                                          //validated the text field and adds to the firebase, pass to register view model
-                                          logger.d("called in login");
-                                          _formKey.currentState!.save();
-                                          loginViewModel.loginUser(context, _emailController.text, _passwordController.text);
-                                        }
+                                      loginViewModel.loginUser(context, "sample@gmail.com", "qwerty");
+                                      // if (_formKey.currentState!.validate()){
+                                      //   //check if user is a responder
+                                      //   if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {
+                                      //     director.changeDirection();
+                                      //     //Navigator.pushNamed(context, '/responderlogin');
+                                      //   }
+                                      //   else {
+                                      //     //validated the text field and adds to the firebase, pass to register view model
+                                      //     logger.d("called in login");
+                                      //     _formKey.currentState!.save();
+                                      //     loginViewModel.loginUser(context, _emailController.text, _passwordController.text);
+                                      //   }
           
-                                      }
-                                      else {
-                                        setState(() {
-                                          _loginHeight = 330.r;
-                                        });
-                                      }
+                                      // }
+                                      // else {
+                                      //   setState(() {
+                                      //     _loginHeight = 330.r;
+                                      //   });
+                                      // }
                                     },
                                     color: const Color(0xFF3D424A),
                                     child: Text(
@@ -259,7 +266,49 @@ class _LoginViewState extends State<LoginView> {
                                         letterSpacing: 1.r
                                       ),
                                     ),
-                                  )
+                                  ),
+
+                                  SizedBox(width: 10,),
+
+                                  MaterialButton(
+                                    height: 50.r,
+                                    minWidth: 100.r,
+                                    onPressed: () {
+                                      director.changeDirection();
+                                    
+                                      // if (_formKey.currentState!.validate()){
+                                      //   //check if user is a responder
+                                      //   if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {
+                                      //     director.changeDirection();
+                                      //     //Navigator.pushNamed(context, '/responderlogin');
+                                      //   }
+                                      //   else {
+                                      //     //validated the text field and adds to the firebase, pass to register view model
+                                      //     logger.d("called in login");
+                                      //     _formKey.currentState!.save();
+                                      //     loginViewModel.loginUser(context, _emailController.text, _passwordController.text);
+                                      //   }
+          
+                                      // }
+                                      // else {
+                                      //   setState(() {
+                                      //     _loginHeight = 330.r;
+                                      //   });
+                                      // }
+                                    },
+                                    color: const Color(0xFF3D424A),
+                                    child: Text(
+                                      "Responder",
+                                      style: TextStyle(
+                                        fontSize: 14.r,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.r
+                                      ),
+                                    ),
+                                  ),
+
+
                                 ],
                               )
 
@@ -295,7 +344,7 @@ class _LoginViewState extends State<LoginView> {
 
                       TextButton(
                         onPressed: () {
-                  
+                          Navigator.pushNamed(context, '/forgotpassword');
                         }, 
                         child: Text(
                           "Forgot Password",

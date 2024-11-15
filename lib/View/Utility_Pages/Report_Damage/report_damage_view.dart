@@ -415,33 +415,40 @@ class _ReportDamageViewState extends State<ReportDamageView> {
 
                           SizedBox(width: 10.r,),
 
-                          MaterialButton(
-                            height: 65.r,
-                            minWidth: 150.r,
-                            onPressed: () {
-                              setState(() {
-                                viewModel.reportTitleController.clear();
-                                viewModel.contentController.clear();
-                                viewModel.locationController.clear();
-                                viewModel.choosenImage = null;
-                              });
-                            
-                              
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(12.r))
-                            ),
-                            color: Color(0xFF57BEE6),
-                            elevation: 1.r,
-                            child: Text(
-                              "Clear",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.r,
-                                color: Theme.of(context).colorScheme.outline
+                          Column(
+                            children: [
+                              MaterialButton(
+                                height: 65.r,
+                                minWidth: 150.r,
+                                onPressed: () {
+                                  setState(() {
+                                    viewModel.reportTitleController.clear();
+                                    viewModel.contentController.clear();
+                                    viewModel.locationController.clear();
+                                    viewModel.choosenImage = null;
+                                  });
+                                
+                                  
+                                },
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(12.r))
+                                ),
+                                color: Color(0xFF57BEE6),
+                                elevation: 1.r,
+                                child: Text(
+                                  "Clear",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.r,
+                                    color: Theme.of(context).colorScheme.outline
+                                  ),
+                                ),
                               ),
-                            ),
+                              SizedBox(height: 16.r,)
+                            ],
                           ),
+
+                          
                         ],
                       ),
 

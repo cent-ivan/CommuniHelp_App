@@ -119,12 +119,19 @@ class PickProfileDialog {
                   ),
                   color: Color(0xFF57BEE6),
                   onPressed: () async {
-                    File imagePicked = await viewModel.pickImage(ImageSource.camera, context);
-                    viewModel.image = imagePicked;
+                    try {
+                      File imagePicked = await viewModel.pickImage(ImageSource.camera, context);
+                      viewModel.image = imagePicked;
 
-                    if (context.mounted) {
-                      Navigator.pop(context);
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
+                    } catch (e) {
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
                     }
+                    
                   },
                   child: Text(
                     "Open Camera",

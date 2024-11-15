@@ -254,18 +254,6 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget{
         }
       ),
 
-
-      //notifications
-      actions: [
-        IconButton(
-          onPressed: () {
-
-          }, 
-          icon: const Icon(Icons.notifications),
-          iconSize: 30.r,
-          color: Theme.of(context).colorScheme.outline,
-        ),
-      ],
     );
   }
   
@@ -338,39 +326,7 @@ class DrawerBase extends StatelessWidget {
                     ],
                   )
                 ),
-      
-
-                //Notifications
-                Container( 
-                  margin: const EdgeInsets.only(bottom: 4), 
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.notification_important), 
-                        iconSize: 25,
-                        color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
-                      ),
-                      
-                      const SizedBox( width: 15,),
-      
-                      TextButton(
-                        child: Text(
-                          "Notifications",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                        ),
-                        onPressed: (){
-      
-                        },
-                      )
-                    ],
-                  )
-                ),
-      
+          
 
                 //Privacy Policy
                 Container( 
@@ -399,6 +355,40 @@ class DrawerBase extends StatelessWidget {
                         ),
                         onPressed: () {
                           Navigator.pushNamed(context, '/respondersettings');
+                        },
+                      )
+                    ],
+                  )
+                ),
+
+
+                //about App
+                Container( 
+                  margin: const EdgeInsets.only(bottom: 2), 
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.info_rounded), 
+                        iconSize: 25,
+                        color: Theme.of(context).colorScheme.outline,
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/aboutapp');
+                        },
+                      ),
+                      
+                      const SizedBox( width: 15,),
+      
+                      TextButton(
+                        child: Text(
+                          "About App",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                        onPressed: (){
+                          Navigator.pushNamed(context, '/aboutapp');
                         },
                       )
                     ],

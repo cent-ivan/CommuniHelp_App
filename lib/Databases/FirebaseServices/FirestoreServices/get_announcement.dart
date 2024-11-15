@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Model/announcement_model.dart';
+import 'package:communihelp_app/ViewModel/Notification_Controller/notification_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -12,9 +13,15 @@ class GetAnnouncement extends ChangeNotifier{
 
   List<AnnouncementModel> announcements = []; //list of announcements
 
+  //for refresh
+  void clear() {
+    announcements.clear();
+  }
 
+  
   Future listenToAnnouncements(String municipality) async{
     await Future.delayed(Duration(seconds: 3));
+    
     CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance
         .collection("announcements")
         .doc(municipality.toUpperCase())
@@ -25,6 +32,7 @@ class GetAnnouncement extends ChangeNotifier{
     collection.snapshots().listen((qrySnapshot) {
       if (announcements.isNotEmpty) {
         announcements.clear();
+        notifyListeners();
       }
       
       // Process each document in the snapshot
@@ -48,18 +56,20 @@ class GetAnnouncement extends ChangeNotifier{
       }
 
     sortUrgent();
-  
-    onNewDataAdded(); //Notification
+
+    if (announcements.isEmpty) {
+      logger.i("No Data");
+    }
+    else {
+      NotificationController().showNotification(title: "ANNOUNCEMENT ALERT: at $municipality"); //Notification
+    }
+    
     }, onError: (error) {
       logger.e("Error: ${error.toString()}");
     });
 }
 
-  void onNewDataAdded() {
-    //  updating UI, notifying user
-    logger.i("New announcements have been added.");
-  }
-
+  
 
 
   void sortUrgent() {
@@ -88,7 +98,7 @@ class GetAnnouncement extends ChangeNotifier{
   }
 
 
-  //add announcement to Firestore
+  //add announcement to Firestore              the AnnouncementModel are passed
   Future addAnnouncement(String municipality, AnnouncementModel announcement) async {
     await _db.collection("announcements").doc(municipality.toUpperCase()).set({"Municipality" : municipality})
     .whenComplete( ()=> "Good")
@@ -98,7 +108,7 @@ class GetAnnouncement extends ChangeNotifier{
         logger.e("Error Occured : ${error.toString()}");
       }
     );
-
+    //Firestore Databases are NoSQL meaning there schema is 
     await _db.collection("announcements").doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_announcement").doc().set(announcement.toJson())
     .whenComplete( ()=> "Good")
       

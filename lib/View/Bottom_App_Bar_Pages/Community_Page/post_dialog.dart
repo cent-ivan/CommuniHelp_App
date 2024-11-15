@@ -75,7 +75,10 @@ class PostDialog {
                                     key: UniqueKey(),
                                     imageUrl: userData.userProfURL,
                                     progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                    errorWidget: (context, url, error) => CircleAvatar(
+                                        backgroundImage: AssetImage('assets/images/user.png') ,
+                                        radius: 20.r,
+                                      ),
                                     imageBuilder: (context, imageProvider) => CircleAvatar(
                                       backgroundImage: imageProvider,
                                       radius: 20.r,

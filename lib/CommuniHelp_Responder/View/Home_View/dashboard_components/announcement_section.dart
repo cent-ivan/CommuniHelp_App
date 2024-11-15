@@ -1,4 +1,6 @@
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,10 +20,14 @@ class ResponderAnnouncement extends StatefulWidget {
 }
 
 class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
-
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
+    final responderSettings = ResponderSettingViewModel();
+    responderSettings.loadSettings(curUser!.uid);
+    var languageClass = ResLanguage(responderSettings.userLanguage);
     return Consumer<AnnouncementViewModel>(builder: (context, viewModel, child) => Column(
       children: [
     
@@ -34,10 +40,17 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
               margin: const EdgeInsets.fromLTRB(9, 3, 0, 0).r,
               child: TextButton(
                 onPressed: () {
-                  viewModel.loadAnnouncement();
+                  if (viewModel.dbAnnouncement.announcements.isEmpty) {
+                    viewModel.loadAnnouncement();
+                  }
+                  else {
+                    setState(() {
+                      
+                    });
+                  }
                 },
                 child: Text(
-                  "Announcement", 
+                  languageClass.systemLang["Home"]["Announcement"], 
                     style: TextStyle(
                     fontSize: 25.r,
                     fontWeight: FontWeight.bold, 
@@ -49,9 +62,15 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
 
             IconButton(
               onPressed: () {
-                setState(() {
-                  viewModel.loadAnnouncement();
-                });   
+                //checks the list is empty to avoid notificaiton spam
+                if (viewModel.dbAnnouncement.announcements.isEmpty) {
+                    viewModel.loadAnnouncement();
+                  }
+                  else {
+                    setState(() {
+                      
+                    });
+                  }
                 }, 
               icon: Icon(
                 Icons.refresh,
@@ -117,6 +136,8 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14.r
                                   ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2, 
                                 ),
                               ),
                             ),
@@ -165,7 +186,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
                                   color: item.isUrgent! ? Theme.of(context).colorScheme.outline:Color(0xFF3D424A)
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 3, 
+                                maxLines: 2, 
                               ),
                             ),
 

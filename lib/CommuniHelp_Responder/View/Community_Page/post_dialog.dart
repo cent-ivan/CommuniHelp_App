@@ -1,5 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Model/forum_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +11,7 @@ import 'package:provider/provider.dart';
 import '../../../Databases/FirebaseServices/FirestoreServices/get_forum.dart';
 import '../../../Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 
-class PostDialog {
+class RespPostDialog {
   //form global key
   final _formKey = GlobalKey<FormState>();
 
@@ -16,7 +20,22 @@ class PostDialog {
 
   final firestoreForum = GetForum();
 
+  static final  customCache = CacheManager(
+    Config(
+      "customCacheKey",
+      stalePeriod: Duration(days: 30)
+    )
+  );
+
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
+
+
   void addPost(BuildContext context) {
+    final responderSettings = ResponderSettingViewModel();
+    responderSettings.loadSettings(curUser!.uid);
+    var languageClass = ResLanguage(responderSettings.userLanguage);
+    
     final userData = Provider.of<GetUserData>(context, listen: false);
     showDialog(
       barrierDismissible: false,
@@ -27,7 +46,7 @@ class PostDialog {
           child: SingleChildScrollView(
             child: AlertDialog(
               backgroundColor: Theme.of(context).colorScheme.surface,
-              title: Text("Magbahagi ng saloobin", style: TextStyle(fontWeight: FontWeight.bold),),
+              title: Text(languageClass.systemLang["Forum"]["DialogTitle"], style: TextStyle(fontWeight: FontWeight.bold),),
               contentPadding: EdgeInsets.symmetric(horizontal: 0),
               content: Form(
                 key: _formKey,
@@ -47,14 +66,24 @@ class PostDialog {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
-                                  radius: 20.r,
-                                  backgroundColor: Colors.black,
-                                ),
+                                child: CachedNetworkImage(
+                                    cacheManager: customCache,
+                                    key: UniqueKey(),
+                                    imageUrl: userData.userProfURL,
+                                    progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+                                    errorWidget: (context, url, error) => CircleAvatar(
+                                        backgroundImage: AssetImage('assets/images/user.png') ,
+                                        radius: 20.r,
+                                      ),
+                                    imageBuilder: (context, imageProvider) => CircleAvatar(
+                                      backgroundImage: imageProvider,
+                                      radius: 20.r,
+                                  )
+                                ) 
                               ),
                                     
                               Text(
-                                "${userData.name}, taga-${userData.barangay}"
+                                "${userData.name}, ${languageClass.systemLang["Forum"]["from"]}${userData.barangay}"
                               ),
                             ],
                           ),
@@ -67,7 +96,7 @@ class PostDialog {
                                 fontSize: 16.r
                               ),
                               decoration: InputDecoration(
-                                hintText: 'Pamagat ng iyong post ',
+                                hintText: languageClass.systemLang["Forum"]["FieldTitle"],
                                 hintStyle: TextStyle(
                                   fontWeight: FontWeight.bold
                                 )
@@ -77,7 +106,7 @@ class PostDialog {
                               maxLines: 3,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Maglagay ng pamagat";
+                                  return languageClass.systemLang["Forum"]["BlankTitle"];
                                 }
                                 return null;
                               },
@@ -93,7 +122,7 @@ class PostDialog {
                               controller: content,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                hintText: 'Ano ang iyong gustong ibahagi?',
+                                hintText: languageClass.systemLang["Forum"]["Content"],
                                 hintStyle: TextStyle(
                                   fontStyle: FontStyle.italic
                                 )
@@ -102,7 +131,7 @@ class PostDialog {
                               maxLines: 10,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Blangko ang iyong post";
+                                  return languageClass.systemLang["Forum"]["BlankContent"];
                                 }
                                 return null;
                               },
@@ -119,7 +148,7 @@ class PostDialog {
               actions: [
                 TextButton(
                   child: Text(
-                    'I-post',
+                    'Post',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                       fontSize: 16.r

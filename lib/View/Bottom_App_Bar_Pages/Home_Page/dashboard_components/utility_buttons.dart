@@ -48,7 +48,7 @@ class UtilityButtons extends StatelessWidget {
               height: 80.r,
               minWidth: 100.r,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25.r))
+                borderRadius: BorderRadius.all(Radius.circular(12.r))
               ),
               color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
@@ -83,7 +83,7 @@ class UtilityButtons extends StatelessWidget {
               height: 80.r,
               minWidth: 95.r,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25.r))
+                borderRadius: BorderRadius.all(Radius.circular(12.r))
               ),
               color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
@@ -115,7 +115,7 @@ class UtilityButtons extends StatelessWidget {
               height: 80.r,
               minWidth: 95.r,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25.r))
+                borderRadius: BorderRadius.all(Radius.circular(12.r))
               ),
               color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
@@ -145,10 +145,10 @@ class UtilityButtons extends StatelessWidget {
                 viewModel.loadData(getService.user!.uid);
                 Navigator.pushNamed(context,'/emergencykit');
               },
-              height: 75.r,
+              height: 80.r,
               minWidth: 95.r,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25.r))
+                borderRadius: BorderRadius.all(Radius.circular(12.r))
               ),
               color: Theme.of(context).colorScheme.surfaceContainer,
               splashColor: const Color(0x4D57BEE6),
@@ -182,7 +182,7 @@ class UtilityButtons extends StatelessWidget {
           margin: const EdgeInsets.only(top: 15).r,
           padding: const EdgeInsets.fromLTRB(10,10,10,15).r,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(9.r))
+            borderRadius: BorderRadius.all(Radius.circular(6.r))
           ),
           child: Wrap(
             spacing: 5.r,

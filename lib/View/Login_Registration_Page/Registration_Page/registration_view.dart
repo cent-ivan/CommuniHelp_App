@@ -19,7 +19,7 @@ List<String> options =["Male", "Female"]; //for radio list
 class _RegistrationViewState extends State<RegistrationView> {
 
   //DefaultBox height
-  double _whiteContainerHeight = 750.r + 40.r;
+  double _whiteContainerHeight = 690.r + 40.r;
 
   //password values
   bool _isObscure1 =  true;
@@ -41,7 +41,7 @@ class _RegistrationViewState extends State<RegistrationView> {
       body: SingleChildScrollView(
         child: Container(
           width: 500.r,
-          height: 1110.r,
+          height: 1130.r,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/background/Register.jpg'),
@@ -58,7 +58,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 240.r,
+                      width: 210.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),
@@ -538,7 +538,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                   color: Color(0xFF3D424A),
                                 ),
                                 decoration: InputDecoration(
-                                  hintText: "Comfirm Password",
+                                  hintText: "Confirm Password",
                                   hintStyle: const TextStyle(
                                     color: Color(0xFF3D424A)
                                   ),
@@ -602,6 +602,18 @@ class _RegistrationViewState extends State<RegistrationView> {
                                           "user",
                                           []
                                         );
+
+                                        //resets input field
+                                        viewModel.nameController.clear(); 
+                                        viewModel.bdayController.clear(); 
+                                        currentOption = options[0]; 
+                                        viewModel.barangayValue = null; 
+                                        viewModel.municipalityValue =null;
+                                        viewModel.emailController.clear(); 
+                                        viewModel.contactController.clear();  
+                                        viewModel.passwordController.clear();  
+                                        viewModel.confirmPasswordController.clear(); 
+
                                         
                                         Navigator.pop(context);
                                       }
@@ -657,7 +669,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                               
                                       else {
                                         setState(() {
-                                          _whiteContainerHeight = 830.r;
+                                          _whiteContainerHeight = 870.r;
                                         });
                                       }
                                     },
