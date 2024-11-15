@@ -38,7 +38,7 @@ class _SeeReportViewState extends State<SeeReportView> {
         child: StreamBuilder(stream: _db.collection('reports').doc(userData.municipality.toUpperCase()).collection("${userData.municipality.toUpperCase()}_reports").snapshots(), 
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return Center(child: const CircularProgressIndicator());
             }
 
             //list all of the reports and listen to stream

@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Community_Page/post_dialog.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,11 +33,18 @@ class _CommunityViewState extends State<CommunityView> {
     )
   );
 
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
+
 
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<GetUserData>(context, listen: false);
     final viewModel = Provider.of<CommunityViewModel>(context);
+
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage); //catches aklanon language to replace with filipino
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -70,7 +79,7 @@ class _CommunityViewState extends State<CommunityView> {
                       ),
                 
                       Text(
-                        network.isOnline.value ? "Share a thought" : "Offline mode. Cannot Post and Like",
+                        network.isOnline.value ? languageClass.systemLang["Forum"]["PostButton"] : languageClass.systemLang["Forum"]["Offline"],
                         style: TextStyle(
                           color:  network.isOnline.value ? Theme.of(context).colorScheme.outline: Colors.grey.shade800 ,
                           fontSize: 16.r,
@@ -150,7 +159,7 @@ class _CommunityViewState extends State<CommunityView> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "${data["Name"]}, taga-${data["Barangay"]}",
+                                        "${data["Name"]}, ${languageClass.systemLang["Forum"]["from"]}${data["Barangay"]}",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16.r

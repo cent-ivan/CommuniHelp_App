@@ -55,7 +55,7 @@ class _LoginViewState extends State<LoginView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 350.r,
+                      width: 230.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),

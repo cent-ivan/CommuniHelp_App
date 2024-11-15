@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:communihelp_app/View/base_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
@@ -19,6 +20,17 @@ class HomeBase extends StatefulWidget {
 }
 
 class _HomeBaseState extends State<HomeBase> {
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then(
+      (isAllowed) {
+        if (!isAllowed) {
+          AwesomeNotifications().requestPermissionToSendNotifications();
+        }
+      }
+    );
+    super.initState();
+  }
 
   final PageStorageBucket bucket = PageStorageBucket();
 
@@ -32,6 +44,7 @@ class _HomeBaseState extends State<HomeBase> {
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
     final baseController = Provider.of<BaseController>(context);
+
     return Scaffold(
       appBar:  AppBarBase(),
 
@@ -268,7 +281,7 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget{
       actions: [
         IconButton(
           onPressed: () {
-
+            Navigator.pushNamed(context, '/notifpage');
           }, 
           icon: const Icon(Icons.notifications),
           iconSize: 30.r,
@@ -454,39 +467,8 @@ class DrawerBase extends StatelessWidget {
                   )
                 ),
       
-                //Rate Us 
-                Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.reviews_sharp), 
-                        iconSize: 25,
-                        color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
-                      ),
-      
-                      const SizedBox( width: 15,),
-      
-                      TextButton(
-                        child: Text(
-                          "Rate Us",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                        ),
-                        onPressed: (){
-      
-                        },
-                      )
-                    ],
-                  )
-                ),
 
-
-                const SizedBox( height: 50,),
+                const SizedBox( height: 60,),
 
                 //Logout
                 Container(

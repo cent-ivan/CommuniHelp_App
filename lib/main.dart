@@ -1,4 +1,14 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/manage_announcement.dart';
+import 'package:communihelp_app/CommuniHelp_Responder/View/responder_setting.dart';
+import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/search_view.dart';
+import 'package:communihelp_app/View/notification_page.dart';
+import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
+import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Registration_Responder/registration_responder_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Resport_Page/see_report_view.dart';
@@ -11,7 +21,6 @@ import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_em
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_password.dart';
 import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/Manmade_Info_Components/View_Page/manmade_info_page_view.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
-import 'package:communihelp_app/View/Utility_Pages/News_Feed/see_news_web.dart';
 import 'package:communihelp_app/View/base_controller.dart';
 import 'package:communihelp_app/View/settings_view.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
@@ -24,7 +33,6 @@ import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_mode
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_kit_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
-import 'package:communihelp_app/ViewModel/theme.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/edit_profile_view.dart';
 import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/login_view.dart';
 import 'package:communihelp_app/View/Login_Registration_Page/Registration_Page/registration_view.dart';
@@ -55,6 +63,7 @@ import 'ViewModel/Connection_Controller/dependency_injection.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async{
+  await dotenv.load(fileName: "lib/.env"); //initialize env
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -64,6 +73,14 @@ void main() async{
     DeviceOrientation.portraitDown
   ]);
 
+  //awesome notificatioin
+  AwesomeNotifications().initialize( 
+    null,
+    [
+      NotificationChannel(channelKey: 'sample_channel', channelName: 'basic_notif', channelDescription: 'Sample Notification only')
+    ],
+    debug: true
+  );
 
   //Hive local db
   await Hive.initFlutter();
@@ -72,12 +89,18 @@ void main() async{
 
   await Hive.openBox<List>('emergencykit');
   await Hive.openBox<List>('emergencycontact');
+  await Hive.openBox<Map<dynamic, dynamic>>('weatherbox');
+  await Hive.openBox<List<dynamic>>('contactbox');
+
+  await Hive.openBox<Map<dynamic, dynamic>>('settingsbox');
+  await Hive.openBox<Map<dynamic, dynamic>>('ressettingsbox');
 
   await Hive.openBox<bool>('director');
 
   await initializeDateFormatting('en_PH', null); // Initialize for Philippines locale
   
   runApp(
+    
     MultiProvider(
       providers: [
         //View Model for Pages
@@ -91,6 +114,11 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => CommunityViewModel())),
         ChangeNotifierProvider(create: ((context) => ReportViewModel())),
         ChangeNotifierProvider(create: ((context) => NewsViewModel())),
+        ChangeNotifierProvider(create: ((context) => HiveDbWeather())),
+        ChangeNotifierProvider(create: ((context) => ContactsViewModel())),
+        ChangeNotifierProvider(create: ((context) => UserSettingViewModel())),
+        ChangeNotifierProvider(create: ((context) => ResponderSettingViewModel())),
+        ChangeNotifierProvider(create: ((context) => EvacuationFinderViewModel())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
@@ -161,8 +189,10 @@ class MainApp extends StatelessWidget {
           '/editprofile': (context) => const EditProfileView(),
           '/changeemail': (context) => const ChangeEmail(),
           '/changepass': (context) => const ChangePassword(),
-          '/settings': (context) => const SettingsView(), 
-          '/webview': (context) => const WebViewScreen(),
+          '/settings': (context) => const UserSettingsView(), 
+          '/respondersettings': (context) => const ResponderSettingsView(), 
+          '/searchcontact' : (context) => const SearchView(),
+          '/notifpage': (context) => const NotificationPage(),
           
 
           //Responder routes
@@ -177,8 +207,8 @@ class MainApp extends StatelessWidget {
           '/viewinfopage': (context) => const InfoPageView(),
           '/viewmanmadeinfopage': (context) => const ManmadeInfoPageView()
         },
-        theme: lightMode,
-        darkTheme: darktMode,
+        theme: ! director.isResponder ? Provider.of<UserSettingViewModel>(context).themeData : Provider.of<ResponderSettingViewModel>(context).themeData,
+        darkTheme: ! director.isResponder ? Provider.of<UserSettingViewModel>(context).darktTheme : Provider.of<ResponderSettingViewModel>(context).darktTheme,
       ),
     );
   }

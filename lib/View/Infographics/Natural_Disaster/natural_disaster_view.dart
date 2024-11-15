@@ -1,13 +1,26 @@
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/natural_infographic_buttons.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class NaturalDisasterView extends StatelessWidget {
+class NaturalDisasterView extends StatefulWidget {
   const NaturalDisasterView({super.key});
 
   @override
+  State<NaturalDisasterView> createState() => _NaturalDisasterViewState();
+}
+
+class _NaturalDisasterViewState extends State<NaturalDisasterView> {
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
+  
+  @override
   Widget build(BuildContext context) {
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage); //catches aklanon language to replace with filipino
     return Scaffold(
       appBar: const NaturalAppBar(),
 
@@ -48,6 +61,7 @@ class NaturalDisasterView extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.r),
                               child: Image(
                                 image: 
+                                
                                 const AssetImage("assets/images/infographics/Typhoon.jpg"),
                                 fit: BoxFit.fill,
                               ),
@@ -97,7 +111,7 @@ class NaturalDisasterView extends StatelessWidget {
                                   
                       //Title
                       Text(
-                        "Natural Disaster",
+                        languageClass.systemLang["NaturalInfo"]["NaturalTitle"],
                         style: TextStyle(
                           fontSize: 20.r,
                           fontWeight: FontWeight.bold
@@ -115,7 +129,7 @@ class NaturalDisasterView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.r)
                         ),
                         child: Text(
-                          "Natural disasters, such as hurricanes, earthquakes, floods, wildfires, and tsunamis, can cause widespread devastation and loss of life. These events are often unpredictable and can occur suddenly, leaving communities with little time to prepare.",
+                          languageClass.systemLang["NaturalInfo"]["Definition"],
                           style: TextStyle(
                             fontSize: 16.r
                           ),
@@ -152,14 +166,21 @@ class NaturalAppBar extends StatelessWidget implements PreferredSizeWidget{
     super.key,
   });
 
+  
+
   @override
   Widget build(BuildContext context) {
+    //show current user
+    User? curUser = FirebaseAuth.instance.currentUser;
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage == "Akl" ?  "Fil" : settings.userLanguage); //catches aklanon language to replace with filipino
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 1,
       title: Text(
-        "Natural Disasters",
+        languageClass.systemLang["NaturalInfo"]["NaturalTitle"],
         style: TextStyle(
           color: Theme.of(context).colorScheme.outline,
           fontSize: 20.r,
@@ -177,7 +198,7 @@ class NaturalAppBar extends StatelessWidget implements PreferredSizeWidget{
       
     );
   }
-  
+
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight.r);
 }

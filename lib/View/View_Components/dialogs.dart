@@ -127,6 +127,40 @@ class GlobalDialogUtil{
     );
   }
 
+  //signing out screen
+  void noLocationDialog(context){
+    showDialog(
+      barrierColor: Colors.black26,
+      context: context, 
+      builder: (context) {
+        return SimpleDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5.r),)
+          ),
+          backgroundColor: const Color(0xF2FCFCFC),
+          elevation: 0,
+          contentPadding: EdgeInsets.all(12).r,
+          children: [
+              Center(child: Icon(Icons.location_disabled, size: 20.r,color: Color(0xFF3D424A))),
+          
+              SizedBox(height: 15,), //const Color(0xF2FCFCFC)
+          
+              Center(
+                child: Text(
+                  "No selected evacuation site",
+                  style: TextStyle(
+                    color: Color(0xFF3D424A),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              )
+          ],
+        );
+      }
+    );
+  }
+
 
   void showWaiting(BuildContext context) {
     showDialog(context: context, 

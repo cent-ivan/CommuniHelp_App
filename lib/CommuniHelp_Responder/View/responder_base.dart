@@ -2,6 +2,7 @@ import 'package:communihelp_app/CommuniHelp_Responder/View/Community_Page/commun
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/responder_dashboard_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Profile_Page/profile_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/ViewModel/auth_responder.dart';
+import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/contacts_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class _HomeBaseResponderState extends State<HomeBaseResponder>  with SingleTicke
 
   final List<Widget> _screens = [
     const ResponderDashboardView(),
-    const Placeholder(),
+    const ContactsView(),
     
     const ResponderCommunityView(),
     const ResponderProfileView()
@@ -307,7 +308,7 @@ class DrawerBase extends StatelessWidget {
                 
                 //Home
                 Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
+                  margin: const EdgeInsets.only(bottom: 4), 
                   child: Row(
                     children: [
                       IconButton(
@@ -341,7 +342,7 @@ class DrawerBase extends StatelessWidget {
 
                 //Notifications
                 Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
+                  margin: const EdgeInsets.only(bottom: 4), 
                   child: Row(
                     children: [
                       IconButton(
@@ -373,14 +374,16 @@ class DrawerBase extends StatelessWidget {
 
                 //Privacy Policy
                 Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
+                  margin: const EdgeInsets.only(bottom: 4), 
                   child: Row(
                     children: [
                       IconButton(
                         icon: const Icon(Icons.settings), 
                         iconSize: 25,
                         color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/respondersettings');
+                        },
                       ),
                       
                       const SizedBox( width: 15,),
@@ -395,7 +398,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/settings');
+                          Navigator.pushNamed(context, '/respondersettings');
                         },
                       )
                     ],
@@ -434,39 +437,8 @@ class DrawerBase extends StatelessWidget {
                   )
                 ),
       
-                //Rate Us 
-                Container( 
-                  margin: const EdgeInsets.only(bottom: 2), 
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.reviews_sharp), 
-                        iconSize: 25,
-                        color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
-                      ),
-      
-                      const SizedBox( width: 15,),
-      
-                      TextButton(
-                        child: Text(
-                          "Rate Us",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                        ),
-                        onPressed: (){
-      
-                        },
-                      )
-                    ],
-                  )
-                ),
-
-
-                const SizedBox( height: 50,),
+          
+                const SizedBox( height: 65,),
 
                 //Logout
                 Container(

@@ -1,4 +1,6 @@
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,10 +20,14 @@ class AnnouncementSection extends StatefulWidget {
 }
 
 class _AnnouncementSectionState extends State<AnnouncementSection> {
-
+  //show current user
+  User? curUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
+    final userSetting = Provider.of<UserSettingViewModel>(context);
+    userSetting.loadSettings(curUser!.uid);
+    var languageClass = Language(userSetting.userLanguage);
     return Consumer<AnnouncementViewModel>(builder: (context, viewModel, child) => Column(
       children: [
     
@@ -37,7 +43,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                   viewModel.loadAnnouncement();
                 },
                 child: Text(
-                  "Announcement", 
+                  languageClass.systemLang["Home"]["Announcement"], 
                     style: TextStyle(
                     fontSize: 25.r,
                     fontWeight: FontWeight.bold, 
@@ -106,6 +112,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                               child: Container(
                                 width: 155.r,
                                 margin: const EdgeInsets.only(bottom: 8).r,
+                                padding: EdgeInsets.all(8).r,
                                 decoration: BoxDecoration(
                                   color: item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26,
                                   borderRadius: BorderRadius.all(const Radius.circular(5).r)
@@ -115,7 +122,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 14.r
+                                    fontSize: 12.r
                                   ),
                                 ),
                               ),
@@ -223,9 +230,12 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
       builder: (context) {
         return AlertDialog(
           scrollable: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r),)
+          ),
           backgroundColor: Color(0xFFF2F2F2),
           content: SizedBox(
-            height: item.content!.length + 255.r,
+            height: item.content!.length + 275.r,
             child: Padding(
               padding: const EdgeInsets.all(5).r,
               child: Column(
@@ -295,6 +305,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                             SizedBox(height: 5.r,),
       
                             Container(
+                              width: 250.r,
                               padding: EdgeInsets.all(14).r,
                               decoration: BoxDecoration(
                                 color: Color(0xBFDEDEDE),

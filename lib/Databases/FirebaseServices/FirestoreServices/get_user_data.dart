@@ -85,7 +85,7 @@ class GetUserData extends ChangeNotifier {
     barangay = "";
     municipality = "";
     email = "";
-    mobileNumber = "";;
+    mobileNumber = "";
     notifyListeners();
   }
  

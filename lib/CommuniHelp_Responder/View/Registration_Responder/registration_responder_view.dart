@@ -57,7 +57,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 280.r,
+                      width: 240.r,
                       child: const Image(
                         image: AssetImage('assets/images/logo/communiHelpLogo.png')
                       ),
@@ -71,7 +71,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 25.r,
+                          fontSize: 20.r,
                           letterSpacing: 2.r,
                           shadows: [
                             Shadow(
@@ -641,6 +641,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
                                                   "Some input fields are still missing",
                                                   style: TextStyle(
                                                   fontSize: 16,
+                                                  color: Color(0xFF3D424A)
                                                 ),
                                               ),
                                               ),
@@ -678,7 +679,7 @@ class _RegistrationResponderViewState extends State<RegistrationResponderView> {
                                       Navigator.pop(context);
                                     }, 
                                     child: Text(
-                                      "Member na ako",
+                                      "Login Screen",
                                       style: TextStyle(
                                         fontSize: 12.r,
                                         fontWeight: FontWeight.bold,

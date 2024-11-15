@@ -2,19 +2,24 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class NewsViewModel extends ChangeNotifier{
   Logger logger = Logger();
 
   String url = "";
 
+  final apiKey = dotenv.env['NEWS_API_KEY'];
+  final localUrl = dotenv.env['LOCAL_NEWS_URL'];
+  final interUrl = dotenv.env['INTER_NEWS_URL'];
+  final weatherUrl = dotenv.env['WEATHER_NEWS_URL'];
+  final nullUrl = dotenv.env['NULL_NEWS_URL'];
+
   void assignUrl(String passedUrl) {
     url = passedUrl;
     notifyListeners();
   }
 
-
-  final apiKey = '83325436e3d949bd8da939c060580c9f';
   bool isLoading = true;
   List<dynamic> localArticles = [];
   List<dynamic> interArticles = [];
@@ -55,12 +60,12 @@ class NewsViewModel extends ChangeNotifier{
     
     String url;
     if (category == "Local News") {
-      url = 'https://newsapi.org/v2/everything?q=(disaster%20AND%20Typhoon%20AND%20philippines%20AND%20natural%20disaster)&sortBy=popularity&apiKey=$apiKey';
+      url = localUrl! + apiKey!;
     } else if (category == "International News") {
-      url = 'https://newsapi.org/v2/everything?q=(Disaster%20AND%20safety%20AND%20world%20AND%20natural%20disaster)&sortBy=popularity&apiKey=$apiKey';
+      url = interUrl! + apiKey!;
 
     } else if (category == "Weather News") {
-      url = 'https://newsapi.org/v2/everything?q=Philippines%20weather&apiKey=$apiKey';
+      url = weatherUrl! + apiKey!;
 
     } else {
       throw Exception("Invalid category");
@@ -74,7 +79,7 @@ class NewsViewModel extends ChangeNotifier{
         isLoading = false;
         notifyListeners();
         if (category == "Local News" && (data['articles'] == null || data['articles'].isEmpty)) {
-          url = 'https://newsapi.org/v2/everything?q=Philippines&apiKey=$apiKey';
+          url = nullUrl! + apiKey!;
           final fallbackResponse = await http.get(Uri.parse(url));
           if (fallbackResponse.statusCode == 200) {
             final fallbackData = json.decode(fallbackResponse.body);

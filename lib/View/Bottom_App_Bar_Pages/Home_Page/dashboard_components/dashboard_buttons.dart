@@ -1,5 +1,7 @@
 //Infographics Section
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/dashboard_components/utility_buttons.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,6 +12,11 @@ class InfographicsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //show current user
+    User? curUser = FirebaseAuth.instance.currentUser;
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage);
     return Container(
       height: 215.r,
       padding: const EdgeInsets.all(10).r,
@@ -62,7 +69,7 @@ class InfographicsSection extends StatelessWidget {
                   SizedBox(height: 15.r,),
           
                   Text(
-                    "Natural Disasters",
+                    languageClass.systemLang["Home"]["NaturalDis"],
                     style: TextStyle(
                       fontSize: 11.r,
                       fontWeight: FontWeight.bold,
@@ -103,7 +110,7 @@ class InfographicsSection extends StatelessWidget {
                   SizedBox(height: 15.r,),
           
                   Text(
-                    "Man-made Disasters",
+                    languageClass.systemLang["Home"]["ManmadeDis"],
                     style: TextStyle(
                       fontSize: 11.r,
                       fontWeight: FontWeight.bold,
@@ -133,7 +140,7 @@ class UtilitySection extends StatelessWidget {
   Widget build(BuildContext context) {
     //Container of Utility Section
     return Container(
-      height: 485.r,
+      height: 465.r,
       padding: const EdgeInsets.all(10).r,
       margin: const EdgeInsets.fromLTRB(9, 15, 9, 9).r,
       decoration: BoxDecoration(

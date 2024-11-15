@@ -6,6 +6,7 @@ import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/use
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/pick_profile_dialog.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,6 +50,10 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   Widget build(BuildContext context) {
     final emergencyViewModel = Provider.of<EmergencyViewModel>(context);
+ 
+    final settings = UserSettingViewModel();
+    settings.loadSettings(user.uid);
+    var languageClass = Language(settings.userLanguage); //catches aklanon language to replace with filipino
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -147,7 +152,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Personal Details",
+                              languageClass.systemLang["Profile"]["details"],
                               style: TextStyle(
                                 color: const Color(0xFFFEAE49),
                                 fontSize: 20.r,
@@ -168,7 +173,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 color: const Color(0xFF3D424A)
                               ),
                               decoration: InputDecoration(
-                              hintText: "Edit Name",
+                              hintText: languageClass.systemLang["Profile"]["fullname"],
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
                                 ),
@@ -200,7 +205,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 color: const Color(0xFF3D424A)
                               ),
                               decoration: InputDecoration(
-                                hintText: "Edit Birthday",
+                                hintText:  languageClass.systemLang["Profile"]["birthday"],
                                 enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
                                 ),
@@ -235,7 +240,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                       
                             //Gender edit
                             Text(
-                              "Gender",
+                              languageClass.systemLang["Profile"]["gender"],
                               style: TextStyle(
                                 color: const Color(0xFF3D424A),
                                 fontSize: 14.r,
@@ -445,57 +450,15 @@ class _EditProfileViewState extends State<EditProfileView> {
                       
                             //Contact Number
                             Text(
-                              "Contact Details",
+                              languageClass.systemLang["Profile"]["contactdet"],
                               style: TextStyle(
                                 color: const Color(0xFFFEAE49),
                                 fontSize: 20.r,
                                 fontWeight: FontWeight.bold
                               ),
                             ),
-            
-                    
-                            // Text(
-                            //   "Email",
-                            //   style: TextStyle(
-                            //     color: Theme.of(context).colorScheme.outline,
-                            //     fontSize: 14.r,
-                            //     fontWeight: FontWeight.w500
-                            //   ),
-                            // ),
-                    
-                            // SizedBox(height: spaceBetweenLabel,),
-                    
-                            //edit email
-                            // TextFormField(
-                            //   controller: viewModel.emailController,
-                            //   cursorColor: const Color(0xFF3D424A),
-                            //   style: TextStyle(
-                            //     fontSize: 18.r
-                            //   ),
-                            //   decoration: InputDecoration(
-                            //     hintText: "Edit Email",
-                            //     enabledBorder: UnderlineInputBorder(
-                            //       borderSide: BorderSide(width: 1.r, color: const Color(0xFF3D424A))
-                            //     ),
-                            //     focusedBorder: UnderlineInputBorder(
-                            //       borderSide: BorderSide(width: 3.r, color: const Color(0xFF3D424A))
-                            //     )
-                            //   ),
-                    
-                            //   validator: (value) {
-                            //     if (value!.isEmpty){
-                            //       return "Please enter an email";
-                            //     }
-                            //     else if (!value.contains('@')){
-                            //       return "Enter a valid email";
-                            //     }
-                            //     else{
-                            //       return null;
-                            //     }
-                            //   },
-                            // ),
-                    
-                    
+
+     
                             SizedBox(height: spaceBetweenDetails,),
                     
                             Text(
@@ -640,7 +603,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                     Navigator.pushNamed(context, '/changeemail');
                                   }, 
                                   child: Text(
-                                    "Change email here",
+                                    languageClass.systemLang["Profile"]["changeemail"],
                                     style: TextStyle(
                                       color: const Color(0xFF3D424A),
                                       fontSize: 14.r,
@@ -656,7 +619,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                     Navigator.pushNamed(context, '/changepass');
                                   }, 
                                   child: Text(
-                                    "Change password here",
+                                    languageClass.systemLang["Profile"]["changepass"],
                                     style: TextStyle(
                                       color: const Color(0xFF3D424A),
                                       fontSize: 14.r,

@@ -46,7 +46,10 @@ class ReportStorage {
     String url = await profileRef.getDownloadURL();
     logger.d("After URL: $url");
 
-    showFinsihed(context);
+    if (context.mounted) {
+      showFinsihed(context);
+    }
+    
 
     addReport(municipality, url, userName, reportName, location, content, date);
     

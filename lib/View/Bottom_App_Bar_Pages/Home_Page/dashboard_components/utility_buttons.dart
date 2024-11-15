@@ -1,6 +1,9 @@
 //Utility Buttons
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_kit_view_model.dart';
+import 'package:communihelp_app/ViewModel/News_View_Model/news_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +20,13 @@ class UtilityButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final getService = Provider.of<GetUserData>(context);
     final viewModel = Provider.of<EmergencyKitViewModel>(context);
+    final newsViewModel = Provider.of<NewsViewModel>(context);
+
+    //show current user
+    User? curUser = FirebaseAuth.instance.currentUser;
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage);
 
     return Wrap(
       spacing: 5.r,
@@ -52,7 +62,7 @@ class UtilityButtons extends StatelessWidget {
             
                   Center(
                     child: Text(
-                    "Search for Evacuation Center",
+                    languageClass.systemLang["Home"]["SearchEvac"],
                         style: TextStyle(
                         fontSize: 12.r,
                         fontWeight: FontWeight.bold,
@@ -66,9 +76,10 @@ class UtilityButtons extends StatelessWidget {
             
             //News Button
             MaterialButton(
-              onPressed: () {
+              onPressed:  () {
+                newsViewModel.callInit();
                 Navigator.pushNamed(context,'/newsfeed');
-              },
+              } ,
               height: 80.r,
               minWidth: 95.r,
               shape: RoundedRectangleBorder(
@@ -85,7 +96,7 @@ class UtilityButtons extends StatelessWidget {
                   ),
             
                   Text(
-                  "View News",
+                  languageClass.systemLang["Home"]["News"],
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
@@ -117,7 +128,7 @@ class UtilityButtons extends StatelessWidget {
                   ),
             
                   Text(
-                  "View Weather",
+                  languageClass.systemLang["Home"]["Weather"],
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
@@ -150,7 +161,7 @@ class UtilityButtons extends StatelessWidget {
                   ),
             
                   Text(
-                  "My Kit",
+                  languageClass.systemLang["Home"]["Kit"],
                       style: TextStyle(
                       fontSize: 12.r,
                       fontWeight: FontWeight.bold,
@@ -181,7 +192,7 @@ class UtilityButtons extends StatelessWidget {
 
               Center(
                 child: Text(
-                  "Magpadaea it Report",
+                  languageClass.systemLang["Home"]["ReportLabel"],
                       style: TextStyle(
                       fontSize: 16.r,
                       fontWeight: FontWeight.bold,
@@ -211,7 +222,7 @@ class UtilityButtons extends StatelessWidget {
                     ),
               
                     Text(
-                    "Report",
+                    languageClass.systemLang["Home"]["Report"],
                         style: TextStyle(
                         fontSize: 11.r,
                         fontWeight: FontWeight.bold,

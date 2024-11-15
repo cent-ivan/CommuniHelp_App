@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,6 +36,12 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     final viewModel= Provider.of<ProfileViewModel>(context);
+    //show current user
+    User? curUser = FirebaseAuth.instance.currentUser;
+
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage); //catches aklanon language to replace with filipino
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -52,7 +60,7 @@ class _ProfileViewState extends State<ProfileView> {
               children: [
                 Center(
                   child: Text(
-                    "My Profile",
+                    languageClass.systemLang["Profile"]["ProfileLabel"],
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                       fontSize: 24.r,
@@ -105,7 +113,7 @@ class _ProfileViewState extends State<ProfileView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Personal Details",
+                                languageClass.systemLang["Profile"]["details"],
                                 style: TextStyle(
                                   color: const Color(0xFFFEAE49),
                                   fontSize: 20.r,
@@ -120,9 +128,10 @@ class _ProfileViewState extends State<ProfileView> {
                               Row(
                                 children: [
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Full Name",
+                                        languageClass.systemLang["Profile"]["fullname"],
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.outline,
                                           fontSize: 14.r,
@@ -151,7 +160,8 @@ class _ProfileViewState extends State<ProfileView> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Gender",
+                                        languageClass.systemLang["Profile"]["gender"],
+
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.outline,
                                           fontSize: 14.r,
@@ -182,7 +192,7 @@ class _ProfileViewState extends State<ProfileView> {
                         
                               //Birthdate
                               Text(
-                                "Birthdate",
+                                languageClass.systemLang["Profile"]["birthday"],
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.outline,
                                   fontSize: 14.r,
@@ -287,7 +297,7 @@ class _ProfileViewState extends State<ProfileView> {
                           children: [
                             //Contact Number
                             Text(
-                              "Contact Details",
+                              languageClass.systemLang["Profile"]["contactdet"],
                               style: TextStyle(
                                 color: const Color(0xFFFEAE49),
                                 fontSize: 20.r,
@@ -362,7 +372,8 @@ class _ProfileViewState extends State<ProfileView> {
                               color: const Color(0xFF57BEE6),
                               child: Center(
                                 child: Text(
-                                  "Edit Profile",
+                                  languageClass.systemLang["Profile"]["edit"],
+
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.outline,
                                     fontSize: 14.r,
@@ -373,7 +384,7 @@ class _ProfileViewState extends State<ProfileView> {
                             ),
 
                             Text(
-                                network.isOnline.value ? "" : "No internet. Cannot edit",
+                                network.isOnline.value ? "" : languageClass.systemLang["Profile"]["nonet"],
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.outline,
                                   fontSize: 10.r,
