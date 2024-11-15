@@ -31,9 +31,12 @@ class AnnouncementViewModel extends ChangeNotifier{
 
   //Retrieve from database, make sure that aklan is in the first announcement
   Future loadAnnouncement() async{
-    await getData.getUser();
-    String municipality = getData.municipality;
-    dbAnnouncement.listenToAnnouncements(municipality);
-    notifyListeners();
+    if (dbAnnouncement.announcements.isEmpty) {
+      await getData.getUser();
+      String municipality = getData.municipality;
+      dbAnnouncement.listenToAnnouncements(municipality);
+      notifyListeners();
+    }
+    
   }
 }

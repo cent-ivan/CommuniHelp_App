@@ -17,6 +17,8 @@ class _DashboardViewState extends State<DashboardView> {
   
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
+
+  
   
   @override
   Widget build(BuildContext context) {
@@ -28,8 +30,8 @@ class _DashboardViewState extends State<DashboardView> {
         key: const PageStorageKey<String>('DashboardView'),
         physics: const ClampingScrollPhysics(),
         child: Container(
-          padding: const EdgeInsets.fromLTRB(9, 15, 9, 0).r,
-          height: 1095.r,
+          padding: const EdgeInsets.fromLTRB(9, 15, 9, 0),
+          height: 990.r,
           child:  Column(
             children: <Widget>[
     
@@ -39,7 +41,7 @@ class _DashboardViewState extends State<DashboardView> {
     
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(9, 28, 9, 9).r,
+                margin: const EdgeInsets.fromLTRB(9, 28, 9, 9),
                 child: Text(
                   "DASHBOARD",
                   style: TextStyle(
