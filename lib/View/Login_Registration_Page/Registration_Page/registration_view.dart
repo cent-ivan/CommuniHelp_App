@@ -538,7 +538,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                   color: Color(0xFF3D424A),
                                 ),
                                 decoration: InputDecoration(
-                                  hintText: "Comfirm Password",
+                                  hintText: "Confirm Password",
                                   hintStyle: const TextStyle(
                                     color: Color(0xFF3D424A)
                                   ),

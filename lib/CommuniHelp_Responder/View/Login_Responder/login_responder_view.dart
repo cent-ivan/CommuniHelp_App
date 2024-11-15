@@ -230,18 +230,19 @@ class _LoginResponderViewState extends State<LoginResponderView> {
                                     height: 50.r,
                                     minWidth: 100.r,
                                     onPressed: () {
-                                      if (_formKey.currentState!.validate()){
-                                        //validated the text field and adds to the firebase, pass to register view model
-                                        _formKey.currentState!.save();
+                                      _authResponder.logInEmailPassword(context, "sample@gmail.com", "qwerty");
+                                      // if (_formKey.currentState!.validate()){
+                                      //   //validated the text field and adds to the firebase, pass to register view model
+                                      //   _formKey.currentState!.save();
                     
-                                        _authResponder.logInEmailPassword(context, _emailController.text, _passwordController.text);
-                                      }
-                                      else {
-                                        setState(() {
-                                          _loginHeight = 358.r;
+                                      //   _authResponder.logInEmailPassword(context, "sample@gmail.com", "qwerty");
+                                      // }
+                                      // else {
+                                      //   setState(() {
+                                      //     _loginHeight = 358.r;
                                 
-                                        });
-                                      }
+                                      //   });
+                                      // }
                                     },
                                     color: const Color(0xFF3D424A),
                                     child: Text(

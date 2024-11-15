@@ -43,6 +43,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   @override
   void initState() {
     vModel.setCustomMarker();
+    vModel.userCustomMarker(userData);
     getCurrentLocation();
     loadPins();
     super.initState();
@@ -101,9 +102,12 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                 markerId: MarkerId('user_position'),
                 position: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
                 infoWindow: InfoWindow(title: "You"),
-              )
+                icon: vModel.userMarker,
+                flat: true
+              ),
 
-            }.union(evacPins),
+
+            }.union(evacPins), //ADD ALL OF THE MARKERS IN THE DATABASE
 
             onLongPress: (pos) {
               !viewModel.pinMode ? addMarker(pos, viewModel) : null;
@@ -356,7 +360,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           onPressed: () => googleMapController?.animateCamera(
             viewModel.direct != null ? 
             CameraUpdate.newLatLngBounds(viewModel.direct!.bounds, 100.0) :
-            CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!), zoom: 12.5, tilt: 20.0),) //move to initial position,
+            CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!), zoom: 12.5, tilt: 30.0),) //move to initial position,
           ),
           child: viewModel.direct == null? Icon(Icons.pin_drop)  : Icon(Icons.center_focus_strong),
         ),
@@ -470,6 +474,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   Future getMarkers(String municipality) async {
    
     try {
+      //This line will retrieve the markers position
       DocumentSnapshot doc = await FirebaseFirestore.instance.collection("locations_evac").doc(municipality.toUpperCase()).get();
       if (doc.exists) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;

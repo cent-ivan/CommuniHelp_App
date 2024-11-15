@@ -1,3 +1,4 @@
+import 'package:communihelp_app/CommuniHelp_Responder/ViewModel/auth_responder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
@@ -29,6 +30,9 @@ class _LoginViewState extends State<LoginView> {
   //controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  //access view model
+  final AuthResponder _authResponder = AuthResponder();
 
   @override
   Widget build(BuildContext context) {
@@ -231,25 +235,26 @@ and Utility App""",
                                     height: 50.r,
                                     minWidth: 100.r,
                                     onPressed: () {
-                                      if (_formKey.currentState!.validate()){
-                                        //check if user is a responder
-                                        if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {
-                                          director.changeDirection();
-                                          //Navigator.pushNamed(context, '/responderlogin');
-                                        }
-                                        else {
-                                          //validated the text field and adds to the firebase, pass to register view model
-                                          logger.d("called in login");
-                                          _formKey.currentState!.save();
-                                          loginViewModel.loginUser(context, _emailController.text, _passwordController.text);
-                                        }
+                                      loginViewModel.loginUser(context, "sample@gmail.com", "qwerty");
+                                      // if (_formKey.currentState!.validate()){
+                                      //   //check if user is a responder
+                                      //   if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {
+                                      //     director.changeDirection();
+                                      //     //Navigator.pushNamed(context, '/responderlogin');
+                                      //   }
+                                      //   else {
+                                      //     //validated the text field and adds to the firebase, pass to register view model
+                                      //     logger.d("called in login");
+                                      //     _formKey.currentState!.save();
+                                      //     loginViewModel.loginUser(context, _emailController.text, _passwordController.text);
+                                      //   }
           
-                                      }
-                                      else {
-                                        setState(() {
-                                          _loginHeight = 330.r;
-                                        });
-                                      }
+                                      // }
+                                      // else {
+                                      //   setState(() {
+                                      //     _loginHeight = 330.r;
+                                      //   });
+                                      // }
                                     },
                                     color: const Color(0xFF3D424A),
                                     child: Text(
@@ -261,7 +266,49 @@ and Utility App""",
                                         letterSpacing: 1.r
                                       ),
                                     ),
-                                  )
+                                  ),
+
+                                  SizedBox(width: 10,),
+
+                                  MaterialButton(
+                                    height: 50.r,
+                                    minWidth: 100.r,
+                                    onPressed: () {
+                                      director.changeDirection();
+                                    
+                                      // if (_formKey.currentState!.validate()){
+                                      //   //check if user is a responder
+                                      //   if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {
+                                      //     director.changeDirection();
+                                      //     //Navigator.pushNamed(context, '/responderlogin');
+                                      //   }
+                                      //   else {
+                                      //     //validated the text field and adds to the firebase, pass to register view model
+                                      //     logger.d("called in login");
+                                      //     _formKey.currentState!.save();
+                                      //     loginViewModel.loginUser(context, _emailController.text, _passwordController.text);
+                                      //   }
+          
+                                      // }
+                                      // else {
+                                      //   setState(() {
+                                      //     _loginHeight = 330.r;
+                                      //   });
+                                      // }
+                                    },
+                                    color: const Color(0xFF3D424A),
+                                    child: Text(
+                                      "Responder",
+                                      style: TextStyle(
+                                        fontSize: 14.r,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.r
+                                      ),
+                                    ),
+                                  ),
+
+
                                 ],
                               )
 

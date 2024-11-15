@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/directions_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logger/logger.dart';
 
@@ -16,13 +18,33 @@ class EvacuationFinderViewModel extends ChangeNotifier{
   bool pinMode = false; //for responders to pin
   Marker? placedPin;
 
+  BitmapDescriptor userMarker = BitmapDescriptor.defaultMarker;
   BitmapDescriptor evacIcon = BitmapDescriptor.defaultMarker;
+
+  static final  customCache = CacheManager(
+    Config(
+      "customCacheKey",
+      stalePeriod: Duration(days: 30)
+    )
+  );
+
 
   void setCustomMarker() {
     logger.i("Sets icon");
     //creates custom marker
     BitmapDescriptor.asset(ImageConfiguration.empty, 'assets/images/shelter.png', height: 35, width: 35).then((icon) { 
       evacIcon = icon;
+    });
+  }
+
+  
+
+
+  //get users symbol
+  void userCustomMarker(GetUserData userData) {
+
+    BitmapDescriptor.asset(ImageConfiguration.empty, 'assets/images/user_spot.png', height: 28, width: 28).then((icon) { 
+      userMarker = icon;
     });
   }
   

@@ -42,8 +42,9 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
               child: TextButton(
                 onPressed: () {
                   if (viewModel.dbAnnouncement.announcements.isEmpty) {
+                    viewModel.loadAnnouncement();
                     setState(() {
-                      viewModel.loadAnnouncement();
+                      
                       
                     });
                     
@@ -73,7 +74,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                   }
                   else {
                     setState(() {
-                      print("Merong data daw");
+                   
                     });
                   }
                   
