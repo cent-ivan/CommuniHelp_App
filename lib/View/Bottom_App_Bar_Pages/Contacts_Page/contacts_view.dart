@@ -3,6 +3,7 @@ import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.d
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,7 @@ class _ContactsViewState extends State<ContactsView> {
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: Container(
+          width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(12, 0, 16, 12),
           child: SingleChildScrollView(
             child: Consumer<ContactsViewModel>(builder: (context, viewModel, child) => Column(
@@ -86,9 +88,23 @@ class _ContactsViewState extends State<ContactsView> {
                 ),
             
                 SizedBox(height: 16.r,),
-                    
+                
+                viewModel.dbContact.contacts.isEmpty ?
+                Container(
+                  margin: EdgeInsets.only(top: 150.r),
+                  child: Center(
+                      child: Text(
+                        languageClass.systemLang["Contact"]["Empty"],
+                        style: TextStyle(
+                          fontSize: 20.r,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.outline
+                        ),
+                      ),
+                  ),
+                ) :
                 //List of contacts
-                SizedBox(
+                 SizedBox(
                   height: 375.r,
                   width: 295.r,
                   child: ListView.builder(
@@ -155,7 +171,7 @@ class _ContactsViewState extends State<ContactsView> {
                       );
                     }
                   ),
-                )
+                ) 
 
 
               ],
@@ -498,6 +514,11 @@ class _ContactFloatingActionButtonState extends State<ContactFloatingActionButto
                     width: 250.r,
                     child: TextField(
                       controller: viewModel.editNumberController,
+                      keyboardType: TextInputType.number, //accepts only intgers
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      maxLength: 11,
                       decoration: InputDecoration(
                       hintText: "Enter  number",
                       enabledBorder: UnderlineInputBorder(

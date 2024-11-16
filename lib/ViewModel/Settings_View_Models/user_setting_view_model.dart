@@ -135,7 +135,8 @@ class Language {
       },
         "Contact" : {
           "Label" : "My Contact List",
-          "Search" : "Search"
+          "Search" : "Search",
+          "Empty" : "No contacts"
         },
         "Forum" : {
           "PostButton" : "Share a thought",
@@ -208,7 +209,8 @@ class Language {
       },
       "Contact" : {
           "Label" : "Aking Kontaks",
-          "Search" : "Hanapin"
+          "Search" : "Hanapin",
+          "Empty" : "Walang laman"
         },
       "Forum" : {
           "PostButton" : "Magbahagi ng saloobin",
@@ -264,7 +266,8 @@ class Language {
         },
         "Contact" : {
           "Label" : "Akong Kontaks",
-          "Search" : "Pangitaon"
+          "Search" : "Pangitaon",
+          "Empty" : "Wa it seuod"
         },
         "Forum" : {
           "PostButton" : "Magbahagi ng saloobin",
