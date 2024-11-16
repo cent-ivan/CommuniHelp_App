@@ -11,15 +11,10 @@ class AnnouncementViewModel extends ChangeNotifier{
   GetUserData getData = GetUserData();
   GetAnnouncement dbAnnouncement = GetAnnouncement();
 
+  Stream getStream(String municipality) {
+    return dbAnnouncement.getAnnouncementStream(municipality);
+  }
 
-
-  // Static instance of the singleton
-  //static final AnnouncementViewModel _instance = AnnouncementViewModel._();
-
-  // Public factory constructor
-  // factory AnnouncementViewModel() {
-  //   return _instance; // Returns the same instance every time
-  // }
 
   Future addAnnouncement(AnnouncementModel announcement) async {
     await getData.getUser();

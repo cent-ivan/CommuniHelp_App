@@ -98,19 +98,12 @@ class _CommunityViewState extends State<CommunityView> {
                 child: StreamBuilder(
                   stream: viewModel.getStream(userData.municipality), //get posts by municipality
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    }
-
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: Text("No Data"),
-                      );
-                    }
+                     
 
                     //produce a list of widgets
                     return ListView(
-                      children: snapshot.data!.docs.map<Widget>((DocumentSnapshot document) {
+                      children: snapshot.data.docs.map<Widget>((DocumentSnapshot document) {
+                      
                       Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
                       List<Map<String,bool>> collectionLikes = (data["Presses"] as List).map((item) => Map<String, bool>.from(item as Map)).toList();
                       viewModel.loadStatus(userData, collectionLikes);

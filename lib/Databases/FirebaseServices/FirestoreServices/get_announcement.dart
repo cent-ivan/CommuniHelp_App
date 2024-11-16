@@ -16,6 +16,15 @@ class GetAnnouncement extends ChangeNotifier{
   //for refresh
   void clear() {
     announcements.clear();
+    notifyListeners();
+  }
+
+  //for display announcement
+  Stream getAnnouncementStream(String municipality) {
+    
+    final Stream<QuerySnapshot<Map<String, dynamic>>> announceStream = _db.collection("announcements").doc(municipality.toUpperCase()).collection("${municipality.toUpperCase()}_announcement").snapshots();
+    
+    return announceStream;
   }
 
   
@@ -56,13 +65,9 @@ class GetAnnouncement extends ChangeNotifier{
       }
 
     sortUrgent();
+    NotificationController().showNotification(title: "ANNOUNCEMENT ALERT: at $municipality"); //Notification
 
-    if (announcements.isEmpty) {
-      logger.i("No Data");
-    }
-    else {
-      NotificationController().showNotification(title: "ANNOUNCEMENT ALERT: at $municipality"); //Notification
-    }
+
     
     }, onError: (error) {
       logger.e("Error: ${error.toString()}");

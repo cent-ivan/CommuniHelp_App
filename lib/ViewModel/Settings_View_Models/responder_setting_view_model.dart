@@ -107,13 +107,13 @@ class ResLanguage {
         },
         "Home" : {
           "Announcement" : "Announcements",
-          "PostAnnounce" : "Announcement",
-          "SearchEvac" : "Mark Evacuation Centers",
+          "PostAnnounce" : "Announce",
+          "SearchEvac" : "Evacuation Centers",
           "News" : "View News",
           "Weather" : "View Weather",
           "Kit" : "My Kits",
           "ReportLabel" : "See Reports",
-          "Report" : "Reports" 
+          "Report" : "Report" 
         },
         "NaturalInfo" : {
           "NaturalTitle" : "Natural Disasters",
@@ -185,24 +185,7 @@ class ResLanguage {
           "ReportLabel" : "Tingnan ang mga ulat",
           "Report" : "Magulat" 
         },
-      "NaturalInfo" : {
-        "NaturalTitle" : "Mga likas na sakuna",
-        "Definition" : "Ang mga likas na sakuna, tulad ng bagyo, lindol, baha, pagguho ng lupa, at marami pang iba, ay maaaring magdulot ng matinding pinsala at pagkawala ng buhay. Kadalasan, hindi tiyak kung kailan ito mangyayari at nagiging banta sa komunidad.",
-        "Types" : "Uri ng likas na sakuna",
-        "TyButton" : "Bagyo",
-        "FloodButton" : "Baha",
-        "LandButton" : "Pagguho ng lupa",
-        "EarthButton" : "Lindol"
-      },
-      "ManmadeInfo" : {
-        "Title" : "Mga sakunang likha ng tao",
-        "Definition" : "Ang isang sakunang likha ng tao ay maaaring magdulot ng matinding pinsala, na kadalasang nagmumula sa pagkakamali, kapabayaan, o sinadyang pananakit ng tao.",
-        "Types" : "Uri ng sakunang likha ng tao",
-        "Accident" : "Aksidente sa sasakyan",
-        "Fire" : "Sunog",
-        "Failure" : "Pagbagsak ng estruktura",
-        "Pollution" : "Polusyon sa tubig"
-      },
+
       "Contact" : {
           "Label" : "Aking Kontaks",
           "Search" : "Hanapin"
