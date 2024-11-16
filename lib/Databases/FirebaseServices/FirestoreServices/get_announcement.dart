@@ -65,9 +65,14 @@ class GetAnnouncement extends ChangeNotifier{
       }
 
     sortUrgent();
-    NotificationController().showNotification(title: "ANNOUNCEMENT ALERT: at $municipality"); //Notification
 
-
+    if (announcements.isEmpty) {
+      logger.i("No data");
+    }
+    else {
+      NotificationController().showNotification(title: "ANNOUNCEMENT ALERT: at $municipality"); //Notification
+    }
+    
     
     }, onError: (error) {
       logger.e("Error: ${error.toString()}");
@@ -80,7 +85,6 @@ class GetAnnouncement extends ChangeNotifier{
   void sortUrgent() {
     logger.i("Called Sort Urgent");
     //sorts 
-    
     
     sortByDateString();
     announcements.sort((a, b) => b.isUrgent! ? 1 : -1); //sort by urgent

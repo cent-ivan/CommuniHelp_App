@@ -98,7 +98,22 @@ class _CommunityViewState extends State<CommunityView> {
                 child: StreamBuilder(
                   stream: viewModel.getStream(userData.municipality), //get posts by municipality
                   builder: (context, snapshot) {
-                     
+                     if (!snapshot.hasData) {
+                      return SizedBox(
+                        width: 380.r,
+                        height: 150.r,
+                
+                        child: Center(
+                          child: Text(
+                            languageClass.systemLang["Forum"]["NoPost"],
+                            style: TextStyle(
+                              fontSize: 18.r,
+                              color: Theme.of(context).colorScheme.outline
+                            ),
+                          ),
+                        ),
+                      );
+                     }
 
                     //produce a list of widgets
                     return ListView(

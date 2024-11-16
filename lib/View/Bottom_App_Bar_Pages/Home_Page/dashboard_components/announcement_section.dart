@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
+import 'package:communihelp_app/ViewModel/Notification_Controller/notification_controller.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +83,18 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                 );
               }
 
-            
+              
+              
+
+              List<DocumentSnapshot> docs = snapshot.data!.docs;
+              viewModel.sortUrgent(docs);
+
+              if (snapshot.hasData) {
+                if (docs.length > viewModel.previousDocs.length) {
+                  NotificationController().showNotification(title: "ANNOUNCEMENT ALERT: at ${userData.municipality}"); //Notification
+                }
+                viewModel.previousDocs = docs;
+              }
           
               return ExpandableCarousel(
                 options: ExpandableCarouselOptions(
@@ -94,8 +106,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                   slideIndicator: CircularSlideIndicator(),
                   enlargeCenterPage: true,
                 ),
-                items: snapshot.data!.docs.map<Widget>((DocumentSnapshot document) {
-                  
+                items: docs.map<Widget>((DocumentSnapshot document) {
                   Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
                   return Padding(
                     padding: const EdgeInsets.all(5).r,

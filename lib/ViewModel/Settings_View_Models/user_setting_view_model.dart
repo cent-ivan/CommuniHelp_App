@@ -140,6 +140,7 @@ class Language {
         "Forum" : {
           "PostButton" : "Share a thought",
           "Offline" : "Offline mode. Cannot Post and Like",
+          "NoPost" : "No post available",
           "DialogTitle" : "Share a thought",
           "from" : "from ",
           "FieldTitle" : "Enter post title",
@@ -212,6 +213,7 @@ class Language {
       "Forum" : {
           "PostButton" : "Magbahagi ng saloobin",
           "Offline" : "Offline mode. Hindi maka-Post at Like",
+          "NoPost" : "Walang mga post",
           "DialogTitle" : "Magbahagi ng saloobin",
           "from" : "taga-",
           "FieldTitle" : "Maglagay ng titulo",
@@ -267,6 +269,7 @@ class Language {
         "Forum" : {
           "PostButton" : "Magbahagi ng saloobin",
           "Offline" : "Offline mode. Hindi maka-Post at Like",
+          "NoPost" : "Uwa it mga post",
           "DialogTitle" : "Magbahagi ng saloobin",
           "from" : "taga-",
           "FieldTitle" : "Magbutang it titulo",
