@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
-import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -38,9 +38,9 @@ class _ResponderProfileViewState extends State<ResponderProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    final responderSettings = ResponderSettingViewModel();
+    final responderSettings = UserSettingViewModel();
     responderSettings.loadSettings(curUser!.uid);
-    var languageClass = ResLanguage(responderSettings.userLanguage);
+    var languageClass = Language(responderSettings.userLanguage);
     
     final viewModel= Provider.of<ProfileViewModel>(context);
     return PopScope(

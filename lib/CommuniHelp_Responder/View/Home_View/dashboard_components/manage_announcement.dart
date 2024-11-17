@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_announcement.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +23,7 @@ class _ManageAnnouncementState extends State<ManageAnnouncement> {
   Widget build(BuildContext context) {
     final userData = Provider.of<GetUserData>(context);
     final getAnnouncement = Provider.of<GetAnnouncement>(context);
+    
     return Scaffold(
       appBar: AnnouncementAppBar(),
       body: Padding(
@@ -293,6 +296,11 @@ class AnnouncementAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<AnnouncementViewModel>(context);
+
+    User? curUser = FirebaseAuth.instance.currentUser;
+    final responderSettings = UserSettingViewModel();
+    responderSettings.loadSettings(curUser!.uid);
+    var languageClass = Language(responderSettings.userLanguage);
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -302,8 +310,8 @@ class AnnouncementAppBar extends StatelessWidget implements PreferredSizeWidget{
           colors: [Theme.of(context).colorScheme.outline, const Color(0x80FEAE49),   const Color(0xFF57BEE6)],
         ).createShader(bounds),
           
-        child: const Text(
-          "Make Announcement",
+        child: Text(
+          languageClass.systemLang["MakeAnnounce"]["AnnounceTitle"],
           style: TextStyle(
             color: Colors.white,
             fontSize: 25,

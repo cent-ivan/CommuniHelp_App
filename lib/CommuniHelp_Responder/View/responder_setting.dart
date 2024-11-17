@@ -1,4 +1,4 @@
-import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,11 +23,11 @@ class _ResponderSettingsViewState extends State<ResponderSettingsView> {
   @override
   Widget build(BuildContext context) {
   
-    final viewModel = Provider.of<ResponderSettingViewModel>(context);
+    final viewModel = Provider.of<UserSettingViewModel>(context);
     //language current value
     String currentOption = viewModel.userLanguage;
   
-    var languageClass = ResLanguage(currentOption);
+    var languageClass = Language(currentOption);
     viewModel.loadSettings(curUser!.uid);
 
     return Scaffold(

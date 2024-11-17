@@ -105,15 +105,29 @@ class Language {
         },
         "Home" : {
           "Announcement" : "Announcements",
+          "NoAnnouncement" : "No Announcements",
           "PostAnnounce" : "Announcement",
           "NaturalDis" : "Natural Disasters",
           "ManmadeDis" : "Man-made Disasters",
           "SearchEvac" : "Search for Evacuation Center",
+          "MarkEvac" : " Mark Evacuation Centers", //responder version
           "News" : "View News",
           "Weather" : "View Weather",
           "Kit" : "My Kits",
           "ReportLabel" : "Send a report",
+          "ReportResp" : "See Reports", //reponder version
+          "ReportRespButton" : "Reports", //reponder version
           "Report" : "Report" 
+        },
+        "MakeAnnounce" : {
+          "AnnounceTitle" : "Make Announcements",
+          "Today" : "Today",
+          "Title" : "Title",
+          "TitleHint" : "Enter Title",
+          "Content" : "Content",
+          "ContentHint" : "Enter announcement content",
+          "Urgent" : "Important",
+          "NoContent" : "Empty Text Fields, make sure you fill up all"
         },
         "NaturalInfo" : {
           "NaturalTitle" : "Natural Disasters",
@@ -136,7 +150,15 @@ class Language {
         "Contact" : {
           "Label" : "My Contact List",
           "Search" : "Search",
-          "Empty" : "No contacts"
+          "Empty" : "No contacts",
+          "nameHint" : "Enter name",
+          "numberHint" : "Enter number"
+        },
+        "Weather" : {
+          "WeatherTitle" : "Weather Update",
+          "Button" : "Open live earth",
+          "dropdownHint" : "Select a municipality",
+          "ForecastLabel" : "This week's forecast"
         },
         "Forum" : {
           "PostButton" : "Share a thought",
@@ -165,6 +187,17 @@ class Language {
           "host" : "List of Hostpitals",
           "fire" : "Number of Fire Rescuer",
           "coast" : "Number of Coastguard"
+        },
+        "Report": {
+          "reportName" : "Report Name: ",
+          "reportLabel" : "Send Report",
+          "location" : "Location",
+          "locationHint" : "Enter your location",
+          "content" : "Content",
+          "contentHint" : "Report context",
+          "uploadLabel" : "Upload Photo",
+          "uploadHint" : "Pick a Photo",
+          "appBarTitle" : "Report To Authorities"
         }
     };
   }
@@ -179,15 +212,29 @@ class Language {
       },
       "Home" : {
           "Announcement" : "Mga Anunsyo",
+          "NoAnnouncement" : "Walang Anunsyo",
           "PostAnnounce" : "Maganunsyo",
           "NaturalDis" : "Natural na Sakuna",
           "ManmadeDis" : "Sakunang Gawang-tao",
           "SearchEvac" : "Maghanap ng Evacuation Center",
+          "MarkEvac" : " Magmarka ng mga Evacuation Center", //responder version
           "News" : "Mga Balita",
           "Weather" : "Ang Panahon",
           "Kit" : "Aking Kits",
           "ReportLabel" : "Magpadala ng ulat",
-          "Report" : "Report" 
+          "ReportResp" : "Tingnan ang mga ulat", //reponder version
+          "ReportRespButton" : "Mga ulat", //reponder version
+          "Report" : "Magulat" 
+        },
+      "MakeAnnounce" : {
+          "AnnounceTitle" : "Gumawa ng Anunsyo",
+          "Today" : "Ngayon",
+          "Title" : "Titulo",
+          "TitleHint" : "Maglagay ng titulo",
+          "Content" : "Laman",
+          "ContentHint" : "Maglagay ng nilalaman",
+          "Urgent" : "Importante",
+          "NoContent" : "Walang laman, siguradohin na may laman ang mga text fields"
         },
       "NaturalInfo" : {
         "NaturalTitle" : "Mga likas na sakuna",
@@ -210,7 +257,14 @@ class Language {
       "Contact" : {
           "Label" : "Aking Kontaks",
           "Search" : "Hanapin",
-          "Empty" : "Walang laman"
+          "Empty" : "Walang laman",
+          "nameHint" : "Maglagay ng pangalan",
+          "numberHint" : "Maglagay ng numero"
+        },
+      "Weather" : {
+          "WeatherTitle" : "Ulat ng Panahon",
+          "Button" : "Buksan ang live earth",
+          "ForecastLabel" : "Taya para sa linggong ito"
         },
       "Forum" : {
           "PostButton" : "Magbahagi ng saloobin",
@@ -239,6 +293,17 @@ class Language {
           "host" : "Listahan ng mga ostpital",
           "fire" : "Numero ng Bombero",
           "coast" : "Numero ng Coastguard"
+        },
+      "Report": {
+          "reportName" : "Pangalan ng Report: ",
+          "reportLabel" : "Magpadala ng ulat",
+          "location" : "Lokasyon",
+          "locationHint" : "Ilagay ang iyong lokasyon",
+          "content" : "Content",
+          "contentHint" : "Ano ang konteksto",
+          "uploadLabel" : "Mag-upload ng lalarawan",
+          "uploadHint" : "Pumili ng larawan",
+          "appBarTitle" : "Magulat sa Awtoridad"
         }
 
     };
@@ -254,26 +319,47 @@ class Language {
       },
       "Home" : {
           "Announcement" : "Mga Anunsyo",
+          "NoAnnouncement" : "Uwa it Anunsyo",
           "PostAnnounce" : "Maganunsyo",
           "NaturalDis" : "Natural na Sakuna",
           "ManmadeDis" : "Sakunang Gawa-tao",
           "SearchEvac" : "Magusoy ng Evacuation Center",
+          "MarkEvac" : " Magmarka it mga Evacuation Centers", //responder version
           "News" : "Mga Balita",
           "Weather" : "Ang Panahon",
           "Kit" : "Akong Kits",
-          "ReportLabel" : "Magpadaea it ulat",
-          "Report" : "Report" 
+          "ReportLabel" : "Magpadaea it report",
+          "ReportResp" : "Mantawon ang mga ulat", //reponder version
+          "ReportRespButton" : "Mga ulat", //reponder version
+          "Report" : "Magreport" 
+        },
+        "MakeAnnounce" : {
+          "AnnounceTitle" : "Maghimo it Anunsyo",
+          "Today" : "Makara",
+          "Title" : "Titulo",
+          "TitleHint" : "Magbutang it titulo",
+          "Content" : "Laman",
+          "ContentHint" : "Magbutang it nilalaman",
+          "Urgent" : "Importante",
+          "NoContent" : "Uwa it sueod, siguradohon nga may sueod ang mga text fields"
         },
         "Contact" : {
           "Label" : "Akong Kontaks",
           "Search" : "Pangitaon",
-          "Empty" : "Wa it seuod"
+          "Empty" : "Wa it seuod",
+          "nameHint" : "Magbutang it pangalan",
+          "numberHint" : "Magbutang it numero"
+        },
+        "Weather" : {
+          "WeatherTitle" : "Ulat it Panahon",
+          "Button" : "Buksan ang live earth",
+          "ForecastLabel" : "Forcast it makarang dominggo"
         },
         "Forum" : {
-          "PostButton" : "Magbahagi ng saloobin",
+          "PostButton" : "Magbahagi it saloobin",
           "Offline" : "Offline mode. Hindi maka-Post at Like",
           "NoPost" : "Uwa it mga post",
-          "DialogTitle" : "Magbahagi ng saloobin",
+          "DialogTitle" : "Magbahagi it saloobin",
           "from" : "taga-",
           "FieldTitle" : "Magbutang it titulo",
           "Content" : "Ano nasa isip mo?",
@@ -296,6 +382,17 @@ class Language {
           "host" : "Listahan it mga ostpital",
           "fire" : "Numero it Bombero",
           "coast" : "Numero it Coastguard"
+        },
+        "Report": {
+          "reportName" : "Pangalan it Report: ",
+          "reportLabel" : "Magpadaea it report",
+          "location" : "Lokasyon",
+          "locationHint" : "Ibutang ang imong lokasyon",
+          "content" : "Content",
+          "contentHint" : "Ano ang konteksto",
+          "uploadLabel" : "Mag-upload it lalarawan",
+          "uploadHint" : "Magpili it larawan",
+          "appBarTitle" : "Magreport sa Awtoridad"
         }
     };
   }

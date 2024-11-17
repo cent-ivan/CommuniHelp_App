@@ -74,7 +74,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
           
                   child: Center(
                     child: Text(
-                      "No Announcements",
+                      languageClass.systemLang["Home"]["NoAnnouncement"], 
                       style: TextStyle(
                         fontSize: 18.r
                       ),
@@ -91,7 +91,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
 
               if (snapshot.hasData) {
                 if (docs.length > viewModel.previousDocs.length) {
-                  NotificationController().showNotification(title: "ANNOUNCEMENT ALERT: at ${userData.municipality}"); //Notification
+                  NotificationController().showNotification(title: "ANNOUNCEMENT UPDATE: at ${userData.municipality}"); //Notification
                 }
                 viewModel.previousDocs = docs;
               }

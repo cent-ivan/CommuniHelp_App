@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Community_Page/post_dialog.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
-import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -39,9 +39,9 @@ class _ResponderCommunityViewState extends State<ResponderCommunityView> {
 
   @override
   Widget build(BuildContext context) {
-    final responderSettings = ResponderSettingViewModel();
+    final responderSettings = UserSettingViewModel();
     responderSettings.loadSettings(curUser!.uid);
-    var languageClass = ResLanguage(responderSettings.userLanguage);
+    var languageClass = Language(responderSettings.userLanguage);
 
     final userData = Provider.of<GetUserData>(context, listen: false);
     final viewModel = Provider.of<CommunityViewModel>(context);

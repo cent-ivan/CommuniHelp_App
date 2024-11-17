@@ -33,7 +33,7 @@ class _ContactsViewState extends State<ContactsView> {
   Widget build(BuildContext context) {
     final settings = UserSettingViewModel();
     settings.loadSettings(curUser!.uid);
-    var languageClass = Language(settings.userLanguage); //catches aklanon language to replace with filipino
+    var languageClass = Language(settings.userLanguage);
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -456,15 +456,20 @@ class _ContactFloatingActionButtonState extends State<ContactFloatingActionButto
   User? curUser = FirebaseAuth.instance.currentUser;
 
   final dialog = GlobalDialogUtil();
+  
+  
+  
 
   @override
   Widget build(BuildContext context) {
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
     return SizedBox.fromSize(
       size: Size.square(40.r),
       child: FloatingActionButton(
         heroTag: 'addContactHero',
         onPressed: () {
-          addContact();
+          addContact(settings);
           
         },
         backgroundColor: Color(0xFF57BEE6),
@@ -477,7 +482,8 @@ class _ContactFloatingActionButtonState extends State<ContactFloatingActionButto
     );
   }
 
-  void addContact() {
+  void addContact(UserSettingViewModel settings) {
+    var languageClass = Language(settings.userLanguage);
     showDialog(context: context, 
       builder: (context) {
         return SimpleDialog(
@@ -495,7 +501,7 @@ class _ContactFloatingActionButtonState extends State<ContactFloatingActionButto
                     child: TextField(
                       controller: viewModel.editNameController,
                       decoration: InputDecoration(
-                      hintText: "Enter name",
+                      hintText: languageClass.systemLang["Contact"]["nameHint"],
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(width: 2.r, color: Theme.of(context).colorScheme.outline)
                       ),
@@ -520,7 +526,7 @@ class _ContactFloatingActionButtonState extends State<ContactFloatingActionButto
                       ],
                       maxLength: 11,
                       decoration: InputDecoration(
-                      hintText: "Enter  number",
+                      hintText: languageClass.systemLang["Contact"]["numberHint"],
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(width: 1.r, color: Theme.of(context).colorScheme.outline)
                       ),

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
 import 'package:communihelp_app/ViewModel/Notification_Controller/notification_controller.dart';
-import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
@@ -28,9 +28,9 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<GetUserData>(context);
-    final responderSettings = ResponderSettingViewModel();
+    final responderSettings = UserSettingViewModel();
     responderSettings.loadSettings(curUser!.uid);
-    var languageClass = ResLanguage(responderSettings.userLanguage);
+    var languageClass = Language(responderSettings.userLanguage);
     return Consumer<AnnouncementViewModel>(builder: (context, viewModel, child) => Column(
       children: [
     
@@ -42,7 +42,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
               alignment: Alignment.topLeft,
               margin: const EdgeInsets.fromLTRB(9, 3, 0, 0).r,
               child: Text(
-                languageClass.systemLang["Home"]["Announcement"], 
+                  languageClass.systemLang["Home"]["Announcement"], 
                   style: TextStyle(
                   fontSize: 25.r,
                   fontWeight: FontWeight.bold, 
@@ -73,7 +73,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
           
                   child: Center(
                     child: Text(
-                      "No Announcements",
+                      languageClass.systemLang["Home"]["NoAnnouncement"], 
                       style: TextStyle(
                         fontSize: 18.r
                       ),
@@ -82,8 +82,14 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
                 );
               }
 
+              List<DocumentSnapshot> docs = snapshot.data!.docs;
+              viewModel.sortUrgent(docs);
+
               if (snapshot.hasData) {
-                NotificationController().showNotification(title: "ANNOUNCEMENT ALERT: at ${userData.municipality}"); //Notification
+                if (docs.length > viewModel.previousDocs.length) {
+                  NotificationController().showNotification(title: "ANNOUNCEMENT UPDATE: at ${userData.municipality}"); //Notification
+                }
+                viewModel.previousDocs = docs;
               }
           
               return ExpandableCarousel(
@@ -96,7 +102,7 @@ class _ResponderAnnouncementState extends State<ResponderAnnouncement> {
                   slideIndicator: CircularSlideIndicator(),
                   enlargeCenterPage: true,
                 ),
-                items: snapshot.data!.docs.map<Widget>((DocumentSnapshot document) {
+                items: docs.map<Widget>((DocumentSnapshot document) {
                   Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
                   return Padding(
                     padding: const EdgeInsets.all(5).r,

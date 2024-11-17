@@ -27,6 +27,7 @@ class _NewsViewState extends State<NewsView> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<NewsViewModel>(context);
+
     return PopScope(
       canPop: false,
       child: DefaultTabController(
@@ -170,7 +171,7 @@ class _NewsListViewState extends State<NewsListView> {
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.outline,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20.r
+                                  fontSize: 16.r
                                 ),
                               ),
                 

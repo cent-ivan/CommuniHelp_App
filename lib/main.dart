@@ -8,7 +8,6 @@ import 'package:communihelp_app/View/Infographics/Manmade_Disaster/manmade_disas
 import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/forgot_pass_view.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
-import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
@@ -111,7 +110,6 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => HiveDbWeather())),
         ChangeNotifierProvider(create: ((context) => ContactsViewModel())),
         ChangeNotifierProvider(create: ((context) => UserSettingViewModel())),
-        ChangeNotifierProvider(create: ((context) => ResponderSettingViewModel())),
         ChangeNotifierProvider(create: ((context) => EvacuationFinderViewModel())),
 
         //View Model for Firestore
@@ -137,7 +135,6 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userSettings = context.watch<UserSettingViewModel>();
-    final responderSettings = context.watch<ResponderSettingViewModel>();
     final director =  Provider.of<Director>(context);
     return  ScreenUtilInit(
       
@@ -205,8 +202,8 @@ class MainApp extends StatelessWidget {
 
 
         },
-        theme: ! director.isResponder ? userSettings.themeData : responderSettings.themeData,
-        darkTheme: ! director.isResponder ? userSettings.darktTheme : responderSettings.darktTheme,
+        theme: userSettings.themeData,
+        darkTheme: userSettings.darktTheme
       ),
     );
   }

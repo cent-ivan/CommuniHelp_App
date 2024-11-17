@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,7 +46,11 @@ class _WeatherViewState extends State<WeatherView> {
   }
 
   @override
-  Widget build(BuildContext context) {   
+  Widget build(BuildContext context) { 
+    User? curUser = FirebaseAuth.instance.currentUser;
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -54,8 +60,8 @@ class _WeatherViewState extends State<WeatherView> {
           shaderCallback: (bounds) => LinearGradient(
             colors: [Theme.of(context).colorScheme.outline, const Color(0x80FEAE49), const Color(0xFF57BEE6)],
           ).createShader(bounds),
-          child: const Text(
-            "Weather Update",
+          child: Text(
+            languageClass.systemLang["Weather"]["WeatherTitle"],
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -127,7 +133,7 @@ class _WeatherViewState extends State<WeatherView> {
                       launchUrl(Uri.parse('https://zoom.earth/maps/satellite/#view=11.24,123.57,5z'));
                     },
                     child: Text(
-                      "Open live earth",
+                      languageClass.systemLang["Weather"]["Button"],
                       style: TextStyle(
                         color: Color(0xFF3D424A),
                         fontSize: 12.r
@@ -235,7 +241,7 @@ class _WeatherViewState extends State<WeatherView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "This Week's Forecast",
+                            languageClass.systemLang["Weather"]["ForecastLabel"],
                             style: TextStyle(
                               fontSize: 16.r,
                               color: Color(0xFFEDEDED)
