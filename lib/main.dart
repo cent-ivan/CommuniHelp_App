@@ -4,7 +4,14 @@ import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/search_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/about_app_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/share_app_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/accident/accident_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/fire/fire_view.dart';
 import 'package:communihelp_app/View/Infographics/Manmade_Disaster/manmade_disaster_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/pollution/pollution_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/earthquake/earthquake_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/flood/flood_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/landslide/landslide_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/typhoon/typhoon_view.dart';
 import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/forgot_pass_view.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
@@ -173,8 +180,6 @@ class MainApp extends StatelessWidget {
           '/evacuationfinder': (context) => const EvacautionFinderView(),
           '/profile' : (context) => const ProfileView(),
           '/emergency': (context) => const EmergencyView(),
-          '/naturalinfo': (context) => const NaturalDisasterView(),
-          '/manmadeinfo': (context) => const ManmadeDisasterView(),
           '/newsfeed': (context) => const NewsView(),
           '/emergencykit': (context) => const EmergencyKitView(),
           '/weatherupdate': (context) => const WeatherView(),
@@ -190,6 +195,20 @@ class MainApp extends StatelessWidget {
           '/aboutapp' : (context) => const AboutAppView(),
           '/shareapp' : (context) => const ShareAppView(),
           '/forgotpassword' : (context) => const ForgotPassView(),
+
+          //natural infographics
+          '/naturalinfo': (context) => const NaturalDisasterView(),
+          '/typhhon' : (context) => const TyphoonView(),
+          '/flood' : (context) => const FloodView(),
+          '/landslide' : (context) => const LandslideView(),
+          '/earthquake' : (context) => const EarthquakeView(),
+
+          //manmade Infographics
+          '/manmadeinfo': (context) => const ManmadeDisasterView(),
+          '/fire' : (context) => const FireView(),
+          '/accident' : (context) => const AccidentView(),
+          '/structure' : (context) => const FireView(),
+          '/pollution' : (context) => const PollutionView(),
           
 
           //Responder routes
