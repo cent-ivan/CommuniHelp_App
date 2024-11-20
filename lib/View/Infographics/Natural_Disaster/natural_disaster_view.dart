@@ -52,7 +52,7 @@ class _NaturalDisasterViewState extends State<NaturalDisasterView> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/background/weather_back.png'),
+            image: AssetImage('assets/images/background/natural.png'),
             fit: BoxFit.cover
           )
         ),
@@ -61,30 +61,106 @@ class _NaturalDisasterViewState extends State<NaturalDisasterView> {
             children: [
               //Typhoon
               Positioned(
-                top: 65,
-                left: 75,
-                child: _circularButton(viewModel, context, settings.userLanguage, Colors.white, "Typhoon", '/typhhon')
+                top: 150,
+                left: 65,
+                child: Column(
+                  children: [
+                    _circularButton(viewModel, context, settings.userLanguage, Colors.white, "Typhoon", '/typhhon'),
+                    SizedBox(height: 4,),
+                    Container(
+                      padding: EdgeInsets.all(8).r,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xA63D424A)
+                      ),
+                      child: Text(
+                        languageClass.systemLang["NaturalInfo"]["TyButton"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFEDEDED)
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ),
 
               //Landslide
               Positioned(
-                top: 90,
-                right: 80,
-                child: _circularButton(viewModel, context, settings.userLanguage,Color(0xFFFEAE49), "Landslide", '/landslide')
+                top: 280,
+                right: 60,
+                child: Column(
+                  children: [
+                    _circularButton(viewModel, context, settings.userLanguage,Color(0xFFFEAE49), "Landslide", '/landslide'),
+                    SizedBox(height: 4,),
+                    Container(
+                      padding: EdgeInsets.all(8).r,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xA63D424A)
+                      ),
+                      child: Text(
+                        languageClass.systemLang["NaturalInfo"]["LandButton"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFEDEDED)
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ),
 
               //Flood
               Positioned(
-                bottom: 90,
-                right: 100,
-                child: _circularButton(viewModel, context, settings.userLanguage,Color(0xFF01579B), "Flood", '/flood')
+                bottom: 80,
+                right: 80,
+                child: Column(
+                  children: [
+                    _circularButton(viewModel, context, settings.userLanguage,Color(0xFF01579B), "Flood", '/flood'),
+                    SizedBox(height: 4,),
+                    Container(
+                      padding: EdgeInsets.all(8).r,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xA63D424A)
+                      ),
+                      child: Text(
+                        languageClass.systemLang["NaturalInfo"]["FloodButton"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFEDEDED)
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ),
 
               //Earthquake
               Positioned(
-                bottom: 65,
-                left: 75,
-                child: _circularButton(viewModel, context, settings.userLanguage,Colors.brown, "Earthquake", '/earthquake')
+                bottom: 250,
+                left: 60,
+                child: Column(
+                  children: [
+                    _circularButton(viewModel, context, settings.userLanguage, Color(0xFFCC3636), "Earthquake", '/earthquake'),
+                    SizedBox(height: 4,),
+                    Container(
+                      padding: EdgeInsets.all(8).r,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xA63D424A)
+                      ),
+                      child: Text(
+                        languageClass.systemLang["NaturalInfo"]["EarthButton"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFEDEDED)
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ),
 
             ],
@@ -97,8 +173,8 @@ class _NaturalDisasterViewState extends State<NaturalDisasterView> {
 
   SizedBox _circularButton(NaturalDisasterViewModel viewModel, BuildContext context, String language, Color color, String disaster, String path) {
     return SizedBox(
-      height: 20,
-      width: 20,
+      height: 25,
+      width: 25,
       child: ElevatedButton(
         onPressed: () {
           logger.d("Language: $language");
@@ -110,7 +186,7 @@ class _NaturalDisasterViewState extends State<NaturalDisasterView> {
           padding: EdgeInsets.all(12).r,
           elevation: 3,
           backgroundColor: Colors.transparent,
-          side: BorderSide(color: color, width: 2),
+          side: BorderSide(color: color, width: 4),
         ),
         child: Container()
       ),
@@ -143,13 +219,13 @@ class _NaturalDisasterViewState extends State<NaturalDisasterView> {
                 color: Color(0x80EFEFEF),
                 borderRadius: BorderRadius.circular(8).r
               ),
-              padding: EdgeInsets.all(8).r,
+              padding: EdgeInsets.all(16).r,
               child: Text(
                 languageClass.systemLang["NaturalInfo"][viewModel.disasterDialog],
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   color: Color(0xFF3D424A),
-                  height: 2
+                  height: 1.5
                 ),
               ),
             ),

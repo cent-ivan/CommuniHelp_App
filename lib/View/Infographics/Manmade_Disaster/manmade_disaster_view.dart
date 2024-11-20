@@ -59,32 +59,108 @@ class _ManmadeDisasterViewState extends State<ManmadeDisasterView> {
 
         child: Consumer<ManMadeDisasterViewModel>(builder: (context, viewModel, child) => Stack(
             children: [
-              //Typhoon
+              //Fire
               Positioned(
                 top: 65,
                 left: 75,
-                child: _circularButton(viewModel, context, settings.userLanguage, Colors.white, "Burn", '/fire')
+                child: Column(
+                  children: [
+                    _circularButton(viewModel, context, settings.userLanguage,  Color(0xFFFEAE49), "Burn", '/fire'),
+                    SizedBox(height: 4,),
+                    Container(
+                      padding: EdgeInsets.all(8).r,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xA63D424A)
+                      ),
+                      child: Text(
+                        languageClass.systemLang["ManmadeInfo"]["Fire"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFEDEDED)
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ),
 
-              //Landslide
+              //Accident
               Positioned(
                 top: 90,
                 right: 80,
-                child: _circularButton(viewModel, context, settings.userLanguage,Color(0xFFFEAE49), "Vehicular", '/accident')
+                child: Column(
+                  children: [
+                    _circularButton(viewModel, context, settings.userLanguage,Colors.white, "Vehicular", '/accident'),
+                    SizedBox(height: 4,),
+                    Container(
+                      padding: EdgeInsets.all(8).r,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xA63D424A)
+                      ),
+                      child: Text(
+                        languageClass.systemLang["ManmadeInfo"]["Accident"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFEDEDED)
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ),
 
-              //Flood
+              //Destroyed Structural
               Positioned(
-                bottom: 90,
+                bottom: 200,
                 right: 100,
-                child: _circularButton(viewModel, context, settings.userLanguage,Color(0xFF01579B), "Structural", '/structure')
+                child: Column(
+                  children: [
+                    _circularButton(viewModel, context, settings.userLanguage,Color(0xFFCC3636), "Structural", '/structure'),
+                    SizedBox(height: 4,),
+                    Container(
+                      padding: EdgeInsets.all(8).r,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xA63D424A)
+                      ),
+                      child: Text(
+                        languageClass.systemLang["ManmadeInfo"]["Failure"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFEDEDED)
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ),
 
-              //Earthquake
+              //Pollution
               Positioned(
                 bottom: 65,
                 left: 75,
-                child: _circularButton(viewModel, context, settings.userLanguage,Colors.brown, "Pollution", '/pollution')
+                child: Column(
+                  children: [
+                    _circularButton(viewModel, context, settings.userLanguage, Color(0xFF01579B), "Pollution", '/pollution'),
+                    SizedBox(height: 4,),
+                    Container(
+                      padding: EdgeInsets.all(8).r,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xA63D424A)
+                      ),
+                      child: Text(
+                        languageClass.systemLang["ManmadeInfo"]["Pollution"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFEDEDED)
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ),
 
             ],
@@ -101,7 +177,7 @@ class _ManmadeDisasterViewState extends State<ManmadeDisasterView> {
       width: 20,
       child: ElevatedButton(
         onPressed: () {
-          logger.d("Language: $language");
+          logger.e("Language: $language");
           viewModel.getPath(disaster, language);
           _startDialog(viewModel , context, color, path);
         },

@@ -1,7 +1,10 @@
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/pollution/pollution_pages.dart';
+import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/manmade_dis_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class PollutionView extends StatefulWidget {
   const PollutionView({super.key});
@@ -11,6 +14,8 @@ class PollutionView extends StatefulWidget {
 }
 
 class _PollutionViewState extends State<PollutionView> {
+  int _currentPage = 0; //shows the index of the current page
+  final PageController _controller = PageController(initialPage: 0);
   
   @override
   Widget build(BuildContext context) {
@@ -20,6 +25,8 @@ class _PollutionViewState extends State<PollutionView> {
     settings.loadSettings(curUser!.uid);
     var languageClass = Language(settings.userLanguage);
     
+    final viewModel = Provider.of<ManMadeDisasterViewModel>(context);
+    final pages = Provider.of<PollutionPages>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -42,7 +49,29 @@ class _PollutionViewState extends State<PollutionView> {
         )
       ),
 
-      body: Placeholder(),
+      body: PageView(
+        physics: NeverScrollableScrollPhysics(),
+        controller: _controller,
+        onPageChanged: (value) {
+          setState(() {
+            _currentPage = value;
+          });
+        },
+
+        children: pages.getList(settings.userLanguage.toUpperCase(), viewModel).map((infoPath) {
+          return SingleChildScrollView(
+            child: InteractiveViewer(
+                  //for zoom
+                  minScale: 0.5,
+                  maxScale: 8,
+                  child: Image(
+                    image: AssetImage(infoPath),
+                    fit: BoxFit.fitWidth,
+                  )
+                ),
+          );
+        }).toList(),
+      ),
 
       bottomNavigationBar: BottomAppBar(
         color: Color(0xFFEFEFEF),
@@ -53,7 +82,11 @@ class _PollutionViewState extends State<PollutionView> {
             children: [
               GestureDetector(
                 onTap: () {
-                  
+                  _controller.animateToPage( //animates the switching of page
+                      _currentPage -= 1, 
+                      duration: Duration(milliseconds: 600), 
+                      curve: Curves.easeIn
+                    );
                 },
                 child: Image.asset('assets/images/infographics/left-arrow.png', height: 35, width: 35,)
               ),
@@ -67,7 +100,11 @@ class _PollutionViewState extends State<PollutionView> {
                     borderRadius: BorderRadius.all(Radius.circular(8.r))
                   ),
                   onPressed: () {
-                
+                    _controller.animateToPage( //animates the switching of page
+                      _currentPage += 1, 
+                      duration: Duration(milliseconds: 600), 
+                      curve: Curves.easeIn
+                    );
                   },
                   child: Text(
                     "Next",

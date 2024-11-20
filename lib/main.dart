@@ -4,14 +4,22 @@ import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/search_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/about_app_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/share_app_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/accident/accident_pages.dart';
 import 'package:communihelp_app/View/Infographics/Manmade_Disaster/accident/accident_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/fire/fire_pages.dart';
 import 'package:communihelp_app/View/Infographics/Manmade_Disaster/fire/fire_view.dart';
 import 'package:communihelp_app/View/Infographics/Manmade_Disaster/manmade_disaster_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/pollution/pollution_pages.dart';
 import 'package:communihelp_app/View/Infographics/Manmade_Disaster/pollution/pollution_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/structure/structure_pages.dart';
 import 'package:communihelp_app/View/Infographics/Manmade_Disaster/structure/structure_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/earthquake/earthquake_pages.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/earthquake/earthquake_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/flood/flood_pages.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/flood/flood_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/landslide/landslide_pages.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/landslide/landslide_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/typhoon/typhoon_pages.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/typhoon/typhoon_view.dart';
 import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/forgot_pass_view.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
@@ -119,6 +127,16 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => ContactsViewModel())),
         ChangeNotifierProvider(create: ((context) => UserSettingViewModel())),
         ChangeNotifierProvider(create: ((context) => EvacuationFinderViewModel())),
+        //pages
+        ChangeNotifierProvider(create: ((context) => TyphoonPages())),
+        ChangeNotifierProvider(create: ((context) => LandslidePages())),
+        ChangeNotifierProvider(create: ((context) => FloodPages())),
+        ChangeNotifierProvider(create: ((context) => FloodPages())),
+        ChangeNotifierProvider(create: ((context) => EarthquakePages())),
+        ChangeNotifierProvider(create: ((context) => FirePages())),
+        ChangeNotifierProvider(create: ((context) => AccidentPages())),
+        ChangeNotifierProvider(create: ((context) => PollutionPages())),
+        ChangeNotifierProvider(create: ((context) => StructurePages())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),

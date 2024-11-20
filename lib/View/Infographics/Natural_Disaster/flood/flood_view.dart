@@ -1,7 +1,10 @@
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/flood/flood_pages.dart';
+import 'package:communihelp_app/ViewModel/Inforgraphics_Controller/natural_dis_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class FloodView extends StatefulWidget {
   const FloodView({super.key});
@@ -11,6 +14,9 @@ class FloodView extends StatefulWidget {
 }
 
 class _FloodViewState extends State<FloodView> {
+  int _currentPage = 0; //shows the index of the current page
+  final PageController _controller = PageController(initialPage: 0);
+
   @override
   Widget build(BuildContext context) {
     //show current user
@@ -19,6 +25,8 @@ class _FloodViewState extends State<FloodView> {
     settings.loadSettings(curUser!.uid);
     var languageClass = Language(settings.userLanguage);
 
+    final viewModel = Provider.of<NaturalDisasterViewModel>(context);
+    final landslidePages = Provider.of<FloodPages>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -41,7 +49,30 @@ class _FloodViewState extends State<FloodView> {
         )
       ),
 
-      body: Placeholder(),
+      body: PageView(
+        physics: NeverScrollableScrollPhysics(),
+        controller: _controller,
+        onPageChanged: (value) {
+          setState(() {
+            _currentPage = value;
+          });
+        },
+
+        children: landslidePages.getList(settings.userLanguage.toUpperCase(), viewModel).map((infoPath) {
+          return SingleChildScrollView(
+            child: InteractiveViewer(
+                  //for zoom
+                  minScale: 0.5,
+                  maxScale: 8,
+                  child: Image(
+                    image: AssetImage(infoPath),
+                    fit: BoxFit.fitWidth,
+                  )
+                ),
+          );
+        }).toList(),
+      ),
+      
 
       bottomNavigationBar: BottomAppBar(
         color: Color(0xFFEFEFEF),
@@ -52,7 +83,11 @@ class _FloodViewState extends State<FloodView> {
             children: [
               GestureDetector(
                 onTap: () {
-                  
+                  _controller.animateToPage( //animates the switching of page
+                      _currentPage -= 1, 
+                      duration: Duration(milliseconds: 600), 
+                      curve: Curves.easeIn
+                    );
                 },
                 child: Image.asset('assets/images/infographics/left-arrow.png', height: 35, width: 35,)
               ),
@@ -66,7 +101,11 @@ class _FloodViewState extends State<FloodView> {
                     borderRadius: BorderRadius.all(Radius.circular(8.r))
                   ),
                   onPressed: () {
-                
+                    _controller.animateToPage( //animates the switching of page
+                      _currentPage += 1, 
+                      duration: Duration(milliseconds: 600), 
+                      curve: Curves.easeIn
+                    );
                   },
                   child: Text(
                     "Next",
