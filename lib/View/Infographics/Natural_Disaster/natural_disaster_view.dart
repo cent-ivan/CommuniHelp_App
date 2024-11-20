@@ -19,7 +19,7 @@ class _NaturalDisasterViewState extends State<NaturalDisasterView> {
   //show current user
    User? curUser = FirebaseAuth.instance.currentUser;
   final settings = UserSettingViewModel();
-    
+  
   
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _NaturalDisasterViewState extends State<NaturalDisasterView> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: const Color(0x80A4EACD),
         elevation: 1,
         title: Text(
              languageClass.systemLang["NaturalInfo"]["NaturalTitle"],
@@ -134,20 +134,28 @@ class _NaturalDisasterViewState extends State<NaturalDisasterView> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.asset(viewModel.coverPath!, height: 200, width:  350),
+              child: Image.asset(viewModel.coverPath!, height: 150, width:  400, fit: BoxFit.fill,),
             ),
-            SizedBox(height: 8.r,),
-
-
-            Padding(
-              padding: EdgeInsets.all(12).r,
-              child: Row(
-                children: [
-                  Container()
-                ],
+            
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 4.r),
+              decoration: BoxDecoration(
+                color: Color(0x80EFEFEF),
+                borderRadius: BorderRadius.circular(8).r
+              ),
+              padding: EdgeInsets.all(8).r,
+              child: Text(
+                languageClass.systemLang["NaturalInfo"][viewModel.disasterDialog],
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  color: Color(0xFF3D424A),
+                  height: 2
+                ),
               ),
             ),
 
+
+            //redirect to pages
             MaterialButton(
               color: Color(0xFF57BEE6),
               elevation: 2,
@@ -174,5 +182,6 @@ class _NaturalDisasterViewState extends State<NaturalDisasterView> {
       }
     );
   }
+
 
 }

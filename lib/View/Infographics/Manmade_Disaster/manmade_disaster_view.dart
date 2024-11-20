@@ -130,22 +130,30 @@ class _ManmadeDisasterViewState extends State<ManmadeDisasterView> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.r))
           ),
-          titlePadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0).r,
-          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8).r,
+          contentPadding: EdgeInsets.all(16).r,
           children: [
-            Image.asset(viewModel.coverPath!, height: 200, width:  350),
+            Image.asset(viewModel.coverPath!, height: 180, width:  400, fit: BoxFit.fill,),
             SizedBox(height: 8.r,),
 
 
-            Padding(
-              padding: EdgeInsets.all(12).r,
-              child: Row(
-                children: [
-                  Container()
-                ],
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 4.r),
+              decoration: BoxDecoration(
+                color: Color(0x80EFEFEF),
+                borderRadius: BorderRadius.circular(8).r
+              ),
+              padding: EdgeInsets.all(8).r,
+              child: Text(
+                languageClass.systemLang["ManmadeInfo"][viewModel.disasterDialog],
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  color: Color(0xFF3D424A),
+                  height: 2
+                ),
               ),
             ),
 
+            //redirect to pages
             MaterialButton(
               color: Color(0xFF57BEE6),
               elevation: 2,

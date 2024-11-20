@@ -8,6 +8,7 @@ import 'package:communihelp_app/View/Infographics/Manmade_Disaster/accident/acci
 import 'package:communihelp_app/View/Infographics/Manmade_Disaster/fire/fire_view.dart';
 import 'package:communihelp_app/View/Infographics/Manmade_Disaster/manmade_disaster_view.dart';
 import 'package:communihelp_app/View/Infographics/Manmade_Disaster/pollution/pollution_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/structure/structure_view.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/earthquake/earthquake_view.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/flood/flood_view.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/landslide/landslide_view.dart';
@@ -207,7 +208,7 @@ class MainApp extends StatelessWidget {
           '/manmadeinfo': (context) => const ManmadeDisasterView(),
           '/fire' : (context) => const FireView(),
           '/accident' : (context) => const AccidentView(),
-          '/structure' : (context) => const FireView(),
+          '/structure' : (context) => const StructureView(),
           '/pollution' : (context) => const PollutionView(),
           
 
