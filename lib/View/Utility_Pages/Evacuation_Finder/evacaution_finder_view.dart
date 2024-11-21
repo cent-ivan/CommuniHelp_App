@@ -103,7 +103,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                 position: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
                 infoWindow: InfoWindow(title: "You"),
                 icon: vModel.userMarker,
-                flat: true
+                flat: false
               ),
 
 
@@ -188,6 +188,22 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             )
           ),
 
+          if (targetEvac != null)
+          Positioned(
+            bottom: 90.r,
+            left: 10.r,
+            child: Container(
+              width: 120.r,
+              height: 120.r,
+              padding: EdgeInsets.all(8).r,
+              decoration: BoxDecoration(
+                color: Color(0xB3F2F2F2),
+                borderRadius: BorderRadius.circular(4).r
+              ),
+             
+            ),
+          ),
+
           if (!viewModel.pinMode)
           //DROPDWON
           Positioned(
@@ -196,8 +212,8 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 5.r, horizontal: 4.r),
               decoration: BoxDecoration(
-                color: Color(0x73F2F2F2), //button
-                borderRadius: BorderRadius.circular(5).r
+                color: Color(0xB3F2F2F2), //button
+                borderRadius: BorderRadius.circular(4).r
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -255,6 +271,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                           setState(() {
                             initialValue= newVal;
                             targetEvac = newVal;
+                            
                           });
                           googleMapController?.animateCamera(
                             CameraUpdate.newCameraPosition(
