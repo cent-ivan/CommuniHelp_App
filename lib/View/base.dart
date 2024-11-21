@@ -4,6 +4,7 @@ import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.da
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import '../Databases/FirebaseServices/auth.dart';
@@ -18,19 +19,30 @@ class HomeBase extends StatefulWidget {
 }
 
 class _HomeBaseState extends State<HomeBase> {
- 
+ Logger logger = Logger();
 
   final PageStorageBucket bucket = PageStorageBucket();
 
-  GetUserData getData = GetUserData();
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<GetUserData>(context);
     // ignore: unused_local_variable
     final baseController = Provider.of<BaseController>(context);
+
+    final emergencyViewModel = Provider.of<EmergencyViewModel>(context);
+    if (emergencyViewModel.isNew) {
+      logger.e("Walang laman boss");
+      userData.getUser();
+      emergencyViewModel.loadMunicipality(context);
+      emergencyViewModel.changeNew();
+    }
+    else {
+      logger.e("May laman boss");
+    }
 
     return Scaffold(
       appBar:  AppBarBase(),
@@ -558,7 +570,7 @@ class FloatingActionButtonBase extends StatelessWidget {
         elevation: 0,
         shape: const CircleBorder(),
         onPressed: () {
-          emergencyViewModel.loadMunicipality();
+          emergencyViewModel.loadMunicipality(context);
           Navigator.pushNamed(context, '/emergency');
         },
         backgroundColor: const Color(0xFFFEAE49),

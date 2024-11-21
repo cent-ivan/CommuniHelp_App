@@ -1,3 +1,4 @@
+
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Emergency_Page/emergency_components/emergency_buttons.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
@@ -92,13 +93,15 @@ class _EmergencyNumbersState extends State<EmergencyNumbers> {
             height: (480 + (viewModel.mddrmoContacts.length.toDouble() * 4) * ((viewModel.ambulanceContacts.length.toDouble() * 10) + (viewModel.bfpContacts.length.toDouble() * 6) + (viewModel.cgContacts.length.toDouble() * 5))).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: 
+              [
                 
                 //Municipality Tag
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      viewModel.loadMunicipality();
+                      
+                      viewModel.loadMunicipality(context);
                     });
                   },
                   child: Container(
