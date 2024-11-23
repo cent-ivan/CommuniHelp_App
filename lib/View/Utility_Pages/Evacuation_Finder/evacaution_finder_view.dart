@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/Model/evacuation_marker_model.dart';
@@ -6,6 +7,7 @@ import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/directio
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/auth_director.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,9 +26,6 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   Logger logger = Logger(); //for debug messages
   final dialog = GlobalDialogUtil();
 
-  //form global key
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController title = TextEditingController(); //for adding 
   
 
   final vModel = EvacuationFinderViewModel();
@@ -66,10 +65,15 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
     
   }
 
-  String? initialValue;
-  String? deleteValue;
-  String? targetEvac;
   
+  String? deleteValue;
+  
+  static final  customCache = CacheManager(
+    Config(
+      "customCacheKey",
+      stalePeriod: Duration(days: 30)
+    )
+  );
   
 
   @override
@@ -103,7 +107,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                 position: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
                 infoWindow: InfoWindow(title: "You"),
                 icon: vModel.userMarker,
-                flat: false
+                flat: true
               ),
 
 
@@ -133,10 +137,105 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             },
           ),
 
+          //select mode
+          if (!viewModel.pinMode)
+          Positioned(
+            bottom: 90.r,
+            left: 10.r,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8.r, horizontal: 8.r),
+              decoration: BoxDecoration(
+                color: Color(0xCCF2F2F2), //button
+                borderRadius: BorderRadius.circular(4).r
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    'Mode: ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12.r,
+                      
+                    ),
+                  ),
+
+                  DropdownButton(
+                    value: viewModel.mode,
+                    dropdownColor: Color(0xFFEDEDED),
+                      underline: Container(
+                      height: 1,
+                      color: Colors.black,
+                    ),
+                    iconEnabledColor: Colors.black,
+                    items: [
+                      DropdownMenuItem(
+                        value: 'walking',
+                        child: Text(
+                            'Walking',
+                            style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12.r,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 'driving',
+                        child: Text(
+                            'Driving',
+                            style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12.r,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 'bicycling',
+                        child: Text(
+                            'Bicycling',
+                            style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12.r,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+                    ], 
+                    onChanged: (newValue) async {
+                      viewModel.mode = newValue!;
+                      if (viewModel.targetEvac != null && viewModel.destination == null) {
+                        //if user picked a evacuation
+                        final directions  = await DirectionRepo().getDirection(LatLng(currentLocation!.latitude!, currentLocation!.longitude!), getEvacPosition(viewModel.targetEvac!), viewModel.mode);
+                        setState(() {
+                          viewModel.direct = directions;
+                        });
+                      }
+                      //if have pins
+                      else if (viewModel.origin?.position != null && viewModel.destination?.position != null) {
+                        final directions = await DirectionRepo().getDirection(viewModel.origin!.position, viewModel.destination!.position, viewModel.mode);
+                        setState(() {
+                          viewModel.direct = directions;
+                        });
+                      }
+                      else {
+                        logger.e("Nuttun");
+                      }
+                      
+                      
+                    }
+                  ),
+
+                ],
+              ),
+            )
+          ),
+
+
           if (viewModel.direct != null) 
           //shows text info about distance and duration when showing a navigation polyline
           Positioned(
-            top: 20.r,
+            top:  20.r,
             right: 10.r,
             child: Container(
               height: 35.r,
@@ -188,21 +287,58 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             )
           ),
 
-          if (targetEvac != null)
+          //evac picture
+          if (viewModel.targetEvac != null && !viewModel.pinMode)
           Positioned(
-            bottom: 90.r,
+            bottom: 155.r,
             left: 10.r,
-            child: Container(
-              width: 120.r,
-              height: 120.r,
+            child: viewModel.imageurl! != "" ? GestureDetector(
+              onTap: () {
+                showImage(context, viewModel.targetEvac!, viewModel);
+              },
+              child: Container(
+                width: 125.r,
+                height: 125.r,
+                padding: EdgeInsets.all(8).r,
+                decoration: BoxDecoration(
+                  color: Color(0xFFF2F2F2),
+                  borderRadius: BorderRadius.circular(4).r
+                ),
+                child: CachedNetworkImage(
+                  cacheManager: customCache,
+                  key: UniqueKey(),
+                  imageUrl: viewModel.imageurl!,
+                  progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(value: downloadProgress.progress),
+                  ),
+                  errorWidget: (context, url, error) => Image.asset('assets/images/default_image.png', height: 150, width: 150,),
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 135.r,
+                    height: 160.r,
+                    padding: EdgeInsets.all(8).r,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
+                      borderRadius: BorderRadius.circular(5).r
+                    ),
+                  ),
+                ),
+              ),
+            ) :
+            Container(
+              width: 115.r,
+              height: 115.r,
               padding: EdgeInsets.all(8).r,
               decoration: BoxDecoration(
-                color: Color(0xB3F2F2F2),
+                image: DecorationImage(image: AssetImage('assets/images/dashboard/checklist_images/no_pictures.png'), fit: BoxFit.fill),
+                color: Color(0xFFF2F2F2),
                 borderRadius: BorderRadius.circular(4).r
               ),
-             
+                
             ),
           ),
+          
+          
 
           if (!viewModel.pinMode)
           //DROPDWON
@@ -212,7 +348,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 5.r, horizontal: 4.r),
               decoration: BoxDecoration(
-                color: Color(0xB3F2F2F2), //button
+                color: Color(0xCCF2F2F2), //button
                 borderRadius: BorderRadius.circular(4).r
               ),
               child: Column(
@@ -260,7 +396,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                       }
 
                       return DropdownButton(
-                        value: initialValue,
+                        value: viewModel.initialValue,
                         dropdownColor: Color(0xFFEDEDED),
                         underline: Container(
                           height: 1,
@@ -269,8 +405,12 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                         iconEnabledColor: Colors.black,
                         onChanged: (newVal) {
                           setState(() {
-                            initialValue= newVal;
-                            targetEvac = newVal;
+                            viewModel.direct = null;
+                            // Get the document data
+                            Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                            viewModel.initialValue= newVal;
+                            viewModel.targetEvac = newVal;
+                            viewModel.imageurl = data[newVal]['image'];
                             
                           });
                           googleMapController?.animateCamera(
@@ -312,7 +452,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
               children: [
                 SpeedDialChild(
                   labelBackgroundColor: Colors.redAccent,
-                  label: "Clear my pins",
+                  label: "CLEAR",
                   onTap: () {
                     viewModel.clearMyPins();
                   }
@@ -323,8 +463,8 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                   //for direction
                   onTap: () async { // origin to target
 
-                    if (targetEvac != null) {
-                      final directions  = await DirectionRepo().getDirection(LatLng(currentLocation!.latitude!, currentLocation!.longitude!), getEvacPosition(targetEvac!));
+                    if (viewModel.targetEvac != null) {
+                      final directions  = await DirectionRepo().getDirection(LatLng(currentLocation!.latitude!, currentLocation!.longitude!), getEvacPosition(viewModel.targetEvac!), viewModel.mode);
                       setState(() {
                         viewModel.direct = directions;
                       });
@@ -342,7 +482,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                   labelBackgroundColor: Colors.redAccent,
                   label: "DELETE a Pin",
                   onTap: () {
-                    initialValue = null;
+                    viewModel.initialValue = null;
                     deleteEvac(viewModel);
                   }
                 ),
@@ -435,7 +575,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
         );
       });
 
-      final directions = await DirectionRepo().getDirection(viewModel.origin!.position, viewModel.destination!.position);
+      final directions = await DirectionRepo().getDirection(viewModel.origin!.position, viewModel.destination!.position, viewModel.mode);
       setState(() {
         viewModel.direct = directions;
       });
@@ -528,7 +668,6 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
       setState(() {
         viewModel.placedPin = Marker(
           markerId: const MarkerId('temp_marker'),
-          infoWindow: InfoWindow(title: 'Pinned Evacuation Area'), //display text over the marker
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
           position: pos,
           onTap: () {
@@ -540,8 +679,8 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                 )
               )
             );
-
-            showPrompt(viewModel ,context, userData.municipality, pos);
+            viewModel.assignEvacPos(pos);
+            Navigator.pushNamed(context, '/addmarkerpage');
           }
         );
        
@@ -633,6 +772,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                           setState(() {
                             evacData.remove(newVal);
                             deleteValue= newVal;
+                            viewModel.clearMyPins();
                           });
 
                           Navigator.pop(context);
@@ -667,110 +807,43 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
     );
   }
 
-  //Prompt for adding evacution markers
-  void showPrompt(EvacuationFinderViewModel viewModel ,BuildContext context, String municipality, LatLng pos) {
+  
+  //show picture
+  void showImage(BuildContext context, String evacKey, EvacuationFinderViewModel viewModel) {
     showDialog(
-      barrierDismissible: false,
       context: context, 
       builder: (context) {
-        return Form(
-          key: _formKey,
-          child: SimpleDialog(
-            backgroundColor: const Color(0xF2FCFCFC),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(5.r),)
-            ),
-            contentPadding: EdgeInsets.all(16).r,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(Icons.location_on, color: Color(0xFF3D424A),),
-                  Text(
-                    "Enter evacuation details",
-                    style: TextStyle(
-                      color:  Color(0xFF3D424A),
-                      fontSize: 16.r,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ],
-              ),
-          
-              SizedBox(height: 12.r),
-          
-              SizedBox(
-                width: 200.r,
-                child: TextFormField(
-                controller: title,
-                style: TextStyle(
-                  fontSize: 12.r,
-                  color: Color(0xFF3D424A)
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Enter name',
-                  hintStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF3D424A)
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4).r,
-                    borderSide: BorderSide(width: 1.r, color:Color(0xFF3D424A))
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8).r,
-                    borderSide: BorderSide(width: 2.r, color: Color(0xFF3D424A))
-                  )
-                ),
-                
-                keyboardType: TextInputType.multiline,
-                minLines: 1,
-                maxLines: 3,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Enter a name";
-                  }
-                  return null;
-                  },
-                ),
-              ),
-
-              SizedBox(height: 16,),
-              Row(
-                children: [
-                  MaterialButton(
-                    onPressed: () {
-                      //sends pos to firestore
-                      if (_formKey.currentState!.validate()) {
-                        viewModel.addEvacFirebase(municipality, title.text ,pos);
-                        viewModel.placedPin = null;
-                        viewModel.pinMode = false;
-                        loadPins();
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: Text("PIN", style: TextStyle(color: Color(0xFF3D424A), fontWeight: FontWeight.bold),),
-                  ),
-
-                  MaterialButton(
-                    onPressed: () {
-                      //exits dialog
-                      Navigator.pop(context);
-                    },
-                    child: Text("Cancel", style: TextStyle(color: Color(0xFF3D424A), fontWeight: FontWeight.bold),),
-                  ),
-                ],
-              )
-
-            ],
+        return SimpleDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4.r),)
           ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          children: [
+            CachedNetworkImage(
+              cacheManager: customCache,
+              key: UniqueKey(),
+              imageUrl: viewModel.imageurl!,
+              progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(value: downloadProgress.progress),
+              ),
+              errorWidget: (context, url, error) => Image.asset('assets/images/dashboard/checklist_images/no_pictures.png', height: 150, width: 150,),
+              imageBuilder: (context, imageProvider) => Container(
+                width: 145.r,
+                height: 150.r,
+                padding: EdgeInsets.all(8).r,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth),
+                  borderRadius: BorderRadius.circular(5).r
+                ),
+              ),
+            ),
+          
+          ],
         );
       }
     );
   }
-  
-
-  
 }
 
   
@@ -783,6 +856,7 @@ class MapAppBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<EvacuationFinderViewModel>(context);
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -800,6 +874,12 @@ class MapAppBar extends StatelessWidget implements PreferredSizeWidget{
         icon: const Icon(Icons.arrow_back_ios_new),
         iconSize: 20,
         onPressed: () {
+          viewModel.pinMode = false;
+          viewModel.placedPin = null;
+          viewModel.clearMyPins();
+          viewModel.mode = "walking";
+          viewModel.initialValue = null;
+          viewModel.targetEvac = null;
           Navigator.pop(context);
         },
       ),

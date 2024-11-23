@@ -518,6 +518,7 @@ class _WeatherViewState extends State<WeatherView> {
               "Country" : data["location"]["country"],
 
               //Forecast
+              if (forecastData.length > 3)
               "TomorrowTemp" : "${forecastData[0]['day']['avgtemp_c']}°C",
               "TomorrowHum" : forecastData[0]['day']['avghumidity'],
               "SecondDayTemp" : "${forecastData[1]['day']['avgtemp_c']}°C",
@@ -528,6 +529,7 @@ class _WeatherViewState extends State<WeatherView> {
               "FourthDayHum" : forecastData[3]['day']['avghumidity'],
               "FifthDayTemp" : "${forecastData[4]['day']['avgtemp_c']}°C",
               "FifthDayHum" : forecastData[4]['day']['avghumidity']
+              
             };
   
           });
@@ -544,7 +546,7 @@ class _WeatherViewState extends State<WeatherView> {
         }
       } catch (e) {
           logger.e('Error fetching weather data ${e.toString()}');
-        }
+      }
     }
     else {
       //else get from Hive

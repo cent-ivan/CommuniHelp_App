@@ -1,4 +1,5 @@
 import 'package:communihelp_app/View/base_controller.dart';
+import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
 import 'package:flutter/material.dart';
@@ -299,6 +300,7 @@ class DrawerBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final evacuationViewModel = Provider.of<EvacuationFinderViewModel>(context);
     final getService = Provider.of<GetUserData>(context);
     final getCollection = Provider.of<EmergencyViewModel>(context);
     final profileViewModel = Provider.of<ProfileViewModel>(context);
@@ -472,11 +474,15 @@ class DrawerBase extends StatelessWidget {
                     color: const Color(0xE6FEAE49),
                     disabledColor: Colors.grey.shade800,
                     onPressed: network.isOnline.value ? () {
+                      evacuationViewModel.targetEvac = null;
+                      evacuationViewModel.imageurl = null;
+                      evacuationViewModel.clearMyPins();
                       _auth.signOut(context);
                       getCollection.reloadLists();
                       //announcementViewModel.addAnnouncement();
                       profileViewModel.refreshProfile();
                       getService.reloadData(); 
+
                     } : () => _handleExit(context), //else exit user if offline,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
