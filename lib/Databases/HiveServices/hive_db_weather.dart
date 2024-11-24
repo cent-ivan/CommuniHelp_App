@@ -17,7 +17,7 @@ class HiveDbWeather extends ChangeNotifier{
   }
 
   void updateData() {
-    logger.i("inside: ${_weather.get('WEATHER')!}");
+    
     _weather.put('WEATHER', weatherData);
     logger.i("Weather DB: Updated");
   }
