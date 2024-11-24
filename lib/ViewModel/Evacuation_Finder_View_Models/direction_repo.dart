@@ -14,7 +14,7 @@ class DirectionRepo {
 
   DirectionRepo({Dio? dio});
 
-  Future<DirectionsModel?> getDirection(LatLng origin, LatLng destination) async {
+  Future<DirectionsModel?> getDirection(LatLng origin, LatLng destination, String mode) async {
     DirectionsModel? dataMap;
     try {
       //Dio handles http request by coverting it to json
@@ -23,6 +23,7 @@ class DirectionRepo {
         queryParameters: {
           'origin' : "${origin.latitude},${origin.longitude}", //the user's or marker's latitude and longitude 
           'destination' : "${destination.latitude}, ${destination.longitude}", //the evacuaton or marker's latitude and longitude 
+          'mode' : mode,
           'key':_apiKey //the api key
         }
       );

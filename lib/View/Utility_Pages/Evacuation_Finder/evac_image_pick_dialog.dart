@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:communihelp_app/ViewModel/Home_View_Models/report_view_model.dart';
+import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-class PickImageDialog {
+class EvacImagePickDialog {
   Logger logger = Logger(); //for debug message
   
   //shows dialog for picking
@@ -16,7 +16,7 @@ class PickImageDialog {
       barrierDismissible: false,
       context: context, 
       builder: (context) {
-        final viewModel = Provider.of<ReportViewModel>(context);
+        final viewModel = Provider.of<EvacuationFinderViewModel>(context);
         return SimpleDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.r),)

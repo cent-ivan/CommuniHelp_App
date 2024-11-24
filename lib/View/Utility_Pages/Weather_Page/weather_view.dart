@@ -332,7 +332,7 @@ class _WeatherViewState extends State<WeatherView> {
 
                                   Divider(thickness: 0.5,),
 
-                                  //3rd day
+                                  // //3rd day
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -497,8 +497,8 @@ class _WeatherViewState extends State<WeatherView> {
   // Method to fetch weather data
   Future<void> fetchWeather(String municipality, bool isMuni) async {
     if (network.isOnline.value) {
-      //get data from api if online
-      final apiUrl = 'https://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$municipality,Aklan&days=5';  // Fetch 5-day forecast
+      //get data from api if online 
+      final apiUrl = 'http://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$municipality,Aklan&days=5&aqi=no&alerts=no';  // Fetch 5-day forecast
       try {
         final response = await http.get(Uri.parse(apiUrl));
         if (response.statusCode == 200) {
@@ -517,7 +517,7 @@ class _WeatherViewState extends State<WeatherView> {
               "Municipality": data["location"]["name"],
               "Country" : data["location"]["country"],
 
-              //Forecast
+              //Forecast)
               "TomorrowTemp" : "${forecastData[0]['day']['avgtemp_c']}°C",
               "TomorrowHum" : forecastData[0]['day']['avghumidity'],
               "SecondDayTemp" : "${forecastData[1]['day']['avgtemp_c']}°C",
@@ -528,6 +528,7 @@ class _WeatherViewState extends State<WeatherView> {
               "FourthDayHum" : forecastData[3]['day']['avghumidity'],
               "FifthDayTemp" : "${forecastData[4]['day']['avgtemp_c']}°C",
               "FifthDayHum" : forecastData[4]['day']['avghumidity']
+              
             };
   
           });
@@ -544,7 +545,7 @@ class _WeatherViewState extends State<WeatherView> {
         }
       } catch (e) {
           logger.e('Error fetching weather data ${e.toString()}');
-        }
+      }
     }
     else {
       //else get from Hive

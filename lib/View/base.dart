@@ -1,9 +1,11 @@
 import 'package:communihelp_app/View/base_controller.dart';
+import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import '../Databases/FirebaseServices/auth.dart';
@@ -18,19 +20,30 @@ class HomeBase extends StatefulWidget {
 }
 
 class _HomeBaseState extends State<HomeBase> {
- 
+ Logger logger = Logger();
 
   final PageStorageBucket bucket = PageStorageBucket();
 
-  GetUserData getData = GetUserData();
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
 
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<GetUserData>(context);
     // ignore: unused_local_variable
     final baseController = Provider.of<BaseController>(context);
+
+    final emergencyViewModel = Provider.of<EmergencyViewModel>(context);
+    if (emergencyViewModel.isNew) {
+      logger.e("Walang laman boss");
+      userData.getUser();
+      emergencyViewModel.loadMunicipality(context);
+      emergencyViewModel.changeNew();
+    }
+    else {
+      logger.e("May laman boss");
+    }
 
     return Scaffold(
       appBar:  AppBarBase(),
@@ -287,6 +300,7 @@ class DrawerBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final evacuationViewModel = Provider.of<EvacuationFinderViewModel>(context);
     final getService = Provider.of<GetUserData>(context);
     final getCollection = Provider.of<EmergencyViewModel>(context);
     final profileViewModel = Provider.of<ProfileViewModel>(context);
@@ -460,11 +474,15 @@ class DrawerBase extends StatelessWidget {
                     color: const Color(0xE6FEAE49),
                     disabledColor: Colors.grey.shade800,
                     onPressed: network.isOnline.value ? () {
+                      evacuationViewModel.targetEvac = null;
+                      evacuationViewModel.imageurl = null;
+                      evacuationViewModel.clearMyPins();
                       _auth.signOut(context);
                       getCollection.reloadLists();
                       //announcementViewModel.addAnnouncement();
                       profileViewModel.refreshProfile();
                       getService.reloadData(); 
+
                     } : () => _handleExit(context), //else exit user if offline,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -558,7 +576,7 @@ class FloatingActionButtonBase extends StatelessWidget {
         elevation: 0,
         shape: const CircleBorder(),
         onPressed: () {
-          emergencyViewModel.loadMunicipality();
+          emergencyViewModel.loadMunicipality(context);
           Navigator.pushNamed(context, '/emergency');
         },
         backgroundColor: const Color(0xFFFEAE49),

@@ -3,9 +3,11 @@ import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/responder_d
 import 'package:communihelp_app/CommuniHelp_Responder/View/Profile_Page/profile_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/ViewModel/auth_responder.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/contacts_view.dart';
+import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../ViewModel/Connection_Controller/Controller/network_controller.dart';
 
@@ -273,6 +275,7 @@ class DrawerBase extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    final evacuationViewModel = Provider.of<EvacuationFinderViewModel>(context);
     return Drawer(
       elevation: 0,
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -439,6 +442,10 @@ class DrawerBase extends StatelessWidget {
                     elevation: 1,
                     color: const Color(0xE6FEAE49),
                     onPressed: () {
+                      evacuationViewModel.targetEvac = null;
+                      evacuationViewModel.imageurl = null;
+                      evacuationViewModel.imageurl = null;
+                      evacuationViewModel.clearMyPins();
                       _auth.signOut(context);
                     },
                     child: Row(

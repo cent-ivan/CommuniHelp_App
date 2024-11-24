@@ -41,7 +41,6 @@ class _EditProfileViewState extends State<EditProfileView> {
   //show current user
   final user = FirebaseAuth.instance.currentUser!;
 
-  GetUserData userData = GetUserData();
   GetAnnouncement getAnnouncement = GetAnnouncement();
 
   //show dialog pick image
@@ -50,7 +49,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   Widget build(BuildContext context) {
     final emergencyViewModel = Provider.of<EmergencyViewModel>(context);
- 
+    final userData = Provider.of<GetUserData>(context);
     final settings = UserSettingViewModel();
     settings.loadSettings(user.uid);
     var languageClass = Language(settings.userLanguage); //catches aklanon language to replace with filipino
@@ -519,8 +518,11 @@ class _EditProfileViewState extends State<EditProfileView> {
                              
                                       userData.reloadData();
                                       emergencyViewModel.reloadLists();
+                                      //emergencyViewModel.changeNew();
+                                      
     
                                       viewModel.updateUserData(context, user.uid, user.email!, userData.type);
+                                      //viewModel.loadData(context);
                                       getAnnouncement.clear();
 
                                     });
@@ -606,7 +608,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                     languageClass.systemLang["Profile"]["changeemail"],
                                     style: TextStyle(
                                       color: const Color(0xFF3D424A),
-                                      fontSize: 14.r,
+                                      fontSize: 12.r,
                                       fontWeight: FontWeight.bold,
                                       decoration: TextDecoration.underline
                                     ),
@@ -622,7 +624,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                     languageClass.systemLang["Profile"]["changepass"],
                                     style: TextStyle(
                                       color: const Color(0xFF3D424A),
-                                      fontSize: 14.r,
+                                      fontSize: 12.r,
                                       fontWeight: FontWeight.bold,
                                       decoration: TextDecoration.underline
                                     ),

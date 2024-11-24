@@ -81,8 +81,16 @@ class PickProfileDialog {
                       ),
                       color: Color(0xFF57BEE6),
                       onPressed: () async {
-                        File croppedImage = await viewModel.cropImage(viewModel.image, context);
-                        viewModel.newImage(croppedImage);
+                        try {
+                          File croppedImage = await viewModel.cropImage(viewModel.image, context);
+                          viewModel.newImage(croppedImage);
+                        } catch (e) {
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                          }
+                          
+                        }
+                        
                         
                       },
                       child: Text(

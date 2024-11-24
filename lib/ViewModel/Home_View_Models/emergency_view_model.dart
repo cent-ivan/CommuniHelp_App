@@ -4,6 +4,7 @@ import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/netwo
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 
 import '../../Databases/HiveServices/hive_db_emergencycontact.dart';
 import '../../Model/Emergency_contact_model/emergency_contacts_model.dart';
@@ -12,9 +13,10 @@ class EmergencyViewModel extends ChangeNotifier{
   var logger = Logger();//showing debug messages
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
   
-  final getService = GetUserData(); //access data from firestore
+  //final getService = GetUserData(); //access data from firestore
   final getCollection = GetEmergencyContacts();
   final getStoredCollection = EmergencyContactLocalDatabase();
+  bool isNew = true;
 
 
   String municipalityName = "No data";
@@ -24,7 +26,10 @@ class EmergencyViewModel extends ChangeNotifier{
   List<EmergencyContactsModel> bfpContacts = [];
   List<EmergencyContactsModel> cgContacts = [];
   
-
+  void changeNew() {
+    isNew = !isNew;
+  
+  }
 
   void filterContact(){
     if (network.isOnline.value){
@@ -88,18 +93,20 @@ class EmergencyViewModel extends ChangeNotifier{
 
 
   void reloadLists() {
-    getCollection.queryContacts = [];
+    getCollection.queryContacts.clear();
     getStoredCollection.reloadData();
-    mddrmoContacts = [];
-    ambulanceContacts = [];
-    bfpContacts = [];
-    cgContacts = [];
+    mddrmoContacts.clear();
+    ambulanceContacts.clear();
+    bfpContacts.clear();
+    cgContacts.clear();
+    
     notifyListeners();
   }
 
-  Future loadMunicipality() async {
-    await getService.getUser();
-    municipalityName = getService.municipality;
+  Future loadMunicipality(BuildContext context) async {
+    final userData = Provider.of<GetUserData>(context, listen: false);
+    await userData.getUser();
+    municipalityName = userData.municipality;
     if (getCollection.queryContacts.isEmpty){
       getCollection.getLDRRMOContacts(municipalityName);
       await Future.delayed(Duration(seconds: 3, milliseconds: 500));

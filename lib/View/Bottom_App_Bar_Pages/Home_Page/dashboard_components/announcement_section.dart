@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 //-----------------------------------------------------------------------------------------------
@@ -22,6 +23,7 @@ class AnnouncementSection extends StatefulWidget {
 }
 
 class _AnnouncementSectionState extends State<AnnouncementSection> {
+  Logger logger = Logger();
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
   
@@ -62,8 +64,26 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
           StreamBuilder(
             stream: viewModel.getStream(userData.municipality), 
             builder: (context, snapshot) {
+              logger.i(userData.municipality);
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: const CircularProgressIndicator());
+              }
+              
+              //remove to debug
+              if (snapshot.hasError) {
+                return SizedBox(
+                  width: 380.r,
+                  height: 150.r,
+          
+                  child: Center(
+                    child: Text(
+                      languageClass.systemLang["Home"]["NoAnnouncement"], 
+                      style: TextStyle(
+                        fontSize: 18.r
+                      ),
+                    ),
+                  ),
+                );
               }
           
               //if empty
@@ -83,8 +103,6 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                 );
               }
 
-              
-              
 
               List<DocumentSnapshot> docs = snapshot.data!.docs;
               viewModel.sortUrgent(docs);
