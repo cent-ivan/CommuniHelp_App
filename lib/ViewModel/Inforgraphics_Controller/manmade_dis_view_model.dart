@@ -2,32 +2,37 @@ import 'package:flutter/material.dart';
 
 
 class ManMadeDisasterViewModel extends ChangeNotifier{
-  String? pageTitle;
+  String? coverPath;
+  String? disasterDialog;
   String? disasterPath;
   String? userLanguage;
 
   final Map<String, List<String>> assetEnglishPaths = {
-    "Vehicular" : [
+    "VEHICULAR" : [
+      "assets/images/infographics/manmade_infographics/vehicular/vehicular_En/Vehicular1_cover_En.png",
       "assets/images/infographics/manmade_infographics/vehicular/vehicular_En/Vehicular1.png",
       "assets/images/infographics/manmade_infographics/vehicular/vehicular_En/Vehicular2.png",
       "assets/images/infographics/manmade_infographics/vehicular/vehicular_En/Vehicular3.png",
       "assets/images/infographics/manmade_infographics/vehicular/vehicular_En/Vehicular4.png",
       "assets/images/infographics/manmade_infographics/vehicular/vehicular_En/Vehicular5.png",
     ],
-    "Burn" : [
+    "BURN" : [
+      "assets/images/infographics/manmade_infographics/burn/burn_En/Burn1_cover_En.png",
       "assets/images/infographics/manmade_infographics/burn/burn_En/Burn1.png",
       "assets/images/infographics/manmade_infographics/burn/burn_En/Burn2.png",
       "assets/images/infographics/manmade_infographics/burn/burn_En/Burn3.png",
       "assets/images/infographics/manmade_infographics/burn/burn_En/Burn4.png",
     ],
-    "Structural" : [
+    "STRUCTURAL" : [
+      "assets/images/infographics/manmade_infographics/structural/structural_En/Structural1_cover_En.png",
       "assets/images/infographics/manmade_infographics/structural/structural_En/Structural1.png",
       "assets/images/infographics/manmade_infographics/structural/structural_En/Structural2.png",
       "assets/images/infographics/manmade_infographics/structural/structural_En/Structural3.png",
       "assets/images/infographics/manmade_infographics/structural/structural_En/Structural4.png",
       "assets/images/infographics/manmade_infographics/structural/structural_En/Structural5.png",
     ],
-    "Pollution" : [
+    "POLLUTION" : [
+      "assets/images/infographics/manmade_infographics/pollution/pollution_En/Pollution1_cover_En.png",
       "assets/images/infographics/manmade_infographics/pollution/pollution_En/Pollution1.png",
       "assets/images/infographics/manmade_infographics/pollution/pollution_En/Pollution2.png",
       "assets/images/infographics/manmade_infographics/pollution/pollution_En/Pollution3.png",
@@ -39,27 +44,31 @@ class ManMadeDisasterViewModel extends ChangeNotifier{
 
 
   final Map<String, List<String>> assetFilipinoPaths = {
-    "Vehicular" : [
+    "VEHICULAR" : [
+      "assets/images/infographics/manmade_infographics/vehicular/vehicular_Fil/Aksidente1_cover_Fil.png",
       "assets/images/infographics/manmade_infographics/vehicular/vehicular_Fil/Aksidente1.png",
       "assets/images/infographics/manmade_infographics/vehicular/vehicular_Fil/Aksidente2.png",
       "assets/images/infographics/manmade_infographics/vehicular/vehicular_Fil/Aksidente3.png",
       "assets/images/infographics/manmade_infographics/vehicular/vehicular_Fil/Aksidente4.png",
       "assets/images/infographics/manmade_infographics/vehicular/vehicular_Fil/Aksidente5.png",
     ],
-    "Burn" : [
+    "BURN" : [
+      "assets/images/infographics/manmade_infographics/burn/burn_Fil/Sunog1_cover_Fil.png",
       "assets/images/infographics/manmade_infographics/burn/burn_Fil/Sunog1.png",
       "assets/images/infographics/manmade_infographics/burn/burn_Fil/Sunog2.png",
       "assets/images/infographics/manmade_infographics/burn/burn_Fil/Sunog3.png",
       "assets/images/infographics/manmade_infographics/burn/burn_Fil/Sunog4.png",
     ],
-    "Structural" : [
+    "STRUCTURAL" : [
+      "assets/images/infographics/manmade_infographics/structural/structural_Fil/Istruktura1_cover_Fil.png",
       "assets/images/infographics/manmade_infographics/structural/structural_Fil/Istruktura1.png",
       "assets/images/infographics/manmade_infographics/structural/structural_Fil/Istruktura2.png",
       "assets/images/infographics/manmade_infographics/structural/structural_Fil/Istruktura3.png",
       "assets/images/infographics/manmade_infographics/structural/structural_Fil/Istruktura4.png",
       "assets/images/infographics/manmade_infographics/structural/structural_Fil/Istruktura5.png",
     ],
-    "Pollution" : [
+    "POLLUTION" : [
+      "assets/images/infographics/manmade_infographics/pollution/pollution_Fil/Polusyon1_cover_Fil.png",
       "assets/images/infographics/manmade_infographics/pollution/pollution_Fil/Polusyon1.png",
       "assets/images/infographics/manmade_infographics/pollution/pollution_Fil/Polusyon2.png",
       "assets/images/infographics/manmade_infographics/pollution/pollution_Fil/Polusyon3.png",
@@ -71,22 +80,47 @@ class ManMadeDisasterViewModel extends ChangeNotifier{
 
   void getPath(String disaster, String language) {
     userLanguage = language;
-    //check the user language first
-    if (language.contains("En")) {
+    if (language.toLowerCase() == "en" ) {
       for (String key in assetEnglishPaths.keys) {
-        if (disaster.contains(key)) {
+        if (disaster.toUpperCase() == key) {
+          coverPath = assetEnglishPaths[key]?[0]; //gets the cover path in the path list
           disasterPath = key;
+          _getDisasterDialog(disasterPath!); //gets the dialog in user setting
           notifyListeners();
         }
       }
     }
-    else if (language.contains("Fil") || language.contains("Akl")) {
+    else if (language.toLowerCase() == "fil" || language.toLowerCase() =="akl" ) {
       for (String key in assetFilipinoPaths.keys) {
-        if (disaster.contains(key)) {
+        if (disaster.toUpperCase() == key) {
+          coverPath = assetFilipinoPaths[key]?[0];
           disasterPath = key;
+          _getDisasterDialog(disasterPath!); //gets the dialog in user setting
           notifyListeners();
         }
       }
+    }
+  }
+
+  void _getDisasterDialog(String disaster) {
+    if (disaster == "VEHICULAR") {
+      disasterDialog = "AccidentDialog";
+      notifyListeners();
+    }
+    else if (disaster == "BURN") {
+      disasterDialog = "FireDialog";
+      notifyListeners();
+    }
+    else if (disaster == "STRUCTURAL") {
+      disasterDialog = "FailureDialog";
+      notifyListeners();
+    }
+    else if (disaster == "POLLUTION") {
+      disasterDialog = "PollutionDialog";
+      notifyListeners();
+    }
+    else {
+      disasterDialog = "None";
     }
   }
   

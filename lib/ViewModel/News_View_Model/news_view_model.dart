@@ -10,16 +10,12 @@ class NewsViewModel extends ChangeNotifier{
   String url = "";
 
   final apiKey = dotenv.env['NEWS_API_KEY'];
-  final localUrl = dotenv.env['LOCAL_NEWS_URL'];
-  final interUrl = dotenv.env['INTER_NEWS_URL'];
-  final weatherUrl = dotenv.env['WEATHER_NEWS_URL'];
-  final nullUrl = dotenv.env['NULL_NEWS_URL'];
+  final baseUrl = dotenv.env['NEWS_BASE_URL'];
+  final localUrl = dotenv.env['LOCAL_NEWS_PARAM'];
+  final interUrl = dotenv.env['INTER_NEWS_PARAM'];
+  final weatherUrl = dotenv.env['WEATHER_NEWS_PARAM'];
 
-  void assignUrl(String passedUrl) {
-    url = passedUrl;
-    notifyListeners();
-  }
-
+  
   bool isLoading = true;
   List<dynamic> localArticles = [];
   List<dynamic> interArticles = [];
@@ -60,12 +56,12 @@ class NewsViewModel extends ChangeNotifier{
     
     String url;
     if (category == "Local News") {
-      url = localUrl! + apiKey!;
+      url = baseUrl! + apiKey! + localUrl!;
     } else if (category == "International News") {
-      url = interUrl! + apiKey!;
+      url = baseUrl! + apiKey! + interUrl!;
 
     } else if (category == "Weather News") {
-      url = weatherUrl! + apiKey!;
+      url = baseUrl! + apiKey! + weatherUrl!;
 
     } else {
       throw Exception("Invalid category");
@@ -78,15 +74,8 @@ class NewsViewModel extends ChangeNotifier{
         final data = json.decode(response.body);
         isLoading = false;
         notifyListeners();
-        if (category == "Local News" && (data['articles'] == null || data['articles'].isEmpty)) {
-          url = nullUrl! + apiKey!;
-          final fallbackResponse = await http.get(Uri.parse(url));
-          if (fallbackResponse.statusCode == 200) {
-            final fallbackData = json.decode(fallbackResponse.body);
-            return fallbackData['articles'] ?? [];
-          }
-        }
-        return data['articles'] ?? [];
+        
+        return data['results'] ?? [];
       } else {
         throw Exception("Failed to load news ${response.statusCode}");
       }

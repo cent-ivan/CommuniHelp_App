@@ -1,6 +1,8 @@
 import 'package:communihelp_app/CommuniHelp_Responder/ViewModel/post_announcement_view_model.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -32,6 +34,11 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
   Widget build(BuildContext context) {
     //user data
     final userData = Provider.of<GetUserData>(context);
+     //show current user
+    User? curUser = FirebaseAuth.instance.currentUser;
+    final responderSettings = UserSettingViewModel();
+    responderSettings.loadSettings(curUser!.uid);
+    var languageClass = Language(responderSettings.userLanguage);
     return Scaffold(
       appBar: AnnouncementAppBar(),
       body: Padding(
@@ -49,7 +56,7 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Today: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                            "${languageClass.systemLang["MakeAnnounce"]["Today"]}: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                             style: TextStyle(
                               fontSize: 18.r,
                               fontWeight: FontWeight.bold,
@@ -65,7 +72,7 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
           
           
                       Text(
-                        "Title",
+                        languageClass.systemLang["MakeAnnounce"]["Title"],
                         style: TextStyle(
                           fontSize: 16.r,
                           fontWeight: FontWeight.bold,
@@ -88,7 +95,7 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
                             ),
                             cursorColor: Theme.of(context).colorScheme.outline,
                             decoration: InputDecoration(
-                            hintText: "Enter Title",
+                            hintText: languageClass.systemLang["MakeAnnounce"]["TitleHint"],
                             hintStyle: TextStyle(
                               color: Theme.of(context).colorScheme.outline,
                               fontStyle: FontStyle.italic
@@ -109,7 +116,7 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
                       SizedBox(height: 16.r,),
           
                       Text(
-                        "Content",
+                        languageClass.systemLang["MakeAnnounce"]["Content"],
                         style: TextStyle(
                           fontSize: 16.r,
                           fontWeight: FontWeight.bold,
@@ -134,7 +141,7 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
                             ),
                             cursorColor: Theme.of(context).colorScheme.outline,
                             decoration: InputDecoration(
-                            hintText: "Enter announcement content",
+                            hintText: languageClass.systemLang["MakeAnnounce"]["ContentHint"],
                             hintStyle: TextStyle(
                               color: Theme.of(context).colorScheme.outline,
                               fontStyle: FontStyle.italic
@@ -162,7 +169,7 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Urgent",
+                                languageClass.systemLang["MakeAnnounce"]["Urgent"],
                                 style: TextStyle(
                                   fontSize: 16.r,
                                   fontWeight: FontWeight.bold,
@@ -255,8 +262,9 @@ class _AnnouncementMakeState extends State<AnnouncementMake> {
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(Radius.circular(4.r),)
                                           ),
+                                          contentPadding: EdgeInsets.all(12).r,
                                           children: [
-                                            Center(child: Text("Empty text fields.", style: TextStyle(fontWeight: FontWeight.bold),))
+                                            Center(child: Text(languageClass.systemLang["MakeAnnounce"]["NoContent"], style: TextStyle(fontWeight: FontWeight.bold),))
                                           ],
                                         );
                                       }
@@ -343,6 +351,10 @@ class AnnouncementAppBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Widget build(BuildContext context) {
+    User? curUser = FirebaseAuth.instance.currentUser;
+    final responderSettings = UserSettingViewModel();
+    responderSettings.loadSettings(curUser!.uid);
+    var languageClass = Language(responderSettings.userLanguage);
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -352,8 +364,8 @@ class AnnouncementAppBar extends StatelessWidget implements PreferredSizeWidget{
           colors: [Theme.of(context).colorScheme.outline, const Color(0x80FEAE49),   const Color(0xFF57BEE6)],
         ).createShader(bounds),
           
-        child: const Text(
-          "Make Announcement",
+        child: Text(
+          languageClass.systemLang["MakeAnnounce"]["AnnounceTitle"],
           style: TextStyle(
             color: Colors.white,
             fontSize: 25,

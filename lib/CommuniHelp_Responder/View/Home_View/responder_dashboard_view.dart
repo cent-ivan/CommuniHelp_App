@@ -1,7 +1,5 @@
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/announcement_section.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/utility_buttons.dart';
-import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,13 +11,10 @@ class ResponderDashboardView extends StatefulWidget {
 }
 
 class _ResponderDashboardViewState extends State<ResponderDashboardView> {
-  //show current user
-  User? curUser = FirebaseAuth.instance.currentUser;
+
 
   @override
   Widget build(BuildContext context) {
-    final themeSettings = ResponderSettingViewModel();
-    themeSettings.loadSettings(curUser!.uid);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,//if dark mode const Color(0xFF3D424A)
       body: SingleChildScrollView(

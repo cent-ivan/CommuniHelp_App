@@ -55,7 +55,7 @@ class InfographicsSection extends StatelessWidget {
                     height: 100.r,
                     minWidth: 135.r,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15.r))
+                      borderRadius: BorderRadius.all(Radius.circular(12.r))
                     ),
                     color: const Color(0xFFF2F2F2),
                     splashColor: const Color(0xFFB9EFD8),
@@ -92,7 +92,7 @@ class InfographicsSection extends StatelessWidget {
                     height: 100.r,
                     minWidth: 135.r,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15.r))
+                      borderRadius: BorderRadius.all(Radius.circular(12.r))
                     ),
                     color: const Color(0xFFF2F2F2),
                     splashColor: const Color(0x80FEAE49),
@@ -140,9 +140,9 @@ class UtilitySection extends StatelessWidget {
   Widget build(BuildContext context) {
     //Container of Utility Section
     return Container(
-      height: 495.r,
+      height: 408.r,
       padding: const EdgeInsets.all(10).r,
-      margin: const EdgeInsets.fromLTRB(9, 15, 9, 9).r,
+      margin: const EdgeInsets.fromLTRB(9, 8, 9, 9).r,
       decoration: BoxDecoration(
         color:  const Color(0x4D57BEE6),
         borderRadius: BorderRadius.all(Radius.circular(18.r))
@@ -151,7 +151,7 @@ class UtilitySection extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            margin: const EdgeInsets.fromLTRB(9, 3, 9, 15).r,
+            margin: const EdgeInsets.fromLTRB(9, 6, 9, 15),
             child: Text(
               "Utility",
               style: TextStyle(

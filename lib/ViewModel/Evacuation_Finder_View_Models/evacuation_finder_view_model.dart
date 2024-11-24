@@ -32,7 +32,7 @@ class EvacuationFinderViewModel extends ChangeNotifier{
   void setCustomMarker() {
     logger.i("Sets icon");
     //creates custom marker
-    BitmapDescriptor.asset(ImageConfiguration.empty, 'assets/images/shelter.png', height: 35, width: 35).then((icon) { 
+    BitmapDescriptor.asset(ImageConfiguration.empty, 'assets/images/shelter.png', height: 25, width: 25).then((icon) { 
       evacIcon = icon;
     });
   }

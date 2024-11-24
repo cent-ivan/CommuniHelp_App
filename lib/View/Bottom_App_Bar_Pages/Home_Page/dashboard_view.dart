@@ -1,6 +1,5 @@
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/dashboard_components/announcement_section.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/dashboard_components/dashboard_buttons.dart';
-import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,29 +16,33 @@ class _DashboardViewState extends State<DashboardView> {
   
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
+
+  
   
   @override
   Widget build(BuildContext context) {
-    final themeSettings = ResponderSettingViewModel();
-    themeSettings.loadSettings(curUser!.uid);
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,//if dark mode const Color(0xFF3D424A)
       body: SingleChildScrollView(
         key: const PageStorageKey<String>('DashboardView'),
         physics: const ClampingScrollPhysics(),
         child: Container(
-          padding: const EdgeInsets.fromLTRB(9, 15, 9, 0).r,
-          height: 1095.r,
+          padding: const EdgeInsets.fromLTRB(9, 15, 9, 0),
+          height: 990.r,
           child:  Column(
             children: <Widget>[
     
               //ANNOUNCEMENT SECTION
-              const AnnouncementSection(),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: const AnnouncementSection()
+              ),
     
     
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(9, 28, 9, 9).r,
+                margin: const EdgeInsets.fromLTRB(9, 28, 9, 9),
                 child: Text(
                   "DASHBOARD",
                   style: TextStyle(

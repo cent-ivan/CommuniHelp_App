@@ -1,6 +1,8 @@
 import 'package:communihelp_app/View/Utility_Pages/Report_Damage/pick_image_dialog.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/report_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,6 +30,10 @@ class _ReportDamageViewState extends State<ReportDamageView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<ReportViewModel>(context);
+    User? curUser = FirebaseAuth.instance.currentUser;
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage);
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -61,7 +67,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                               Row(
                                 children: [
                                   Text(
-                                    "Report Name: ",
+                                    languageClass.systemLang["Report"]["reportName"],
                                     style: TextStyle(
                                       fontSize: 20.r,
                                       fontWeight: FontWeight.bold,
@@ -74,7 +80,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                                   //Title text field
                                   SizedBox(
                                     height: 50.r,
-                                    width: 180.r,
+                                    width: 120.r,
                                     child: TextFormField(
                                       controller: viewModel.reportTitleController,
                                       style: TextStyle(
@@ -135,7 +141,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Send Report",
+                        languageClass.systemLang["Report"]["reportLabel"],
                         style: TextStyle(
                           fontSize: 24.r,
                           color: Theme.of(context).colorScheme.outline,
@@ -148,7 +154,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
               
                       //LOCATION
                       Text(
-                        "Location",
+                        languageClass.systemLang["Report"]["location"],
                         style: TextStyle(
                           fontSize: 20.r,
                           color: Theme.of(context).colorScheme.outline,
@@ -170,7 +176,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                           ),
                           cursorColor: Theme.of(context).colorScheme.outline,
                           decoration: InputDecoration(
-                            hintText: "Enter your location",
+                            hintText: languageClass.systemLang["Report"]["locationHint"],
                             hintStyle: TextStyle(
                               color: Theme.of(context).colorScheme.outline,
                               fontStyle: FontStyle.italic
@@ -191,7 +197,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                       
                       //CONTENT
                       Text(
-                        "Content",
+                        languageClass.systemLang["Report"]["content"],
                         style: TextStyle(
                           fontSize: 20.r,
                           color: Theme.of(context).colorScheme.outline,
@@ -215,7 +221,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                           ),
                           cursorColor: Theme.of(context).colorScheme.outline,
                           decoration: InputDecoration(
-                            hintText: "Ano ang i-report",
+                            hintText: languageClass.systemLang["Report"]["contentHint"],
                             hintStyle: TextStyle(
                               color: Theme.of(context).colorScheme.outline,
                               fontStyle: FontStyle.italic
@@ -236,7 +242,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                       
                       //CONTENT
                       Text(
-                        "Upload Photo",
+                        languageClass.systemLang["Report"]["uploadLabel"],
                         style: TextStyle(
                           fontSize: 20.r,
                           color: Theme.of(context).colorScheme.outline,
@@ -275,7 +281,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                                   imageDialog.showPickScreen(context);
                                 }, 
                                 child: Text(
-                                "Pick a Photo",
+                                languageClass.systemLang["Report"]["uploadHint"],
                                 style: TextStyle(
                                     color: Color(0xFFFEAE49),
                                     fontSize: 16.r,
@@ -475,6 +481,10 @@ class ReportAppBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Widget build(BuildContext context) {
+    User? curUser = FirebaseAuth.instance.currentUser;
+    final settings = UserSettingViewModel();
+    settings.loadSettings(curUser!.uid);
+    var languageClass = Language(settings.userLanguage);
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -484,8 +494,8 @@ class ReportAppBar extends StatelessWidget implements PreferredSizeWidget{
           colors: [Theme.of(context).colorScheme.outline, const Color(0x80FEAE49),   const Color(0xFF57BEE6)],
         ).createShader(bounds),
           
-        child: const Text(
-          "Report To Authorities",
+        child: Text(
+          languageClass.systemLang["Report"]["appBarTitle"],
           style: TextStyle(
             color: Colors.white,
             fontSize: 25,

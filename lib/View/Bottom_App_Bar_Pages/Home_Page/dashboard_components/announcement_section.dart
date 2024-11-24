@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/anouncement_view_model.dart';
+import 'package:communihelp_app/ViewModel/Notification_Controller/notification_controller.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,6 @@ import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../Model/announcement_model.dart';
 //-----------------------------------------------------------------------------------------------
 //Announcement Section
 
@@ -23,10 +24,11 @@ class AnnouncementSection extends StatefulWidget {
 class _AnnouncementSectionState extends State<AnnouncementSection> {
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
-  final userData = GetUserData();
+  
   @override
   Widget build(BuildContext context) {
-    final userSetting = Provider.of<UserSettingViewModel>(context);
+    final userData = Provider.of<GetUserData>(context);
+    final userSetting =  Provider.of<UserSettingViewModel>(context);
     userSetting.loadSettings(curUser!.uid);
     var languageClass = Language(userSetting.userLanguage);
     return Consumer<AnnouncementViewModel>(builder: (context, viewModel, child) => Column(
@@ -39,85 +41,86 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
             Container(
               alignment: Alignment.topLeft,
               margin: const EdgeInsets.fromLTRB(9, 3, 0, 0).r,
-              child: TextButton(
-                onPressed: () {
-                  if (viewModel.dbAnnouncement.announcements.isEmpty) {
-                    viewModel.loadAnnouncement();
-                    setState(() {
-                      
-                      
-                    });
-                    
-                  }
-                  else {
-                    setState(() {
-        
-                    });
-                  }
-                },
-                child: Text(
-                  languageClass.systemLang["Home"]["Announcement"], 
-                    style: TextStyle(
-                    fontSize: 25.r,
-                    fontWeight: FontWeight.bold, 
-                    color: Theme.of(context).colorScheme.outline,               
-                  ),
+              child: Text(
+                languageClass.systemLang["Home"]["Announcement"], 
+                  style: TextStyle(
+                  fontSize: 25.r,
+                  fontWeight: FontWeight.bold, 
+                  color: Theme.of(context).colorScheme.outline,               
                 ),
               ), 
             ),
-
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  if (viewModel.dbAnnouncement.announcements.isEmpty) {
-                    viewModel.loadAnnouncement();
-                  }
-                  else {
-                    setState(() {
-                   
-                    });
-                  }
-                  
-                });   
-                }, 
-              icon: Icon(
-                Icons.refresh,
-                color: Theme.of(context).colorScheme.outline,
-              )
-            )
           ],
         ),
         
         //Announcement Tiles
-        viewModel.dbAnnouncement.announcements.isNotEmpty ?
+
         SizedBox(
-          width: 380.r,
-          height: 200.r,
-          child: SafeArea(
-            child: ExpandableCarousel(
-              options: ExpandableCarouselOptions(
-                indicatorMargin: 3.r,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 6),
-                autoPlayAnimationDuration: Duration(seconds: 2, milliseconds: 5),
-                showIndicator: true,
-                slideIndicator: CircularSlideIndicator(),
-                enlargeCenterPage: true,
-              ),
-              items: viewModel.dbAnnouncement.announcements.map((item) { //creates a Iterable to loop list
+          height: 220,
+          width: 500,
+          child: userData.municipality.isNotEmpty ?
+          StreamBuilder(
+            stream: viewModel.getStream(userData.municipality), 
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: const CircularProgressIndicator());
+              }
+          
+              //if empty
+              if (!snapshot.hasData) {
+                return SizedBox(
+                  width: 380.r,
+                  height: 150.r,
+          
+                  child: Center(
+                    child: Text(
+                      languageClass.systemLang["Home"]["NoAnnouncement"], 
+                      style: TextStyle(
+                        fontSize: 18.r
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              
+              
+
+              List<DocumentSnapshot> docs = snapshot.data!.docs;
+              viewModel.sortUrgent(docs);
+
+              if (snapshot.hasData) {
+                if (docs.length > viewModel.previousDocs.length) {
+                  NotificationController().showNotification(title: "ANNOUNCEMENT UPDATE: at ${userData.municipality}"); //Notification
+                }
+                viewModel.previousDocs = docs;
+              }
+          
+              return ExpandableCarousel(
+                options: ExpandableCarouselOptions(
+                  indicatorMargin: 3.r,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 6),
+                  autoPlayAnimationDuration: Duration(seconds: 2, milliseconds: 5),
+                  showIndicator: true,
+                  slideIndicator: CircularSlideIndicator(),
+                  enlargeCenterPage: true,
+                ),
+                items: docs.map<Widget>((DocumentSnapshot document) {
+                  Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
                   return Padding(
                     padding: const EdgeInsets.all(5).r,
                     child: GestureDetector(
-                      onTap: () => showAnnouncement(item),
+                      onTap: () => showAnnouncement(data),
                       child: Container(
                         width: 300.r,
                         height: 200.r,
                         padding: const EdgeInsets.all(8).r,
                         decoration: BoxDecoration(
-                          border: Border.all(color: item.isUrgent! ? Colors.redAccent : Colors.transparent, width: 4),
+                          border: Border.all(color: data["Urgent"] ? Colors.redAccent : Colors.transparent, width: 4),
                           borderRadius: BorderRadius.all(const Radius.circular(9).r),
                           gradient: LinearGradient(
-                            colors: item.isUrgent! ? 
+                            colors: data["Urgent"] ? 
                             [const Color(0xCCFEAE49), const Color(0x80FEC57C), Theme.of(context).colorScheme.surface, ]
                             : [const Color(0xFFADADAD), const Color(0x99F5F5F5), Theme.of(context).colorScheme.surface, ], 
                             begin: Alignment.topCenter,
@@ -135,11 +138,11 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 margin: const EdgeInsets.only(bottom: 8).r,
                                 padding: EdgeInsets.all(8).r,
                                 decoration: BoxDecoration(
-                                  color: item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26,
+                                  color: data["Urgent"] ? Color(0xE6FEAE49) : Colors.black26,
                                   borderRadius: BorderRadius.all(const Radius.circular(5).r)
                                 ),
                                 child: Text(
-                                  item.isUrgent! ? "ANNOUNCEMENT: ${item.title!}" : item.title!,
+                                  data["Urgent"] ? "ANNOUNCEMENT: ${data["Title"]}" : data["Title"],
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -150,13 +153,13 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 ),
                               ),
                             ),
-
+          
                             //date
                             Container(
                               padding: const EdgeInsets.symmetric(vertical: 3).r,
                                   
                               child: Text(
-                                  "Date Posted: ${item.date}",
+                                  "Date Posted: ${data["Date"]}",
                                   style: TextStyle(
                                   fontSize: 12.r,
                                   color: Color(0xFF3D424A),
@@ -164,17 +167,17 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 ),
                               ),
                             ),
-
+          
                             //level
                             Container(
                               width: 90.r,
                               margin: const EdgeInsets.only(bottom: 8).r, //item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26
                               decoration: BoxDecoration(
-                                color: levelColor(item.level!, item.municipality!),
+                                color: levelColor(data["Level"], data["Municipality"]),
                                 borderRadius: BorderRadius.all(const Radius.circular(2).r)
                               ),
                               child: Text(
-                                item.level!,
+                                data["Level"],
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -182,50 +185,36 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 ),
                               ),
                             ),
-
+          
                             
                           
                             Padding(
                               padding: const EdgeInsets.all(9),
                               child: Text(
-                                item.content!,
+                                data["Content"],
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   fontSize: 12.r,
-                                  color: item.isUrgent! ? Theme.of(context).colorScheme.outline:Color(0xFF3D424A)
+                                  color: data["Urgent"]  ? Theme.of(context).colorScheme.outline:Color(0xFF3D424A)
                                 ),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2, 
                               ),
                             ),
-
+          
                             
                           ],
                         ),
                       ),
                     ),
                   );
-    
-                }).toList(), // Convert the list of items into widgets
-              )
-            )
-          
+                }).toList(),
+              );
+            }
+          ) :
+          Center(child: CircularProgressIndicator(),),
         )
-        :
-        //shows if emmpty
-        SizedBox(
-          width: 380.r,
-          height: 150.r,
-
-          child: Center(
-            child: Text(
-              "No Announcements",
-              style: TextStyle(
-                fontSize: 18.r
-              ),
-            ),
-          ),
-        )
+        
       ],
       
     )
@@ -247,7 +236,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
   }
 
 
-  void showAnnouncement(AnnouncementModel item) {
+  void showAnnouncement(Map<String, dynamic> data) {
     showDialog(
       context: context,
       builder: (context) {
@@ -258,7 +247,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
           ),
           backgroundColor: Color(0xFFF2F2F2),
           content: SizedBox(
-            height: item.content!.length + 275.r,
+            height: data["Content"].length + 275.r,
             child: Padding(
               padding: const EdgeInsets.all(5).r,
               child: Column(
@@ -273,12 +262,12 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 padding: EdgeInsets.all(4).r,
                                 margin: const EdgeInsets.only(bottom: 14).r,
                                 decoration: BoxDecoration(
-                                  color: item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26,
+                                  color: data["Urgent"] ? Color(0xE6FEAE49) : Colors.black26,
                                   borderRadius: BorderRadius.all(const Radius.circular(5).r),
-                                  border: Border.all(color: item.isUrgent! ? Colors.redAccent : Colors.transparent, width: 2),
+                                  border: Border.all(color: data["Urgent"] ? Colors.redAccent : Colors.transparent, width: 2),
                                 ),
                                 child: Text(
-                                  item.isUrgent! ? "ANNOUNCEMENT: ${item.title!}" : item.title!,
+                                  data["Urgent"] ? "ANNOUNCEMENT: ${data["Title"]}" : data["Title"],
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -296,11 +285,11 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4).r,
                                 margin: const EdgeInsets.only(bottom: 16).r, //item.isUrgent! ? Color(0xE6FEAE49) : Colors.black26
                                 decoration: BoxDecoration(
-                                  color: levelColor(item.level!, item.municipality!),
+                                  color: levelColor(data["Level"], data["Municipality"]),
                                   borderRadius: BorderRadius.all(const Radius.circular(2).r),
                                 ),
                                 child: Text(
-                                  item.level!,
+                                  data["Level"],
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -315,7 +304,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9).r,
                                   
                                   child: Text(
-                                    "Date: ${item.date}",
+                                    "Date: ${data["Date"]}",
                                     style: TextStyle(
                                       fontSize: 12.r,
                                       color: Color(0xFF3D424A),
@@ -335,7 +324,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                                 borderRadius: BorderRadius.all(const Radius.circular(5).r),
                               ),
                               child: Text(
-                                item.content!,
+                                data["Content"],
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   fontSize: 14.r,
@@ -346,6 +335,7 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
                           ],
                         ),
 
+                  //close button
                   Container(
                     margin: EdgeInsets.only(top: 25).r,
                     child: MaterialButton(

@@ -75,6 +75,7 @@ class ProfileStorage {
   Future addUser(BuildContext context, String oldMuni, String url, String uid, String name, String birthdate, String gender, String barangay, String municipality, String email, String mobileNumber, String type) async {
 
     try {
+      getAnnouncement.dbAnnouncement.clear();
       final user = UserModel(
         uid: uid,
       
@@ -100,6 +101,7 @@ class ProfileStorage {
         );
       logger.i("Done Updating");
       userData.getUser();
+      logger.f("Municipal: ${user.municipality!}");
       getAnnouncement.dbAnnouncement.listenToAnnouncements(user.municipality!);
 
       //remove loading

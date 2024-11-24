@@ -1,6 +1,6 @@
 //Utility Buttons
 import 'package:communihelp_app/ViewModel/News_View_Model/news_view_model.dart';
-import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
+import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,9 +25,9 @@ class _ResponderUtilityButtonsState extends State<ResponderUtilityButtons> {
   @override
   Widget build(BuildContext context) {
     //final getService = Provider.of<GetUserData>(context);
-    final responderSettings = ResponderSettingViewModel();
+    final responderSettings = UserSettingViewModel();
     responderSettings.loadSettings(curUser!.uid);
-    var languageClass = ResLanguage(responderSettings.userLanguage);
+    var languageClass = Language(responderSettings.userLanguage);
 
     final newsViewModel = Provider.of<NewsViewModel>(context);
 
@@ -71,7 +71,7 @@ class _ResponderUtilityButtonsState extends State<ResponderUtilityButtons> {
               
                     Center(
                       child: Text(
-                      languageClass.systemLang["Home"]["SearchEvac"],
+                      languageClass.systemLang["Home"]["MarkEvac"],
                           style: TextStyle(
                           fontSize: 12.r,
                           fontWeight: FontWeight.bold,
@@ -201,7 +201,7 @@ class _ResponderUtilityButtonsState extends State<ResponderUtilityButtons> {
       
                 Center(
                   child: Text(
-                    languageClass.systemLang["Home"]["ReportLabel"],
+                    languageClass.systemLang["Home"]["ReportResp"],
                         style: TextStyle(
                         fontSize: 16.r,
                         fontWeight: FontWeight.bold,
@@ -231,7 +231,7 @@ class _ResponderUtilityButtonsState extends State<ResponderUtilityButtons> {
                       ),
                 
                       Text(
-                      languageClass.systemLang["Home"]["Report"],
+                      languageClass.systemLang["Home"]["ReportRespButton"],
                           style: TextStyle(
                           fontSize: 11.r,
                           fontWeight: FontWeight.bold,

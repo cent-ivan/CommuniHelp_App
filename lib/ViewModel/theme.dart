@@ -18,6 +18,6 @@ ThemeData darktMode = ThemeData(
     primary: Color(0xFF3D424A), 
     secondary: Color(0xFF31373C),
     outline: Color(0xFFEDEDED), //for texts and icons
-    surfaceContainer: Color(0xFFADADAD)//buttons
+    surfaceContainer: Color(0xFFF2F2F2)//buttons
   )
 );

@@ -4,10 +4,26 @@ import 'package:communihelp_app/Databases/HiveServices/hive_db_weather.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/search_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/about_app_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Home_Page/share_app_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/accident/accident_pages.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/accident/accident_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/fire/fire_pages.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/fire/fire_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/manmade_disaster_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/pollution/pollution_pages.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/pollution/pollution_view.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/structure/structure_pages.dart';
+import 'package:communihelp_app/View/Infographics/Manmade_Disaster/structure/structure_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/earthquake/earthquake_pages.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/earthquake/earthquake_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/flood/flood_pages.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/flood/flood_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/landslide/landslide_pages.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/landslide/landslide_view.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/typhoon/typhoon_pages.dart';
+import 'package:communihelp_app/View/Infographics/Natural_Disaster/typhoon/typhoon_view.dart';
 import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/forgot_pass_view.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
-import 'package:communihelp_app/ViewModel/Settings_View_Models/responder_setting_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Login_Responder/login_responder_view.dart';
@@ -20,8 +36,6 @@ import 'package:communihelp_app/Model/Emergency_kit_model/emergency_kit_model.da
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/dashboard_components/announcement_make.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_email.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/change_password.dart';
-import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/Manmade_Info_Components/View_Page/manmade_info_page_view.dart';
-import 'package:communihelp_app/View/Infographics/Natural_Disaster/Natural_Info_Components/View_Page/info_page_view.dart';
 import 'package:communihelp_app/View/base_controller.dart';
 import 'package:communihelp_app/View/settings_view.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/community_view_model.dart';
@@ -39,7 +53,6 @@ import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/login_vi
 import 'package:communihelp_app/View/Login_Registration_Page/Registration_Page/registration_view.dart';
 import 'package:communihelp_app/View/Utility_Pages/Emergency_Kit/emergency_kit_view.dart';
 import 'package:communihelp_app/View/Utility_Pages/Evacuation_Finder/evacaution_finder_view.dart';
-import 'package:communihelp_app/View/Infographics/Man_Made_Disaster/manmade_disaster_view.dart';
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/natural_disaster_view.dart';
 import 'package:communihelp_app/View/Utility_Pages/News_Feed/news_view.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Profile_Page/profile_view.dart';
@@ -113,8 +126,17 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => HiveDbWeather())),
         ChangeNotifierProvider(create: ((context) => ContactsViewModel())),
         ChangeNotifierProvider(create: ((context) => UserSettingViewModel())),
-        ChangeNotifierProvider(create: ((context) => ResponderSettingViewModel())),
         ChangeNotifierProvider(create: ((context) => EvacuationFinderViewModel())),
+        //pages
+        ChangeNotifierProvider(create: ((context) => TyphoonPages())),
+        ChangeNotifierProvider(create: ((context) => LandslidePages())),
+        ChangeNotifierProvider(create: ((context) => FloodPages())),
+        ChangeNotifierProvider(create: ((context) => FloodPages())),
+        ChangeNotifierProvider(create: ((context) => EarthquakePages())),
+        ChangeNotifierProvider(create: ((context) => FirePages())),
+        ChangeNotifierProvider(create: ((context) => AccidentPages())),
+        ChangeNotifierProvider(create: ((context) => PollutionPages())),
+        ChangeNotifierProvider(create: ((context) => StructurePages())),
 
         //View Model for Firestore
         ChangeNotifierProvider(create: ((context) => RegistrationViewModel())),
@@ -139,7 +161,6 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userSettings = context.watch<UserSettingViewModel>();
-    final responderSettings = context.watch<ResponderSettingViewModel>();
     final director =  Provider.of<Director>(context);
     return  ScreenUtilInit(
       
@@ -178,8 +199,6 @@ class MainApp extends StatelessWidget {
           '/evacuationfinder': (context) => const EvacautionFinderView(),
           '/profile' : (context) => const ProfileView(),
           '/emergency': (context) => const EmergencyView(),
-          '/naturalinfo': (context) => const NaturalDisasterView(),
-          '/manmadeinfo': (context) => const ManMadeDisasterView(),
           '/newsfeed': (context) => const NewsView(),
           '/emergencykit': (context) => const EmergencyKitView(),
           '/weatherupdate': (context) => const WeatherView(),
@@ -195,6 +214,20 @@ class MainApp extends StatelessWidget {
           '/aboutapp' : (context) => const AboutAppView(),
           '/shareapp' : (context) => const ShareAppView(),
           '/forgotpassword' : (context) => const ForgotPassView(),
+
+          //natural infographics
+          '/naturalinfo': (context) => const NaturalDisasterView(),
+          '/typhhon' : (context) => const TyphoonView(),
+          '/flood' : (context) => const FloodView(),
+          '/landslide' : (context) => const LandslideView(),
+          '/earthquake' : (context) => const EarthquakeView(),
+
+          //manmade Infographics
+          '/manmadeinfo': (context) => const ManmadeDisasterView(),
+          '/fire' : (context) => const FireView(),
+          '/accident' : (context) => const AccidentView(),
+          '/structure' : (context) => const StructureView(),
+          '/pollution' : (context) => const PollutionView(),
           
 
           //Responder routes
@@ -205,12 +238,10 @@ class MainApp extends StatelessWidget {
           '/manageannouncement': (context) => const ManageAnnouncement(),
           '/viewreport': (context) => const SeeReportView(),
 
-          //Infograhics routes
-          '/viewinfopage': (context) => const InfoPageView(),
-          '/viewmanmadeinfopage': (context) => const ManmadeInfoPageView()
+
         },
-        theme: ! director.isResponder ? userSettings.themeData : responderSettings.themeData,
-        darkTheme: ! director.isResponder ? userSettings.darktTheme : responderSettings.darktTheme,
+        theme: userSettings.themeData,
+        darkTheme: userSettings.darktTheme
       ),
     );
   }
