@@ -13,7 +13,7 @@ class FloodPages extends ChangeNotifier {
         floodList = viewModel.assetFilipinoPaths[viewModel.disasterPath]?.sublist(1);
         break;
       case "AKL":
-        floodList = viewModel.assetFilipinoPaths[viewModel.disasterPath]?.sublist(1);
+        floodList = viewModel.assetAklanonPaths[viewModel.disasterPath]?.sublist(1);
         break;
       default:
     }

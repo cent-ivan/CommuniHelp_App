@@ -97,12 +97,16 @@ flutter:
     - assets/images/infographics/button_images/
     - assets/images/infographics/natural_infographics/typhoon/typhoon_En/
     - assets/images/infographics/natural_infographics/typhoon/typhoon_Fil/
+    - assets/images/infographics/natural_infographics/typhoon/typhoon_Akl/
     - assets/images/infographics/natural_infographics/flood/flood_En/
     - assets/images/infographics/natural_infographics/flood/flood_Fil/
+    - assets/images/infographics/natural_infographics/flood/flood_Akl/
     - assets/images/infographics/natural_infographics/landslide/landslide_En/
     - assets/images/infographics/natural_infographics/landslide/landslide_Fil/
+    - assets/images/infographics/natural_infographics/landslide/landslide_Akl/
     - assets/images/infographics/natural_infographics/earthquake/earthquake_En/
     - assets/images/infographics/natural_infographics/earthquake/earthquake_Fil/
+    - assets/images/infographics/natural_infographics/earthquake/earthquake_Akl/
     
     - assets/images/infographics/manmade_infographics/burn/burn_En/
     - assets/images/infographics/manmade_infographics/burn/burn_Fil/

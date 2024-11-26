@@ -13,7 +13,7 @@ class TyphoonPages extends ChangeNotifier {
         typhoonList = viewModel.assetFilipinoPaths[viewModel.disasterPath]?.sublist(1);
         break;
       case "AKL":
-        typhoonList = viewModel.assetFilipinoPaths[viewModel.disasterPath]?.sublist(1);
+        typhoonList = viewModel.assetAklanonPaths[viewModel.disasterPath]?.sublist(1);
         break;
       default:
     }
