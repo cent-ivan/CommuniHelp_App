@@ -34,7 +34,7 @@ class _DashboardViewState extends State<DashboardView> {
             children: <Widget>[
     
               //ANNOUNCEMENT SECTION
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: const AnnouncementSection()
               ),

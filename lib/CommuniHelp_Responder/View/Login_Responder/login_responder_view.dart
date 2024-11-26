@@ -20,7 +20,7 @@ class _LoginResponderViewState extends State<LoginResponderView> {
   //Dialogs
   final GlobalDialogUtil _messageDialog = GlobalDialogUtil();
 
-  double _loginHeight = 350.r;
+  final double _loginHeight = 350.r;
 
   bool _isObscure =  true;
 
