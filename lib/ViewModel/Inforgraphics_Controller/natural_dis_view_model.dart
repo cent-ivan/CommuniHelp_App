@@ -86,6 +86,8 @@ class NaturalDisasterViewModel extends ChangeNotifier{
     ]
   };
 
+  final  Map<String, List<String>> assetAklanonPaths = {};
+
   void getPath(String disaster, String language) {
     userLanguage = language;
     if (language.toLowerCase() == "en" ) {

@@ -29,7 +29,7 @@ class _ManmadeDisasterViewState extends State<ManmadeDisasterView> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Color(0x80FEAE49),
         elevation: 1,
         title: Text(
              languageClass.systemLang["ManmadeInfo"]["Title"],
@@ -52,7 +52,7 @@ class _ManmadeDisasterViewState extends State<ManmadeDisasterView> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/background/weather_back.png'),
+            image: AssetImage('assets/images/background/manmade.png'),
             fit: BoxFit.cover
           )
         ),
@@ -61,8 +61,8 @@ class _ManmadeDisasterViewState extends State<ManmadeDisasterView> {
             children: [
               //Fire
               Positioned(
-                top: 65,
-                left: 75,
+                bottom: 220,
+                left: 95,
                 child: Column(
                   children: [
                     _circularButton(viewModel, context, settings.userLanguage,  Color(0xFFFEAE49), "Burn", '/fire'),
@@ -87,8 +87,8 @@ class _ManmadeDisasterViewState extends State<ManmadeDisasterView> {
 
               //Accident
               Positioned(
-                top: 90,
-                right: 80,
+                top: 180,
+                right: 10,
                 child: Column(
                   children: [
                     _circularButton(viewModel, context, settings.userLanguage,Colors.white, "Vehicular", '/accident'),
@@ -113,8 +113,8 @@ class _ManmadeDisasterViewState extends State<ManmadeDisasterView> {
 
               //Destroyed Structural
               Positioned(
-                bottom: 200,
-                right: 100,
+                top: 180,
+                left: 40,
                 child: Column(
                   children: [
                     _circularButton(viewModel, context, settings.userLanguage,Color(0xFFCC3636), "Structural", '/structure'),
@@ -140,7 +140,7 @@ class _ManmadeDisasterViewState extends State<ManmadeDisasterView> {
               //Pollution
               Positioned(
                 bottom: 65,
-                left: 75,
+                right: 45,
                 child: Column(
                   children: [
                     _circularButton(viewModel, context, settings.userLanguage, Color(0xFF01579B), "Pollution", '/pollution'),

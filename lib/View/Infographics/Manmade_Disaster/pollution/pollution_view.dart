@@ -100,14 +100,18 @@ class _PollutionViewState extends State<PollutionView> {
                     borderRadius: BorderRadius.all(Radius.circular(8.r))
                   ),
                   onPressed: () {
+                    _currentPage != pages.getList(settings.userLanguage.toUpperCase(), viewModel).length - 1 ?
                     _controller.animateToPage( //animates the switching of page
                       _currentPage += 1, 
                       duration: Duration(milliseconds: 600), 
                       curve: Curves.easeIn
-                    );
+                    ) : 
+                    Navigator.pop(context);
                   },
                   child: Text(
-                    "Next",
+                    _currentPage != pages.getList(settings.userLanguage.toUpperCase(), viewModel).length -1  ?
+                    languageClass.systemLang["ManmadeInfo"]["Next"]
+                    : languageClass.systemLang["ManmadeInfo"]["Finish"],
                     style: TextStyle(
                       color: Color(0xFF3D424A),
                       fontWeight: FontWeight.bold

@@ -128,7 +128,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                 polylineId: PolylineId('route_polyline'),
                 startCap: Cap.roundCap,
                 endCap: Cap.roundCap,
-                color: Color(0xA6FEAE49),
+                color: Color(0xBFFEAE49),
                 width: 6,
                 points: viewModel.direct!.polylinePoints.map(
                   (e) => LatLng(e.latitude, e.longitude)).toList(),
@@ -140,10 +140,10 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           //select mode
           if (!viewModel.pinMode)
           Positioned(
-            bottom: 90.r,
-            left: 10.r,
+            top:  10.r, 
+            right: 10.r,
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 8.r, horizontal: 8.r),
+              padding: EdgeInsets.symmetric(vertical: 2.r, horizontal: 4.r),
               decoration: BoxDecoration(
                 color: Color(0xCCF2F2F2), //button
                 borderRadius: BorderRadius.circular(4).r
@@ -154,7 +154,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                     'Mode: ',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 12.r,
+                      fontSize: 8.r,
                       
                     ),
                   ),
@@ -174,7 +174,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                             'Walking',
                             style: TextStyle(
                             color: Colors.black,
-                            fontSize: 12.r,
+                            fontSize: 8.r,
                             fontWeight: FontWeight.bold
                           ),
                         ),
@@ -185,7 +185,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                             'Driving',
                             style: TextStyle(
                             color: Colors.black,
-                            fontSize: 12.r,
+                            fontSize: 8.r,
                             fontWeight: FontWeight.bold
                           ),
                         ),
@@ -196,7 +196,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                             'Bicycling',
                             style: TextStyle(
                             color: Colors.black,
-                            fontSize: 12.r,
+                            fontSize: 8.r,
                             fontWeight: FontWeight.bold
                           ),
                         ),
@@ -235,7 +235,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           if (viewModel.direct != null) 
           //shows text info about distance and duration when showing a navigation polyline
           Positioned(
-            top:  20.r,
+            top:  60.r,
             right: 10.r,
             child: Container(
               height: 35.r,
@@ -290,16 +290,16 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           //evac picture
           if (viewModel.targetEvac != null && !viewModel.pinMode)
           Positioned(
-            bottom: 155.r,
+            bottom: 85.r,
             left: 10.r,
             child: viewModel.imageurl! != "" ? GestureDetector(
               onTap: () {
                 showImage(context, viewModel.targetEvac!, viewModel);
               },
               child: Container(
-                width: 125.r,
-                height: 125.r,
-                padding: EdgeInsets.all(8).r,
+                width: 95.r,
+                height: 95.r,
+                padding: EdgeInsets.all(4).r,
                 decoration: BoxDecoration(
                   color: Color(0xFFF2F2F2),
                   borderRadius: BorderRadius.circular(4).r
@@ -338,7 +338,26 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             ),
           ),
           
-          
+          //show direction text
+          if (!viewModel.pinMode && viewModel.direct != null)
+          Positioned(
+            bottom: 140.r,
+            right: 15.r,
+            child: GestureDetector(
+              onTap: () {
+                showDirections(context, viewModel);
+              },
+              child: Container(
+                width: 45.r,
+                height: 45.r,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8).r,
+                  color: Color(0xFFEFEFEF)
+                ),
+                child: Icon(Icons.directions),
+              ),
+            )
+          ),
 
           if (!viewModel.pinMode)
           //DROPDWON
@@ -357,7 +376,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                   Text(
                     "Evacuation Center List",
                     style: TextStyle(
-                        fontSize: 12.r,
+                        fontSize: 10.r,
                         fontWeight: FontWeight.bold,
                         color: Colors.black
                     ),
@@ -387,7 +406,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                                   data[key]["name"],
                                   style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 12.r
+                                  fontSize: 10.r
                                 ),
                               ),
                             )
@@ -446,7 +465,8 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
             right: 15.r,
             child: SpeedDial(
               elevation : 0,
-              backgroundColor: Color(0xFF57BEE6),
+              backgroundColor: Color(0xFFEFEFEF),
+              foregroundColor: Color(0xFF3D424A),
               overlayColor: Colors.black26,
               animatedIcon: AnimatedIcons.list_view,
               children: [
@@ -493,10 +513,14 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                   labelBackgroundColor: Colors.greenAccent,
                   label: "NEW Evacuation Pin",
                   onTap: () {
-                    viewModel.pinMode = true;
+                    setState(() {
+                      viewModel.pinMode = true;
+                    });
+                    
                     viewModel.origin = null;
                     viewModel.destination = null;
                     viewModel.direct = null;
+                    logger.e(viewModel.pinMode);
                   }
                 ),
       
@@ -512,11 +536,11 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
         child: FloatingActionButton(
           heroTag: 'mapFocusHero',
           elevation: 0,
-          backgroundColor: Color(0xFF2BADDF),
+          backgroundColor: Color(0xFFEFEFEF),
           foregroundColor: Color(0xFFCC0000),
           onPressed: () => googleMapController?.animateCamera(
             viewModel.direct != null ? 
-            CameraUpdate.newLatLngBounds(viewModel.direct!.bounds, 100.0) :
+            CameraUpdate.newLatLngBounds(viewModel.direct!.bounds, 125.0) :
             CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!), zoom: 12.5, tilt: 30.0),) //move to initial position,
           ),
           child: viewModel.direct == null? Icon(Icons.pin_drop)  : Icon(Icons.center_focus_strong),
@@ -529,7 +553,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   
   //METHODS--------------------------------------------------------
   //adds blue and gree pin in the map
-  void addMarker(LatLng pos, EvacuationFinderViewModel viewModel) async {
+  void addMarker(LatLng pos, EvacuationFinderViewModel viewModel, ) async {
     //add maker of ORIGIN, if origin is not set OR both origin and destination are set
     if (viewModel.origin == null || (viewModel.origin != null && viewModel.destination != null) ) {
       //assign variable at _origin
@@ -587,6 +611,9 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   void getCurrentLocation() async {
     Location location = Location();
     try {
+      await location.changeSettings(
+        distanceFilter: 5
+      );
       await location.getLocation().then((location) {
       if (mounted) {
           setState(() {
@@ -844,6 +871,61 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
       }
     );
   }
+
+
+  void showDirections(BuildContext context, EvacuationFinderViewModel viewModel) {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return SimpleDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r),)
+          ),
+          title: Text("Directions"),
+          titleTextStyle: TextStyle(
+            fontSize: 12.r,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF3D424A)
+          ),
+          children: [
+            Container(
+              height: 350,
+              width: 250,
+              padding: EdgeInsets.all(8),
+              child: ListView.builder(
+                shrinkWrap: true,  
+                itemCount: viewModel.direct!.textDirections.length, 
+                itemBuilder: (context, index) {
+                  return SingleChildScrollView(
+                    child: Container(
+                      height: 60,
+                      padding: EdgeInsets.all(4).r,
+                      margin: EdgeInsets.only(bottom: 8),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFEFEFEF),
+                        borderRadius: BorderRadius.circular(8).r
+                      ),
+                      child: Center(
+                        child: Text(
+                          viewModel.direct!.textDirections[index],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFF3D424A),
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      }
+    );
+  }
 }
 
   
@@ -859,7 +941,7 @@ class MapAppBar extends StatelessWidget implements PreferredSizeWidget{
     final viewModel = Provider.of<EvacuationFinderViewModel>(context);
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Color(0xD9EFEFEF),
       elevation: 1,
       title: Text(
           "Evacuation Map",
@@ -874,7 +956,7 @@ class MapAppBar extends StatelessWidget implements PreferredSizeWidget{
         icon: const Icon(Icons.arrow_back_ios_new),
         iconSize: 20,
         onPressed: () {
-          viewModel.pinMode = false;
+          viewModel.pinMode = false; 
           viewModel.placedPin = null;
           viewModel.clearMyPins();
           viewModel.mode = "walking";

@@ -23,6 +23,7 @@ import 'package:communihelp_app/View/Infographics/Natural_Disaster/typhoon/typho
 import 'package:communihelp_app/View/Infographics/Natural_Disaster/typhoon/typhoon_view.dart';
 import 'package:communihelp_app/View/Login_Registration_Page/Login_Page/forgot_pass_view.dart';
 import 'package:communihelp_app/View/Utility_Pages/Evacuation_Finder/add_marker_widget.dart';
+import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/direction_repo.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/contacts_view_model.dart';
 import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view_model.dart';
@@ -128,6 +129,7 @@ void main() async{
         ChangeNotifierProvider(create: ((context) => ContactsViewModel())),
         ChangeNotifierProvider(create: ((context) => UserSettingViewModel())),
         ChangeNotifierProvider(create: ((context) => EvacuationFinderViewModel())),
+        ChangeNotifierProvider(create: ((context) => DirectionRepo())),
         //pages
         ChangeNotifierProvider(create: ((context) => TyphoonPages())),
         ChangeNotifierProvider(create: ((context) => LandslidePages())),

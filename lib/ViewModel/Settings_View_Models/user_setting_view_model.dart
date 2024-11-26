@@ -141,7 +141,9 @@ class Language {
           "LandDialog" : "This infographic will help you learn how to prepare for a landslide to keep yourself and your family safe. It also explains what to do during a landslide to avoid danger and what steps to take after it to stay safe and recover.",
           "EarthButton" : "Earthquake",
           "EarthDialog" : "This infographic will guide you on how to prepare for an earthquake to keep yourself and your family safe. It also explains what to do during the earthquake to stay protected and what steps to take after it to stay safe and recover.",
-          "StartButton" : "Read"
+          "StartButton" : "Read",
+          "Next" : "Next",
+          "Finish": "Finish"
         },
         "ManmadeInfo" : {
         "Title" : "Man-made Disaster",
@@ -155,7 +157,9 @@ class Language {
         "FailureDialog" : "This infographic will guide you on how to prepare for structural failure, such as the collapse of buildings. It will explain the warning signs you should watch out for to stay safe before a failure happens. During a structural failure, it will show you what to do to protect yourself and others. After the failure, it will provide important steps to take for your safety, as well as how to assist in recovery and avoid further damage.",
         "Pollution" : "Water Pollution",
         "PollutionDialog" : "This infographic will help you understand how water pollution happens and what you can do to help prevent it. It will also show you the effects of water pollution on the environment and health. Additionally, it will guide you on the steps you can take to protect water sources and reduce pollution for a cleaner, safer environment.",
-        "StartButton" : "Read"
+        "StartButton" : "Read",
+        "Next" : "Next",
+        "Finish": "Finish"
       },
         "Contact" : {
           "Label" : "My Contact List",
@@ -258,7 +262,9 @@ class Language {
         "LandDialog" : "Ang infographic na ito ay tutulong sa iyo na matutunan kung paano maghanda para sa pagguho ng lupa upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may pagguho ng lupa upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos nito upang manatiling ligtas at maka-recover.",
         "EarthButton" : "Lindol",
         "EarthDialog" : "Ang infographic na ito ay gagabay sa iyo kung paano maghanda para sa lindol upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may lindol upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos ng baha upang manatiling ligtas at kung ano pa ang dapat gawin.",
-        "StartButton" : "Basahin"
+        "StartButton" : "Basahin",
+        "Next" : "Sunod",
+        "Finish": "Tapos"
       },
       "ManmadeInfo" : {
         "Title" : "Mga sakunang likha ng tao",
@@ -273,7 +279,8 @@ class Language {
         "Pollution" : "Polusyon sa tubig",
         "PollutionDialog" : "Ang infographic na ito ay tutulong sa iyo na maunawaan kung paano nangyayari ang polusyon sa tubig at kung ano ang maaari mong gawin upang makatulong na maiwasan ito. Ipapakita rin nito ang mga epekto ng polusyon sa tubig sa kalikasan at kalusugan. Karagdagan pa, gagabayan ka nito sa mga hakbang na maaari mong gawin upang protektahan ang mga pinagkukunan ng tubig at mabawasan ang polusyon para sa mas malinis at mas ligtas na kapaligiran.",
         "StartButton" : "Basahin",
-        
+        "Next" : "Sunod",
+        "Finish": "Tapos"
       },
       "Contact" : {
           "Label" : "Aking Kontaks",
@@ -366,7 +373,9 @@ class Language {
           "LandDialog" : "Ang infographic na ito ay tutulong sa iyo na matutunan kung paano maghanda para sa pagguho ng lupa upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may pagguho ng lupa upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos nito upang manatiling ligtas at maka-recover.",
           "EarthButton" : "Linog",
           "EarthDialog" : "Ang infographic na ito ay gagabay sa iyo kung paano maghanda para sa lindol upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may lindol upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos ng baha upang manatiling ligtas at kung ano pa ang dapat gawin.",
-          "StartButton" : "Basahon"
+          "StartButton" : "Basahon",
+          "Next" : "Sunod",
+          "Finish": "Tapos"
         },
         "ManmadeInfo" : {
         "Title" : "Mga sakuna nga ubra it tawo",
@@ -381,6 +390,8 @@ class Language {
         "Pollution" : "Polusyon sa tubi",
         "PollutionDialog" : "Ang infographic na ito ay tutulong sa iyo na maunawaan kung paano nangyayari ang polusyon sa tubig at kung ano ang maaari mong gawin upang makatulong na maiwasan ito. Ipapakita rin nito ang mga epekto ng polusyon sa tubig sa kalikasan at kalusugan. Karagdagan pa, gagabayan ka nito sa mga hakbang na maaari mong gawin upang protektahan ang mga pinagkukunan ng tubig at mabawasan ang polusyon para sa mas malinis at mas ligtas na kapaligiran.",
         "StartButton" : "Basahon",
+        "Next" : "Sunod",
+        "Finish": "Tapos"
       },
         "MakeAnnounce" : {
           "AnnounceTitle" : "Maghimo it Anunsyo",

@@ -56,81 +56,89 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //sender details
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [                
-                          
-                          Column(      
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    languageClass.systemLang["Report"]["reportName"],
-                                    style: TextStyle(
-                                      fontSize: 20.r,
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context).colorScheme.outline,
-                                    ),
-                                  ),
-                      
-                                  SizedBox(width: 8.r),
-                      
-                                  //Title text field
-                                  SizedBox(
-                                    height: 50.r,
-                                    width: 120.r,
-                                    child: TextFormField(
-                                      controller: viewModel.reportTitleController,
+                  Container(
+                    decoration: BoxDecoration(
+                      color:  Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(8).r,
+                      border: Border.all(color: Theme.of(context).colorScheme.outline)
+                    ),
+                    padding: const EdgeInsets.all(8.0).r,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [                
+                            
+                            Column(      
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      languageClass.systemLang["Report"]["reportName"],
                                       style: TextStyle(
-                                        color: Color(0xFFFEAE49),
+                                        fontSize: 20.r,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16.r
-                                      ),
-                                      decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(4).r,
-                                          borderSide: BorderSide(width: 2.r, color: Theme.of(context).colorScheme.outline)
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8).r,
-                                          borderSide: BorderSide(width: 1.5.r, color: Theme.of(context).colorScheme.outline)
-                                        )
+                                        color: Theme.of(context).colorScheme.outline,
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                      
-                            ],
-                          ),
+                        
+                                    SizedBox(width: 8.r),
+                        
+                                    //Title text field
+                                    SizedBox(
+                                      height: 50.r,
+                                      width: 120.r,
+                                      child: TextFormField(
+                                        controller: viewModel.reportTitleController,
+                                        style: TextStyle(
+                                          color: Color(0xFFFEAE49),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.r
+                                        ),
+                                        decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(4).r,
+                                            borderSide: BorderSide(width: 2.r, color: Theme.of(context).colorScheme.outline)
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(8).r,
+                                            borderSide: BorderSide(width: 1.5.r, color: Theme.of(context).colorScheme.outline)
+                                          )
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                        
+                              ],
+                            ),
+                                    
+                          ],
+                        ),
                                   
-                        ],
-                      ),
-              
-                      //Municipality
-                      Text(
-                        "Nabas",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.outline,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.r,
-                          letterSpacing: 1.5.r
+                        //Municipality
+                        Text(
+                          "Nabas",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.outline,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.r,
+                            letterSpacing: 1.5.r
+                          ),
                         ),
-                      ),
-              
-                      //Date
-                      Text(
-                        "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.outline,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.r,
-                          letterSpacing: 2
+                                  
+                        //Date
+                        Text(
+                          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.outline,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.r,
+                            letterSpacing: 2
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),                
               
                   SizedBox(height: 16.r,),
