@@ -156,7 +156,23 @@ class _NewsListViewState extends State<NewsListView> {
                               child: Image.network(article['image_url'], 
                                 width: 75.r,
                                 height: 75.r, 
-                                fit: BoxFit.cover
+                                fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                  // Display a placeholder or fallback widget
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.broken_image, size: 50, color: Colors.grey),
+                                        Text(
+                                          'Image failed to load',
+                                          style: TextStyle(color: Colors.grey, fontSize: 8),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
                               )
                             )
                             : Container(margin: EdgeInsets.only(right: 40.r), child: Center(child: const Icon(Icons.image_not_supported , size: 50,))),
@@ -233,7 +249,23 @@ class _NewsListViewState extends State<NewsListView> {
                         child: Image.network(article['image_url'], 
                           width: 235.r,
                           height: 165.r, 
-                          fit: BoxFit.cover
+                          fit: BoxFit.cover,
+                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                  // Display a placeholder or fallback widget
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.broken_image, size: 50, color: Colors.grey),
+                                        Text(
+                                          'Image failed to load',
+                                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
                         )
                     ),
                   )

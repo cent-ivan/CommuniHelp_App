@@ -26,6 +26,7 @@ class EvacuationFinderViewModel extends ChangeNotifier{
   String? initialValue;
   String? targetEvac;
   String mode = "walking";
+
   
   DirectionsModel? direct;
 

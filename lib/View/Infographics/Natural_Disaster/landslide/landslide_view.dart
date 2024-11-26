@@ -26,7 +26,7 @@ class _LandslideViewState extends State<LandslideView> {
     var languageClass = Language(settings.userLanguage);
 
     final viewModel = Provider.of<NaturalDisasterViewModel>(context);
-    final landslidePages = Provider.of<LandslidePages>(context);
+    final pages = Provider.of<LandslidePages>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -58,7 +58,7 @@ class _LandslideViewState extends State<LandslideView> {
           });
         },
 
-        children: landslidePages.getList(settings.userLanguage.toUpperCase(), viewModel).map((infoPath) {
+        children: pages.getList(settings.userLanguage.toUpperCase(), viewModel).map((infoPath) {
           return SingleChildScrollView(
             child: InteractiveViewer(
                   //for zoom
@@ -101,14 +101,18 @@ class _LandslideViewState extends State<LandslideView> {
                     borderRadius: BorderRadius.all(Radius.circular(8.r))
                   ),
                   onPressed: () {
+                    _currentPage != pages.getList(settings.userLanguage.toUpperCase(), viewModel).length - 1 ?
                     _controller.animateToPage( //animates the switching of page
                       _currentPage += 1, 
                       duration: Duration(milliseconds: 600), 
                       curve: Curves.easeIn
-                    );
+                    ) : 
+                    Navigator.pop(context);
                   },
                   child: Text(
-                    "Next",
+                    _currentPage != pages.getList(settings.userLanguage.toUpperCase(), viewModel).length -1  ?
+                    languageClass.systemLang["NaturalInfo"]["Next"]
+                    : languageClass.systemLang["NaturalInfo"]["Finish"],
                     style: TextStyle(
                       color: Color(0xFF3D424A),
                       fontWeight: FontWeight.bold

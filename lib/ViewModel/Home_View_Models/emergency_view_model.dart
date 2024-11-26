@@ -18,6 +18,8 @@ class EmergencyViewModel extends ChangeNotifier{
   final getStoredCollection = EmergencyContactLocalDatabase();
   bool isNew = true;
 
+  int loadTries = 2;
+
 
   String municipalityName = "No data";
 
@@ -106,22 +108,39 @@ class EmergencyViewModel extends ChangeNotifier{
   Future loadMunicipality(BuildContext context) async {
     final userData = Provider.of<GetUserData>(context, listen: false);
     await userData.getUser();
-    municipalityName = userData.municipality;
-    if (getCollection.queryContacts.isEmpty){
-      getCollection.getLDRRMOContacts(municipalityName);
-      await Future.delayed(Duration(seconds: 3, milliseconds: 500));
-      getCollection.getHostpitalContacts(municipalityName);
-      await Future.delayed(Duration(seconds: 2, milliseconds: 300));
-      getCollection.getBFPContacts(municipalityName);
-      getCollection.getCoastContacts(municipalityName);
-      await Future.delayed(Duration(seconds: 2, milliseconds: 500));
-      getStoredCollection.loadData();
-      filterContact();
-      getCollection.addToLocal(); //adds the newly get contacts from firestore to Hive db
+    try {
+      municipalityName = userData.municipality;
+      if (getCollection.queryContacts.isEmpty){
+        getCollection.getLDRRMOContacts(municipalityName);
+        await Future.delayed(Duration(seconds: 3, milliseconds: 500));
+        getCollection.getHostpitalContacts(municipalityName);
+        await Future.delayed(Duration(seconds: 2, milliseconds: 300));
+        getCollection.getBFPContacts(municipalityName);
+        getCollection.getCoastContacts(municipalityName);
+        await Future.delayed(Duration(seconds: 2, milliseconds: 500));
+        getStoredCollection.loadData();
+        filterContact();
+        getCollection.addToLocal(); //adds the newly get contacts from firestore to Hive db
+      }
+      else {
+        logger.d("Exists..");
+      }
     }
-    else {
-      logger.d("Exists..");
+    catch (e) {
+      logger.e("Try Again.");
+      if (loadTries != 0) {
+        if (context.mounted) {
+          loadMunicipality(context);
+          loadTries -= 1;
+          notifyListeners();
+        }
+        else {
+          logger.e("Nope");
+        }
+        
+      }
     }
+    
 
     notifyListeners();
   }
