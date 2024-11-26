@@ -13,7 +13,7 @@ class LandslidePages extends ChangeNotifier {
         landslideList = viewModel.assetFilipinoPaths[viewModel.disasterPath]?.sublist(1);
         break;
       case "AKL":
-        landslideList = viewModel.assetFilipinoPaths[viewModel.disasterPath]?.sublist(1);
+        landslideList = viewModel.assetAklanonPaths[viewModel.disasterPath]?.sublist(1);
         break;
       default:
     }

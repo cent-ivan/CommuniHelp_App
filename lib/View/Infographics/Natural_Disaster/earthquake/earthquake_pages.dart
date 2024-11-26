@@ -13,7 +13,7 @@ class EarthquakePages extends ChangeNotifier {
         earthquakeList = viewModel.assetFilipinoPaths[viewModel.disasterPath]?.sublist(1);
         break;
       case "AKL":
-        earthquakeList = viewModel.assetFilipinoPaths[viewModel.disasterPath]?.sublist(1);
+        earthquakeList = viewModel.assetAklanonPaths[viewModel.disasterPath]?.sublist(1);
         break;
       default:
     }

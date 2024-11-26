@@ -86,7 +86,43 @@ class NaturalDisasterViewModel extends ChangeNotifier{
     ]
   };
 
-  final  Map<String, List<String>> assetAklanonPaths = {};
+  final  Map<String, List<String>> assetAklanonPaths = {
+    "TYPHOON" : [
+      //Aklanon typhoon
+      'assets/images/infographics/natural_infographics/typhoon/typhoon_Akl/Bagyo1_cover_Akl.png',
+      'assets/images/infographics/natural_infographics/typhoon/typhoon_Akl/Bagyo1.png',
+      'assets/images/infographics/natural_infographics/typhoon/typhoon_Akl/Bagyo2.png',
+      'assets/images/infographics/natural_infographics/typhoon/typhoon_Akl/Bagyo3.png',
+      'assets/images/infographics/natural_infographics/typhoon/typhoon_Akl/Bagyo4.png',
+      'assets/images/infographics/natural_infographics/typhoon/typhoon_Akl/Bagyo5.png',
+    ],
+    "FLOOD" : [
+      //Aklanon flood
+      'assets/images/infographics/natural_infographics/flood/flood_Akl/Baha1_cover_Akl.png',
+      'assets/images/infographics/natural_infographics/flood/flood_Akl/Baha1.png',
+      'assets/images/infographics/natural_infographics/flood/flood_Akl/Baha2.png',
+      'assets/images/infographics/natural_infographics/flood/flood_Akl/Baha3.png',
+      'assets/images/infographics/natural_infographics/flood/flood_Akl/Baha4.png',
+      'assets/images/infographics/natural_infographics/flood/flood_Akl/Baha5.png',
+    ],
+    "LANDSLIDE" : [
+      //Aklanon landslide
+      'assets/images/infographics/natural_infographics/landslide/landslide_Akl/Landslide1_cover_Akl.png',
+      'assets/images/infographics/natural_infographics/landslide/landslide_Akl/Landslide1.png',
+      'assets/images/infographics/natural_infographics/landslide/landslide_Akl/Landslide2.png',
+      'assets/images/infographics/natural_infographics/landslide/landslide_Akl/Landslide3.png',
+      'assets/images/infographics/natural_infographics/landslide/landslide_Akl/Landslide4.png',
+    ],
+    "EARTHQUAKE" : [
+      //Aklanon Earthquake
+      'assets/images/infographics/natural_infographics/earthquake/earthquake_Akl/Linog1_cover_Akl.png',
+      'assets/images/infographics/natural_infographics/earthquake/earthquake_Akl/Linog1.png',
+      'assets/images/infographics/natural_infographics/earthquake/earthquake_Akl/Linog2.png',
+      'assets/images/infographics/natural_infographics/earthquake/earthquake_Akl/Linog3.png',
+      'assets/images/infographics/natural_infographics/earthquake/earthquake_Akl/Linog4.png',
+      'assets/images/infographics/natural_infographics/earthquake/earthquake_Akl/Linog5.png',
+    ]
+  };
 
   void getPath(String disaster, String language) {
     userLanguage = language;
@@ -100,10 +136,20 @@ class NaturalDisasterViewModel extends ChangeNotifier{
         }
       }
     }
-    else if (language.toLowerCase() == "fil" || language.toLowerCase() =="akl" ) {
+    else if (language.toLowerCase() == "fil") {
       for (String key in assetFilipinoPaths.keys) {
         if (disaster.toUpperCase() == key) {
           coverPath = assetFilipinoPaths[key]?[0];
+          disasterPath = key;
+          _getDisasterDialog(disasterPath!); //gets the dialog in user setting
+          notifyListeners();
+        }
+      }
+    }
+    else if (language.toLowerCase() =="akl" ) {
+      for (String key in assetAklanonPaths.keys) {
+        if (disaster.toUpperCase() == key) {
+          coverPath = assetAklanonPaths[key]?[0];
           disasterPath = key;
           _getDisasterDialog(disasterPath!); //gets the dialog in user setting
           notifyListeners();

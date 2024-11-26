@@ -256,12 +256,12 @@ class Language {
         "Types" : "Uri ng likas na sakuna",
         "TyButton" : "Bagyo",
         "TyDialog" : "Ang infographic na ito ay magpapakita sa iyo kung paano maghanda para sa bagyo upang manatiling ligtas. Ipinapaliwanag din dito kung ano ang dapat gawin habang may bagyo at kung anong mga hakbang ang dapat gawin pagkatapos nitong dumaan upang mapanatiling ligtas ang iyong sarili at pamilya.",
-        "FloodButton" : "Baha",
-        "FloodDialog" : "Ang infographic na ito ay gagabay sa iyo kung paano maghanda para sa baha upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may baha upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos ng baha upang manatiling ligtas at kung ano pa ang dapat gawin.",
-        "LandButton" : "Pagguho ng lupa",
-        "LandDialog" : "Ang infographic na ito ay tutulong sa iyo na matutunan kung paano maghanda para sa pagguho ng lupa upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may pagguho ng lupa upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos nito upang manatiling ligtas at maka-recover.",
-        "EarthButton" : "Lindol",
-        "EarthDialog" : "Ang infographic na ito ay gagabay sa iyo kung paano maghanda para sa lindol upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may lindol upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos ng baha upang manatiling ligtas at kung ano pa ang dapat gawin.",
+          "FloodButton" : "Baha",
+          "FloodDialog" : "Ang dayang infographic ay magpakita kimo kung paano magprepaeae agud mangin ligtas sa baha. Ginapaliwanag man daya kung ano ang mga ueubeahon habang nasa baha at kung ano ang mga hakbang na dapat ubeahon pagkatapos it baha para maluwas ro imong sarili at pamilya.",
+          "LandButton" : "Pagguho it eugta",
+          "LandDialog" : "Ang infographic na ito ay tutulong sa iyo na matutunan kung paano maghanda para sa pagguho ng lupa upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may pagguho ng lupa upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos nito upang manatiling ligtas at maka-recover.",
+          "EarthButton" : "Linog",
+          "EarthDialog" : "Ang infographic na ito ay gagabay sa iyo kung paano maghanda para sa lindol upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may lindol upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos ng lindol upang manatiling ligtas at kung ano pa ang dapat gawin.",
         "StartButton" : "Basahin",
         "Next" : "Sunod",
         "Finish": "Tapos"
@@ -336,6 +336,7 @@ class Language {
 
     };
   }
+  
 
   Map getAkl() {
     return {
@@ -366,13 +367,13 @@ class Language {
           "Definition" : "Ang mga natural , such as typhoons, earthquakes, floods, landslide, and many more, can cause widespread devastation and loss of life. These events are often unpredictable and can occur suddenly, leaving communities with little time to prepare.",
           "Types" : "Types of Natural Disasters",
           "TyButton" : "Bagyo",
-          "TyDialog" : "Ang infographic na ito ay magpapakita sa iyo kung paano maghanda para sa bagyo upang manatiling ligtas. Ipinapaliwanag din dito kung ano ang dapat gawin habang may bagyo at kung anong mga hakbang ang dapat gawin pagkatapos nitong dumaan upang mapanatiling ligtas ang iyong sarili at pamilya.",
-          "FloodButton" : "Baha",
-          "FloodDialog" : "Ang infographic na ito ay gagabay sa iyo kung paano maghanda para sa baha upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may baha upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos ng baha upang manatiling ligtas at kung ano pa ang dapat gawin.",
-          "LandButton" : "Pagguho it eugta",
-          "LandDialog" : "Ang infographic na ito ay tutulong sa iyo na matutunan kung paano maghanda para sa pagguho ng lupa upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may pagguho ng lupa upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos nito upang manatiling ligtas at maka-recover.",
-          "EarthButton" : "Linog",
-          "EarthDialog" : "Ang infographic na ito ay gagabay sa iyo kung paano maghanda para sa lindol upang mapanatiling ligtas ang iyong sarili at pamilya. Ipinaliwanag din nito kung ano ang dapat gawin habang may lindol upang maiwasan ang panganib at kung anong mga hakbang ang dapat gawin pagkatapos ng baha upang manatiling ligtas at kung ano pa ang dapat gawin.",
+          "TyDialog" : "Ang dayang infographic ay magpakita kimo kung paano magprepaeae agud mangin ligtas sa bagyo. Ginapaliwanag man daya kung ano ang mga ueubeahon habang may bagyo at kung ano ang mga hakbang na dapat ubeahon pagkatapos it bagyo para maluwas ro imong sarili at pamilya.",
+        "FloodButton" : "Baha",
+        "FloodDialog" : "Ang dayang infographic ay magpakita kimo kung paano magprepaeae agud mangin ligtas sa baha. Ginapaliwanag man daya kung ano ang mga ueubeahon habang nasa baha at kung ano ang mga hakbang na dapat ubeahon pagkatapos it baha para maluwas ro imong sarili at pamilya.",
+        "LandButton" : "Pagguho ng lupa",
+        "LandDialog" : "Ang dayang infographic ay makabulig kimo para matun-an kung paano maghanda pagguho it eugta. Ginapaliwanag man daya kung ano ang mga ueubeahon habang may pagguho it eugta at kung ano ang mga hakbang na dapat ubeahon pagkatapos it sakuna para maluwas ro imong sarili at imong pamilya.",
+        "EarthButton" : "Lindol",
+        "EarthDialog" : "Ang dayang infographic ay magpakita kimo kung paano magprepaeae agud mangin ligtas sa linog. Ginapaliwanag man daya kung ano ang mga ueubeahon habang nagalinog at kung ano ang mga hakbang na dapat ubeahon pagkatapos it linog para maluwas ro imong sarili at pamilya.",
           "StartButton" : "Basahon",
           "Next" : "Sunod",
           "Finish": "Tapos"
@@ -382,13 +383,13 @@ class Language {
         "Definition" : "Ang isang sakunang likha ng tao ay maaaring magdulot ng matinding pinsala, na kadalasang nagmumula sa pagkakamali, kapabayaan, o sinadyang pananakit ng tao.",
         "Types" : "Uri it sakunang nga ubra it tawo",
         "Accident" : "Aksidente sa saeakyan",
-        "AccidentDialog" : "Ang infographic na ito ay tutulong sa iyo na matutunan kung paano maghanda para sa aksidente sa sasakyan at kung paano manatiling ligtas sakaling mangyari ito. Gabay din ito sa mga hakbang na dapat gawin habang nangyayari ang aksidente upang maprotektahan ang iyong sarili at ang iba. Karagdagan pa, ipapaliwanag nito ang mga mahahalagang hakbang na dapat gawin pagkatapos ng aksidente upang manatiling ligtas.",
+        "AccidentDialog" : "Ang dayang infographic ay makabulig kimo para matun-an kung paano maghanda ro sarili sa aksidente sa saeakyan o sa kalsada. Ginapaliwanag man daya kung ano ang mga ueubeahon habang gatabo ang aksidente at kung ano ang mga ubeahon pagkatapos it aksidente para maluwas ro imong sarili at imong pamilya.",
         "Fire" : "Sunog",
-        "FireDialog" : "Ang infographic na ito ay tutulong sa iyo na matutunan kung paano maghanda para sa sunog, upang manatiling ligtas bago ito mangyari. Gabay din ito sa mga hakbang na dapat gawin habang may sunog upang maprotektahan ang iyong sarili at ang iba. Karagdagan pa, ipapakita nito ang mga mahahalagang hakbang na dapat gawin pagkatapos ng sunog upang tiyakin ang iyong kaligtasan.",
-        "Failure" : "Pagkahueog it estruktura",
-        "FailureDialog" : "Ang infographic na ito ay magbibigay gabay kung paano maghanda para sa pagkasira ng mga istruktura, tulad ng pagbagsak ng mga gusali. Gabay ito sa mga no dapat gawin bago, habang at pagkatapos mangyari ang pagkasira.",
-        "Pollution" : "Polusyon sa tubi",
-        "PollutionDialog" : "Ang infographic na ito ay tutulong sa iyo na maunawaan kung paano nangyayari ang polusyon sa tubig at kung ano ang maaari mong gawin upang makatulong na maiwasan ito. Ipapakita rin nito ang mga epekto ng polusyon sa tubig sa kalikasan at kalusugan. Karagdagan pa, gagabayan ka nito sa mga hakbang na maaari mong gawin upang protektahan ang mga pinagkukunan ng tubig at mabawasan ang polusyon para sa mas malinis at mas ligtas na kapaligiran.",
+        "FireDialog" : "Ang dayang infographic ay makabulig kimo para matun-an kung paano maghanda ro sarili sa sunog. Ginapaliwanag man daya kung ano ang mga ueubeahon habang gatabo ang sunog at kung ano ang mga ubeahon pagkatapos it sunog.", 
+        "Failure" : "Pagbagsak ng estruktura",
+        "FailureDialog" : "Ang dayang infographic ay makatao kimo it gabay kung paano magprepaeae sa pakasamad it istruktura, pareho it pagkahueog it isa ka gusali. Ginapaliwanag man daya kung ano ang mga ueubeahon habang gatabo at kung ano ang mga ubeahon pagkatapos it sakuna.",
+        "Pollution" : "Polusyon sa tubig",
+        "PollutionDialog" : "Ang dayang infographic ay makatao kimo it bulig para matun-an kung paano nagatabo ang polusyon sa tubi. Ginapaliwanag man daya kung ano ang mga ueubeahon kung paano maiwasan at kung paano maprotektahan ang mga anyong tubig.",
         "StartButton" : "Basahon",
         "Next" : "Sunod",
         "Finish": "Tapos"
