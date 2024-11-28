@@ -78,7 +78,24 @@ class ManMadeDisasterViewModel extends ChangeNotifier{
     ]
   };
 
-  final  Map<String, List<String>> assetAklanonPaths = {};
+  final  Map<String, List<String>> assetAklanonPaths = {
+    "VEHICULAR" : [
+      "assets/images/infographics/manmade_infographics/vehicular/vehicular_Akl/Accident1_cover_Akl.png",
+      "assets/images/infographics/manmade_infographics/vehicular/vehicular_Akl/Accident1.png",
+      "assets/images/infographics/manmade_infographics/vehicular/vehicular_Akl/Accident2.png",
+      "assets/images/infographics/manmade_infographics/vehicular/vehicular_Akl/Accident3.png",
+      "assets/images/infographics/manmade_infographics/vehicular/vehicular_Akl/Accident4.png",
+      "assets/images/infographics/manmade_infographics/vehicular/vehicular_Akl/Accident5.png",
+    ],
+    "STRUCTURAL" : [
+      "assets/images/infographics/manmade_infographics/structural/structural_Akl/Structural1_cover_Akl.png",
+      "assets/images/infographics/manmade_infographics/structural/structural_Akl/Structural1.png",
+      "assets/images/infographics/manmade_infographics/structural/structural_Akl/Structural2.png",
+      "assets/images/infographics/manmade_infographics/structural/structural_Akl/Structural3.png",
+      "assets/images/infographics/manmade_infographics/structural/structural_Akl/Structural4.png",
+      "assets/images/infographics/manmade_infographics/structural/structural_Akl/Structural5.png",
+    ],
+  };
 
   void getPath(String disaster, String language) {
     userLanguage = language;
@@ -92,10 +109,20 @@ class ManMadeDisasterViewModel extends ChangeNotifier{
         }
       }
     }
-    else if (language.toLowerCase() == "fil" || language.toLowerCase() =="akl" ) {
+    else if (language.toLowerCase() == "fil" ) {
       for (String key in assetFilipinoPaths.keys) {
         if (disaster.toUpperCase() == key) {
           coverPath = assetFilipinoPaths[key]?[0];
+          disasterPath = key;
+          _getDisasterDialog(disasterPath!); //gets the dialog in user setting
+          notifyListeners();
+        }
+      }
+    }
+    else if (language.toLowerCase() =="akl" ) {
+      for (String key in assetAklanonPaths.keys) {
+        if (disaster.toUpperCase() == key) {
+          coverPath = assetAklanonPaths[key]?[0];
           disasterPath = key;
           _getDisasterDialog(disasterPath!); //gets the dialog in user setting
           notifyListeners();

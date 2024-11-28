@@ -13,7 +13,7 @@ class AccidentPages extends ChangeNotifier {
         disasterList = viewModel.assetFilipinoPaths[viewModel.disasterPath]?.sublist(1);
         break;
       case "AKL":
-        disasterList = viewModel.assetFilipinoPaths[viewModel.disasterPath]?.sublist(1);
+        disasterList = viewModel.assetAklanonPaths[viewModel.disasterPath]?.sublist(1);
         break;
       default:
     }
