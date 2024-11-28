@@ -110,12 +110,16 @@ flutter:
     
     - assets/images/infographics/manmade_infographics/burn/burn_En/
     - assets/images/infographics/manmade_infographics/burn/burn_Fil/
+    - assets/images/infographics/manmade_infographics/burn/burn_Akl/
     - assets/images/infographics/manmade_infographics/pollution/pollution_En/
     - assets/images/infographics/manmade_infographics/pollution/pollution_Fil/
+    - assets/images/infographics/manmade_infographics/pollution/pollution_Akl/
     - assets/images/infographics/manmade_infographics/structural/structural_En/
     - assets/images/infographics/manmade_infographics/structural/structural_Fil/
+    - assets/images/infographics/manmade_infographics/structural/structural_Akl/
     - assets/images/infographics/manmade_infographics/vehicular/vehicular_En/
     - assets/images/infographics/manmade_infographics/vehicular/vehicular_Fil/
+    - assets/images/infographics/manmade_infographics/vehicular/vehicular_Akl/
     
 
       # fonts:
