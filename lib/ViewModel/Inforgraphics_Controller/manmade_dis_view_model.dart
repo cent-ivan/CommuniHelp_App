@@ -95,6 +95,15 @@ class ManMadeDisasterViewModel extends ChangeNotifier{
       "assets/images/infographics/manmade_infographics/structural/structural_Akl/Structural4.png",
       "assets/images/infographics/manmade_infographics/structural/structural_Akl/Structural5.png",
     ],
+    "POLLUTION" : [
+      "assets/images/infographics/manmade_infographics/pollution/pollution_Akl/Water1_cover_Akl.png",
+      "assets/images/infographics/manmade_infographics/pollution/pollution_Akl/Water1.png",
+      "assets/images/infographics/manmade_infographics/pollution/pollution_Akl/Water2.png",
+      "assets/images/infographics/manmade_infographics/pollution/pollution_Akl/Water3.png",
+      "assets/images/infographics/manmade_infographics/pollution/pollution_Akl/Water4.png",
+      "assets/images/infographics/manmade_infographics/pollution/pollution_Akl/Water5.png",
+      "assets/images/infographics/manmade_infographics/pollution/pollution_Akl/Water6.png",
+    ]
   };
 
   void getPath(String disaster, String language) {

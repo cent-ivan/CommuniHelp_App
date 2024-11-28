@@ -38,7 +38,7 @@ class _AboutAppViewState extends State<AboutAppView> {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 30.r),
-          height: 1100.r,
+          height: 1120.r,
           width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +80,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                 child: Text(
                   """CommuniHelp, a disaster preparedness assistance and utility mobile application that will provide both information resource, a utility app specific for disaster preparedness, and improve disaster preparedness literacy of civilians. Made by fourth year students of Aklan State University, Bachelor of Science in Information Technology - Software Engineering.
         
-        This application can help disseminate information about safety before, during, and after a disaster. This mobile application can also provide a communication channel for dissemination of updates and information for a wider scope.""",
+        This application can help disseminate information about safety before, during, and after a disaster. This mobile application can also provide a communication channel for dissemination of updates and information for a wider scope. It has features like locating and getting directions to evacaution centers and have a many more features that can help a civilian in disaster preparedness.""",
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.outline,
