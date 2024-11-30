@@ -29,7 +29,7 @@ class _DashboardViewState extends State<DashboardView> {
         physics: const ClampingScrollPhysics(),
         child: Container(
           padding: const EdgeInsets.fromLTRB(9, 15, 9, 0),
-          height: 990.r,
+          height: 1025.r,
           child:  Column(
             children: <Widget>[
     
