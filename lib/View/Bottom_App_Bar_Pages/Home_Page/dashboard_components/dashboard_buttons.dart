@@ -140,7 +140,7 @@ class UtilitySection extends StatelessWidget {
   Widget build(BuildContext context) {
     //Container of Utility Section
     return Container(
-      height: 460.r,
+      height: 490.r,
       padding: const EdgeInsets.all(10).r,
       margin: const EdgeInsets.fromLTRB(9, 8, 9, 9).r,
       decoration: BoxDecoration(
