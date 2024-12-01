@@ -230,31 +230,32 @@ and Utility App""",
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
+                                  
 
                                   MaterialButton(
                                     height: 50.r,
                                     minWidth: 100.r,
                                     onPressed: () {
-                                      loginViewModel.loginUser(context, "sample@gmail.com", "qwerty");
-                                      // if (_formKey.currentState!.validate()){
-                                      //   //check if user is a responder
-                                      //   if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {
-                                      //     director.changeDirection();
-                                      //     //Navigator.pushNamed(context, '/responderlogin');
-                                      //   }
-                                      //   else {
-                                      //     //validated the text field and adds to the firebase, pass to register view model
-                                      //     logger.d("called in login");
-                                      //     _formKey.currentState!.save();
-                                      //     loginViewModel.loginUser(context, _emailController.text, _passwordController.text);
-                                      //   }
+                                      //loginViewModel.loginUser(context, "sample@gmail.com", "qwerty");
+                                      if (_formKey.currentState!.validate()){
+                                        //check if user is a responder
+                                        if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {
+                                          director.changeDirection();
+                                          //Navigator.pushNamed(context, '/responderlogin');
+                                        }
+                                        else {
+                                          //validated the text field and adds to the firebase, pass to register view model
+                                          logger.d("called in login");
+                                          _formKey.currentState!.save();
+                                          loginViewModel.loginUser(context, _emailController.text, _passwordController.text);
+                                        }
           
-                                      // }
-                                      // else {
-                                      //   setState(() {
-                                      //     _loginHeight = 330.r;
-                                      //   });
-                                      // }
+                                      }
+                                      else {
+                                        setState(() {
+                                          _loginHeight = 330.r;
+                                        });
+                                      }
                                     },
                                     color: const Color(0xFF3D424A),
                                     child: Text(
@@ -276,6 +277,33 @@ and Utility App""",
                                     onPressed: () {
                                       director.changeDirection();
                                     
+                                      
+                                    },
+                                    color: const Color(0xFF3D424A),
+                                    child: Text(
+                                      "Responder",
+                                      style: TextStyle(
+                                        fontSize: 14.r,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.r
+                                      ),
+                                    ),
+                                  ),
+
+
+                                ],
+                              )
+
+                            ],
+                          ),
+                        ),
+
+                        MaterialButton(
+                                    height: 20.r,
+                                    minWidth: 80.r,
+                                    onPressed: () {
+                                      loginViewModel.loginUser(context, "power@gmail.com", "123456");
                                       // if (_formKey.currentState!.validate()){
                                       //   //check if user is a responder
                                       //   if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {
@@ -298,23 +326,15 @@ and Utility App""",
                                     },
                                     color: const Color(0xFF3D424A),
                                     child: Text(
-                                      "Responder",
+                                      "Fast Login",
                                       style: TextStyle(
-                                        fontSize: 14.r,
+                                        fontSize: 12.r,
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         letterSpacing: 1.r
                                       ),
                                     ),
                                   ),
-
-
-                                ],
-                              )
-
-                            ],
-                          ),
-                        ),
                       ],
                     ),
                   ),
