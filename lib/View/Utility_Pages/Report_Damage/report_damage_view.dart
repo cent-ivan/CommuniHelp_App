@@ -1,3 +1,4 @@
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/View/Utility_Pages/Report_Damage/pick_image_dialog.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/network_controller.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/report_view_model.dart';
@@ -18,6 +19,9 @@ class ReportDamageView extends StatefulWidget {
 
 class _ReportDamageViewState extends State<ReportDamageView> {
   Logger logger = Logger(); //for debug message
+
+  //user data
+  final userData = GetUserData();
   
   //form global key
   final _formKey = GlobalKey<FormState>();
@@ -118,7 +122,7 @@ class _ReportDamageViewState extends State<ReportDamageView> {
                                   
                         //Municipality
                         Text(
-                          "Nabas",
+                          userData.municipality,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.outline,
                             fontWeight: FontWeight.bold,
