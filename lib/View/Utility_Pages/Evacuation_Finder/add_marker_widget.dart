@@ -179,7 +179,7 @@ class _AddMarkerState extends State<AddMarker> {
                                         title.clear();
                                         viewModel.choosenImage = null;
 
-                                        Navigator.pop(context);
+                                        Navigator.popAndPushNamed(context, '/evacuationfinder');
                                       }
                                     },
                                     child: Text("PIN", style: TextStyle(color: Theme.of(context).colorScheme.outline, fontWeight: FontWeight.bold),),

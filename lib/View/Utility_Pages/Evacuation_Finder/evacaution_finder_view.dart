@@ -44,8 +44,9 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
     vModel.setCustomMarker();
     vModel.userCustomMarker(userData);
     getCurrentLocation();
-    loadPins();
+    
     super.initState();
+    loadPins();
   }
 
   @override
@@ -235,7 +236,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           if (viewModel.direct != null) 
           //shows text info about distance and duration when showing a navigation polyline
           Positioned(
-            top:  60.r,
+            top:  80.r,
             right: 10.r,
             child: Container(
               height: 35.r,
@@ -297,7 +298,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                 showImage(context, viewModel.targetEvac!, viewModel);
               },
               child: Container(
-                width: 95.r,
+                width: 108.r,
                 height: 95.r,
                 padding: EdgeInsets.all(4).r,
                 decoration: BoxDecoration(
@@ -341,8 +342,8 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           //show direction text
           if (!viewModel.pinMode && viewModel.direct != null)
           Positioned(
-            bottom: 140.r,
-            right: 15.r,
+            bottom: 150.r,
+            right: 18.r,
             child: GestureDetector(
               onTap: () {
                 showDirections(context, viewModel);
@@ -354,7 +355,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                   borderRadius: BorderRadius.circular(8).r,
                   color: Color(0xFFEFEFEF)
                 ),
-                child: Icon(Icons.directions),
+                child: Icon(Icons.directions, color: Color(0xFF3D424A),),
               ),
             )
           ),
@@ -443,7 +444,10 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                           );
                         },
                         onTap: () {
-                          getMarkers(userData.municipality);
+                          setState(() {
+                            getMarkers(userData.municipality);
+                          });
+                          
                         },
                         items: evacPlace,
                       );
@@ -656,7 +660,9 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
 
   //loads all the evac pins in the firestore
   Future getMarkers(String municipality) async {
-   
+    setState(() {
+      
+    });
     try {
       //This line will retrieve the markers position
       DocumentSnapshot doc = await FirebaseFirestore.instance.collection("locations_evac").doc(municipality.toUpperCase()).get();
@@ -707,7 +713,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
               )
             );
             viewModel.assignEvacPos(pos);
-            Navigator.pushNamed(context, '/addmarkerpage');
+            Navigator.popAndPushNamed(context, '/addmarkerpage');
           }
         );
        
@@ -799,7 +805,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                           setState(() {
                             evacData.remove(newVal);
                             deleteValue= newVal;
-                            viewModel.clearMyPins();
+                            //viewModel.clearMyPins();
                           });
 
                           Navigator.pop(context);
@@ -823,8 +829,10 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                   loadPins();
                   viewModel.destination = null;
                 });    
-                
-                Navigator.pop(context);
+                setState(() {
+                  viewModel.targetEvac = null;
+                });
+                //Navigator.pop(context);
               },
               child: Text("DELETE", style: TextStyle(color: Color(0xFF3D424A), fontWeight: FontWeight.bold),),
             ),
@@ -856,11 +864,11 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
               ),
               errorWidget: (context, url, error) => Image.asset('assets/images/dashboard/checklist_images/no_pictures.png', height: 150, width: 150,),
               imageBuilder: (context, imageProvider) => Container(
-                width: 145.r,
-                height: 150.r,
-                padding: EdgeInsets.all(8).r,
+                width: 155.r,
+                height: 175.r,
+                padding: EdgeInsets.all(4).r,
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth),
+                  image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(5).r
                 ),
               ),
@@ -878,6 +886,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
       context: context, 
       builder: (context) {
         return SimpleDialog(
+          backgroundColor: Colors.grey.shade300,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.r),)
           ),
@@ -890,7 +899,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
           children: [
             Container(
               height: 350,
-              width: 250,
+              width: 260,
               padding: EdgeInsets.all(8),
               child: ListView.builder(
                 shrinkWrap: true,  
@@ -902,7 +911,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
                       padding: EdgeInsets.all(4).r,
                       margin: EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
-                        color: Color(0xFFEFEFEF),
+                        color:  Color(0xFFEFEFEF),
                         borderRadius: BorderRadius.circular(8).r
                       ),
                       child: Center(
@@ -946,14 +955,14 @@ class MapAppBar extends StatelessWidget implements PreferredSizeWidget{
       title: Text(
           "Evacuation Map",
           style: TextStyle(
-            color: Theme.of(context).colorScheme.outline,
+            color: Color(0xFF3D424A),
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
           
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new),
+        icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF3D424A),),
         iconSize: 20,
         onPressed: () {
           viewModel.pinMode = false; 
