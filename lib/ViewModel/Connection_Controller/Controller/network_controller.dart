@@ -1,3 +1,4 @@
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/ViewModel/Connection_Controller/Controller/snackbars.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ class NetworkController extends GetxController {
 
   //Snackbars
   SnackBars snackBars = SnackBars();
+  final userData = GetUserData();
 
   RxBool isOnline = true.obs; //use this to check if its online
 
