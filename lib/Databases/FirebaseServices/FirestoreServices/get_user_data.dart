@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/Model/user_model.dart';
+import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -7,6 +8,7 @@ import 'package:logger/logger.dart';
 
 class GetUserData extends ChangeNotifier {
   var logger = Logger();//showing debug messages
+  final dialog = GlobalDialogUtil();
 
 
   //show current user
