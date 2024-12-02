@@ -26,6 +26,11 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
   Logger logger = Logger(); //for debug messages
   final dialog = GlobalDialogUtil();
 
+  bool? _serviceEnabled;
+  PermissionStatus? _permissionGranted;
+
+  Location location = Location();
+
   
 
   final vModel = EvacuationFinderViewModel();
@@ -613,10 +618,33 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
 
   //gets the user current location
   void getCurrentLocation() async {
-    Location location = Location();
+    // Check if the location service is enabled
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled!) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled!) {
+        return; // Return if the service cannot be enabled
+      }
+    }
+
+    // Check if the app has permission to access the location
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      // Request permission if not granted
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return; // Return if permission is not granted
+      }
+    }
+
+    trackUser();
+  }
+
+
+  void trackUser() async {
     try {
       await location.changeSettings(
-        distanceFilter: 5
+        distanceFilter: 4
       );
       await location.getLocation().then((location) {
       if (mounted) {
@@ -644,6 +672,7 @@ class _EvacautionFinderViewState extends State<EvacautionFinderView> {
     
 
     logger.i("Added current location: $currentLocation");
+
   }
 
   //gets the position of the evacuation when changed in the 
