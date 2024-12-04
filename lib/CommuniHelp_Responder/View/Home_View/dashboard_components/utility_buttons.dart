@@ -21,6 +21,7 @@ class ResponderUtilityButtons extends StatefulWidget {
 class _ResponderUtilityButtonsState extends State<ResponderUtilityButtons> {
   //show current user
   User? curUser = FirebaseAuth.instance.currentUser;
+
   
   @override
   Widget build(BuildContext context) {

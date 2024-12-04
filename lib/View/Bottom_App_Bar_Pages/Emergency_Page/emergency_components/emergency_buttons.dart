@@ -1,13 +1,19 @@
 //Emergency Hotline Body
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/View/View_Components/dialogs.dart';
 import 'package:communihelp_app/ViewModel/Home_View_Models/emergency_view_model.dart';
+import 'package:direct_call_plus/direct_call_plus.dart';
+import 'package:direct_caller_sim_choice/direct_caller_sim_choice.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:sim_card_info/sim_card_info.dart';
+import 'package:sim_card_info/sim_info.dart';
 
 //LDDRMO BUTTON
 class LDRRMOButton extends StatefulWidget {
@@ -22,6 +28,12 @@ class LDRRMOButton extends StatefulWidget {
 class _LDRRMOButtonState extends State<LDRRMOButton> {
   //access dialogs
   GlobalDialogUtil dialogs = GlobalDialogUtil();
+  final DirectCaller directCaller = DirectCaller();
+  String? slotIndex;
+
+  final _simCardInfoPlugin = SimCardInfo();
+  List<SimInfo>? _simCardInfo;
+  bool isSupported = false;
 
   Logger logger = Logger(); //show message for debugging
 
@@ -32,15 +44,40 @@ class _LDRRMOButtonState extends State<LDRRMOButton> {
     )
   );
 
+  Future<void> initSimInfoState() async {
+    await Permission.phone.request();
+    List<SimInfo>? simCardInfo;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    // We also handle the message potentially returning null.
+    try {
+      simCardInfo = await _simCardInfoPlugin.getSimInfo() ?? [];
+    } on PlatformException {
+      simCardInfo = [];
+      setState(() {
+        isSupported = false;
+      });
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+    setState(() {
+      _simCardInfo = simCardInfo;
+    });
+  }
+
+  
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<GetUserData>(context);
     return Container(
       
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(12).r,
       ),
-      height: (80 * widget.numberOfContacts.toDouble()).r,
+      height: (220 ).r,
       child: Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => ListView.builder(
           itemCount: viewModel.mddrmoContacts.length,
           itemBuilder: (context, index) {
@@ -48,22 +85,25 @@ class _LDRRMOButtonState extends State<LDRRMOButton> {
               padding: const EdgeInsets.all(10).r,
               child: MaterialButton(
                   onPressed: () async {
-                    //uri path to paste in phone call
-                    final Uri url = Uri(
-                      scheme: 'tel',
-                      path: viewModel.mddrmoContacts[index].number!
-                    );
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
+
+                    await initSimInfoState();
+                    for (SimInfo info in _simCardInfo!) {
+                      //checks if device's number is equal to the user's mobile number
+                      if (info.number == userData.mobileNumber) {
+                        slotIndex = info.slotIndex;
+                      }
+                    }
+
+                    //check if slot is there
+                    if (slotIndex != null) {
+                      directCaller.makePhoneCall(viewModel.mddrmoContacts[index].number!, simSlot: int.parse(slotIndex!) + 1);
+                      
                     }
                     else {
-                      if (context.mounted) {
-                        dialogs.unknownErrorDialog(context, "Cannot be launched");
-                      }
-                      else {
-                        logger.e("Cannot be launch");
-                      }
+                      logger.e("Default");
+                      await DirectCallPlus.makeCall(viewModel.mddrmoContacts[index].number!);
                     }
+                    
                     
                   },
                   height: 115.r,
@@ -161,8 +201,37 @@ class AmbulanceButton extends StatefulWidget {
 class _AmbulanceButtonState extends State<AmbulanceButton> {
   //access dialogs
   GlobalDialogUtil dialogs = GlobalDialogUtil();
+  final DirectCaller directCaller = DirectCaller();
+  String? slotIndex;
+
+  final _simCardInfoPlugin = SimCardInfo();
+  List<SimInfo>? _simCardInfo;
+  bool isSupported = false;
 
   Logger logger = Logger(); //show message for debugging
+
+  Future<void> initSimInfoState() async {
+    await Permission.phone.request();
+    List<SimInfo>? simCardInfo;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    // We also handle the message potentially returning null.
+    try {
+      simCardInfo = await _simCardInfoPlugin.getSimInfo() ?? [];
+    } on PlatformException {
+      simCardInfo = [];
+      setState(() {
+        isSupported = false;
+      });
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+    setState(() {
+      _simCardInfo = simCardInfo;
+    });
+  }
 
   static final  customCache = CacheManager(
     Config(
@@ -171,14 +240,17 @@ class _AmbulanceButtonState extends State<AmbulanceButton> {
     )
   );
 
+  
+
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<GetUserData>(context);
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(12).r,
       ),
-      height: (50 * widget.numberOfContacts.toDouble()).r,
+      height: (30 * widget.numberOfContacts.toDouble()).r,
       child: Consumer<EmergencyViewModel>(builder: (context, viewModel, child) => ListView.builder(
           itemCount: widget.numberOfContacts,
           itemBuilder: (context, index) {
@@ -186,21 +258,22 @@ class _AmbulanceButtonState extends State<AmbulanceButton> {
               padding: const EdgeInsets.all(10).r,
               child: MaterialButton(
                   onPressed: () async {
-                    //uri path to paste in phone call
-                    final Uri url = Uri(
-                      scheme: 'tel',
-                      path: viewModel.ambulanceContacts[index].number!
-                    );
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
+                    await initSimInfoState();
+                    for (SimInfo info in _simCardInfo!) {
+                      //checks if device's number is equal to the user's mobile number
+                      if (info.number == userData.mobileNumber) {
+                        slotIndex = info.slotIndex;
+                      }
+                    }
+
+                    //check if slot is there
+                    if (slotIndex != null) {
+                      directCaller.makePhoneCall(viewModel.mddrmoContacts[index].number!, simSlot: int.parse(slotIndex!) + 1);
+                      
                     }
                     else {
-                      if (context.mounted) {
-                        dialogs.unknownErrorDialog(context, "Cannot be launched");
-                      }
-                      else {
-                        logger.e("Cannot be launch");
-                      }
+                      logger.e("Default");
+                      await DirectCallPlus.makeCall(viewModel.mddrmoContacts[index].number!);
                     }
                   },
                   height: 115.r,
@@ -299,8 +372,37 @@ class BFPButton extends StatefulWidget {
 class _BFPButtonState extends State<BFPButton> {
   //access dialogs
   GlobalDialogUtil dialogs = GlobalDialogUtil();
+  final DirectCaller directCaller = DirectCaller();
+  String? slotIndex;
+
+  final _simCardInfoPlugin = SimCardInfo();
+  List<SimInfo>? _simCardInfo;
+  bool isSupported = false;
 
   Logger logger = Logger(); //show message for debugging
+
+  Future<void> initSimInfoState() async {
+    await Permission.phone.request();
+    List<SimInfo>? simCardInfo;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    // We also handle the message potentially returning null.
+    try {
+      simCardInfo = await _simCardInfoPlugin.getSimInfo() ?? [];
+    } on PlatformException {
+      simCardInfo = [];
+      setState(() {
+        isSupported = false;
+      });
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+    setState(() {
+      _simCardInfo = simCardInfo;
+    });
+  }
 
   static final  customCache = CacheManager(
     Config(
@@ -311,6 +413,7 @@ class _BFPButtonState extends State<BFPButton> {
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<GetUserData>(context);
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
@@ -324,21 +427,22 @@ class _BFPButtonState extends State<BFPButton> {
               padding: const EdgeInsets.all(8).r,
               child: MaterialButton(
                   onPressed: () async {
-                    //uri path to paste in phone call
-                    final Uri url = Uri(
-                      scheme: 'tel',
-                      path: viewModel.bfpContacts[index].number!,
-                    );
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
+                    await initSimInfoState();
+                    for (SimInfo info in _simCardInfo!) {
+                      //checks if device's number is equal to the user's mobile number
+                      if (info.number == userData.mobileNumber) {
+                        slotIndex = info.slotIndex;
+                      }
+                    }
+
+                    //check if slot is there
+                    if (slotIndex != null) {
+                      directCaller.makePhoneCall(viewModel.bfpContacts[index].number!, simSlot: int.parse(slotIndex!) + 1);
+                      
                     }
                     else {
-                      if (context.mounted) {
-                        dialogs.unknownErrorDialog(context, "Cannot be launched");
-                      }
-                      else {
-                        logger.e("Cannot be launch");
-                      }
+                      logger.e("Default");
+                      await DirectCallPlus.makeCall(viewModel.bfpContacts[index].number!);
                     }
                   },
                   height: 115.r,
@@ -437,8 +541,37 @@ class CoastButton extends StatefulWidget {
 class _CoastButtonState extends State<CoastButton> {
   //access dialogs
   GlobalDialogUtil dialogs = GlobalDialogUtil();
+  final DirectCaller directCaller = DirectCaller();
+  String? slotIndex;
+
+  final _simCardInfoPlugin = SimCardInfo();
+  List<SimInfo>? _simCardInfo;
+  bool isSupported = false;
 
   Logger logger = Logger(); //show message for debugging
+
+  Future<void> initSimInfoState() async {
+    await Permission.phone.request();
+    List<SimInfo>? simCardInfo;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    // We also handle the message potentially returning null.
+    try {
+      simCardInfo = await _simCardInfoPlugin.getSimInfo() ?? [];
+    } on PlatformException {
+      simCardInfo = [];
+      setState(() {
+        isSupported = false;
+      });
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+    setState(() {
+      _simCardInfo = simCardInfo;
+    });
+  }
 
   static final  customCache = CacheManager(
     Config(
@@ -449,6 +582,7 @@ class _CoastButtonState extends State<CoastButton> {
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<GetUserData>(context);
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
@@ -462,21 +596,22 @@ class _CoastButtonState extends State<CoastButton> {
               padding: const EdgeInsets.all(8).r,
               child: MaterialButton(
                   onPressed: () async {
-                    //uri path to paste in phone call
-                    final Uri url = Uri(
-                      scheme: 'tel',
-                      path: viewModel.cgContacts[index].number!,
-                    );
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
+                    await initSimInfoState();
+                    for (SimInfo info in _simCardInfo!) {
+                      //checks if device's number is equal to the user's mobile number
+                      if (info.number == userData.mobileNumber) {
+                        slotIndex = info.slotIndex;
+                      }
+                    }
+
+                    //check if slot is there
+                    if (slotIndex != null) {
+                      directCaller.makePhoneCall(viewModel.cgContacts[index].number!, simSlot: int.parse(slotIndex!) + 1);
+                      
                     }
                     else {
-                      if (context.mounted) {
-                        dialogs.unknownErrorDialog(context, "Cannot be launched");
-                      }
-                      else {
-                        logger.e("Cannot be launch");
-                      }
+                      logger.e("Default");
+                      await DirectCallPlus.makeCall(viewModel.cgContacts[index].number!);
                     }
                   },
                   height: 115.r,

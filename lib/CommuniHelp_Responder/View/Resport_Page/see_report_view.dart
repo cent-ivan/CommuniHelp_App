@@ -27,6 +27,8 @@ class _SeeReportViewState extends State<SeeReportView> {
       stalePeriod: Duration(days: 30)
     )
   );
+
+  
   
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class _SeeReportViewState extends State<SeeReportView> {
             return ListView(
               children: snapshot.data!.docs.map<Widget>((DocumentSnapshot document)  {
                 Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                
                 return GestureDetector(
                   onTap: () {
                     viewModel.showReport(context, data);
@@ -111,7 +114,7 @@ class _SeeReportViewState extends State<SeeReportView> {
                           ],
                         ),
 
-                        SizedBox(width: 32.r,),
+                        SizedBox(width: 29.r,),
 
                         //remove button
                         MaterialButton(
@@ -124,7 +127,7 @@ class _SeeReportViewState extends State<SeeReportView> {
                           },
                           child: CircleAvatar(
                             backgroundImage: AssetImage('assets/images/dashboard/remove.png'),
-                            radius: 16.r,
+                            radius: 14.r,
                           ),
                         )
                       ],
