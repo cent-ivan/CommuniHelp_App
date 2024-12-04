@@ -57,6 +57,22 @@ class NotificationController {
       payload: payload, // Optional: You can pass additional data if needed
     );
   }
+
+
+  Future showReportNotification({
+    int id = 0,
+    String? title,
+    String? body,
+    String? payload,
+  }) async {
+    await notificationsPlugin.show(
+      id,
+      title,
+      body,
+      await notificationDetails(),
+      payload: payload, // Optional: You can pass additional data if needed
+    );
+  }
 }
 
 

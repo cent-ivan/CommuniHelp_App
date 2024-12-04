@@ -20,17 +20,24 @@ class EmergencyViewModel extends ChangeNotifier{
 
   int loadTries = 2;
 
-
   String municipalityName = "No data";
+  String selectedHostpital = "";
+
 
   List<EmergencyContactsModel> mddrmoContacts = [];
+  List<EmergencyContactsModel> mddrmoHotlines = [];
   List<EmergencyContactsModel> ambulanceContacts = [];
+  List<EmergencyContactsModel> ambulanceHotlines = [];
+  List<EmergencyContactsModel> hostpitalsList = [];
   List<EmergencyContactsModel> bfpContacts = [];
   List<EmergencyContactsModel> cgContacts = [];
   
   void changeNew() {
     isNew = !isNew;
-  
+  }
+
+  void applyHostpital(String newHostpital) {
+    selectedHostpital = newHostpital;
   }
 
   void filterContact(){

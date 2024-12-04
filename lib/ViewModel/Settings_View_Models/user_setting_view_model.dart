@@ -352,7 +352,7 @@ class Language {
           "PostAnnounce" : "Maganunsyo",
           "NaturalDis" : "Natural na Sakuna",
           "ManmadeDis" : "Sakuna Ubra it tawo",
-          "SearchEvac" : "Magusoy ng Evacuation Center",
+          "SearchEvac" : "Magpangita ng Evacuation Center",
           "MarkEvac" : " Magmarka it mga Evacuation Centers", //responder version
           "News" : "Mga Balita",
           "Weather" : "Ang Panahon",
@@ -451,7 +451,7 @@ class Language {
           "locationHint" : "Ibutang ang imong lokasyon",
           "content" : "Content",
           "contentHint" : "Ano ang konteksto",
-          "uploadLabel" : "Mag-upload it lalarawan",
+          "uploadLabel" : "Mag-upload it larawan",
           "uploadHint" : "Magpili it larawan",
           "appBarTitle" : "Magreport sa Awtoridad"
         }

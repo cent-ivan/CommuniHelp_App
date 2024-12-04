@@ -35,6 +35,7 @@ class ResponderReportViewModel {
               //content of the report
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       data["Title"],

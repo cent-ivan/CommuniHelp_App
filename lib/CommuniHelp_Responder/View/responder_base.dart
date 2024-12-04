@@ -1,12 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Community_Page/community_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Home_View/responder_dashboard_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/View/Profile_Page/profile_view.dart';
 import 'package:communihelp_app/CommuniHelp_Responder/ViewModel/auth_responder.dart';
+import 'package:communihelp_app/Databases/FirebaseServices/FirestoreServices/get_user_data.dart';
 import 'package:communihelp_app/View/Bottom_App_Bar_Pages/Contacts_Page/contacts_view.dart';
 import 'package:communihelp_app/ViewModel/Evacuation_Finder_View_Models/evacuation_finder_view_model.dart';
+import 'package:communihelp_app/ViewModel/Notification_Controller/notification_controller.dart';
+import 'package:communihelp_app/auth_director.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../../ViewModel/Connection_Controller/Controller/network_controller.dart';
@@ -19,6 +24,7 @@ class HomeBaseResponder extends StatefulWidget {
 }
 
 class _HomeBaseResponderState extends State<HomeBaseResponder>  with SingleTickerProviderStateMixin{
+  Logger logger = Logger();
   final PageStorageBucket bucket = PageStorageBucket();
   int _currentIndex = 0;
 
@@ -32,7 +38,51 @@ class _HomeBaseResponderState extends State<HomeBaseResponder>  with SingleTicke
   
 
   final NetworkController network =  Get.put(NetworkController()); //checksconnction
-  
+
+  final userData = GetUserData();
+  final director = Director();
+  List<Map> reports = [];
+  bool responder = true;
+  //Notifies if reports are present
+  Future listenToReports(String municipality, bool responder) async{
+      await Future.delayed(Duration(seconds: 3));
+    
+      CollectionReference<Map<String, dynamic>> collection = FirebaseFirestore.instance
+        .collection("reports")
+        .doc(municipality.toUpperCase())
+        .collection("${municipality.toUpperCase()}_reports");
+      
+
+      // Use snapshots() to listen for changes in the collection
+      collection.snapshots().listen((qrySnapshot) {
+        for (var doc in qrySnapshot.docs) {
+          if (doc.exists) {
+            Map<String, dynamic> data = doc.data();
+            reports.add(data);
+          }
+        }
+      
+      if (reports.isEmpty) {
+        logger.i("No data, ${director.isResponder}");
+      }
+      else if (reports.isNotEmpty && responder) {
+        
+        NotificationController().showReportNotification(title: "New Report Received"); //Notification
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadNotif(responder);
+  }
+
+
+  void loadNotif(bool responder) async {
+    await userData.getUser();
+    await listenToReports(userData.municipality, responder);
+  }
 
   @override
   Widget build(BuildContext context) {
