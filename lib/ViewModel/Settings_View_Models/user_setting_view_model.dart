@@ -212,7 +212,10 @@ class Language {
           "uploadLabel" : "Upload Photo",
           "uploadHint" : "Pick a Photo",
           "appBarTitle" : "Report To Authorities"
-        }
+        },
+      "Share" : {
+        "description" : "Scan the qr code and press the file or APK in the website. Give permission to download the app and wait until the download process is complete"
+      }
     };
   }
 
@@ -332,7 +335,10 @@ class Language {
           "uploadLabel" : "Mag-upload ng lalarawan",
           "uploadHint" : "Pumili ng larawan",
           "appBarTitle" : "Magulat sa Awtoridad"
-        }
+        },
+      "Share" : {
+        "description" : "I-scan ang qr code at pindutin ang file o APK sa website. Bigyan ng permisyon na downloadin ang app at hintayin ito matapos."
+      }
 
     };
   }
@@ -454,7 +460,10 @@ class Language {
           "uploadLabel" : "Mag-upload it larawan",
           "uploadHint" : "Magpili it larawan",
           "appBarTitle" : "Magreport sa Awtoridad"
-        }
+        },
+      "Share" : {
+        "description" : "I-scan ang qr code at pinduton ang file o APK sa website. Itao ang permisyon na downloadin ang app at hueaton matapos ang download process."
+      }
     };
   }
 }
