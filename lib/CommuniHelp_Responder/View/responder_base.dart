@@ -458,7 +458,9 @@ class DrawerBase extends StatelessWidget {
                         icon: const Icon(Icons.share), 
                         iconSize: 25,
                         color: Theme.of(context).colorScheme.outline,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/shareapp');
+                        },
                       ),
                       
                       const SizedBox( width: 15,),
@@ -473,7 +475,7 @@ class DrawerBase extends StatelessWidget {
                           ),
                         ),
                         onPressed: (){
-      
+                          Navigator.pushNamed(context, '/shareapp');
                         },
                       )
                     ],

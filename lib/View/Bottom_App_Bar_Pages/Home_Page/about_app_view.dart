@@ -38,7 +38,7 @@ class _AboutAppViewState extends State<AboutAppView> {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 30.r),
-          height: 1120.r,
+          height: 1140.r,
           width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
