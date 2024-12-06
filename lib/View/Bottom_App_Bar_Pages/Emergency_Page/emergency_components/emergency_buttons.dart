@@ -29,20 +29,12 @@ class _LDRRMOButtonState extends State<LDRRMOButton> {
   //access dialogs
   GlobalDialogUtil dialogs = GlobalDialogUtil();
   final DirectCaller directCaller = DirectCaller();
-  String? slotIndex;
-
+  
   final _simCardInfoPlugin = SimCardInfo();
   List<SimInfo>? _simCardInfo;
   bool isSupported = false;
 
   Logger logger = Logger(); //show message for debugging
-
-  static final  customCache = CacheManager(
-    Config(
-      "customCacheKey",
-      stalePeriod: Duration(days: 30)
-    )
-  );
 
   Future<void> initSimInfoState() async {
     await Permission.phone.request();
@@ -67,6 +59,21 @@ class _LDRRMOButtonState extends State<LDRRMOButton> {
     });
   }
 
+  static final  customCache = CacheManager(
+    Config(
+      "customCacheKey",
+      stalePeriod: Duration(days: 30)
+    )
+  );
+
+ String changeNumber(String number) {
+  if (number.contains("+"))  {
+    String editted = number.substring(3);
+    return  "0$editted";
+  }
+    String editted = number.substring(2);
+    return "0$editted";
+ }
   
   @override
   Widget build(BuildContext context) {
@@ -85,25 +92,68 @@ class _LDRRMOButtonState extends State<LDRRMOButton> {
               padding: const EdgeInsets.all(10).r,
               child: MaterialButton(
                   onPressed: () async {
-
                     await initSimInfoState();
-                    for (SimInfo info in _simCardInfo!) {
-                      //checks if device's number is equal to the user's mobile number
-                      if (info.number == userData.mobileNumber) {
-                        slotIndex = info.slotIndex;
-                      }
-                    }
 
-                    //check if slot is there
-                    if (slotIndex != null) {
-                      directCaller.makePhoneCall(viewModel.mddrmoContacts[index].number!, simSlot: int.parse(slotIndex!) + 1);
+                    if (_simCardInfo!.length == 2) {
+                      if (changeNumber(_simCardInfo![0].number)  == userData.mobileNumber) {
+                        try {
+                          directCaller.makePhoneCall(viewModel.mddrmoContacts[index].number!, simSlot: 1);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Slot 1 Unable to call. NUMBER: ${userData.mobileNumber} == ${changeNumber(_simCardInfo![0].number)}, ${e.toString()}");
+                          }
+                        }
+                        
+                      }
+                      else if  (changeNumber(_simCardInfo![1].number)  == userData.mobileNumber) {
+                        try {
+                          directCaller.makePhoneCall(viewModel.mddrmoContacts[index].number!, simSlot: 2);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Slot 2 Unable to call. $_simCardInfo NUMBER: ${userData.mobileNumber} == ${changeNumber(_simCardInfo![1].number)}, ${e.toString()}");
+                          }
+                        }
+                      }
+                      else {
+                        //add default
+                        
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.mddrmoContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                        
+                      }
                       
                     }
                     else {
-                      logger.e("Default");
-                      await DirectCallPlus.makeCall(viewModel.mddrmoContacts[index].number!);
+                      if (changeNumber(_simCardInfo![0].number)  == userData.mobileNumber) {
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.mddrmoContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                      }
+                      else {
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.mddrmoContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                      }
+                      
                     }
-                    
                     
                   },
                   height: 115.r,
@@ -240,6 +290,14 @@ class _AmbulanceButtonState extends State<AmbulanceButton> {
     )
   );
 
+  String changeNumber(String number) {
+  if (number.contains("+"))  {
+    String editted = number.substring(3);
+    return  "0$editted";
+  }
+    String editted = number.substring(2);
+    return "0$editted";
+ }
   
 
   @override
@@ -259,21 +317,66 @@ class _AmbulanceButtonState extends State<AmbulanceButton> {
               child: MaterialButton(
                   onPressed: () async {
                     await initSimInfoState();
-                    for (SimInfo info in _simCardInfo!) {
-                      //checks if device's number is equal to the user's mobile number
-                      if (info.number == userData.mobileNumber) {
-                        slotIndex = info.slotIndex;
-                      }
-                    }
 
-                    //check if slot is there
-                    if (slotIndex != null) {
-                      directCaller.makePhoneCall(viewModel.mddrmoContacts[index].number!, simSlot: int.parse(slotIndex!) + 1);
+                    if (_simCardInfo!.length == 2) {
+                      if (changeNumber(_simCardInfo![0].number)  == userData.mobileNumber) {
+                        try {
+                          directCaller.makePhoneCall(viewModel.ambulanceContacts[index].number!, simSlot: 1);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Slot 1 Unable to call. NUMBER: ${userData.mobileNumber} == ${changeNumber(_simCardInfo![0].number)}, ${e.toString()}");
+                          }
+                        }
+                        
+                      }
+                      else if  (changeNumber(_simCardInfo![1].number)  == userData.mobileNumber) {
+                        try {
+                          directCaller.makePhoneCall(viewModel.ambulanceContacts[index].number!, simSlot: 2);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Slot 2 Unable to call. $_simCardInfo NUMBER: ${userData.mobileNumber} == ${changeNumber(_simCardInfo![1].number)}, ${e.toString()}");
+                          }
+                        }
+                      }
+                      else {
+                        //add default
+                        
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.ambulanceContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                        
+                      }
                       
                     }
                     else {
-                      logger.e("Default");
-                      await DirectCallPlus.makeCall(viewModel.mddrmoContacts[index].number!);
+                      if (changeNumber(_simCardInfo![0].number)  == userData.mobileNumber) {
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.ambulanceContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                      }
+                      else {
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.ambulanceContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                      }
+                      
                     }
                   },
                   height: 115.r,
@@ -404,6 +507,16 @@ class _BFPButtonState extends State<BFPButton> {
     });
   }
 
+
+  String changeNumber(String number) {
+  if (number.contains("+"))  {
+    String editted = number.substring(3);
+    return  "0$editted";
+  }
+    String editted = number.substring(2);
+    return "0$editted";
+ }
+
   static final  customCache = CacheManager(
     Config(
       "customCacheKey",
@@ -428,21 +541,66 @@ class _BFPButtonState extends State<BFPButton> {
               child: MaterialButton(
                   onPressed: () async {
                     await initSimInfoState();
-                    for (SimInfo info in _simCardInfo!) {
-                      //checks if device's number is equal to the user's mobile number
-                      if (info.number == userData.mobileNumber) {
-                        slotIndex = info.slotIndex;
-                      }
-                    }
 
-                    //check if slot is there
-                    if (slotIndex != null) {
-                      directCaller.makePhoneCall(viewModel.bfpContacts[index].number!, simSlot: int.parse(slotIndex!) + 1);
+                    if (_simCardInfo!.length == 2) {
+                      if (changeNumber(_simCardInfo![0].number)  == userData.mobileNumber) {
+                        try {
+                          directCaller.makePhoneCall(viewModel.bfpContacts[index].number!, simSlot: 1);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Slot 1 Unable to call. NUMBER: ${userData.mobileNumber} == ${changeNumber(_simCardInfo![0].number)}, ${e.toString()}");
+                          }
+                        }
+                        
+                      }
+                      else if  (changeNumber(_simCardInfo![1].number)  == userData.mobileNumber) {
+                        try {
+                          directCaller.makePhoneCall(viewModel.bfpContacts[index].number!, simSlot: 2);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Slot 2 Unable to call. $_simCardInfo NUMBER: ${userData.mobileNumber} == ${changeNumber(_simCardInfo![1].number)}, ${e.toString()}");
+                          }
+                        }
+                      }
+                      else {
+                        //add default
+                        
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.bfpContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                        
+                      }
                       
                     }
                     else {
-                      logger.e("Default");
-                      await DirectCallPlus.makeCall(viewModel.bfpContacts[index].number!);
+                      if (changeNumber(_simCardInfo![0].number)  == userData.mobileNumber) {
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.bfpContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                      }
+                      else {
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.bfpContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                      }
+                      
                     }
                   },
                   height: 115.r,
@@ -573,6 +731,15 @@ class _CoastButtonState extends State<CoastButton> {
     });
   }
 
+  String changeNumber(String number) {
+  if (number.contains("+"))  {
+    String editted = number.substring(3);
+    return  "0$editted";
+  }
+    String editted = number.substring(2);
+    return "0$editted";
+ }
+
   static final  customCache = CacheManager(
     Config(
       "customCacheKey",
@@ -597,21 +764,66 @@ class _CoastButtonState extends State<CoastButton> {
               child: MaterialButton(
                   onPressed: () async {
                     await initSimInfoState();
-                    for (SimInfo info in _simCardInfo!) {
-                      //checks if device's number is equal to the user's mobile number
-                      if (info.number == userData.mobileNumber) {
-                        slotIndex = info.slotIndex;
-                      }
-                    }
 
-                    //check if slot is there
-                    if (slotIndex != null) {
-                      directCaller.makePhoneCall(viewModel.cgContacts[index].number!, simSlot: int.parse(slotIndex!) + 1);
+                    if (_simCardInfo!.length == 2) {
+                      if (changeNumber(_simCardInfo![0].number)  == userData.mobileNumber) {
+                        try {
+                          directCaller.makePhoneCall(viewModel.cgContacts[index].number!, simSlot: 1);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Slot 1 Unable to call. NUMBER: ${userData.mobileNumber} == ${changeNumber(_simCardInfo![0].number)}, ${e.toString()}");
+                          }
+                        }
+                        
+                      }
+                      else if  (changeNumber(_simCardInfo![1].number)  == userData.mobileNumber) {
+                        try {
+                          directCaller.makePhoneCall(viewModel.cgContacts[index].number!, simSlot: 2);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Slot 2 Unable to call. $_simCardInfo NUMBER: ${userData.mobileNumber} == ${changeNumber(_simCardInfo![1].number)}, ${e.toString()}");
+                          }
+                        }
+                      }
+                      else {
+                        //add default
+                        
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.cgContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                        
+                      }
                       
                     }
                     else {
-                      logger.e("Default");
-                      await DirectCallPlus.makeCall(viewModel.cgContacts[index].number!);
+                      if (changeNumber(_simCardInfo![0].number)  == userData.mobileNumber) {
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.cgContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                      }
+                      else {
+                        try {
+                          await DirectCallPlus.makeCall(viewModel.cgContacts[index].number!,);
+                        }
+                        catch (e) {
+                          if (context.mounted) {
+                            dialogs.successDialog(context, "Unable to call. ${e.toString()}");
+                          }
+                        }
+                      }
+                      
                     }
                   },
                   height: 115.r,

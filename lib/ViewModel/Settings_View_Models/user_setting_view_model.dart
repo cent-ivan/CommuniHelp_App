@@ -215,6 +215,10 @@ class Language {
         },
       "Share" : {
         "description" : "Scan the qr code and press the file or APK in the website. Give permission to download the app and wait until the download process is complete"
+      },
+      "PhonePerm" : {
+        "title" : "Phone Permission Needed",
+        "description" :  "We need phone permission to allow this feature to work properly. Please grant it to continue."
       }
     };
   }
@@ -338,6 +342,10 @@ class Language {
         },
       "Share" : {
         "description" : "I-scan ang qr code at pindutin ang file o APK sa website. Bigyan ng permisyon na downloadin ang app at hintayin ito matapos."
+      },
+      "PhonePerm" : {
+        "title" : "Kailangan ng Pahintulot",
+        "description" :  "Kailangan namin ng pahintulot sa telepono upang gumana nang maayos ang feature na ito. Pasugtan raya para makatuloy."
       }
 
     };
@@ -463,6 +471,10 @@ class Language {
         },
       "Share" : {
         "description" : "I-scan ang qr code at pinduton ang file o APK sa website. Itao ang permisyon na downloadin ang app at hueaton matapos ang download process."
+      },
+      "PhonePerm" : {
+        "title" : "Kailangan it Permiso",
+        "description" :  "Kailangan namon it permiso sa telepono para gumana it mayad ang rayang feature. ."
       }
     };
   }

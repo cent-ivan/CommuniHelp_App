@@ -303,7 +303,7 @@ and Utility App""",
                                     height: 20.r,
                                     minWidth: 80.r,
                                     onPressed: () {
-                                      loginViewModel.loginUser(context, "power@gmail.com", "123456");
+                                      loginViewModel.loginUser(context, "sample@gmail.com", "123456");
                                       // if (_formKey.currentState!.validate()){
                                       //   //check if user is a responder
                                       //   if (_emailController.text.contains("LOGIN@HELPER") && _passwordController.text.contains("9112")) {

@@ -5,6 +5,8 @@ import 'package:communihelp_app/ViewModel/Settings_View_Models/user_setting_view
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class EmergencyView extends StatefulWidget {
@@ -15,6 +17,27 @@ class EmergencyView extends StatefulWidget {
 }
 
 class _EmergencyViewState extends State<EmergencyView> {
+  Logger logger = Logger();
+
+  
+
+  @override
+  void initState() {
+    super.initState();
+    initSimInfoState();
+  }
+
+  Future<void> initSimInfoState() async {
+    var status = await Permission.phone.request();
+    
+    if (status.isDenied) {
+      await Permission.phone.request();
+    }
+    else if (status.isPermanentlyDenied) {
+      await openAppSettings();
+    }
+    
+  }
 
   @override
   Widget build(BuildContext context) {

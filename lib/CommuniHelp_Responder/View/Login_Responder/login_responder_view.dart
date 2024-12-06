@@ -230,7 +230,7 @@ class _LoginResponderViewState extends State<LoginResponderView> {
                                     height: 50.r,
                                     minWidth: 100.r,
                                     onPressed: () {
-                                      _authResponder.logInEmailPassword(context, "sample@gmail.com", "qwerty");
+                                      _authResponder.logInEmailPassword(context, "power@gmail.com", "123456");
                                       // if (_formKey.currentState!.validate()){
                                       //   //validated the text field and adds to the firebase, pass to register view model
                                       //   _formKey.currentState!.save();

@@ -149,15 +149,15 @@ class _CommunityViewState extends State<CommunityView> {
                                       progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
                                       errorWidget: (context, url, error) => CircleAvatar(
                                         backgroundImage: AssetImage('assets/images/user.png') ,
-                                        radius: 20.r,
+                                        radius: 30.r,
                                       ),
                                       imageBuilder: (context, imageProvider) => CircleAvatar(
                                         backgroundImage: imageProvider,
-                                        radius: 25.r,
+                                        radius: 30.r,
                                       )
                                     ) 
                                     : CircleAvatar(
-                                      radius: 25.r,
+                                      radius: 30.r,
                                       backgroundColor: Colors.black,
                                     ),
                                   ),
@@ -168,20 +168,22 @@ class _CommunityViewState extends State<CommunityView> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "${data["Name"]}, ${languageClass.systemLang["Forum"]["from"]}${data["Barangay"]}",
+                                        "${data["Name"]}",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16.r
                                         ),
                                       ),
-
                                       Text(
-                                        data["Type"].contains("responder") ? "Responder" : ""
+                                        data["Type"] == "user" ? "${languageClass.systemLang["Forum"]["from"]}${data["Barangay"]}" : "${languageClass.systemLang["Forum"]["from"]}${data["Barangay"]} (Responder)",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.r
+                                        ),
                                       ),
-
                                       Text(
                                         data["Date"]
-                                      )
+                                      ),   
 
                                     ],
                                   ),
