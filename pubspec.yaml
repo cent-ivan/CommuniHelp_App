@@ -35,7 +35,10 @@ dependencies:
   html: ^0.15.5
   direct_call_plus: ^1.0.4
   direct_caller_sim_choice: ^1.0.5
+
+
   sim_card_info: ^1.0.2
+  #mobile_number: ^2.1.1
   permission_handler: ^11.3.1
 
   #icon

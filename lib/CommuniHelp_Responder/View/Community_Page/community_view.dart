@@ -163,6 +163,13 @@ class _ResponderCommunityViewState extends State<ResponderCommunityView> {
                                           fontSize: 14.r
                                         ),
                                       ),
+                                      Text(
+                                        data["Type"] == "user" ? "${languageClass.systemLang["Forum"]["from"]}${data["Barangay"]}" : "${languageClass.systemLang["Forum"]["from"]}${data["Barangay"]} (Responder)",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.r
+                                        ),
+                                      ),
 
                                       Text(
                                         data["Date"]
